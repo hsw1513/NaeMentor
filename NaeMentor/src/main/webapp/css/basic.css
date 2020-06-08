@@ -1,0 +1,35 @@
+@charset "UTF-8";
+
+#container{
+	position: relative;
+	top: 10px;
+	width: auto;
+	height: 1000px;
+	margin: auto;
+	background: yellow;
+}
+
+.myButton {
+	box-shadow: 0px 1px 0px 0px #ffffff;
+	background:linear-gradient(to bottom, #ededed 5%, #dfdfdf 100%);
+	background-color:#ededed;
+	border-radius:15px;
+	border:2px solid #9c9a9c;
+	display:inline-block;
+	cursor:pointer;
+	color:#787778;
+	font-family:Arial;
+	font-size:14px;
+	font-weight:bold;
+	padding:12px 16px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ffffff;
+}
+.myButton:hover {
+	background:linear-gradient(to bottom, #dfdfdf 5%, #ededed 100%);
+	background-color:#dfdfdf;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
