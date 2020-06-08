@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.min.naementor.naemember.admin">
+	
+	<!-- 회원정보조회(기본) -->
+	<select id="userBasicInfo" resultType="MDto">
+		SELECT MEMBERSEQ, EMAIL , NICKNAME , PHONE , BIRTHDAY , 
+			GENDER , AUTH , USERSTATUS ,MENTORTIER, REPORTCNT ,
+			TO_CHAR(JOINDATE, 'YYYY-MM-DD') AS JOINDATE , MENTEECNT, 
+			MENTEEACCSTAR, LASTACCESS , BYEBYE 
+				FROM NAEMEMBER
+					WHERE AUTH = 'ROLE_E'
+	</select>
+	
+	<!-- 회원정보조회(상세) -->
+	<select id="userDetail" parameterType="java.util.Map" resultType="PRDto">
+		SELECT PHOTO, SCHOOL, MAJOR, CAREER, CERTIFICATE, SPECIALFIELD, PMDATE, MENTORCNT, MENTOACCSTAR
+  			 FROM PROFILE
+  				WHERE MEMBERSEQ = #{memberseq}
+	</select>
+	
+	<!-- 신고게시글 조회 -->
+	<select id="SearchRC" resultType="FMDto">
+	SELECT BOARDSEQ, TITLE , CONTENT , WRITESDATE , REPORTCNT , 
+  			SPECIALFIELD, TARGET , MENTEELEVEL , HOWTO, 
+  			LOCATION , DELFLAG , MENTORLIST , FINDREPORTER
+  		FROM FINDINGMENTOR f 
+			WHERE REPORTCNT >= 1 AND DELFLAG  = 'N'
+	</select>
+	
+	<!-- 신고게시글 삭제 -->
+	<update id="deleteReport" parameterType="java.util.Map">
+	 	UPDATE FINDINGMENTOR 
+ 			SET DELFLAG = 'Y'
+ 				WHERE BOARDSEQ = #{boardseq}	
+	</update>
+	
+	<!-- 탈퇴신청 회원 조회 -->
+	<select id="searchByeU" resultType="NMDto">
+		SELECT MEMBERSEQ, EMAIL , NICKNAME , PHONE , BIRTHDAY , 
+			GENDER , AUTH , USERSTATUS ,MENTORTIER, REPORTCNT ,
+			JOINDATE , MENTEECNT, MENTEEACCSTAR, LASTACCESS , BYEBYE
+				FROM NAEMEMBER
+					WHERE BYEBYE = 'Y'		
+	</select>
+	
+	<!-- 계정상태 변경(관리자) -->
+	<update id="changeStatus" parameterType="java.util.Map">
+		UPDATE NAEMEMBER 
+			SET USERSTATUS = #{userstatus}
+				WHERE MEMBERSEQ = #{memberseq} 
+	</update>
+	
+	<!-- 멘토 승인시 권한 변경 -->
+	<update id="mentorPromotion" parameterType="java.util.Map">
+ 		UPDATE NAEMEMBER 
+ 			SET AUTH = 'ROLE_R'
+ 				WHERE MEMBERSEQ =#{memberseq}
+	</update>
+	
+	<!-- 멘토승인시 승급일 기록 -->
+	<update id="promotionDate" parameterType="java.util.Map">
+		UPDATE PROFILE 
+ 			SET PMDATE = SYSDATE
+ 				WHERE MEMBERSEQ =#{memberseq}
+	</update>
+	
+	
+	<resultMap type="com.min.naementor.dtos.NaememberDto" id="joinsearchApplier">
+		<result property="memberseq" column="MEMBERSEQ"/>
+		<result property="email" column="EMAIL"/>
+		<result property="nickname" column="NICKNAME"/>
+		<result property="introduce" column="INTRODUCE"/>
+		<result property="phone" column="PHONE"/>
+		<result property="birthday" column="BIRTHDAY"/>
+		<result property="gender" column="GENDER"/>
+		<result property="reportcnt" column="REPORTCNT"/>
+		<result property="joindate" column="JOINDATE"/>
+		<result property="photo" column="PHOTO"/>
+		<result property="school" column="SCHOOL"/>
+		<result property="major" column="MAJOR"/>
+		<result property="career" column="CAREER"/>
+		<result property="certificate" column="CERTIFICATE"/>
+		<result property="specialfield" column="SPECIALFIELD"/>
+		<result property="mentoaccstar" column="MENTOACCSTAR"/>
+		<result property="filechk" column="FILECHK"/>
+		<result property="userfile" column="USERFILE"/>
+		<result property="uploaddate" column="UPLOADDATE"/>
+	</resultMap>
+	
+	<!-- 멘토신청자 조회 -->
+	<select id="searchApplier" parameterType="java.lang.String" resultMap="joinsearchApplier">
+		SELECT n.MEMBERSEQ, EMAIL, NICKNAME, INTRODUCE, PHONE, BIRTHDAY,
+			   GENDER, REPORTCNT, JOINDATE, PHOTO, SCHOOL, MAJOR, CAREER,
+			   CERTIFICATE, SPECIALFIELD, MENTOACCSTAR, FILECHK, USERFILE, UPLOADDATE
+			FROM NAEMEMBER n JOIN PROFILE p
+				ON n.MEMBERSEQ = p.MEMBERSEQ 
+			JOIN ATTACHFILE a 
+				ON n.MEMBERSEQ = a.MEMBERSEQ
+			WHERE FILECHK = 'Y'
+	</select>
+	
+	
+	
+	
+</mapper>
