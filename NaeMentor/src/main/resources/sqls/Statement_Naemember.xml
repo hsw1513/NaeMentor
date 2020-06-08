@@ -120,19 +120,12 @@
 		FROM NAEMEMBER 
 		  WHERE PHONE = #{phone} AND NOT USERSTATUS = 'D';
 	</select>
-	
-	<!-- 비밀번호 찾기 -->
-	<select id="searchPassword" parameterType="NMDto" resultType="java.lang.String">
-	  SELECT EMAIL 
-		FROM NAEMEMBER  
-		  WHERE EMAIL =#{email} AND BIRTHDAY =#{birthday} AND NOT USERSTATUS = 'D';	
-	</select>
-	
+		
 	<!-- 비밀번호 찾기 -->
 	<select id="searchPassword" parameterType="NMDto" resultType="java.lang.String">
 		SELECT EMAIL 
 			FROM NAEMEMBER  
-				WHERE EMAIL =#{email} AND BIRTHDAY =#{birthday} AND NOT USERSTATUS = 'D'	
+				WHERE EMAIL = #{email} AND BIRTHDAY = #{birthday} AND NOT USERSTATUS = 'D'	
 	</select>
 	
 	<!-- 비밀번호 변경 -->

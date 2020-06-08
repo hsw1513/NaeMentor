@@ -3,7 +3,7 @@
 <mapper namespace="com.min.naementor.naemember.admin">
 	
 	<!-- 회원정보조회(기본) -->
-	<select id="userBasicInfo" resultType="MDto">
+	<select id="userBasicInfo" resultType="NMDto">
 		SELECT MEMBERSEQ, EMAIL , NICKNAME , PHONE , BIRTHDAY , 
 			GENDER , AUTH , USERSTATUS ,MENTORTIER, REPORTCNT ,
 			TO_CHAR(JOINDATE, 'YYYY-MM-DD') AS JOINDATE , MENTEECNT, 
