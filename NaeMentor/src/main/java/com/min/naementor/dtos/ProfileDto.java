@@ -18,7 +18,7 @@ public class ProfileDto implements Serializable {
 	private String mentoaccstar;
 	private String filechk     ;
 	
-	private ProfileDto profiledto;
+	private AttachFileDto attachfiledto;
 	
 	public ProfileDto() {
 		// TODO Auto-generated constructor stub
@@ -39,7 +39,7 @@ public class ProfileDto implements Serializable {
 		this.mentorcnt = mentorcnt;
 		this.mentoaccstar = mentoaccstar;
 		this.filechk = filechk;
-		this.profiledto = profiledto;
+		this.attachfiledto = attachfiledto;
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class ProfileDto implements Serializable {
 		return "ProfileDto [memberseq=" + memberseq + ", photo=" + photo + ", school=" + school + ", major=" + major
 				+ ", career=" + career + ", certificate=" + certificate + ", specialfield=" + specialfield + ", pmdate="
 				+ pmdate + ", mentorcnt=" + mentorcnt + ", mentoaccstar=" + mentoaccstar + ", filechk=" + filechk
-				+ ", profiledto=" + profiledto + "]";
+				+ ", profiledto=" + attachfiledto + "]";
 	}
 
 	public String getMemberseq() {
@@ -138,13 +138,15 @@ public class ProfileDto implements Serializable {
 		this.filechk = filechk;
 	}
 
-	public ProfileDto getProfiledto() {
-		return profiledto;
+	public AttachFileDto getAttachfiledto() {
+		return attachfiledto;
 	}
 
-	public void setProfiledto(ProfileDto profiledto) {
-		this.profiledto = profiledto;
+	public void setAttachfiledto(AttachFileDto attachfiledto) {
+		this.attachfiledto = attachfiledto;
 	}
+
+
 	
 	
 	
