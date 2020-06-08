@@ -3,16 +3,122 @@
 <mapper namespace="com.min.naementor.naemember">
 
 	
-	<insert id="signUp" parameterType="">
+	<!-- 회원가입: 기본정보 입력 -->
+	<insert id="signUp" parameterType="NMDto">
 		INSERT INTO NAEMEMBER(MEMBERSEQ, EMAIL, PASSWORD, NICKNAME, INTRODUCE, PHONE, 
 								BIRTHDAY, GENDER, AUTH, USERSTATUS, MENTORTIER, LOGINCNT, 
 								REPORTCNT, JOINDATE, MENTEECNT, MENTEEACCSTAR, BYEBYE)
-			VALUES(MEMBERSEQ.NEXTVAL, #{email}, #{password}, 
-					#{nickname}, #{introduce}, #{phone}, #{birthday}, #{gender}, 'E', 
-					'A', '', 0, 0, SYSDATE, 0, 0, 'N')
+			VALUES(MEMBERSEQ.NEXTVAL, #{email}, #{password}, #{nickname}, #{introduce}, #{phone}, 
+					#{birthday}, #{gender}, 'E', 'A', '', 0, 
+						0, SYSDATE, 0, 0, 'N')
 	</insert>
+	
+	<!-- 아이디 중복검사 -->
+	<select id="idDupleChk" parameterType="java.lang.String" resultType="java.lang.Integer">
+		SELECT COUNT(EMAIL)
+			FROM NAEMEMBER  
+				WHERE EMAIL = #{email}		
+	</select>
 
-
-
-
+	<!-- 회원가입: 프로필 입력 -->
+	<insert id="insertProFile" parameterType="PRDto">
+		INSERT INTO PROFILE(MEMBERSEQ, PHOTO, SCHOOL, MAJOR, 
+							CAREER, CERTIFICATE, SPECIALFIELD, PMDATE, 
+							MENTORCNT, MENTOACCSTAR, FILECHK)
+		VALUES((SELECT MEMBERSEQ FROM NAEMEMBER WHERE EMAIL = #{email}), #{photo}, #{school}, 
+				#{major}, #{career}, #{certificate}, #{specialfield}, '', 0, 0, 'N')
+	</insert>
+	
+	<!-- 닉네임 중복검사 -->
+	<select id="nickDupleChk" parameterType="java.lang.String" resultType="java.lang.Integer">
+		SELECT COUNT(NICKNAME)
+			FROM NAEMEMBER  
+				WHERE NICKNAME = #{nickname}
+	</select>
+	
+	
+	<!-- 프로필 파일업로드: USERFILE= 일반파일명, SEARCHFILE= UUID파일명 -->
+	<insert id="PfileUpload" parameterType="AFDto">
+		INSERT INTO ATTACHFILE(FILESEQ, USERFILE, SEARCHFILE, FILESIZE, UPLOADDATE, 
+								FILEPATH, ADMINSEQ, MEMBERSEQ)
+		VALUES(FILESEQ.NEXTVAL, #{userfile}, #{searchfile}, #{filesize}, SYSDATE, 
+				#{filepath}, 0, (SELECT MEMBERSEQ FROM NAEMEMBER WHERE EMAIL = #{email}))
+	</insert>
+	
+	
+	<resultMap type="com.min.naementor.dtos.ProfileDto" id="joinEncLogin">
+		<result property="memberseq" column="MEMBERSEQ"/>
+		<result property="email" column="EMAIL"/>
+		<result property="password" column="PASSWORD"/>
+		<result property="nickname" column="NICKNAME"/>
+		<result property="introduce" column="INTRODUCE"/>
+		<result property="phone" column="PHONE"/>
+		<result property="birthday" column="BIRTHDAY"/>
+		<result property="gender" column="GENDER"/>
+		<result property="auth" column="AUTH"/>
+		<result property="userstatus" column="USERSTATUS"/>
+		<result property="mentotier" column="MENTORTIER"/>
+		<result property="logincnt" column="LOGINCNT"/>
+		<result property="reportcnt" column="REPORTCNT"/>
+		<result property="joindate" column="JOINDATE"/>
+		<result property="menteecnt" column="MENTEECNT"/>
+		<result property="menteeaccstar" column="MENTEEACCSTAR"/>
+		<result property="byebye" column="BYEBYE"/>
+		<result property="major" column="MAJOR"/>
+		<result property="career" column="CAREER"/>
+		<result property="certificate" column="CERTIFICATE"/>
+		<result property="specialfield" column="SPECIALFIELD"/>
+		<result property="pmdate" column="PMDATE"/>
+		<result property="mentorcnt" column="MENTORCNT"/>
+		<result property="mentoaccstar" column="MENTOACCSTAR"/>
+		<result property="filechk" column="FILECHK"/>
+		<result property="photo" column="PHOTO"/>
+	</resultMap>
+	
+	<!-- 암호화 로그인 -->
+	<select id="encLogin" parameterType="java.lang.String" resultMap="joinEncLogin">
+		SELECT p.MEMBERSEQ , EMAIL, PASSWORD , NICKNAME , 
+		  	 INTRODUCE , PHONE , BIRTHDAY ,
+		  	 GENDER , AUTH , USERSTATUS ,
+		   	 MENTORTIER , LOGINCNT , REPORTCNT, 
+		   	 JOINDATE , MENTEECNT , MENTEEACCSTAR, BYEBYE, MAJOR,
+		     CAREER, CERTIFICATE, SPECIALFIELD, PMDATE, MENTORCNT, MENTOACCSTAR,
+		   	 FILECHK, PHOTO
+		   	FROM NAEMEMBER n JOIN PROFILE p
+		   			ON n.MEMBERSEQ = p.MEMBERSEQ 
+		   				AND EMAIL =#{email} AND USERSTATUS = 'A'
+	</select>
+	
+	<!-- 로그인 실패시 로그인 시도 카운트 증가, 성공시 카운트 초기화 -->
+	<update id="loginCount" parameterType="java.lang.String">
+	  UPDATE NAEMEMBER 
+		SET LOGINCNT =
+			CASE WHEN EMAIL != #{email}
+				THEN LOGINCNT +1
+					ELSE 0
+						END
+							WHERE EMAIL = #{email}
+	</update>
+	
+	<!-- 로그아웃시 시간 기록 -->
+	<update id="logoutTime" parameterType="java.lang.String">
+	  UPDATE NAEMEMBER 
+		SET LASTACCESS = SYSDATE
+			WHERE EMAIL = #{email}
+	</update>
+	
+	<!-- 계정상태 변경: 로그인 시 휴면상태(R) 계정을 A(Active)로 전환 -->
+	<update id="wakeUp" parameterType="java.lang.String">
+	  UPDATE NAEMEMBER 
+		SET USERSTATUS = 'A'
+			WHERE MEMBERSEQ = #{memberseq} AND USERSTATUS = 'R';
+	</update>
+	
+	<!-- 아이디 찾기 -->
+	<select id="searchId" parameterType="java.lang.String" resultType="java.lang.String">
+	  SELECT EMAIL
+		FROM NAEMEMBER 
+		  WHERE PHONE = #{phone} AND NOT USERSTATUS = 'D';
+	</select>
+	
 </mapper>
