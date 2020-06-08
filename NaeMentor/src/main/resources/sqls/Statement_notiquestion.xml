@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.min.naementor.notiquestion">
+
+<select id="notiAll" resultType="NQDto">
+	SELECT ADMINSEQ, NICKNAME, TITLE, CONTENT, TO_CHAR(WRITEDATE, 'YYYY-MM-DD') AS "WRITEDATE",  BOARDTYPE,
+		ROW_NUMBER() OVER (ORDER BY ADMINSEQ DESC) AS "ROWNUM"
+		FROM NOTIQUESTION n1 JOIN NAEMEMBER n2
+		ON n1.MEMBERSEQ = n2.MEMBERSEQ
+		WHERE BOARDTYPE = 'G' 
+</select>
+
+<select id="searchNoti" parameterType="java.lang.String" resultType="NQDto">
+	SELECT n1.ADMINSEQ, NICKNAME, TITLE, 
+			CONTENT, TO_CHAR(WRITEDATE, 'YYYY-MM-DD') AS "WRITEDATE", BOARDTYPE, 
+			a.USERFILE, DELFLAG
+		FROM NOTIQUESTION n1 JOIN NAEMEMBER n2
+		ON n1.MEMBERSEQ = n2.MEMBERSEQ
+		JOIN ATTACHFILE a
+		ON n1.ADMINSEQ = a.ADMINSEQ
+		WHERE BOARDTYPE = 'G' AND n1.ADMINSEQ =#{adminseq}
+</select>
+
+<insert id="insertNoti" parameterType="NQDto">
+	INSERT INTO NOTIQUESTION
+	(ADMINSEQ, TITLE, CONTENT, WRITEDATE, DELFLAG, REFERENCE, BOARDTYPE, MEMBERSEQ)
+	VALUES(ADMINSEQ.NEXTVAL, #{title}, #{content}, SYSDATE, 'N', 0, 'G', #{memberseq})
+</insert>
+
+<update id="modifyNoti" parameterType="NQDto">
+	UPDATE NOTIQUESTION SET TITLE = #{title}, CONTENT = #{content}, WRITEDATE=SYSDATE 
+	WHERE ADMINSEQ=#{adminseq}
+</update>
+
+<update id="deleteNoti" parameterType="java.util.Map">
+UPDATE NOTIQUESTION SET DELFLAG = 'Y'
+	WHERE ADMINSEQ=#{adminseq}
+</update>
+
+
+</mapper>
