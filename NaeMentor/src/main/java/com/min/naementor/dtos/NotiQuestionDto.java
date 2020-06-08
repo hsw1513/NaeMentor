@@ -2,7 +2,7 @@ package com.min.naementor.dtos;
 
 import java.io.Serializable;
 
-public class NotiquestionDto implements Serializable {
+public class NotiQuestionDto implements Serializable {
 
 	private static final long serialVersionUID = -9083691329807327110L;
 	
@@ -15,10 +15,10 @@ public class NotiquestionDto implements Serializable {
 	private String boardtype;
 	private String memberseq;
 	
-	public NotiquestionDto() {
+	public NotiQuestionDto() {
 	}
 
-	public NotiquestionDto(String adminseq, String title, String content, String writedate, String delflag,
+	public NotiQuestionDto(String adminseq, String title, String content, String writedate, String delflag,
 			String reference, String boardtype, String memberseq) {
 		super();
 		this.adminseq = adminseq;

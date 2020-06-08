@@ -2,7 +2,7 @@ package com.min.naementor.dtos;
 
 import java.io.Serializable;
 
-public class FindingmentorDto implements Serializable{
+public class FindingMentorDto implements Serializable{
 
 	private static final long serialVersionUID = 9175405026471946605L;
 	private String boardseq;
@@ -20,10 +20,10 @@ public class FindingmentorDto implements Serializable{
 	private String memberseq;
 	private String findreporter;
 	
-	public FindingmentorDto() {
+	public FindingMentorDto() {
 	}
 
-	public FindingmentorDto(String boardseq, String title, String content, String writesdate, String reportcnt,
+	public FindingMentorDto(String boardseq, String title, String content, String writesdate, String reportcnt,
 			String specialfield, String target, String menteelevel, String howto, String location, String delflag,
 			String mentorlist, String memberseq, String findreporter) {
 		super();
