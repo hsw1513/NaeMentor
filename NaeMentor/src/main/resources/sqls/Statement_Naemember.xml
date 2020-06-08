@@ -30,7 +30,7 @@
 	</insert>
 	
 	<!-- 닉네임 중복검사 -->
-	<select id="nickDupleChk" parameterType="java.util.Map" resultType="java.lang.Integer">
+	<select id="nickDupleChk" parameterType="java.lang.String" resultType="java.lang.Integer">
 		SELECT COUNT(NICKNAME)
 			FROM NAEMEMBER  
 				WHERE NICKNAME = #{nickname}
@@ -46,7 +46,7 @@
 	</insert>
 	
 	
-	<resultMap type="com.min.naementor.dtos.NaememberDto" id="joinEncLogin">
+	<resultMap type="com.min.naementor.dtos.ProfileDto" id="joinEncLogin">
 		<result property="memberseq" column="MEMBERSEQ"/>
 		<result property="email" column="EMAIL"/>
 		<result property="password" column="PASSWORD"/>
@@ -57,13 +57,14 @@
 		<result property="gender" column="GENDER"/>
 		<result property="auth" column="AUTH"/>
 		<result property="userstatus" column="USERSTATUS"/>
-		<result property="mentortier" column="MENTORTIER"/>
+		<result property="mentotier" column="MENTORTIER"/>
 		<result property="logincnt" column="LOGINCNT"/>
 		<result property="reportcnt" column="REPORTCNT"/>
 		<result property="joindate" column="JOINDATE"/>
 		<result property="menteecnt" column="MENTEECNT"/>
 		<result property="menteeaccstar" column="MENTEEACCSTAR"/>
 		<result property="byebye" column="BYEBYE"/>
+		<result property="profiledto.photo" column="PHOTO"/>
 		<result property="profiledto.major" column="MAJOR"/>
 		<result property="profiledto.career" column="CAREER"/>
 		<result property="profiledto.certificate" column="CERTIFICATE"/>
@@ -72,11 +73,10 @@
 		<result property="profiledto.mentorcnt" column="MENTORCNT"/>
 		<result property="profiledto.mentoaccstar" column="MENTOACCSTAR"/>
 		<result property="profiledto.filechk" column="FILECHK"/>
-		<result property="photo" column="PHOTO"/>
 	</resultMap>
 	
 	<!-- 암호화 로그인 -->
-	<select id="encLogin" parameterType="java.util.Map" resultMap="joinEncLogin">
+	<select id="encLogin" parameterType="java.lang.String" resultMap="joinEncLogin">
 		SELECT p.MEMBERSEQ , EMAIL, PASSWORD , NICKNAME , 
 		  	 INTRODUCE , PHONE , BIRTHDAY ,
 		  	 GENDER , AUTH , USERSTATUS ,
@@ -101,7 +101,7 @@
 	</update>
 	
 	<!-- 로그아웃시 시간 기록 -->
-	<update id="logoutTime" parameterType="java.util.Map">
+	<update id="logoutTime" parameterType="java.lang.String">
 	  UPDATE NAEMEMBER 
 		SET LASTACCESS = SYSDATE
 			WHERE EMAIL = #{email}
@@ -111,14 +111,21 @@
 	<update id="wakeUp" parameterType="java.util.Map">
 	  UPDATE NAEMEMBER 
 		SET USERSTATUS = 'A'
-			WHERE MEMBERSEQ = #{memberseq} AND USERSTATUS = 'R'
+			WHERE MEMBERSEQ = #{memberseq} AND USERSTATUS = 'R';
 	</update>
 	
 	<!-- 아이디 찾기 -->
 	<select id="searchId" parameterType="java.lang.String" resultType="java.lang.String">
 	  SELECT EMAIL
 		FROM NAEMEMBER 
-		  WHERE PHONE = #{phone} AND NOT USERSTATUS = 'D'
+		  WHERE PHONE = #{phone} AND NOT USERSTATUS = 'D';
+	</select>
+	
+	<!-- 비밀번호 찾기 -->
+	<select id="searchPassword" parameterType="NMDto" resultType="java.lang.String">
+	  SELECT EMAIL 
+		FROM NAEMEMBER  
+		  WHERE EMAIL =#{email} AND BIRTHDAY =#{birthday} AND NOT USERSTATUS = 'D';	
 	</select>
 	
 	<!-- 비밀번호 찾기 -->
@@ -141,6 +148,5 @@
  			SET BYEBYE = Y
  				WHERE EMAIL = #{email}	
 	</update>
-	
 	
 </mapper>
