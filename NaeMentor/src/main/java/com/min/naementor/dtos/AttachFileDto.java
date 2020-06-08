@@ -2,7 +2,7 @@ package com.min.naementor.dtos;
 
 import java.io.Serializable;
 
-public class AttachFile implements Serializable {
+public class AttachFileDto implements Serializable {
 
 	private static final long serialVersionUID = 1722518200590321160L;
 	
@@ -15,11 +15,11 @@ public class AttachFile implements Serializable {
 	private String adminseq   ;
 	private String memberseq  ;
 	
-	public AttachFile() {
+	public AttachFileDto() {
 		
 	}
 
-	public AttachFile(String fileseq, String userfile, String searchfile, String filesize, String uploaddate,
+	public AttachFileDto(String fileseq, String userfile, String searchfile, String filesize, String uploaddate,
 			String filepath, String adminseq, String memberseq) {
 		super();
 		this.fileseq = fileseq;
