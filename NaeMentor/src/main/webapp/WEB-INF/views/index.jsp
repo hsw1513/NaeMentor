@@ -11,7 +11,6 @@
 	<%@include file="/WEB-INF/views/topMenu.jsp"%>
 	<div id="container">
 	<h1>hello</h1>
-	${lists}
 	</div>
 	<%@include file="/WEB-INF/views/footer.jsp"%>
   </body>

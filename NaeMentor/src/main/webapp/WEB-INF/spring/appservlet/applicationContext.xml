@@ -49,7 +49,7 @@
 	<!-- 7. Transaction을 AOP를 통해 설정 -->
 	<!-- Service에서 Dao를 조합하여 사용 -->
 	<aop:config>
-		<aop:advisor advice-ref="txAdvice" pointcut="execution(public * com.min.naementor.spring.model.*Service*.*(..))"/>
+		<aop:advisor advice-ref="txAdvice" pointcut="execution(public * com.min.naementor.spring.model.*.*Service*.*(..))"/>
 	</aop:config>
 	
 	<!-- 파일 업로드 beans -->

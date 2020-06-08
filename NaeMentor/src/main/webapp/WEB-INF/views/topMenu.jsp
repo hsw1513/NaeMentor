@@ -19,6 +19,7 @@
     </div>
     <ul class="nav navbar-nav">
     		<li><a href="./boardList.do">게시판</a></li>
+    		<li><a href="./FindingMentor_board.do">FindgingMentor보드로 이동</a></li>
 <%--     	<c:if test="${fn:trim(mem.auth) eq 'U'}"> --%>
     		<li><a href="./writeForm.do">글작성</a></li>
 <%--     	</c:if> --%>

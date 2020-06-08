@@ -11,7 +11,7 @@
 	<tx:annotation-driven transaction-manager="transactionManager"/>
 	
 <aop:config>
-	<aop:pointcut expression="execution(public * com.min.naementor.spring.model.*Dao*.*(..))" id="daoPoint"/>
+	<aop:pointcut expression="execution(public * com.min.naementor.spring.model.*.*Dao*.*(..))" id="daoPoint"/>
 	<aop:aspect ref="aopLogger">
 		<aop:before method="before" pointcut-ref="daoPoint"/>
 		<aop:after-returning method="afterReturnning" pointcut-ref="daoPoint"/>
