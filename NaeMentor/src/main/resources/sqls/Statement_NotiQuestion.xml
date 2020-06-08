@@ -23,7 +23,7 @@
 <!-- $공지 게시판$ -->
 
 <!-- 공지 게시판 전체글 조회 -->
-<select id="notiAll" resultType="joinNotiQuestion">
+<select id="notiAll" resultMap="joinNotiQuestion">
 	SELECT ADMINSEQ, NICKNAME, TITLE, CONTENT, TO_CHAR(WRITEDATE, 'YYYY-MM-DD') AS "WRITEDATE",  BOARDTYPE,
 		ROW_NUMBER() OVER (ORDER BY ADMINSEQ DESC) AS "ROWNUM"
 		FROM NOTIQUESTION n1 JOIN NAEMEMBER n2
@@ -32,7 +32,7 @@
 </select>
 
 <!-- 공지 게시판 게시글 조회 -->
-<select id="searchNoti" parameterType="java.lang.String" resultType="joinNotiQuestion">
+<select id="searchNoti" parameterType="java.lang.String" resultMap="joinNotiQuestion">
 	SELECT n1.ADMINSEQ, NICKNAME, TITLE, 
 			CONTENT, TO_CHAR(WRITEDATE, 'YYYY-MM-DD') AS "WRITEDATE", BOARDTYPE, 
 			a.USERFILE, a.FILESIZE, DELFLAG
@@ -83,7 +83,7 @@ UPDATE ATTACHFILE SET USERFILE=#{userfile}, SEARCHFILE=#{searchfile}, FILESIZE=#
 <!-- $문의 게시판$ -->
 
 <!-- 1:1 문의 게시판 전체 조회 (관리자) -->
-<select id="searchOneToOne" parameterType="java.lang.String" resultType="joinNotiQuestion">
+<select id="allOneToOneA" parameterType="java.lang.String" resultMap="joinNotiQuestion">
 SELECT ADMINSEQ, NICKNAME, TITLE, CONTENT, TO_CHAR(WRITEDATE, 'YYYY-MM-DD') AS "WRITEDATE",  n2.MEMBERSEQ, BOARDTYPE, DELFLAG, REFERENCE, 
 		ROW_NUMBER() OVER (ORDER BY REFERENCE DESC, ADMINSEQ ASC) AS "ROWNUM"
 		FROM NOTIQUESTION n1 JOIN NAEMEMBER n2
@@ -92,7 +92,7 @@ SELECT ADMINSEQ, NICKNAME, TITLE, CONTENT, TO_CHAR(WRITEDATE, 'YYYY-MM-DD') AS "
 </select>
 
 <!-- 1:1 문의 게시판 전체 조회 (사용자) -->
-<select id="allOneToOneU" parameterType="java.lang.String" resultType="joinNotiQuestion">
+<select id="allOneToOneU" parameterType="java.lang.String" resultMap="joinNotiQuestion">
 SELECT REFERENCE, ADMINSEQ, TITLE, CONTENT, TO_CHAR(WRITEDATE, 'YYYY-MM-DD') AS "WRITEDATE", MEMBERSEQ, BOARDTYPE, DELFLAG
 FROM NOTIQUESTION n1 JOIN
 (SELECT REFERENCE 
@@ -104,7 +104,7 @@ FROM NOTIQUESTION n1 JOIN
 </select>
 
 <!-- 1:1 문의 게시판 게시글 조회 -->
-<select id="searchOneToOne" parameterType="java.lang.String" resultType="joinNotiQuestion">
+<select id="searchOneToOne" parameterType="java.lang.String" resultMap="joinNotiQuestion">
 SELECT n1.ADMINSEQ, NICKNAME, TITLE, CONTENT, TO_CHAR(WRITEDATE, 'YYYY-MM-DD') AS "WRITEDATE",  BOARDTYPE, DELFLAG  
 	FROM NOTIQUESTION n1 JOIN NAEMEMBER n2
 						ON n1.MEMBERSEQ = n2.MEMBERSEQ
