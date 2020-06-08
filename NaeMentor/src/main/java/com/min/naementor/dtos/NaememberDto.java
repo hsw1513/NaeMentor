@@ -26,15 +26,16 @@ public class NaememberDto implements Serializable {
 	private String lastaccess    ;
 	private String byebye        ;
 	
+	private ProfileDto profiledto;
+	
 	public NaememberDto() {
-		super();
 		// TODO Auto-generated constructor stub
 	}
 
 	public NaememberDto(String memberseq, String email, String password, String nickname, String introduce,
 			String phone, String birthday, String gender, String auth, String userstatus, String mentortier,
 			String logincnt, String reportcnt, String joindate, String menteecnt, String menteeaccstar,
-			String lastaccess, String byebye) {
+			String lastaccess, String byebye, ProfileDto profiledto) {
 		super();
 		this.memberseq = memberseq;
 		this.email = email;
@@ -54,6 +55,17 @@ public class NaememberDto implements Serializable {
 		this.menteeaccstar = menteeaccstar;
 		this.lastaccess = lastaccess;
 		this.byebye = byebye;
+		this.profiledto = profiledto;
+	}
+
+	@Override
+	public String toString() {
+		return "NaememberDto [memberseq=" + memberseq + ", email=" + email + ", password=" + password + ", nickname="
+				+ nickname + ", introduce=" + introduce + ", phone=" + phone + ", birthday=" + birthday + ", gender="
+				+ gender + ", auth=" + auth + ", userstatus=" + userstatus + ", mentortier=" + mentortier
+				+ ", logincnt=" + logincnt + ", reportcnt=" + reportcnt + ", joindate=" + joindate + ", menteecnt="
+				+ menteecnt + ", menteeaccstar=" + menteeaccstar + ", lastaccess=" + lastaccess + ", byebye=" + byebye
+				+ ", profiledto=" + profiledto + "]";
 	}
 
 	public String getMemberseq() {
@@ -200,16 +212,13 @@ public class NaememberDto implements Serializable {
 		this.byebye = byebye;
 	}
 
-	@Override
-	public String toString() {
-		return "NaememberDto [memberseq=" + memberseq + ", email=" + email + ", password=" + password + ", nickname="
-				+ nickname + ", introduce=" + introduce + ", phone=" + phone + ", birthday=" + birthday + ", gender="
-				+ gender + ", auth=" + auth + ", userstatus=" + userstatus + ", mentortier=" + mentortier
-				+ ", logincnt=" + logincnt + ", reportcnt=" + reportcnt + ", joindate=" + joindate + ", menteecnt="
-				+ menteecnt + ", menteeaccstar=" + menteeaccstar + ", lastaccess=" + lastaccess + ", byebye=" + byebye
-				+ "]";
+	public ProfileDto getProfiledto() {
+		return profiledto;
 	}
-	
+
+	public void setProfiledto(ProfileDto profiledto) {
+		this.profiledto = profiledto;
+	}
 	
 	
 	

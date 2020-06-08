@@ -15,10 +15,11 @@ public class PaymentDto implements Serializable {
 	private String mentorpay;
 	private String paytoken;
 	private String memberseq;
-	public PaymentDto() {
-	}
+
+	private MatchingDto matchingdto;
+
 	public PaymentDto(String boardseq, String menteepay, String menteepaytime, String paystatus, String refundno,
-			String paidTS, String mentorpay, String paytoken, String memberseq) {
+			String paidTS, String mentorpay, String paytoken, String memberseq, MatchingDto matchingdto) {
 		super();
 		this.boardseq = boardseq;
 		this.menteepay = menteepay;
@@ -29,68 +30,97 @@ public class PaymentDto implements Serializable {
 		this.mentorpay = mentorpay;
 		this.paytoken = paytoken;
 		this.memberseq = memberseq;
+		this.matchingdto = matchingdto;
 	}
+
 	@Override
 	public String toString() {
-		return "paymentDto [boardseq=" + boardseq + ", menteepay=" + menteepay + ", menteepaytime=" + menteepaytime
+		return "PaymentDto [boardseq=" + boardseq + ", menteepay=" + menteepay + ", menteepaytime=" + menteepaytime
 				+ ", paystatus=" + paystatus + ", refundno=" + refundno + ", paidTS=" + paidTS + ", mentorpay="
-				+ mentorpay + ", paytoken=" + paytoken + ", memberseq=" + memberseq + "]";
+				+ mentorpay + ", paytoken=" + paytoken + ", memberseq=" + memberseq + ", matchingdto=" + matchingdto
+				+ "]";
 	}
+
 	public String getBoardseq() {
 		return boardseq;
 	}
+
 	public void setBoardseq(String boardseq) {
 		this.boardseq = boardseq;
 	}
+
 	public String getMenteepay() {
 		return menteepay;
 	}
+
 	public void setMenteepay(String menteepay) {
 		this.menteepay = menteepay;
 	}
+
 	public String getMenteepaytime() {
 		return menteepaytime;
 	}
+
 	public void setMenteepaytime(String menteepaytime) {
 		this.menteepaytime = menteepaytime;
 	}
+
 	public String getPaystatus() {
 		return paystatus;
 	}
+
 	public void setPaystatus(String paystatus) {
 		this.paystatus = paystatus;
 	}
+
 	public String getRefundno() {
 		return refundno;
 	}
+
 	public void setRefundno(String refundno) {
 		this.refundno = refundno;
 	}
+
 	public String getPaidTS() {
 		return paidTS;
 	}
+
 	public void setPaidTS(String paidTS) {
 		this.paidTS = paidTS;
 	}
+
 	public String getMentorpay() {
 		return mentorpay;
 	}
+
 	public void setMentorpay(String mentorpay) {
 		this.mentorpay = mentorpay;
 	}
+
 	public String getPaytoken() {
 		return paytoken;
 	}
+
 	public void setPaytoken(String paytoken) {
 		this.paytoken = paytoken;
 	}
+
 	public String getMemberseq() {
 		return memberseq;
 	}
+
 	public void setMemberseq(String memberseq) {
 		this.memberseq = memberseq;
 	}
 
+	public MatchingDto getMatchingdto() {
+		return matchingdto;
+	}
+
+	public void setMatchingdto(MatchingDto matchingdto) {
+		this.matchingdto = matchingdto;
+	}
+	
 	
 	
 }
