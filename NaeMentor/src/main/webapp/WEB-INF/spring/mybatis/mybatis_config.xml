@@ -17,6 +17,8 @@
 	
 	<mappers>
 		<mapper resource="/sqls/Statement_Naemember.xml"/>
+		<mapper resource="/sqls/Statement_Naemember_Admin.xml"/>
+		<mapper resource="/sqls/Statement_report.xml"/>
 		<mapper resource="/sqls/Statement_AttachFile.xml"/>
 		<mapper resource="/sqls/Statement_Profile.xml"/>
 		<mapper resource="/sqls/Statement_Payment.xml"/>

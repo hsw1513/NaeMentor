@@ -76,16 +76,16 @@
 		<result property="gender" column="GENDER"/>
 		<result property="reportcnt" column="REPORTCNT"/>
 		<result property="joindate" column="JOINDATE"/>
-		<result property="photo" column="PHOTO"/>
-		<result property="school" column="SCHOOL"/>
-		<result property="major" column="MAJOR"/>
-		<result property="career" column="CAREER"/>
-		<result property="certificate" column="CERTIFICATE"/>
-		<result property="specialfield" column="SPECIALFIELD"/>
-		<result property="mentoaccstar" column="MENTOACCSTAR"/>
-		<result property="filechk" column="FILECHK"/>
-		<result property="userfile" column="USERFILE"/>
-		<result property="uploaddate" column="UPLOADDATE"/>
+		<result property="profiledto.photo" column="PHOTO"/>
+		<result property="profiledto.school" column="SCHOOL"/>
+		<result property="profiledto.major" column="MAJOR"/>
+		<result property="profiledto.career" column="CAREER"/>
+		<result property="profiledto.certificate" column="CERTIFICATE"/>
+		<result property="profiledto.specialfield" column="SPECIALFIELD"/>
+		<result property="profiledto.mentoaccstar" column="MENTOACCSTAR"/>
+		<result property="profiledto.filechk" column="FILECHK"/>
+		<result property="profiledto.attachfiledto.userfile" column="USERFILE"/>
+		<result property="profiledto.attachfiledto.uploaddate" column="UPLOADDATE"/>
 	</resultMap>
 	
 	<!-- 멘토신청자 조회 -->
