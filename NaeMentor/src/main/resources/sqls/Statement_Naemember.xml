@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.min.naementor.naemember">
+
+	
+	<insert id="signUp" parameterType="">
+		INSERT INTO NAEMEMBER(MEMBERSEQ, EMAIL, PASSWORD, NICKNAME, INTRODUCE, PHONE, 
+								BIRTHDAY, GENDER, AUTH, USERSTATUS, MENTORTIER, LOGINCNT, 
+								REPORTCNT, JOINDATE, MENTEECNT, MENTEEACCSTAR, BYEBYE)
+			VALUES(MEMBERSEQ.NEXTVAL, #{email}, #{password}, 
+					#{nickname}, #{introduce}, #{phone}, #{birthday}, #{gender}, 'E', 
+					'A', '', 0, 0, SYSDATE, 0, 0, 'N')
+	</insert>
+
+
+
+
+</mapper>
