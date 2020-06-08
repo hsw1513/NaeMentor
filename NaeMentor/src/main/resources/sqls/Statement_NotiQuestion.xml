@@ -2,7 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.min.naementor.notiquestion">
 
-<select id="notiAll" resultType="NQDto">
+<resultMap type="com.min.naementor.dtos.NotiQuestionDto" id="joinNotiQuestion">
+	<result column="ADMINSEQ" property="adminseq"/>
+	<result column="TITLE" property="title"/>
+	<result column="CONTENT" property="content"/>
+	<result column="BOARDTYPE" property="boardtype"/>
+	<result column="DELFLAG" property="delflag"/>
+	<result column="WRITEDATE" property="writedate"/>
+	<result column="REFERENCE" property="reference"/>
+	<result column="MEMBERSEQ" property="namemberdto.memberseq"/>
+	<result column="NICKNAME" property="namemberdto.nickname"/>
+	<result column="FILESEQ" property="attachfiledto.fileseq"/>
+	<result column="USERFILE" property="attachfiledto.userfile"/>
+	<result column="SEARCHFILE" property="attachfiledto.searchfile"/>
+	<result column="FILESIZE" property="attachfiledto.filesize"/>
+	<result column="UPLOADDATE" property="attachfiledto.uploaddate"/>
+	<result column="FILEPATH" property="attachfiledto.filepath"/>
+</resultMap>
+
+<!-- $공지 게시판$ -->
+
+<!-- 공지 게시판 전체글 조회 -->
+<select id="notiAll" resultType="joinNotiQuestion">
 	SELECT ADMINSEQ, NICKNAME, TITLE, CONTENT, TO_CHAR(WRITEDATE, 'YYYY-MM-DD') AS "WRITEDATE",  BOARDTYPE,
 		ROW_NUMBER() OVER (ORDER BY ADMINSEQ DESC) AS "ROWNUM"
 		FROM NOTIQUESTION n1 JOIN NAEMEMBER n2
@@ -10,10 +31,11 @@
 		WHERE BOARDTYPE = 'G' 
 </select>
 
-<select id="searchNoti" parameterType="java.lang.String" resultType="NQDto">
+<!-- 공지 게시판 게시글 조회 -->
+<select id="searchNoti" parameterType="java.lang.String" resultType="joinNotiQuestion">
 	SELECT n1.ADMINSEQ, NICKNAME, TITLE, 
 			CONTENT, TO_CHAR(WRITEDATE, 'YYYY-MM-DD') AS "WRITEDATE", BOARDTYPE, 
-			a.USERFILE, DELFLAG
+			a.USERFILE, a.FILESIZE, DELFLAG
 		FROM NOTIQUESTION n1 JOIN NAEMEMBER n2
 		ON n1.MEMBERSEQ = n2.MEMBERSEQ
 		JOIN ATTACHFILE a
@@ -21,21 +43,107 @@
 		WHERE BOARDTYPE = 'G' AND n1.ADMINSEQ =#{adminseq}
 </select>
 
+<!-- 공지 게시판 게시글 입력 -->
 <insert id="insertNoti" parameterType="NQDto">
 	INSERT INTO NOTIQUESTION
 	(ADMINSEQ, TITLE, CONTENT, WRITEDATE, DELFLAG, REFERENCE, BOARDTYPE, MEMBERSEQ)
 	VALUES(ADMINSEQ.NEXTVAL, #{title}, #{content}, SYSDATE, 'N', 0, 'G', #{memberseq})
 </insert>
 
+<!-- 공지 게시판 게시글 수정 -->
 <update id="modifyNoti" parameterType="NQDto">
 	UPDATE NOTIQUESTION SET TITLE = #{title}, CONTENT = #{content}, WRITEDATE=SYSDATE 
 	WHERE ADMINSEQ=#{adminseq}
 </update>
 
+<!-- 공지 게시판 게시글 삭제 -->
 <update id="deleteNoti" parameterType="java.util.Map">
 UPDATE NOTIQUESTION SET DELFLAG = 'Y'
+	WHERE DELFLAG = 'N'
+		AND SEQ IN
+		<foreach collection="seq_" item="adminseq" open="(" separator="," close=")">
+		#{adminseq}
+		</foreach>
+</update>
+
+<!-- 공지 게시판 파일 첨부 -->
+<insert id="insertFile" parameterType="AFDto">
+INSERT INTO ATTACHFILE
+(FILESEQ, USERFILE, SEARCHFILE, FILESIZE, UPLOADDATE, FILEPATH, ADMINSEQ, MEMBERSEQ)
+VALUES(FILESEQ.NEXTVAL, #{userfile}, #{searchfile}, #{filesize}, SYSDATE, #{filepath}, ADMINSEQ.CURRVAL, #{memberseq})
+</insert>
+
+<!-- 공지 게시판 파일 수정 -->
+<update id="modifyFile">
+UPDATE ATTACHFILE SET USERFILE=#{userfile}, SEARCHFILE=#{searchfile}, FILESIZE=#{filesize}, UPLOADDATE=SYSDATE, FILEPATH=#{filepath}
 	WHERE ADMINSEQ=#{adminseq}
 </update>
 
+
+<!-- $문의 게시판$ -->
+
+<!-- 1:1 문의 게시판 전체 조회 (관리자) -->
+<select id="searchOneToOne" parameterType="java.lang.String" resultType="joinNotiQuestion">
+SELECT ADMINSEQ, NICKNAME, TITLE, CONTENT, TO_CHAR(WRITEDATE, 'YYYY-MM-DD') AS "WRITEDATE",  n2.MEMBERSEQ, BOARDTYPE, DELFLAG, REFERENCE, 
+		ROW_NUMBER() OVER (ORDER BY REFERENCE DESC, ADMINSEQ ASC) AS "ROWNUM"
+		FROM NOTIQUESTION n1 JOIN NAEMEMBER n2
+		ON n1.MEMBERSEQ = n2.MEMBERSEQ
+		WHERE BOARDTYPE = 'M'
+</select>
+
+<!-- 1:1 문의 게시판 전체 조회 (사용자) -->
+<select id="allOneToOneU" parameterType="java.lang.String" resultType="joinNotiQuestion">
+SELECT REFERENCE, ADMINSEQ, TITLE, CONTENT, TO_CHAR(WRITEDATE, 'YYYY-MM-DD') AS "WRITEDATE", MEMBERSEQ, BOARDTYPE, DELFLAG
+FROM NOTIQUESTION n1 JOIN
+(SELECT REFERENCE 
+ FROM NOTIQUESTION
+ 	WHERE BOARDTYPE ='M' AND MEMBERSEQ =#{memberseq}
+ 	GROUP BY(REFERENCE)) n2
+ 	USING(REFERENCE)
+ 	ORDER BY REFERENCE DESC, ADMINSEQ ASC
+</select>
+
+<!-- 1:1 문의 게시판 게시글 조회 -->
+<select id="searchOneToOne" parameterType="java.lang.String" resultType="joinNotiQuestion">
+SELECT n1.ADMINSEQ, NICKNAME, TITLE, CONTENT, TO_CHAR(WRITEDATE, 'YYYY-MM-DD') AS "WRITEDATE",  BOARDTYPE, DELFLAG  
+	FROM NOTIQUESTION n1 JOIN NAEMEMBER n2
+						ON n1.MEMBERSEQ = n2.MEMBERSEQ
+		WHERE BOARDTYPE = 'M' AND n1.ADMINSEQ = #{adminseq}
+</select>
+
+<!-- 1:1 문의 게시판 게시글 입력 -->
+<insert id="insertOneToOne" parameterType="NQDto">
+INSERT INTO NOTIQUESTION
+(ADMINSEQ, TITLE, CONTENT, WRITEDATE, DELFLAG, REFERENCE, BOARDTYPE, MEMBERSEQ)
+VALUES(ADMINSEQ.NEXTVAL, #{title}, #{content}, SYSDATE, 'N', 0, 'M', #{memberseq});
+</insert>
+
+<!-- 1:1 문의 게시판 게시글 수정 -->
+<update id="modifyOneToOne" parameterType="NQDto">
+UPDATE NOTIQUESTION SET TITLE = #{title}, CONTENT = #{content}, WRITEDATE=SYSDATE
+	WHERE ADMINSEQ=#{adminseq};
+</update>
+
+<!-- 1:1 문의 게시판 게시글 삭제 -->
+<update id="deleteOneToOne"  parameterType="java.util.Map">
+UPDATE NOTIQUESTION SET DELFLAG = 'Y'
+	WHERE ADMINSEQ=#{adminseq};
+</update>
+
+<!-- 1:1 문의 게시판 답글 입력 -->
+<insert id="insertReply"  parameterType="NQDto">
+INSERT INTO NOTIQUESTION
+	(ADMINSEQ, TITLE, CONTENT, 
+	 WRITEDATE, DELFLAG, REFERENCE, 
+	 BOARDTYPE, MEMBERSEQ)
+VALUES(ADMINSEQ.NEXTVAL, #{title}, #{content}, 
+	   SYSDATE, 'N', (SELECT REFERENCE FROM NOTIQUESTION WHERE ADMINSEQ=#{adminseq}), 'M', #{memberseq});
+</insert>
+
+<!-- 1:1 문의 게시판 답글 수정 -->
+<update id="modifyReply"  parameterType="NQDto">
+UPDATE NOTIQUESTION SET TITLE = #{title}, CONTENT = #{content}, WRITEDATE=SYSDATE
+	WHERE ADMINSEQ=#{adminseq};
+</update>
 
 </mapper>
