@@ -22,68 +22,59 @@ public class FindingMentor_DaoImpl implements FindingMentor_IDao{
 
 	@Override
 	public boolean applyMentor(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
+		return session.update(NS+"applyMentor", map)>0?true:false;
 	}
 
 	@Override
 	public boolean applyMentorChk(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
+		int i = Integer.parseInt(session.selectOne(NS+"applyMentorChk", map));
+		return i==0?true:false;
 	}
 
 	@Override
 	public boolean reportCntUpdate(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
+		return session.update(NS+"reportCntUpdate", map)>0?true:false;
 	}
 
 	@Override
 	public boolean reportUserUpdate(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
+		return session.update(NS+"reportUserUpdate", map)>0?true:false;
 	}
 
 	@Override
 	public boolean reportContentChk(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
+		int i = Integer.parseInt(session.selectOne(NS+"reportContentChk", map));
+		return i==0?true:false;
 	}
 
 	@Override
 	public boolean insertContent(FindingMentorDto dto) {
-		// TODO Auto-generated method stub
-		return false;
+		return session.insert(NS+"insertContent", dto)>0?true:false;
 	}
 
 	@Override
 	public FindingMentorDto modifyContentSelect(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return null;
+		return session.selectOne(NS+"modifyContentSelect", map);
 	}
 
 	@Override
 	public boolean modifyContent(FindingMentorDto dto) {
-		// TODO Auto-generated method stub
-		return false;
+		return session.update(NS+"modifyContent", dto)>0?true:false;
 	}
 
 	@Override
 	public boolean deleteContent(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
+		return session.update(NS+"deleteContent", map)>0?true:false;
 	}
 
 	@Override
 	public boolean multidelContent(Map<String, String[]> map) {
-		// TODO Auto-generated method stub
-		return false;
+		return session.update(NS+"multidelContent", map)>0?true:false;
 	}
 
 	@Override
 	public boolean matching(MatchingDto dto) {
-		// TODO Auto-generated method stub
-		return false;
+		return session.insert(NS+"matching", dto)>0?true:false;
 	}
 
 	@Override

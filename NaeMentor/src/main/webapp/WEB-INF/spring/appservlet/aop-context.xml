@@ -8,7 +8,7 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
 <bean id="aopLogger" class="com.min.naementor.spring.aop.AOP_Logger"></bean>
-	<tx:annotation-driven transaction-manager="transactionManager"/>
+<tx:annotation-driven transaction-manager="transactionManager"/>
 	
 <aop:config>
 	<aop:pointcut expression="execution(public * com.min.naementor.spring.model.*.*Dao*.*(..))" id="daoPoint"/>
