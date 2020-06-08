@@ -1,4 +1,106 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.min.naementor.findingmentor">
+
+<!-- 멘토찾기 게시판 -->
+<!-- 게시글 상세조회 -->
+<select id="detailContent" parameterType="java.util.Map" resultType="FMDto">
+	SELECT METORLIST ,BOARDSEQ, TITLE, CONTENT, WRITESDATE, 
+			REPORTCNT, SPECIALFIELD, TARGET, MENTEELEVEL, HOWTO, 
+			LOCATION, DELFLAG, MEMBERSEQ, FINDREPORTER
+	FROM FINDINGMENTOR 
+	WHERE f.BOARDSEQ = #{memberseq} AND DELFLAG ='N'
+</select>
+
+<!-- 멘토링 신청 -->
+<!-- 1. 멘토중복지원방지 -->
+<select id="applyMentorChk" parameterType="java.util.Map" resultType="java.lang.String">
+	SELECT INSTR((SELECT METORLIST FROM FINDINGMENTOR f WHERE BOARDSEQ =#{boardseq}), ',#{memberseq},') AS BOOL 
+	FROM DUAL
+</select>
+<!-- 2. 멘토링 신청 -->
+<update id="applyMentor" parameterType="java.util.Map">
+	UPDATE FINDINGMENTOR
+	SET METORLIST= CONCAT(METORLIST,'#{memberseq},')
+	WHERE BOARDSEQ=#{boardseq}
+</update>
+
+<!-- 게시글 신고 -->
+<!-- 1. 신고중복방지 -->
+<select id="reportContentChk" parameterType="java.util.Map" resultType="java.lang.String">
+	SELECT INSTR((SELECT FINDREPORTER FROM FINDINGMENTOR f WHERE BOARDSEQ =#{boardseq}),',#{memberseq},') AS BOOL 
+	FROM DUAL
+</select>
+<!-- 2. 게시글 신고자 명단 추가 -->
+<update id="reportUserUpdate">
+	UPDATE FINDINGMENTOR
+	SET FINDREPORTER= CONCAT(FINDREPORTER,'#{memberseq},')
+	WHERE BOARDSEQ=#{boardseq}
+</update>
+<!-- 3. 게시글 신고 카운트 증가 -->
+<update id="reportCntUpdate">
+	UPDATE FINDINGMENTOR SET REPORTCNT = REPORTCNT +1 WHERE BOARDSEQ = #{boardseq}
+</update>
+
+<!-- 멘토찾기 글입력 -->
+<insert id="insertContent" parameterType="FMDto">
+	INSERT INTO FINDINGMENTOR
+	(BOARDSEQ, TITLE, CONTENT, WRITESDATE, REPORTCNT, SPECIALFIELD, TARGET, MENTEELEVEL, HOWTO, LOCATION, DELFLAG, METORLIST, MEMBERSEQ)
+	VALUES(BOARDSEQ.NEXTVAL, #{title}, ${content}, SYSDATE, 0, #{specialfield}, #{target}, #{menteelevel}, #{howto}, #{location}, 'N', '0,', #{memberseq})
+</insert>
+
+<!-- 게시글 수정 -->
+<!-- 1. 불러오기 -->
+<select id="modifyContentSelect" parameterType="java.util.Map" resultType="FMDto">
+	SELECT BOARDSEQ , CONTENT , WRITESDATE , SPECIALFIELD,
+  			TARGET ,MENTEELEVEL ,HOWTO ,LOCATION , METORLIST , MEMBERSEQ 
+	FROM FINDINGMENTOR f
+	WHERE BOARDSEQ =#{boardseq} AND DELFLAG ='N'
+</select>
+<!-- 2. 수정하기 -->
+<update id="modifyContent" parameterType="FMDto">
+	UPDATE FINDINGMENTOR SET WRITESDATE=SYSDATE
+		<if test="content != null">
+		,CONTENT=#{content}
+		</if>
+		<if test="specialfield != null">
+		, SPECIALFIELD =#{specialfield}
+		</if>
+		<if test="target != null">
+		, TARGET=#{target}
+		</if>
+		<if test="menteelevel != null">
+		, MENTEELEVEL=#{menteelevel}
+		</if>
+		<if test="howto != null">
+		, HOWTO=#{howto}
+		</if>
+		<if test="location != null">
+		, LOCATION=#{location}
+		</if>
+  		WHERE BOARDSEQ = #{boardseq}
+</update>
+
+<!-- 게시글 삭제 -->
+<!-- 1. 단일 삭제 -->
+<update id="deleteContent" parameterType="java.util.Map">
+	UPDATE FINDINGMENTOR SET DELFLAG ='Y'
+ 	WHERE BOARDSEQ = #{boardseq} AND MEMBERSEQ = #{memberseq}
+</update>
+<!-- 2. 다중 삭제 -->
+<update id="multidelContent" parameterType="java.util.Map">
+	UPDATE FINDINGMENTOR SET DELFLAG ='N'
+ 	WHERE MEMBERSEQ = #{memberseq} AND BOARDSEQ IN
+ 	<foreach collection="_boardseq" item="boardseq" open="(" separator="," close=")">
+ 		#{boardseq}
+ 	</foreach>
+</update>
+
+<!-- 멘토 선택(Matching게시판 insert) -->
+<insert id="matching" parameterType="MTDto">
+	INSERT INTO MATCHING(BOARDSEQ, MENTEESEQ, MENTORSEQ, MATCHINGDATE, PAYFLAG)
+	VALUES(#{boardseq}, #{menteeseq}, #{mentorseq}, SYSDATE, 'N')
+</insert>
+
+
 </mapper>
