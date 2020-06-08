@@ -20,12 +20,14 @@ public class FindingMentorDto implements Serializable{
 	private String memberseq;
 	private String findreporter;
 	
+	private NaememberDto naememberdto;
+
 	public FindingMentorDto() {
 	}
-
+	
 	public FindingMentorDto(String boardseq, String title, String content, String writesdate, String reportcnt,
 			String specialfield, String target, String menteelevel, String howto, String location, String delflag,
-			String mentorlist, String memberseq, String findreporter) {
+			String mentorlist, String memberseq, String findreporter, NaememberDto naememberdto) {
 		super();
 		this.boardseq = boardseq;
 		this.title = title;
@@ -41,15 +43,16 @@ public class FindingMentorDto implements Serializable{
 		this.mentorlist = mentorlist;
 		this.memberseq = memberseq;
 		this.findreporter = findreporter;
+		this.naememberdto = naememberdto;
 	}
 
 	@Override
 	public String toString() {
-		return "FindingmentorDto [boardseq=" + boardseq + ", title=" + title + ", content=" + content + ", writesdate="
+		return "FindingMentorDto [boardseq=" + boardseq + ", title=" + title + ", content=" + content + ", writesdate="
 				+ writesdate + ", reportcnt=" + reportcnt + ", specialfield=" + specialfield + ", target=" + target
 				+ ", menteelevel=" + menteelevel + ", howto=" + howto + ", location=" + location + ", delflag="
 				+ delflag + ", mentorlist=" + mentorlist + ", memberseq=" + memberseq + ", findreporter=" + findreporter
-				+ "]";
+				+ ", naememberdto=" + naememberdto + "]";
 	}
 
 	public String getBoardseq() {
@@ -163,8 +166,14 @@ public class FindingMentorDto implements Serializable{
 	public void setFindreporter(String findreporter) {
 		this.findreporter = findreporter;
 	}
-	
-	
+
+	public NaememberDto getNaememberdto() {
+		return naememberdto;
+	}
+
+	public void setNaememberdto(NaememberDto naememberdto) {
+		this.naememberdto = naememberdto;
+	}
 	
 	
 	

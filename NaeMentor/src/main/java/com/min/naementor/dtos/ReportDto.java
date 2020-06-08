@@ -12,11 +12,13 @@ public class ReportDto implements Serializable{
 	private String reviewseq		;
 	private String boardseq		;
 	
+	private ReviewDto reviewdto;
+	
 	public ReportDto() {
 	}
 
 	public ReportDto(String singomember, String singoedmember, String singoreason, String singochk, String reviewseq,
-			String boardseq) {
+			String boardseq, ReviewDto reviewdto) {
 		super();
 		this.singomember = singomember;
 		this.singoedmember = singoedmember;
@@ -24,12 +26,14 @@ public class ReportDto implements Serializable{
 		this.singochk = singochk;
 		this.reviewseq = reviewseq;
 		this.boardseq = boardseq;
+		this.reviewdto = reviewdto;
 	}
 
 	@Override
 	public String toString() {
 		return "ReportDto [singomember=" + singomember + ", singoedmember=" + singoedmember + ", singoreason="
-				+ singoreason + ", singochk=" + singochk + ", reviewseq=" + reviewseq + ", boardseq=" + boardseq + "]";
+				+ singoreason + ", singochk=" + singochk + ", reviewseq=" + reviewseq + ", boardseq=" + boardseq
+				+ ", reviewdto=" + reviewdto + "]";
 	}
 
 	public String getSingomember() {
@@ -79,8 +83,15 @@ public class ReportDto implements Serializable{
 	public void setBoardseq(String boardseq) {
 		this.boardseq = boardseq;
 	}
+
+	public ReviewDto getReviewdto() {
+		return reviewdto;
+	}
+
+	public void setReviewdto(ReviewDto reviewdto) {
+		this.reviewdto = reviewdto;
+	}
 	
-
-
+	
 
 }

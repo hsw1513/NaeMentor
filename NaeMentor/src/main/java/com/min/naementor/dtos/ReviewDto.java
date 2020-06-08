@@ -13,11 +13,13 @@ public class ReviewDto implements Serializable{
 	private String mentorstar;
 	private String menteestar;
 	
+	private MatchingDto matchingdto;
+	
 	public ReviewDto() {
 	}
 
 	public ReviewDto(String reviewseq, String boardseq, String content, String writedate, String delflag,
-			String mentorstar, String menteestar) {
+			String mentorstar, String menteestar, MatchingDto matchingdto) {
 		super();
 		this.reviewseq = reviewseq;
 		this.boardseq = boardseq;
@@ -26,13 +28,14 @@ public class ReviewDto implements Serializable{
 		this.delflag = delflag;
 		this.mentorstar = mentorstar;
 		this.menteestar = menteestar;
+		this.matchingdto = matchingdto;
 	}
 
 	@Override
 	public String toString() {
 		return "ReviewDto [reviewseq=" + reviewseq + ", boardseq=" + boardseq + ", content=" + content + ", writedate="
 				+ writedate + ", delflag=" + delflag + ", mentorstar=" + mentorstar + ", menteestar=" + menteestar
-				+ "]";
+				+ ", matchingdto=" + matchingdto + "]";
 	}
 
 	public String getReviewseq() {
@@ -90,6 +93,15 @@ public class ReviewDto implements Serializable{
 	public void setMenteestar(String menteestar) {
 		this.menteestar = menteestar;
 	}
+
+	public MatchingDto getMatchingdto() {
+		return matchingdto;
+	}
+
+	public void setMatchingdto(MatchingDto matchingdto) {
+		this.matchingdto = matchingdto;
+	}
+
 	
 	
 }

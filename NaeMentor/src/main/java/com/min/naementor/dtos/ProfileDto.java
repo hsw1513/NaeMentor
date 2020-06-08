@@ -18,13 +18,15 @@ public class ProfileDto implements Serializable {
 	private String mentoaccstar;
 	private String filechk     ;
 	
+	private ProfileDto profiledto;
+	
 	public ProfileDto() {
-		super();
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public ProfileDto(String memberseq, String photo, String school, String major, String career, String certificate,
-			String specialfield, String pmdate, String mentorcnt, String mentoaccstar, String filechk) {
+			String specialfield, String pmdate, String mentorcnt, String mentoaccstar, String filechk,
+			ProfileDto profiledto) {
 		super();
 		this.memberseq = memberseq;
 		this.photo = photo;
@@ -37,83 +39,112 @@ public class ProfileDto implements Serializable {
 		this.mentorcnt = mentorcnt;
 		this.mentoaccstar = mentoaccstar;
 		this.filechk = filechk;
+		this.profiledto = profiledto;
 	}
-	
-	public String getMemberseq() {
-		return memberseq;
-	}
-	public void setMemberseq(String memberseq) {
-		this.memberseq = memberseq;
-	}
-	public String getPhoto() {
-		return photo;
-	}
-	public void setPhoto(String photo) {
-		this.photo = photo;
-	}
-	public String getSchool() {
-		return school;
-	}
-	public void setSchool(String school) {
-		this.school = school;
-	}
-	public String getMajor() {
-		return major;
-	}
-	public void setMajor(String major) {
-		this.major = major;
-	}
-	public String getCareer() {
-		return career;
-	}
-	public void setCareer(String career) {
-		this.career = career;
-	}
-	public String getCertificate() {
-		return certificate;
-	}
-	public void setCertificate(String certificate) {
-		this.certificate = certificate;
-	}
-	public String getSpecialfield() {
-		return specialfield;
-	}
-	public void setSpecialfield(String specialfield) {
-		this.specialfield = specialfield;
-	}
-	public String getPmdate() {
-		return pmdate;
-	}
-	public void setPmdate(String pmdate) {
-		this.pmdate = pmdate;
-	}
-	public String getMentorcnt() {
-		return mentorcnt;
-	}
-	public void setMentorcnt(String mentorcnt) {
-		this.mentorcnt = mentorcnt;
-	}
-	public String getMentoaccstar() {
-		return mentoaccstar;
-	}
-	public void setMentoaccstar(String mentoaccstar) {
-		this.mentoaccstar = mentoaccstar;
-	}
-	public String getFilechk() {
-		return filechk;
-	}
-	public void setFilechk(String filechk) {
-		this.filechk = filechk;
-	}
-	
+
 	@Override
 	public String toString() {
 		return "ProfileDto [memberseq=" + memberseq + ", photo=" + photo + ", school=" + school + ", major=" + major
 				+ ", career=" + career + ", certificate=" + certificate + ", specialfield=" + specialfield + ", pmdate="
-				+ pmdate + ", mentorcnt=" + mentorcnt + ", mentoaccstar=" + mentoaccstar + ", filechk=" + filechk + "]";
+				+ pmdate + ", mentorcnt=" + mentorcnt + ", mentoaccstar=" + mentoaccstar + ", filechk=" + filechk
+				+ ", profiledto=" + profiledto + "]";
 	}
-	
-	
+
+	public String getMemberseq() {
+		return memberseq;
+	}
+
+	public void setMemberseq(String memberseq) {
+		this.memberseq = memberseq;
+	}
+
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+
+	public String getSchool() {
+		return school;
+	}
+
+	public void setSchool(String school) {
+		this.school = school;
+	}
+
+	public String getMajor() {
+		return major;
+	}
+
+	public void setMajor(String major) {
+		this.major = major;
+	}
+
+	public String getCareer() {
+		return career;
+	}
+
+	public void setCareer(String career) {
+		this.career = career;
+	}
+
+	public String getCertificate() {
+		return certificate;
+	}
+
+	public void setCertificate(String certificate) {
+		this.certificate = certificate;
+	}
+
+	public String getSpecialfield() {
+		return specialfield;
+	}
+
+	public void setSpecialfield(String specialfield) {
+		this.specialfield = specialfield;
+	}
+
+	public String getPmdate() {
+		return pmdate;
+	}
+
+	public void setPmdate(String pmdate) {
+		this.pmdate = pmdate;
+	}
+
+	public String getMentorcnt() {
+		return mentorcnt;
+	}
+
+	public void setMentorcnt(String mentorcnt) {
+		this.mentorcnt = mentorcnt;
+	}
+
+	public String getMentoaccstar() {
+		return mentoaccstar;
+	}
+
+	public void setMentoaccstar(String mentoaccstar) {
+		this.mentoaccstar = mentoaccstar;
+	}
+
+	public String getFilechk() {
+		return filechk;
+	}
+
+	public void setFilechk(String filechk) {
+		this.filechk = filechk;
+	}
+
+	public ProfileDto getProfiledto() {
+		return profiledto;
+	}
+
+	public void setProfiledto(ProfileDto profiledto) {
+		this.profiledto = profiledto;
+	}
 	
 	
 	

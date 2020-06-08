@@ -15,11 +15,16 @@ public class NotiQuestionDto implements Serializable {
 	private String boardtype;
 	private String memberseq;
 	
+	private NaememberDto namemberdto;
+	private AttachFileDto attachfiledto;
+	
 	public NotiQuestionDto() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public NotiQuestionDto(String adminseq, String title, String content, String writedate, String delflag,
-			String reference, String boardtype, String memberseq) {
+			String reference, String boardtype, String memberseq, NaememberDto namemberdto,
+			AttachFileDto attachfiledto) {
 		super();
 		this.adminseq = adminseq;
 		this.title = title;
@@ -29,13 +34,16 @@ public class NotiQuestionDto implements Serializable {
 		this.reference = reference;
 		this.boardtype = boardtype;
 		this.memberseq = memberseq;
+		this.namemberdto = namemberdto;
+		this.attachfiledto = attachfiledto;
 	}
 
 	@Override
 	public String toString() {
-		return "notiquestionDto [adminseq=" + adminseq + ", title=" + title + ", content=" + content + ", writedate="
+		return "NotiQuestionDto [adminseq=" + adminseq + ", title=" + title + ", content=" + content + ", writedate="
 				+ writedate + ", delflag=" + delflag + ", reference=" + reference + ", boardtype=" + boardtype
-				+ ", memberseq=" + memberseq + "]";
+				+ ", memberseq=" + memberseq + ", namemberdto=" + namemberdto + ", attachfiledto=" + attachfiledto
+				+ "]";
 	}
 
 	public String getAdminseq() {
@@ -101,6 +109,23 @@ public class NotiQuestionDto implements Serializable {
 	public void setMemberseq(String memberseq) {
 		this.memberseq = memberseq;
 	}
+
+	public NaememberDto getNamemberdto() {
+		return namemberdto;
+	}
+
+	public void setNamemberdto(NaememberDto namemberdto) {
+		this.namemberdto = namemberdto;
+	}
+
+	public AttachFileDto getAttachfiledto() {
+		return attachfiledto;
+	}
+
+	public void setAttachfiledto(AttachFileDto attachfiledto) {
+		this.attachfiledto = attachfiledto;
+	}
+	
 	
 	
 	
