@@ -1,4 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.min.naementor.review">
+		
+	<resultMap type="com.min.naementor.dtos.ReviewDto" id="viewMentor">
+		<result column="MENTORSTAR" property="mentorstar"/>
+		<result column="CONTENT" property="content"/>
+		<result column="WRITEDATE" property="writedate"/>
+		<result column="MENTOACCSTAR" property="matchingdto.findingmentordto.naememberdto.profile.mentoaccstar"/>
+		<result column="MENTORCNT" property="matchingdto.findingmentordto.naememberdto.profile.mentorcnt"/>
+	</resultMap>
+	<resultMap type="com.min.naementor.dtos.ReviewDto" id="viewMentee">
+		<result column="MENTEESTAR" property="menteestar"/>
+		<result column="CONTENT" property="content"/>
+		<result column="WRITEDATE" property="writedate"/>
+		<result column="MENTEEACCSTAR" property="matchingdto.findingmentordto.naememberdto.profile.menteeaccstar"/>
+		<result column="MENTEECNT" property="matchingdto.findingmentordto.naememberdto.profile.menteecnt"/>
+	</resultMap>
+		
+<!-- 멘토의 별점과 후기만 조회 가능  -->
+	<select id="searchMStar" parameterType="java.lang.String">
+		SELECT r.MENTORSTAR, r.CONTENT, r.WRITEDATE, p.MENTOACCSTAR, p.MENTORCNT 
+		FROM REVIEW r 
+		JOIN MATCHING m ON r.BOARDSEQ = m.BOARDSEQ
+		JOIN PROFILE p ON m.MENTORSEQ = p.MEMBERSEQ
+		WHERE m.MENTORSEQ = #{mentorseq}
+	</select>
+<!-- 멘티 본인의 후기는 조회 불가  -->
+	<select id="denyMSearch" parameterType="java.lang.String">
+		SELECT r.MENTEESTAR , r.CONTENT, r.WRITEDATE, p.MENTEEACCSTAR , p.MENTEECNT 
+		FROM REVIEW r 
+		JOIN MATCHING m ON r.BOARDSEQ = m.BOARDSEQ
+		JOIN NAEMEMBER p ON m.MENTEESEQ = p.MEMBERSEQ
+		WHERE m.MENTEESEQ = #{menteeseq}
+	</select>
+<!-- 멘토링 종료 후 3일간 공고글 에서 입력(작성자, 멘토링 상대, 작성일, 멘토링 날짜, 내용, 별점 입력)  -->
+	<insert id="insertSchedule" parameterType="MSDto">
+		INSERT INTO REVIEW
+		(REVIEWSEQ, BOARDSEQ, CONTENT, WRITEDATE, DELFLAG, MENTORSTAR, MENTEESTAR)
+		VALUES(REVIEWSEQ.NEXTVAL, #{boardseq}, #{content}, SYSDATE, 'N', #{mentorstar}, #{menteestar});
+	</insert>
 </mapper>

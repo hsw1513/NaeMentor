@@ -85,6 +85,9 @@
 			</c:forEach>
 		</table>
 	</div>
+	<div>
+		<h1><a href="./review.do">후기게시판 이동</a></h1>
+	</div>
 </div>
 <%@include file="/WEB-INF/views/footer.jsp"%>
 </body>
