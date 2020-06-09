@@ -77,4 +77,6 @@ public interface FindingMentor_IService {
 	 * @return 멘토의 닉네임과 회원번호
 	 */
 	public List<NaememberDto> chkMentor(Map<String, String[]> map);
+	
+	
 }

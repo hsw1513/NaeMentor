@@ -81,7 +81,11 @@ public class FindingMentor_ServiceImpl implements FindingMentor_IService{
 	@Override
 	public boolean matching(MatchingDto dto) {
 		log.info("matching {}",dto);
-		return dao.matching(dto);
+		if(dao.updateMatching(dto.getBoardseq())) {
+			return dao.matching(dto);
+		}else {
+			return false;
+		}
 	}
 
 	@Override

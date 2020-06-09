@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,6 +42,23 @@
 		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		xhr.send("memberseq="+${detail.memberseq}+"&boardseq="+${detail.boardseq});
 	}
+	function matching(title, name){
+// 		alert(title);
+		// 회원정보 보여주기
+		// 컨펌
+		if(confirm(name+"님과 멘토링을 진행하시겠습니까?")){
+			let info = "boardseq="+${detail.boardseq}+"&mentorseq="+title.trim();
+// 			alert(info);
+			xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = callback
+			xhr.open("POST","./matching.do");
+			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			xhr.send(info);
+			
+		}else{
+			alert("취소되었습니다.");
+		}
+	}
 </script>
 <body>
 <%@include file="/WEB-INF/views/topMenu.jsp"%>
@@ -59,7 +77,14 @@
 	<button onclick="javascript:history.back(-1)">뒤로가기</button>
 	<button onclick="report()">신고하기</button>
 	<button onclick="applyMentor()">멘토링 신청</button>
-	<button onclick="matching()">멘토 수락</button>
+	<div>
+		<h1>신청한 멤버수</h1>
+		<table>
+			<c:forEach var="memtors" items="${findMentor}">
+			<tr><td><a onclick="matching(this.title, this.name)" name="${memtors.nickname}" title="${memtors.memberseq}">${memtors.nickname}</a></td></tr>
+			</c:forEach>
+		</table>
+	</div>
 </div>
 <%@include file="/WEB-INF/views/footer.jsp"%>
 </body>
