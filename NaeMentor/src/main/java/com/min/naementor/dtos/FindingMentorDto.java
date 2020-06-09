@@ -19,15 +19,16 @@ public class FindingMentorDto implements Serializable{
 	private String mentorlist;
 	private String memberseq;
 	private String findreporter;
+	private String matchingchk;
 	
 	private NaememberDto naememberdto;
 
 	public FindingMentorDto() {
 	}
-	
+
 	public FindingMentorDto(String boardseq, String title, String content, String writesdate, String reportcnt,
 			String specialfield, String target, String menteelevel, String howto, String location, String delflag,
-			String mentorlist, String memberseq, String findreporter, NaememberDto naememberdto) {
+			String mentorlist, String memberseq, String findreporter, String matchingchk, NaememberDto naememberdto) {
 		super();
 		this.boardseq = boardseq;
 		this.title = title;
@@ -43,6 +44,7 @@ public class FindingMentorDto implements Serializable{
 		this.mentorlist = mentorlist;
 		this.memberseq = memberseq;
 		this.findreporter = findreporter;
+		this.matchingchk = matchingchk;
 		this.naememberdto = naememberdto;
 	}
 
@@ -52,7 +54,7 @@ public class FindingMentorDto implements Serializable{
 				+ writesdate + ", reportcnt=" + reportcnt + ", specialfield=" + specialfield + ", target=" + target
 				+ ", menteelevel=" + menteelevel + ", howto=" + howto + ", location=" + location + ", delflag="
 				+ delflag + ", mentorlist=" + mentorlist + ", memberseq=" + memberseq + ", findreporter=" + findreporter
-				+ ", naememberdto=" + naememberdto + "]";
+				+ ", matchingchk=" + matchingchk + ", naememberdto=" + naememberdto + "]";
 	}
 
 	public String getBoardseq() {
@@ -165,6 +167,14 @@ public class FindingMentorDto implements Serializable{
 
 	public void setFindreporter(String findreporter) {
 		this.findreporter = findreporter;
+	}
+
+	public String getMatchingchk() {
+		return matchingchk;
+	}
+
+	public void setMatchingchk(String matchingchk) {
+		this.matchingchk = matchingchk;
 	}
 
 	public NaememberDto getNaememberdto() {
