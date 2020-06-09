@@ -112,9 +112,11 @@ ORDER BY BOARDSEQ DESC
 <select id="chkMentor" parameterType="java.util.Map" resultType="java.lang.String">
 	SELECT NICKNAME FROM NAEMEMBER
 	<where>
-		MEMBERSE IN
+		MEMBERSEQ IN
 		<foreach collection="_memberseq" item="memberseq" open="(" separator="," close=")">
+			<if test="memberseq != ''">
 			#{memberseq}
+			</if>
 		</foreach>
 	</where>
 </select>

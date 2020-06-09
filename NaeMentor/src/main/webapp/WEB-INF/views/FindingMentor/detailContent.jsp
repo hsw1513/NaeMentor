@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -59,7 +60,15 @@
 	<button onclick="javascript:history.back(-1)">뒤로가기</button>
 	<button onclick="report()">신고하기</button>
 	<button onclick="applyMentor()">멘토링 신청</button>
-	<button onclick="matching()">멘토 수락</button>
+	<div>
+		<h1>신청한 멤버수</h1>
+		<table>
+			<c:forEach var="memtors" items="${findMentor}">
+			<tr><td>${memtors}</td></tr>
+			</c:forEach>
+		</table>
+		<button onclick="matching()">멘토 수락</button>
+	</div>
 </div>
 <%@include file="/WEB-INF/views/footer.jsp"%>
 </body>

@@ -1,5 +1,6 @@
 package com.min.naementor.spring.controllers;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.min.naementor.dtos.FindingMentorDto;
+import com.min.naementor.spring.comm.SplitUserComm;
 import com.min.naementor.spring.model.findingMentor.FindingMentor_IService;
 
 @Controller
@@ -31,11 +33,17 @@ public class FindingMentor_CTRL {
 		return "FindingMentor/FindingMentor_board";
 	}
 	@RequestMapping(value = "detailContent.do", method = RequestMethod.GET)
-	public String detailContent(Model model, String memberseq, String boardseq) {
+	public String detailContent(Model model, String memberseq, String boardseq , SplitUserComm comm) {
 		log.info("{}, {}",memberseq, boardseq);
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("boardseq", boardseq);
-		model.addAttribute("detail", service.detailContent(map));
+		FindingMentorDto dto = service.detailContent(map);
+		String[] _memberseq = comm.splitId(dto.getMentorlist());
+		System.out.println(Arrays.toString(_memberseq)+"--------------------------------------------------------------------------");
+		Map<String, String[]> map2 = new HashMap<String, String[]>();
+		map2.put("_memberseq", _memberseq);
+		model.addAttribute("findMentor", service.chkMentor(map2));
+		model.addAttribute("detail", dto);
 		return "FindingMentor/detailContent";
 	}
 	@RequestMapping("deleteContent.do")
@@ -66,7 +74,8 @@ public class FindingMentor_CTRL {
 	}
 	@RequestMapping(value="reportContentChk.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String reportContentChk(String memberseq, String boardseq, HttpServletResponse res) {
+	public String reportContentChk( String boardseq, HttpServletResponse res) {
+		String memberseq = "1";
 		log.info("{}, {}",memberseq,boardseq);
 		res.setContentType("text/html; charset=utf-8");
 		Map<String, String> map = new HashMap<String, String>();
@@ -94,6 +103,7 @@ public class FindingMentor_CTRL {
 			return "false";
 		}
 	}
+	
 	
 	
 	
