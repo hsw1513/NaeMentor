@@ -9,7 +9,7 @@
 								BIRTHDAY, GENDER, AUTH, USERSTATUS, MENTORTIER, LOGINCNT, 
 								REPORTCNT, JOINDATE, MENTEECNT, MENTEEACCSTAR, BYEBYE)
 			VALUES(MEMBERSEQ.NEXTVAL, #{email}, #{password}, #{nickname}, #{introduce}, #{phone}, 
-					#{birthday}, #{gender}, 'E', 'A', '', 0, 
+					#{birthday}, #{gender}, 'ROLE_E', 'A', '', 0, 
 						0, SYSDATE, 0, 0, 'N')
 	</insert>
 	
@@ -76,7 +76,7 @@
 	</resultMap>
 	
 	<!-- 암호화 로그인 -->
-	<select id="encLogin" parameterType="java.util.Map" resultMap="joinEncLogin">
+	<select id="encLogin" parameterType="java.lang.String" resultMap="joinEncLogin">
 		SELECT p.MEMBERSEQ , EMAIL, PASSWORD , NICKNAME , 
 		  	 INTRODUCE , PHONE , BIRTHDAY ,
 		  	 GENDER , AUTH , USERSTATUS ,

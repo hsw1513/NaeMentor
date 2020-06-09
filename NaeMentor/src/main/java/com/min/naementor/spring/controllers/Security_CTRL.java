@@ -23,12 +23,9 @@ public class Security_CTRL implements UserDetailsService {
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Map<String, Object> map = new HashMap<String, Object>();
-		// username : 사용자가 입력한 아이디 값
-		map.put(username, username);
 		
 		// 유저의 비밀번호, 권한이 담긴 dto 생성
-		NaememberDto dto = service.encLogin(map);
+		NaememberDto dto = service.encLogin(username);
 		
 		// 유저의 권한을 담는 객체
 		Collection<SimpleGrantedAuthority> roles = new ArrayList<SimpleGrantedAuthority>();

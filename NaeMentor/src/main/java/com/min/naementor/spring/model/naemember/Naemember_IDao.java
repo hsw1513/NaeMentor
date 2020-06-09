@@ -49,7 +49,7 @@ public interface Naemember_IDao {
 	 * @param 로그인 정보 값(email)
 	 * @return 로그인 한 회원의 정보 값
 	 */
-	public NaememberDto encLogin(Map<String, Object> map);
+	public NaememberDto encLogin(String email);
 	
 	/**
 	 * 로그인 실패 시 로그인 시도 카운트 증가, 성공시 카운트 초기화(loginCount)
