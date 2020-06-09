@@ -46,7 +46,7 @@
 	</insert>
 	
 	
-	<resultMap type="com.min.naementor.dtos.ProfileDto" id="joinEncLogin">
+	<resultMap type="com.min.naementor.dtos.NaememberDto" id="joinEncLogin">
 		<result property="memberseq" column="MEMBERSEQ"/>
 		<result property="email" column="EMAIL"/>
 		<result property="password" column="PASSWORD"/>
@@ -76,7 +76,7 @@
 	</resultMap>
 	
 	<!-- 암호화 로그인 -->
-	<select id="encLogin" parameterType="java.lang.String" resultMap="joinEncLogin">
+	<select id="encLogin" parameterType="java.util.Map" resultMap="joinEncLogin">
 		SELECT p.MEMBERSEQ , EMAIL, PASSWORD , NICKNAME , 
 		  	 INTRODUCE , PHONE , BIRTHDAY ,
 		  	 GENDER , AUTH , USERSTATUS ,
@@ -90,7 +90,7 @@
 	</select>
 	
 	<!-- 로그인 실패시 로그인 시도 카운트 증가, 성공시 카운트 초기화 -->
-	<update id="loginCount" parameterType="java.lang.String">
+	<update id="loginCount" parameterType="java.util.Map">
 	  UPDATE NAEMEMBER 
 		SET LOGINCNT =
 			CASE WHEN EMAIL != #{email}
