@@ -28,33 +28,39 @@ public class Notiquestion_DaoImpl implements Notiquestion_IDao {
 	}
 
 	@Override
-	public boolean insertNoti(NotiQuestionDto dto) {
+	public int insertNoti(NotiQuestionDto dto) {
 		int n = sqlSession.insert(NS+"insertNoti", dto);
-		return (n>0)?true:false;
+		return n;
 	}
 
 	@Override
-	public boolean modifyNoti(NotiQuestionDto dto) {
+	public int modifyNoti(NotiQuestionDto dto) {
 		int n = sqlSession.update(NS+"modifyNoti", dto);
-		return (n>0)?true:false;
+		return n;
 	}
 
 	@Override
-	public boolean deleteNoti(Map<String, String[]> map) {
-		int n = sqlSession.update(NS+"deleteNoti", map);
-		return (n>0)?true:false;
+	public int deleteNoti(String adminseq) {
+		return sqlSession.update(NS+"deleteNoti", adminseq);
+	}
+	
+	@Override
+	public int multiDeleteNoti(Map<String, Object> adminseqs) {
+		return sqlSession.update(NS+"multiDeleteNoti", adminseqs);
 	}
 
+	
+	
 	@Override
-	public boolean insertFile(NotiQuestionDto dto) {
+	public int insertFile(NotiQuestionDto dto) {
 		int n = sqlSession.insert(NS+"insertFile", dto);
-		return (n>0)?true:false;
+		return n;
 	}
 
 	@Override
-	public boolean modifyFile(NotiQuestionDto dto) {
+	public int modifyFile(NotiQuestionDto dto) {
 		int n = sqlSession.update(NS+"modifyFile", dto);
-		return (n>0)?true:false;
+		return n;
 	}
 
 	@Override
@@ -73,33 +79,33 @@ public class Notiquestion_DaoImpl implements Notiquestion_IDao {
 	}
 
 	@Override
-	public boolean insertOneToOne(NotiQuestionDto dto) {
+	public int insertOneToOne(NotiQuestionDto dto) {
 		int n = sqlSession.insert(NS+"insertOneToOne", dto);
-		return (n>0)?true:false;
+		return n;
 	}
 
 	@Override
-	public boolean modifyOneToOne(NotiQuestionDto dto) {
+	public int modifyOneToOne(NotiQuestionDto dto) {
 		int n = sqlSession.update(NS+"modifyOneToOne", dto);
-		return (n>0)?true:false;
+		return n;
 	}
 
 	@Override
-	public boolean deleteOneToOne(String adminseq) {
+	public int deleteOneToOne(String adminseq) {
 		int n = sqlSession.update(NS+"deleteOneToOne", adminseq);
-		return (n>0)?true:false;
+		return n;
 	}
 
 	@Override
-	public boolean insertReply(NotiQuestionDto dto) {
+	public int insertReply(NotiQuestionDto dto) {
 		int n = sqlSession.insert(NS+"insertReply", dto);
-		return (n>0)?true:false;
+		return n;
 	}
 
 	@Override
-	public boolean modifyReply(NotiQuestionDto dto) {
+	public int modifyReply(NotiQuestionDto dto) {
 		int n = sqlSession.update(NS+"modifyReply", dto);
-		return (n>0)?true:false;
+		return n;
 	}
 
 }

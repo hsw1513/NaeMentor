@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,18 @@ public class Notiquestion_CTRL {
 	public String notiWrite(NotiQuestionDto dto) {
 		log.info("notiboard notiWrite:\t {}", dto);
 		service.insertNoti(dto);
-		return "redirect:/Notiquestion/Notification_board.do";
+		return "redirect:/Notification_board.do";
 	}
+	
+	@RequestMapping(value="Notification_boardDelete.do", method = RequestMethod.GET)
+	public String notiDel(String adminseq) {
+		service.deleteNoti(adminseq);
+		return "redirect:/Notification_board.do";
+	}
+	
+//	public String notiMultiDel(String[] chks) {
+//		
+//		return "redirect:/Notification_board.do";
+//	}
 	
 } 

@@ -38,7 +38,7 @@
 			a.USERFILE, a.FILESIZE, DELFLAG
 		FROM NOTIQUESTION n1 JOIN NAEMEMBER n2
 		ON n1.MEMBERSEQ = n2.MEMBERSEQ
-		JOIN ATTACHFILE a
+		LEFT OUTER JOIN ATTACHFILE a
 		ON n1.ADMINSEQ = a.ADMINSEQ
 		WHERE BOARDTYPE = 'G' AND n1.ADMINSEQ =#{adminseq}
 </select>
@@ -47,7 +47,7 @@
 <insert id="insertNoti" parameterType="NQDto">
 	INSERT INTO NOTIQUESTION
 	(ADMINSEQ, TITLE, CONTENT, WRITEDATE, DELFLAG, REFERENCE, BOARDTYPE, MEMBERSEQ)
-	VALUES(ADMINSEQ.NEXTVAL, #{title}, #{content}, SYSDATE, 'N', 0, 'G', #{memberseq})
+	VALUES(ADMINSEQ.NEXTVAL, #{title}, #{content}, SYSDATE, 'N', 0, 'G', 1)
 </insert>
 
 <!-- 공지 게시판 게시글 수정 -->
@@ -57,14 +57,20 @@
 </update>
 
 <!-- 공지 게시판 게시글 삭제 -->
-<update id="deleteNoti" parameterType="java.util.Map">
-UPDATE NOTIQUESTION SET DELFLAG = 'Y'
-	WHERE DELFLAG = 'N'
-		AND SEQ IN
-		<foreach collection="seq_" item="adminseq" open="(" separator="," close=")">
-		#{adminseq}
-		</foreach>
+<update id="deleteNoti"  parameterType="java.lang.String">
+	UPDATE NOTIQUESTION SET DELFLAG = 'Y'
+	WHERE ADMINSEQ=#{adminseq}
 </update>
+
+<!-- 공지 게시판 게시글 다중 삭제 -->
+<update id="multiDeleteNoti" parameterType="java.util.Map">
+		UPDATE NOTIQUESTION SET DELFLAG = 'Y'
+		WHERE ADMINSEQ IN 
+		<foreach collection="adminseqs" item="adminseq" open="(" separator="," close=")" >
+		 	#{adminseq}
+		</foreach>
+	</update>
+
 
 <!-- 공지 게시판 파일 첨부 -->
 <insert id="insertFile" parameterType="AFDto">
@@ -115,19 +121,19 @@ SELECT n1.ADMINSEQ, NICKNAME, TITLE, CONTENT, TO_CHAR(WRITEDATE, 'YYYY-MM-DD') A
 <insert id="insertOneToOne" parameterType="NQDto">
 INSERT INTO NOTIQUESTION
 (ADMINSEQ, TITLE, CONTENT, WRITEDATE, DELFLAG, REFERENCE, BOARDTYPE, MEMBERSEQ)
-VALUES(ADMINSEQ.NEXTVAL, #{title}, #{content}, SYSDATE, 'N', 0, 'M', #{memberseq});
+VALUES(ADMINSEQ.NEXTVAL, #{title}, #{content}, SYSDATE, 'N', 0, 'M', #{memberseq})
 </insert>
 
 <!-- 1:1 문의 게시판 게시글 수정 -->
 <update id="modifyOneToOne" parameterType="NQDto">
 UPDATE NOTIQUESTION SET TITLE = #{title}, CONTENT = #{content}, WRITEDATE=SYSDATE
-	WHERE ADMINSEQ=#{adminseq};
+	WHERE ADMINSEQ=#{adminseq}
 </update>
 
 <!-- 1:1 문의 게시판 게시글 삭제 -->
-<update id="deleteOneToOne"  parameterType="java.util.Map">
+<update id="deleteOneToOne"  parameterType="java.lang.String">
 UPDATE NOTIQUESTION SET DELFLAG = 'Y'
-	WHERE ADMINSEQ=#{adminseq};
+	WHERE ADMINSEQ=#{adminseq}
 </update>
 
 <!-- 1:1 문의 게시판 답글 입력 -->
@@ -137,13 +143,13 @@ INSERT INTO NOTIQUESTION
 	 WRITEDATE, DELFLAG, REFERENCE, 
 	 BOARDTYPE, MEMBERSEQ)
 VALUES(ADMINSEQ.NEXTVAL, #{title}, #{content}, 
-	   SYSDATE, 'N', (SELECT REFERENCE FROM NOTIQUESTION WHERE ADMINSEQ=#{adminseq}), 'M', #{memberseq});
+	   SYSDATE, 'N', (SELECT REFERENCE FROM NOTIQUESTION WHERE ADMINSEQ=#{adminseq}), 'M', #{memberseq})
 </insert>
 
 <!-- 1:1 문의 게시판 답글 수정 -->
 <update id="modifyReply"  parameterType="NQDto">
 UPDATE NOTIQUESTION SET TITLE = #{title}, CONTENT = #{content}, WRITEDATE=SYSDATE
-	WHERE ADMINSEQ=#{adminseq};
+	WHERE ADMINSEQ=#{adminseq}
 </update>
 
 </mapper>
