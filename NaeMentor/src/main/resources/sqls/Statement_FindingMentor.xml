@@ -6,8 +6,9 @@
 <select id="selectAll" resultType="FMDto">
  SELECT BOARDSEQ, TITLE, CONTENT, WRITESDATE, 
 			REPORTCNT, SPECIALFIELD, TARGET, MENTEELEVEL, HOWTO, 
-			LOCATION, DELFLAG, MEMBERSEQ, FINDREPORTER, MENTORLIST AS MENTORLIST
+			LOCATION, DELFLAG, MEMBERSEQ, FINDREPORTER, MENTORLIST, MATCHINGCHK
 FROM FINDINGMENTOR
+WHERE DELFLAG = 'N'
 ORDER BY BOARDSEQ DESC
 </select>
 <!-- 멘토찾기 게시판 -->
@@ -53,8 +54,8 @@ ORDER BY BOARDSEQ DESC
 <!-- 멘토찾기 글입력 -->
 <insert id="insertContent" parameterType="FMDto">
 	INSERT INTO FINDINGMENTOR
-	(BOARDSEQ, TITLE, CONTENT, WRITESDATE, REPORTCNT, SPECIALFIELD, TARGET, MENTEELEVEL, HOWTO, LOCATION, DELFLAG, MENTORLIST, MEMBERSEQ, FINDREPORTER)
-	VALUES(BOARDSEQ.NEXTVAL, #{title}, #{content}, SYSDATE, 0, #{specialfield}, #{target}, #{menteelevel}, #{howto}, #{location}, 'N', '0,', #{memberseq}, '0,')
+	(BOARDSEQ, TITLE, CONTENT, WRITESDATE, REPORTCNT, SPECIALFIELD, TARGET, MENTEELEVEL, HOWTO, LOCATION, DELFLAG, MENTORLIST, MEMBERSEQ, FINDREPORTER, MATCHINGCHK)
+	VALUES(BOARDSEQ.NEXTVAL, #{title}, #{content}, SYSDATE, 0, #{specialfield}, #{target}, #{menteelevel}, #{howto}, #{location}, 'N', '0,', #{memberseq}, '0,', 'N')
 </insert>
 
 <!-- 게시글 수정 -->
@@ -109,8 +110,8 @@ ORDER BY BOARDSEQ DESC
 	INSERT INTO MATCHING(BOARDSEQ, MENTEESEQ, MENTORSEQ, MATCHINGDATE, PAYFLAG)
 	VALUES(#{boardseq}, #{menteeseq}, #{mentorseq}, SYSDATE, 'N')
 </insert>
-<select id="chkMentor" parameterType="java.util.Map" resultType="java.lang.String">
-	SELECT NICKNAME FROM NAEMEMBER
+<select id="chkMentor" parameterType="java.util.Map" resultType="NMDto">
+	SELECT MEMBERSEQ,NICKNAME FROM NAEMEMBER
 	<where>
 		MEMBERSEQ IN
 		<foreach collection="_memberseq" item="memberseq" open="(" separator="," close=")">
@@ -120,5 +121,9 @@ ORDER BY BOARDSEQ DESC
 		</foreach>
 	</where>
 </select>
+
+<update id="updateMatching" parameterType="java.lang.String">
+	UPDATE FINDINGMENTOR SET MATCHINGCHK = 'Y' WHERE BOARDSEQ = #{boardseq}
+</update>
 
 </mapper>

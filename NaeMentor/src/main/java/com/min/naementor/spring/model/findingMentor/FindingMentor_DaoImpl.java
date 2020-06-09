@@ -88,4 +88,9 @@ public class FindingMentor_DaoImpl implements FindingMentor_IDao{
 		return session.selectList(NS+"chkMentor", map);
 	}
 
+	@Override
+	public boolean updateMatching(String boardseq) {
+		return session.update(NS+"updateMatching", boardseq)>0?true:false;
+	}
+
 }

@@ -3,6 +3,7 @@ package com.min.naementor.spring.controllers;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.min.naementor.dtos.FindingMentorDto;
+import com.min.naementor.dtos.MatchingDto;
+import com.min.naementor.dtos.NaememberDto;
 import com.min.naementor.spring.comm.SplitUserComm;
 import com.min.naementor.spring.model.findingMentor.FindingMentor_IService;
 
@@ -39,10 +42,11 @@ public class FindingMentor_CTRL {
 		map.put("boardseq", boardseq);
 		FindingMentorDto dto = service.detailContent(map);
 		String[] _memberseq = comm.splitId(dto.getMentorlist());
-		System.out.println(Arrays.toString(_memberseq)+"--------------------------------------------------------------------------");
+//		System.out.println(Arrays.toString(_memberseq)+"--------------------------------------------------------------------------");
 		Map<String, String[]> map2 = new HashMap<String, String[]>();
 		map2.put("_memberseq", _memberseq);
-		model.addAttribute("findMentor", service.chkMentor(map2));
+		List<NaememberDto> lists = service.chkMentor(map2);
+		model.addAttribute("findMentor", lists);
 		model.addAttribute("detail", dto);
 		return "FindingMentor/detailContent";
 	}
@@ -90,7 +94,8 @@ public class FindingMentor_CTRL {
 	}
 	@RequestMapping(value="applyMentor.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String applyMentor(String memberseq, String boardseq, HttpServletResponse res) {
+	public String applyMentor(String boardseq, HttpServletResponse res) {
+		String memberseq = "1";
 		log.info("{}, {}",memberseq,boardseq);
 		res.setContentType("text/html; charset=utf-8");
 		Map<String, String> map = new HashMap<String, String>();
@@ -98,6 +103,20 @@ public class FindingMentor_CTRL {
 		// 세션에 있는 memberseq를 사용합니다.
 		map.put("memberseq",","+memberseq+",");
 		if(service.applyMentor(map)) {
+			return "true";
+		}else {
+			return "false";
+		}
+	}
+	@RequestMapping(value="matching.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String matching(MatchingDto dto, HttpServletResponse res) {
+		// 세션에 있는 memberseq를 사용합니다.
+		String memberseq = "1";
+		dto.setMenteeseq(memberseq);
+		log.info("{}",dto);
+		res.setContentType("text/html; charset=utf-8");
+		if(service.matching(dto)) {
 			return "true";
 		}else {
 			return "false";

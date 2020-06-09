@@ -88,4 +88,10 @@ public interface FindingMentor_IDao {
 	 * @return 멘토의 닉네임과 회원번호
 	 */
 	public List<NaememberDto> chkMentor(Map<String, String[]> map);
+	/**
+	 * 매칭에 성공하면 board의 매칭을 Y로 변경
+	 * @param boardseq(변경할 게시판의 boardseq)
+	 * @return boolean(true:변경성공)
+	 */
+	public boolean updateMatching(String boardseq);
 }
