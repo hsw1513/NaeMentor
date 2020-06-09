@@ -21,19 +21,16 @@
 		</div>
 		<div style="text-align: center; margin-top: 20px;">
 <!-- 			관리자만 보이게-->
-			<input type="button" name="btn" id="Notification_boardDelete" value="삭제">
-			<input type="button" name="btn" id="Notification_boardModify" value="수정">
+			<input type="button" name="btn" onclick="notidel()" value="삭제" >
+			<input type="button" name="btn" onclick="notimod()" value="수정">
 		</div>
 		<script type="text/javascript">
-			onload = function(){
-				var btns = document.getElementsByName("btn");
-				for (var i = 0; i < btns.length; i++) {
-					btns[i].onclick = function(){
-						location.href="./"+this.id+".do?adminseq="+${dto.adminseq};
-					}
-				}
+			function notidel(){
+				location.href="./Notification_boardDelete.do?adminseq="+${dto.adminseq};
 			}
-		
+			function notimod(){
+				location.href="./Notification_boardModify.do?adminseq="+${dto.adminseq};
+			}
 		</script>
 	</div>
 	<%@include file="/WEB-INF/views/footer.jsp"%>

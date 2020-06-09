@@ -22,33 +22,39 @@ public interface Notiquestion_IDao {
 	
 	/**
 	 * 공지 게시판 게시글 입력
-	 * @return boolean(true: 입력)
+	 * @return int(true: 입력)
 	 */
-	public boolean insertNoti(NotiQuestionDto dto);
+	public int insertNoti(NotiQuestionDto dto);
 	
 	/**
 	 * 공지 게시판 게시글 수정
-	 * @return boolean(true: 수정)
+	 * @return int(true: 수정)
 	 */
-	public boolean modifyNoti(NotiQuestionDto dto);
+	public int modifyNoti(NotiQuestionDto dto);
 	
 	/**
 	 * 공지 게시판 게시글 삭제
-	 * @return boolean(true: 삭제)
+	 * @return int(true: 삭제)
 	 */
-	public boolean deleteNoti(Map<String, String[]> map);
+	public int deleteNoti(String adminseq);
+	
+	/**
+	 * 공지 게시판 게시글 다중 삭제
+	 * @return int(true: 삭제)
+	 */
+	public int multiDeleteNoti(Map<String, Object> adminseqs);
 	
 	/**
 	 * 공지 게시판 첨부파일 입력
-	 * @return boolean(true: 첨부)
+	 * @return int(true: 첨부)
 	 */
-	public boolean insertFile(NotiQuestionDto dto);
+	public int insertFile(NotiQuestionDto dto);
 	
 	/**
 	 * 공지 게시판 첨부파일 수정
-	 * @return boolean(true: 수정)
+	 * @return int(true: 수정)
 	 */
-	public boolean modifyFile(NotiQuestionDto dto);
+	public int modifyFile(NotiQuestionDto dto);
 	
 	/**
 	 * 1:1 문의 게시판 전체글 조회 (관리자)
@@ -71,31 +77,31 @@ public interface Notiquestion_IDao {
 	
 	/**
 	 * 1:1 문의 게시판 게시글 입력
-	 * @return boolean(true: 입력)
+	 * @return int(true: 입력)
 	 */
-	public boolean insertOneToOne(NotiQuestionDto dto);
+	public int insertOneToOne(NotiQuestionDto dto);
 	
 	/**
 	 * 1:1 문의 게시판 게시글 수정
-	 * @return boolean(true: 수정)
+	 * @return int(true: 수정)
 	 */
-	public boolean modifyOneToOne(NotiQuestionDto dto);
+	public int modifyOneToOne(NotiQuestionDto dto);
 	
 	/**
 	 * 1:1 문의 게시판 게시글 삭제
-	 * @return boolean(true: 삭제)
+	 * @return int(true: 삭제)
 	 */
-	public boolean deleteOneToOne(String adminseq);
+	public int deleteOneToOne(String adminseq);
 	
 	/**
 	 * 1:1 문의 게시판 답글 입력
-	 * @return boolean(true: 입력)
+	 * @return int(true: 입력)
 	 */
-	public boolean insertReply(NotiQuestionDto dto);
+	public int insertReply(NotiQuestionDto dto);
 	
 	/**
 	 * 1:1 문의 게시판 답글 수정
-	 * @return boolean(true: 수정)
+	 * @return int(true: 수정)
 	 */
-	public boolean modifyReply(NotiQuestionDto dto);
+	public int modifyReply(NotiQuestionDto dto);
 }

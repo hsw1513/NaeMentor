@@ -43,7 +43,7 @@ public class Notiquestion_ServiceImpl implements Notiquestion_IService {
 	 * @return 성공여부 (성공 true)
 	 */
 	@Override
-	public boolean insertNoti(NotiQuestionDto dto) {
+	public int insertNoti(NotiQuestionDto dto) {
 		log.info("insertNoti 새글 작성", dto);
 		return dao.insertNoti(dto);
 	}
@@ -54,20 +54,30 @@ public class Notiquestion_ServiceImpl implements Notiquestion_IService {
 	 * @return 성공여부 (성공 true)
 	 */
 	@Override
-	public boolean modifyNoti(NotiQuestionDto dto) {
+	public int modifyNoti(NotiQuestionDto dto) {
 		log.info("modifyNoti 게시글 수정", dto);
 		return dao.modifyNoti(dto);
 	}
 
 	/**
 	 * <h2>공지 게시판 게시글 삭제</h2>
-	 * @param 식별자 seq의 문자열 배열, key의 이름은 'seq_'
+	 * @param 식별자 adminseq
 	 * @return 성공여부 (성공 true)
 	 */
 	@Override
-	public boolean deleteNoti(Map<String, String[]> map) {
-		log.info("deleteNoti 게시글 삭제", map);
-		return dao.deleteNoti(map);
+	public int deleteNoti(String adminseq) {
+		log.info("deleteNoti 게시글 삭제", adminseq);
+		return dao.deleteNoti(adminseq);
+	}
+	/**
+	 * <h2>공지 게시판 게시글 다중 삭제</h2>
+	 * @param 식별자 adminseqs
+	 * @return 성공여부 (성공 true)
+	 */
+	@Override
+	public int multiDeleteNoti(Map<String, Object> adminseqs) {
+		log.info("multiDeleteNoti 게시글 다중삭제", adminseqs);
+		return dao.multiDeleteNoti(adminseqs);
 	}
 
 	/**
@@ -76,7 +86,7 @@ public class Notiquestion_ServiceImpl implements Notiquestion_IService {
 	 * @return 성공여부 (성공 true)
 	 */
 	@Override
-	public boolean insertFile(NotiQuestionDto dto) {
+	public int insertFile(NotiQuestionDto dto) {
 		log.info("insertFile 첨부파일 등록", dto);
 		return dao.insertFile(dto);
 	}
@@ -87,7 +97,7 @@ public class Notiquestion_ServiceImpl implements Notiquestion_IService {
 	 * @return 성공여부 (성공 true)
 	 */
 	@Override
-	public boolean modifyFile(NotiQuestionDto dto) {
+	public int modifyFile(NotiQuestionDto dto) {
 		log.info("modifyFile 첨부파일 수정", dto);
 		return dao.modifyFile(dto);
 	}
@@ -131,7 +141,7 @@ public class Notiquestion_ServiceImpl implements Notiquestion_IService {
 	 * @return 성공여부 (성공 true)
 	 */
 	@Override
-	public boolean insertOneToOne(NotiQuestionDto dto) {
+	public int insertOneToOne(NotiQuestionDto dto) {
 		log.info("insertOneToOne 새글 작성", dto);
 		return dao.insertOneToOne(dto);
 	}
@@ -142,7 +152,7 @@ public class Notiquestion_ServiceImpl implements Notiquestion_IService {
 	 * @return 성공여부 (성공 true)
 	 */
 	@Override
-	public boolean modifyOneToOne(NotiQuestionDto dto) {
+	public int modifyOneToOne(NotiQuestionDto dto) {
 		log.info("modifyOneToOne 게시글 수정", dto);
 		return dao.modifyOneToOne(dto);
 	}
@@ -153,7 +163,7 @@ public class Notiquestion_ServiceImpl implements Notiquestion_IService {
 	 * @return 성공여부 (성공 true)
 	 */
 	@Override
-	public boolean deleteOneToOne(String adminseq) {
+	public int deleteOneToOne(String adminseq) {
 		log.info("deleteOneToOne 게시글 삭제", adminseq);
 		return dao.deleteOneToOne(adminseq);
 	}
@@ -164,7 +174,7 @@ public class Notiquestion_ServiceImpl implements Notiquestion_IService {
 	 * @return 성공여부 (성공 true)
 	 */
 	@Override
-	public boolean insertReply(NotiQuestionDto dto) {
+	public int insertReply(NotiQuestionDto dto) {
 		log.info("insertReply 답글 작성", dto);
 		return dao.insertReply(dto);
 	}
@@ -175,7 +185,7 @@ public class Notiquestion_ServiceImpl implements Notiquestion_IService {
 	 * @return 성공여부 (성공 true)
 	 */
 	@Override
-	public boolean modifyReply(NotiQuestionDto dto) {
+	public int modifyReply(NotiQuestionDto dto) {
 		log.info("modifyReply 답글 수정", dto);
 		return dao.modifyReply(dto);
 	}

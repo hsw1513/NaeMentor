@@ -1,16 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>공지사항 게시판</title>
 </head>
+<script type="text/javascript" src="./js2/Notiquestion.js"></script>
 <body>
 	<%@include file="/WEB-INF/views/topMenu.jsp"%>
 	<div id="container">
 		<h1>자 이제 시작!</h1>
+		<form action="./">
+		
 		<div>
 			<table class="table table-hover">
 				<tr>
@@ -48,6 +52,7 @@
 		 		</c:forEach>
 			</table>
 		</div>
+		</form>
 		<div style="text-align: center; margin-top: 20px;">
 <!-- 			관리자만 보이게-->
 			<input type="submit" value="삭제">

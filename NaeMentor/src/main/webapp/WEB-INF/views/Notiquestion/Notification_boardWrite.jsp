@@ -13,7 +13,7 @@
 		<table class="table talbe-bordered">
 			<tr>
 				<th>제목</th>
-				<td><input type="text" name="id"></td>
+				<td><input type="text" name="title"></td>
 			</tr>
 			<tr>
 				<th>내용</th>
