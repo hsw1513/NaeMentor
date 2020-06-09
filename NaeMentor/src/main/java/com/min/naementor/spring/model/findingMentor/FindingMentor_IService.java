@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.min.naementor.dtos.FindingMentorDto;
 import com.min.naementor.dtos.MatchingDto;
+import com.min.naementor.dtos.NaememberDto;
 
 public interface FindingMentor_IService {
 	/**
@@ -70,4 +71,10 @@ public interface FindingMentor_IService {
 	 * @return boolean(true: 매칭 성공)
 	 */
 	public boolean matching(MatchingDto dto);
+	/**
+	 * 신청한 멘토들의 아이디를 보여줌
+	 * @param map(_memberseq,memberseq[])
+	 * @return 멘토의 닉네임과 회원번호
+	 */
+	public List<NaememberDto> chkMentor(Map<String, String[]> map);
 }

@@ -16,6 +16,31 @@
 		from1.action = "./modifyContent.do";
 		return true;
 	}
+	var xhr = null;
+	
+	function report(){
+		xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = callback
+		xhr.open("POST","./reportContentChk.do");
+		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		xhr.send("memberseq="+${detail.memberseq}+"&boardseq="+${detail.boardseq});
+	}
+	function callback(){
+		if(xhr.readyState==4){
+// 			alert(xhr.status);
+			if(xhr.status==200){
+				alert(xhr.responseText);
+			}
+		}
+	}
+	
+	function applyMentor(){
+		xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = callback
+		xhr.open("POST","./applyMentor.do");
+		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		xhr.send("memberseq="+${detail.memberseq}+"&boardseq="+${detail.boardseq});
+	}
 </script>
 <body>
 <%@include file="/WEB-INF/views/topMenu.jsp"%>
@@ -32,6 +57,9 @@
 	<input type="submit" value="제출하기">
 	</form>
 	<button onclick="javascript:history.back(-1)">뒤로가기</button>
+	<button onclick="report()">신고하기</button>
+	<button onclick="applyMentor()">멘토링 신청</button>
+	<button onclick="matching()">멘토 수락</button>
 </div>
 <%@include file="/WEB-INF/views/footer.jsp"%>
 </body>

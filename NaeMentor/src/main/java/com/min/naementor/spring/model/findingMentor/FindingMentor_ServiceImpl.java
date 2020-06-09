@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.min.naementor.dtos.FindingMentorDto;
 import com.min.naementor.dtos.MatchingDto;
+import com.min.naementor.dtos.NaememberDto;
 
 @Service
 public class FindingMentor_ServiceImpl implements FindingMentor_IService{
@@ -87,6 +88,12 @@ public class FindingMentor_ServiceImpl implements FindingMentor_IService{
 	public List<FindingMentorDto> selectAll() {
 		log.info("selectAll {}",new Date());
 		return dao.selectAll();
+	}
+
+	@Override
+	public List<NaememberDto> chkMentor(Map<String, String[]> map) {
+		log.info("chkMentor {}",map);
+		return dao.chkMentor(map);
 	}
 
 }
