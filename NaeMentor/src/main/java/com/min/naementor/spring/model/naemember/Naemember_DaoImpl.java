@@ -59,8 +59,8 @@ public class Naemember_DaoImpl implements Naemember_IDao {
 	}
 
 	@Override
-	public NaememberDto encLogin(Map<String, Object> map) { // 로그인
-		return sqlSession.selectOne(NS+"encLogin", map);
+	public NaememberDto encLogin(String email) { // 로그인
+		return sqlSession.selectOne(NS+"encLogin", email);
 	}
 
 	@Override

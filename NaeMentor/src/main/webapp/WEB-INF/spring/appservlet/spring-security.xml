@@ -16,14 +16,22 @@
 	<!-- intercept-url: url에 따라 접근자들을 관리하는 기능(순서 중요) -->
 	<!-- access-denied-handler : 접근권한이 없는 사람이 접근시 여기로 보내겠다 -->
 	<security:http auto-config="true" use-expressions="true">
+	
 		<security:access-denied-handler error-page="/AuthError.do"/>
-		<security:intercept-url pattern="/login.do" access="permitAll" />
+		<security:intercept-url pattern="/index.do" access="permitAll" />
 		<security:intercept-url	pattern="/admin/**" access="hasRole('A')" />
 		<security:intercept-url pattern="/**" access="permitAll" />
+		<!-- login-processing-url : 로그인 폼과 시큐리티를 매핑하는 주소(form action값) -->
+		<!-- login-page : 로그인화면으로 가는 주소(login form 페이지 URL) -->
+		<!-- default-target-url : 로그인 성공시 갈 주소 -->
+		<!-- username-parameter : 아이디 input의 name 값 설정(form id의 name 속성값) -->
+		<!-- password-parameter : 비밀번호 input의 name 값 설정(form pw의 name 속성값) -->
+		<!-- authentication-failure-url : 로그인실패시 갈 주소 매핑 -->
+		<!-- always-use-default-target : 이걸 설정해줘야 항상 잘 작동된다고 함. -->
 		<security:form-login
 			login-processing-url="/logingo.do" 
-			login-page="/loginPage.do"
-			default-target-url="/result.do" 
+			login-page="/index.do"
+			default-target-url="/result.do"
 			username-parameter="email"
 			password-parameter="password"
 			authentication-failure-url="/loginPage.do?error"

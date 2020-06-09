@@ -80,9 +80,9 @@ public class Naemember_ServiceImpl implements Naemember_IService {
 	 * @return 로그인정보들
 	 */
 	@Override
-	public NaememberDto encLogin(Map<String, Object> map) {
-		log.info("encLogin 암호화로그인, {}", map);
-		return dao.encLogin(map);
+	public NaememberDto encLogin(String email) {
+		log.info("encLogin 암호화로그인, {}", email);
+		return dao.encLogin(email);
 	}
 
 	/**
