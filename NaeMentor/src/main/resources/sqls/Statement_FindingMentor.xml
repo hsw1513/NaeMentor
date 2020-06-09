@@ -6,13 +6,14 @@
 <select id="selectAll" resultType="FMDto">
  SELECT BOARDSEQ, TITLE, CONTENT, WRITESDATE, 
 			REPORTCNT, SPECIALFIELD, TARGET, MENTEELEVEL, HOWTO, 
-			LOCATION, DELFLAG, MEMBERSEQ, FINDREPORTER, METORLIST
+			LOCATION, DELFLAG, MEMBERSEQ, FINDREPORTER, MENTORLIST AS MENTORLIST
 FROM FINDINGMENTOR
+ORDER BY BOARDSEQ DESC
 </select>
 <!-- 멘토찾기 게시판 -->
 <!-- 게시글 상세조회 -->
 <select id="detailContent" parameterType="java.util.Map" resultType="FMDto">
-	SELECT METORLIST ,BOARDSEQ, TITLE, CONTENT, WRITESDATE, REPORTCNT, 
+	SELECT MENTORLIST ,BOARDSEQ, TITLE, CONTENT, WRITESDATE, REPORTCNT, 
 		   SPECIALFIELD, TARGET, MENTEELEVEL, HOWTO, LOCATION, DELFLAG, 
 		   MEMBERSEQ, FINDREPORTER
 	FROM FINDINGMENTOR 
@@ -21,27 +22,27 @@ FROM FINDINGMENTOR
 
 <!-- 멘토링 신청 -->
 <!-- 1. 멘토중복지원방지 -->
-<select id="applyMentorChk" parameterType="java.util.Map" resultType="java.lang.Integer">
-	SELECT INSTR((SELECT METORLIST FROM FINDINGMENTOR f WHERE BOARDSEQ =#{boardseq}), ',#{memberseq},') AS BOOL 
+<select id="applyMentorChk" parameterType="java.util.Map" resultType="java.lang.String">
+	SELECT INSTR((SELECT MENTORLIST FROM FINDINGMENTOR f WHERE BOARDSEQ = #{boardseq}), #{memberseq}) AS BOOL 
 	FROM DUAL
 </select>
 <!-- 2. 멘토링 신청 -->
 <update id="applyMentor" parameterType="java.util.Map">
 	UPDATE FINDINGMENTOR
-	SET METORLIST= CONCAT(METORLIST,'#{memberseq},')
+	SET MENTORLIST= CONCAT(MENTORLIST,#{memberseq})
 	WHERE BOARDSEQ=#{boardseq}
 </update>
 
 <!-- 게시글 신고 -->
 <!-- 1. 신고중복방지 -->
-<select id="reportContentChk" parameterType="java.util.Map" resultType="java.lang.Integer">
-	SELECT INSTR((SELECT FINDREPORTER FROM FINDINGMENTOR f WHERE BOARDSEQ =#{boardseq}),',#{memberseq},') AS BOOL 
+<select id="reportContentChk" parameterType="java.util.Map" resultType="java.lang.String">
+	SELECT INSTR((SELECT FINDREPORTER FROM FINDINGMENTOR f WHERE BOARDSEQ =#{boardseq}),#{memberseq}) AS BOOL 
 	FROM DUAL
 </select>
 <!-- 2. 게시글 신고자 명단 추가 -->
 <update id="reportUserUpdate" parameterType="java.util.Map">
 	UPDATE FINDINGMENTOR
-	SET FINDREPORTER= CONCAT(FINDREPORTER,'#{memberseq},')
+	SET FINDREPORTER= CONCAT(FINDREPORTER,#{memberseq})
 	WHERE BOARDSEQ=#{boardseq}
 </update>
 <!-- 3. 게시글 신고 카운트 증가 -->
@@ -52,15 +53,15 @@ FROM FINDINGMENTOR
 <!-- 멘토찾기 글입력 -->
 <insert id="insertContent" parameterType="FMDto">
 	INSERT INTO FINDINGMENTOR
-	(BOARDSEQ, TITLE, CONTENT, WRITESDATE, REPORTCNT, SPECIALFIELD, TARGET, MENTEELEVEL, HOWTO, LOCATION, DELFLAG, METORLIST, MEMBERSEQ)
-	VALUES(BOARDSEQ.NEXTVAL, #{title}, ${content}, SYSDATE, 0, #{specialfield}, #{target}, #{menteelevel}, #{howto}, #{location}, 'N', '0,', #{memberseq})
+	(BOARDSEQ, TITLE, CONTENT, WRITESDATE, REPORTCNT, SPECIALFIELD, TARGET, MENTEELEVEL, HOWTO, LOCATION, DELFLAG, MENTORLIST, MEMBERSEQ, FINDREPORTER)
+	VALUES(BOARDSEQ.NEXTVAL, #{title}, #{content}, SYSDATE, 0, #{specialfield}, #{target}, #{menteelevel}, #{howto}, #{location}, 'N', '0,', #{memberseq}, '0,')
 </insert>
 
 <!-- 게시글 수정 -->
 <!-- 1. 불러오기 -->
 <select id="modifyContentSelect" parameterType="java.util.Map" resultType="FMDto">
 	SELECT BOARDSEQ , CONTENT , WRITESDATE , SPECIALFIELD,
-  			TARGET ,MENTEELEVEL ,HOWTO ,LOCATION , METORLIST , MEMBERSEQ 
+  			TARGET ,MENTEELEVEL ,HOWTO ,LOCATION , MENTORLIST , MEMBERSEQ 
 	FROM FINDINGMENTOR f
 	WHERE BOARDSEQ =#{boardseq} AND DELFLAG ='N'
 </select>
@@ -108,6 +109,14 @@ FROM FINDINGMENTOR
 	INSERT INTO MATCHING(BOARDSEQ, MENTEESEQ, MENTORSEQ, MATCHINGDATE, PAYFLAG)
 	VALUES(#{boardseq}, #{menteeseq}, #{mentorseq}, SYSDATE, 'N')
 </insert>
-
+<select id="chkMentor" parameterType="java.util.Map" resultType="java.lang.String">
+	SELECT NICKNAME FROM NAEMEMBER
+	<where>
+		MEMBERSE IN
+		<foreach collection="_memberseq" item="memberseq" open="(" separator="," close=")">
+			#{memberseq}
+		</foreach>
+	</where>
+</select>
 
 </mapper>

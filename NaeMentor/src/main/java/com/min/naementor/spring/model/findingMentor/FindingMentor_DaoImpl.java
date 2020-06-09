@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.min.naementor.dtos.FindingMentorDto;
 import com.min.naementor.dtos.MatchingDto;
+import com.min.naementor.dtos.NaememberDto;
 @Repository
 public class FindingMentor_DaoImpl implements FindingMentor_IDao{
 	@Autowired
@@ -43,8 +44,8 @@ public class FindingMentor_DaoImpl implements FindingMentor_IDao{
 
 	@Override
 	public boolean reportContentChk(Map<String, String> map) {
-		int i = Integer.parseInt(session.selectOne(NS+"reportContentChk", map));
-		return i==0?true:false;
+		String val = session.selectOne(NS+"reportContentChk", map);
+		return val.equals("0");
 	}
 
 	@Override
@@ -80,6 +81,11 @@ public class FindingMentor_DaoImpl implements FindingMentor_IDao{
 	@Override
 	public List<FindingMentorDto> selectAll() {
 		return session.selectList(NS+"selectAll");
+	}
+
+	@Override
+	public List<NaememberDto> chkMentor(Map<String, String[]> map) {
+		return session.selectList(NS+"chkMentor", map);
 	}
 
 }
