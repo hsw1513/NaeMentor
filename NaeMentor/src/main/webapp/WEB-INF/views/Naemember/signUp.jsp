@@ -22,6 +22,7 @@
 				<span id="result"></span>
 				<input type="password" id="password" name="password" placeholder="비밀번호"><br>
 				<input type="password" id="passOk" placeholder="비밀번호 확인 "><br>
+				<span id="result_pw"></span>
 				<input type="text" id="nickname" name="nickname" placeholder="닉네임"><input type="button" onclick="nickChk()"><br>
 				<textarea rows="5" cols="30" id="introduce" name="introduce" placeholder="자기소개"></textarea><br>
 				<input type="text" id="phone" name="phone" placeholder="휴대폰 번호"><br>

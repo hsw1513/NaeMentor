@@ -42,14 +42,31 @@ public class Login_CTRL {
 		return "Naemember/signUp";
 	}
 	
-	// 회원가입 완료
+	// 회원가입 완료 => 프로필 입력 페이지 이동
 	@RequestMapping(value = "/signUp.do", method = RequestMethod.POST)
-	public String SignUp(NaememberDto dto, Model model) {
+	public String SignUp(NaememberDto dto, Model model, String email) {
 		log.info("회원가입 signUp: , {}", dto);
 		service.signUp(dto);
+		model.addAttribute("email", email);
+		return "Naemember/insertProfile";
+	}
+	
+	// 프로필 입력 후 로그인페이지로 이동
+	@RequestMapping(value = "/proFile.do", method = RequestMethod.POST)
+	public String insertProfile(ProfileDto dto, Model model, String email) {
+		log.info("회원가입 프로필 입력 insertProfile: ,{}", dto);
+		service.insertProFile(dto);
 		return "Naemember/loginPage";
 	}
 	
+	// 회원가입 취소시 기본정보 삭제
+	@RequestMapping(value = "/cancel.do", method = RequestMethod.GET)
+	public String cancelSignUp(Model model, String email) {
+		log.info("프로필 입력 취소시 회원가입 취소 cancelSignUp");
+		System.out.println("********"+email);
+		service.cancelSignUp(email);
+		return "Naemember/loginPage";
+	}
 	
 	//로그인페이지로 가는 매핑
 	@RequestMapping(value = "/logingo.do", method = {RequestMethod.POST,RequestMethod.GET})
@@ -67,7 +84,7 @@ public class Login_CTRL {
 	return "Naemember/loginPage";
 	}
 
-
+	// 로그인 성공시 메인으로 이동
 	@RequestMapping(value = "/result.do", method = RequestMethod.GET)
 	public String maingo(Authentication user, Model model,NaememberDto dto, HttpSession session) {
 	UserDetails userdto = (UserDetails) user.getPrincipal();
@@ -77,14 +94,6 @@ public class Login_CTRL {
 	return "Naemember/login";
 	}
 	
-	@RequestMapping(value = "/idCheck.do", method = RequestMethod.POST)
-	@ResponseBody
-	public Map<String, String> idDupleCheck(String email) {
-		log.info("이메일 중복검사");
-		Map<String, String> map = new HashMap<String, String>();
-		boolean isc = service.idDupleChk(email);
-		map.put("isc", isc+"");
-		return map;
-	}
+	
 	
 }
