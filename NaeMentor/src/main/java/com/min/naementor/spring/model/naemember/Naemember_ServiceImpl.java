@@ -108,6 +108,12 @@ public class Naemember_ServiceImpl implements Naemember_IService {
 		return dao.loginCount(map);
 	}
 
+	@Override
+	public boolean wakeUp(String memberseq) {
+		log.info("loginCount 회원상태 변경, {}", memberseq);
+		return dao.wakeUp(memberseq);
+	}
+
 	
 
 }

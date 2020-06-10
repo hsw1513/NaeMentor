@@ -91,7 +91,7 @@
 		   	 FILECHK, PHOTO
 		   	FROM NAEMEMBER n JOIN PROFILE p
 		   			ON n.MEMBERSEQ = p.MEMBERSEQ 
-		   				AND EMAIL =#{email} AND USERSTATUS = 'A'
+		   				AND EMAIL =#{email} AND NOT USERSTATUS = 'D' AND NOT USERSTATUS = 'S'
 	</select>
 	
 	<!-- 로그인 실패시 로그인 시도 카운트 증가, 성공시 카운트 초기화 -->

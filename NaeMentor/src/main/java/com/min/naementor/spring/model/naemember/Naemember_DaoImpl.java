@@ -74,6 +74,12 @@ public class Naemember_DaoImpl implements Naemember_IDao {
 		return (cnt>0)?true:false;
 	}
 
+	@Override
+	public boolean wakeUp(String memberseq) {
+		int cnt = sqlSession.update(NS+"wakeUp", memberseq);
+		return (cnt>0)?true:false;
+	}
+
 	
 
 }
