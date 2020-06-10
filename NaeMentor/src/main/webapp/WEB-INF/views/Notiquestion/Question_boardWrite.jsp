@@ -11,6 +11,8 @@
 <%@include file="/WEB-INF/views/topMenu.jsp"%>
 	<div id="container">
 	<form action="./QuesWrite.do" method="post">
+		<input type="hidden" name="command" value="write">
+		<input type="hidden" name="adminseq" value="${dto.adminseq}">
 		<table class="table talbe-bordered">
 			<tr>
 				<th>제목</th>
@@ -21,8 +23,7 @@
 				<td><textarea id="editor" rows="20" cols="40" name="content"></textarea></td>
 			</tr>
 		</table>
-		<div>
-			<input type="reset" value="초기화"/>
+			<div style="text-align: center; margin-top: 20px;">
 			<input type="button" value="글 작성" onclick="save()"/>
 		</div>
 	</form>

@@ -19,11 +19,14 @@
 				<tr><th>내용</th><td>${dto.content}</td></tr>
 			</table>
 		</div>
-		<div style="text-align: center; margin-top: 20px;">
-<!-- 			관리자만 보이게-->
+			<div style="text-align: center; margin-top: 20px;">
+			<c:if test="${userinfo.auth eq 'ROLE_A'}">	
 			<input type="button" name="btn" onclick="notidel()" value="삭제" >
+			</c:if>
 			<input type="button" name="btn" onclick="notilist()" value="목록보기" >
+			<c:if test="${userinfo.auth eq 'ROLE_A'}">
 			<input type="button" name="btn" onclick="notimod()" value="수정">
+			</c:if>
 		</div>
 		<script type="text/javascript">
 			function notidel(){

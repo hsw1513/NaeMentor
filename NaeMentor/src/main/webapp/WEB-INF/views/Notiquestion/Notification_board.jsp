@@ -16,7 +16,9 @@
 		<div>
 			<table class="table table-hover">
 				<tr>
+					<c:if test="${userinfo.auth eq 'ROLE_A'}">	
 					<th><input type="checkbox" onclick="checkAll(this.checked)"></th>
+					</c:if>
 						<th>글 번호</th>
 						<th>제목</th>
 						<th>작성자</th>
@@ -26,8 +28,11 @@
 					</c:if>
 				</tr>
 		 		<c:forEach var="dto" items="${lists}" varStatus="vs">
+		 		<c:if test="${dto.delflag eq 'N'}">
 		 			<tr>
+		 			<c:if test="${userinfo.auth eq 'ROLE_A'}">	
 					<td><input type="checkbox" name="chks" value="${dto.adminseq}"></td>
+					</c:if>
 						<td>${fn:length(lists) - vs.index}</td>
 						<td>
 							<a title="${dto.title}" href="./Notification_boardDetail.do?adminseq=${dto.adminseq}" style="color: black;">
@@ -45,17 +50,20 @@
 							<td>${dto.delflag}</td>
 						</c:if>
 					</tr>
+					</c:if>
 		 		</c:forEach>
 			</table>
 		</div>
 <!-- 			관리자만 보이게-->
 		<div style="text-align: center; margin-top: 20px;">
-			<input type="submit" value="삭제" >
-			<input type="button" value="글쓰기" onclick ="notiBorardWrite()">
+			<c:if test="${userinfo.auth eq 'ROLE_A'}">
+				<input type="submit" value="삭제" >
+				<input type="button" value="글쓰기" onclick ="notiBoardWrite()">
+			</c:if>
 		</div>
 		</form>
 		<script type="text/javascript">
-			function notiBorardWrite(){
+			function notiBoardWrite(){
 				location.href="./Notification_boardWrite.do";
 			}
 			function checkAll(bool) {
