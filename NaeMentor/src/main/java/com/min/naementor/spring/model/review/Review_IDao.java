@@ -23,5 +23,5 @@ public interface Review_IDao {
 	 * @param dto
 	 * @return
 	 */
-	public boolean insertSchedule(MemberScheduleDto dto);
+	public boolean insertReview(ReviewDto dto);
 }

@@ -23,14 +23,14 @@ public class Review_ServiceImpl implements Review_IService{
 
 	@Override
 	public List<ReviewDto> denyMSearch(String menteeseq) {
-		log.info("searchMStar{}",menteeseq);
+		log.info("denyMSearch{}",menteeseq);
 		return dao.denyMSearch(menteeseq);
 	}
 
 	@Override
-	public boolean insertSchedule(MemberScheduleDto dto) {
-		log.info("searchMStar{}",dto);
-		return dao.insertSchedule(dto);
+	public boolean insertReview(ReviewDto dto) {
+		log.info("insertReview{}",dto);
+		return dao.insertReview(dto);
 	}
 
 }

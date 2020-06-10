@@ -7,10 +7,13 @@
 <title>로그인 성공 페이지</title>
 </head>
 <body>
+<%@include file="/WEB-INF/views/topMenu.jsp"%>
+<div id="container">
 <a href="/logout.do">로그아웃</a>
 
 로그인 성공!
-
 <a href="./admin/adminPage.do">관리자만 갈 수 있는 페이지</a>
+</div>
+<%@include file="/WEB-INF/views/footer.jsp"%>
 </body>
 </html>
