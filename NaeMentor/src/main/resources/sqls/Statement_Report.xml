@@ -35,4 +35,19 @@
 <!-- 페이징은 나중에... -->
 <!-- multiDel도 나중에.. -->
 
+
+<!-- 회원신고(1.이미 신고한 회원인가 체크): 구현우 -->
+<select id="chkReport" parameterType="java.util.Map" resultType="java.lang.Integer">
+	SELECT SINGOREASON FROM REPORT r
+	WHERE REVIEWSEQ =#{reviewseq} AND SINGOMEMBER =#{singomember}
+</select>
+<!-- 회원신고(2.신고한적이 없는 회원일 경우 신고): 구현우 -->
+<insert id="insertReport" parameterType="RPDto">
+	INSERT INTO REPORT
+	(SINGOMEMBER, SINGOEDMEMBER, SINGOREASON, SINGOCHK, REVIEWSEQ, BOARDSEQ)
+	VALUES(#{singomember}, #{singoedmember}, #{singoreason}, 'N', #{reviewseq}, #{boardseq})
+</insert>
+
+
+
 </mapper>

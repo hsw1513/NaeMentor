@@ -20,6 +20,21 @@ public class Review_CTRL {
 	@Autowired
 	private Review_IService service;
 	private Logger log = LoggerFactory.getLogger(this.getClass());
+	
+	// 리뷰게시판으로 이동(session 정보 탐색 후 분기)
+	@RequestMapping("/review.do")
+	public String review() {
+		// 멘토일 경우 auth = 1
+		String auth = "1";
+		if(auth.equals("1")) {
+			return "redirect:/denyMSearch.do";
+		// 멘티일 경우 auth = 2
+		}else if(auth.equals("2")) {
+			return "redirect:/denyMSearch.do";
+		}else {
+		 return "redirect:/FindingMentor_board.do";
+		}
+	}
 
 	// 멘토 후기 보기
 	@RequestMapping(value = "/searchMStar.do", method=RequestMethod.POST)
@@ -38,7 +53,7 @@ public class Review_CTRL {
 		model.addAttribute("reviews", lists);
 		return "Review/review";
 	}
-	// 스케줄 입력
+	// 후기 입력
 	@RequestMapping(value= "/insertReview.do", method=RequestMethod.POST)
 	@ResponseBody
 	public String insertReview(ReviewDto dto) {
