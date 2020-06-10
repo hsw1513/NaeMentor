@@ -34,7 +34,7 @@
 			default-target-url="/result.do"
 			username-parameter="email"
 			password-parameter="password"
-			authentication-failure-url="/loginPage.do?error"
+			authentication-failure-url="/index.do"
 			always-use-default-target='true' 
 		/>
 		<security:logout 

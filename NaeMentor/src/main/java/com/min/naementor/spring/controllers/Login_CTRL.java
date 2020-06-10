@@ -69,31 +69,39 @@ public class Login_CTRL {
 	}
 	
 	//로그인페이지로 가는 매핑
-	@RequestMapping(value = "/logingo.do", method = {RequestMethod.POST,RequestMethod.GET})
-	public String login(@RequestParam(value = "error", required = false) String error,
-	@RequestParam(value = "logout", required = false) String logout, Model model, Authentication user) {
+		@RequestMapping(value = "/logingo.do", method = {RequestMethod.POST,RequestMethod.GET})
+		public String login(@RequestParam(value = "error", required = false) String error,
+		@RequestParam(value = "logout", required = false) String logout, Model model, Authentication user) {
+			
+		if (error != null) {
+		model.addAttribute("msg", "로그인 에러");
+		}
+
+		if (logout != null) {
+		model.addAttribute("msg", "로그아웃 성공");
+		}
 		
-	if (error != null) {
-	model.addAttribute("msg", "로그인 에러");
-	}
+		return "Naemember/loginPage";
+		}
 
-	if (logout != null) {
-	model.addAttribute("msg", "로그아웃 성공");
-	}
+		// 로그인 성공시 메인으로 이동
+		@RequestMapping(value = "/result.do", method = RequestMethod.GET)
+		public String maingo(Authentication user, Model model,NaememberDto dto, HttpSession session) {
+		UserDetails userdto = (UserDetails) user.getPrincipal();
+		model.addAttribute("user", userdto.toString());
+		NaememberDto ndto = service.encLogin(userdto.getUsername());
+		session.setAttribute("userinfo", ndto);
+		NaememberDto gdto = (NaememberDto) session.getAttribute("userinfo");
+		if(gdto.getUserstatus().equals("R")) {
+			service.wakeUp(gdto.getMemberseq());
+		}
+		return "Naemember/login";
+		}
 	
-	return "Naemember/loginPage";
-	}
-
-	// 로그인 성공시 메인으로 이동
-	@RequestMapping(value = "/result.do", method = RequestMethod.GET)
-	public String maingo(Authentication user, Model model,NaememberDto dto, HttpSession session) {
-	UserDetails userdto = (UserDetails) user.getPrincipal();
-	model.addAttribute("user", userdto.toString());
-	NaememberDto ndto = service.encLogin(userdto.getUsername());
-	session.setAttribute("userinfo", ndto);
-	return "Naemember/login";
-	}
-	
-	
-	
+		// 아이디 찾기
+		@RequestMapping(value = "/searchId.do", method = RequestMethod.GET)
+		public String idSearch() {
+			return "Naemember/searchId";
+		}
+		
 }

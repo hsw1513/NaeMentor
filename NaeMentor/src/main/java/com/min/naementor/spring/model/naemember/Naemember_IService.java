@@ -63,4 +63,13 @@ public interface Naemember_IService {
 	 * @return 로그인 시도 횟수
 	 */
 	public boolean loginCount(Map<String, Object> map);
+	
+	/**
+	 * 휴면회원(R)이 로그인 시 상태 변경(A)
+	 * @param memberseq
+	 * @return 휴면회원 상태 변경(A)
+	 */
+	public boolean wakeUp(String memberseq);
+	
+	
 }
