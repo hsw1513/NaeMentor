@@ -119,9 +119,9 @@ public class Notiquestion_ServiceImpl implements Notiquestion_IService {
 	 * @return 성공여부 (성공 true)
 	 */
 	@Override
-	public List<NotiQuestionDto> allOneToOneU() {
-		log.info("allOneToOneU 전체글 조회 (사용자)");
-		return dao.allOneToOneU();
+	public List<NotiQuestionDto> allOneToOneU(String memberseq) {
+		log.info("allOneToOneU 전체글 조회 (사용자)", memberseq);
+		return dao.allOneToOneU(memberseq);
 	}
 
 	/**

@@ -19,7 +19,7 @@ import com.min.naementor.dtos.NotiQuestionDto;
 import com.min.naementor.spring.model.notiquestion.Notiquestion_IService;
 
 @Controller
-public class Notiquestion_CTRL {
+public class Notification_CTRL {
 
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	
@@ -75,11 +75,18 @@ public class Notiquestion_CTRL {
 		}
 	}
 	
+	@RequestMapping(value="Notification_boardModify.do", method = RequestMethod.GET)
+	public String notiboardModify(Model model, String adminseq) {
+		log.info("notiboard notiboardModify:\t {}", new Date());
+		model.addAttribute("dto", service.searchNoti(adminseq));
+		return "Notiquestion/Notification_boardModify";
+	}
+	
+	@RequestMapping(value="NotiModify.do", method = RequestMethod.POST)
 	public String notiModify(NotiQuestionDto dto) {
 		log.info("notiboard notiModify:\t {}", dto);
 		service.modifyNoti(dto);
-		return "redirect:/Notification_boardDetail.do";
+		return "redirect:/Notification_boardDetail.do?adminseq="+dto.getAdminseq();
 	}
-	
 	
 } 

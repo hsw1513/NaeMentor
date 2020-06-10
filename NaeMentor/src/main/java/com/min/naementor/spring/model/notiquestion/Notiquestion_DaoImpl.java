@@ -69,8 +69,8 @@ public class Notiquestion_DaoImpl implements Notiquestion_IDao {
 	}
 
 	@Override
-	public List<NotiQuestionDto> allOneToOneU() {
-		return sqlSession.selectList(NS+"allOneToOneU");
+	public List<NotiQuestionDto> allOneToOneU(String memberseq) {
+		return sqlSession.selectList(NS+"allOneToOneU", memberseq);
 	}
 
 	@Override
