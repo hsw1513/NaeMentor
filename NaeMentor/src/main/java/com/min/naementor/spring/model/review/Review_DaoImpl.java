@@ -25,8 +25,8 @@ public class Review_DaoImpl implements Review_IDao {
 	}
 
 	@Override
-	public boolean insertSchedule(MemberScheduleDto dto) {
-		return session.insert(NS+"insertSchedule", dto)>0?true:false;
+	public boolean insertReview(ReviewDto dto) {
+		return session.insert(NS+"insertReview", dto)>0?true:false;
 	}
 
 }

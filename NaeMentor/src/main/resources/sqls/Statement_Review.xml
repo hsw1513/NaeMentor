@@ -34,7 +34,7 @@
 		WHERE m.MENTEESEQ = #{menteeseq}
 	</select>
 <!-- 멘토링 종료 후 3일간 공고글 에서 입력(작성자, 멘토링 상대, 작성일, 멘토링 날짜, 내용, 별점 입력)  -->
-	<insert id="insertSchedule" parameterType="MSDto">
+	<insert id="insertReview" parameterType="MSDto">
 		INSERT INTO REVIEW
 		(REVIEWSEQ, BOARDSEQ, CONTENT, WRITEDATE, DELFLAG, MENTORSTAR, MENTEESTAR)
 		VALUES(REVIEWSEQ.NEXTVAL, #{boardseq}, #{content}, SYSDATE, 'N', #{mentorstar}, #{menteestar});

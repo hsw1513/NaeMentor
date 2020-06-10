@@ -19,9 +19,9 @@ public interface Review_IService {
 	 */
 	public List<ReviewDto> denyMSearch(String menteeseq);
 	/**
-	 * 
-	 * @param dto
-	 * @return
+	 * 스케줄 입력
+	 * @param MemberScheduleDto(날짜/장소)
+	 * @return boolean(true: 입력 성공)
 	 */
-	public boolean insertSchedule(MemberScheduleDto dto);
+	public boolean insertReview(ReviewDto dto);
 }
