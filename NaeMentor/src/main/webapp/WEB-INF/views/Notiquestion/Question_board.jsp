@@ -12,56 +12,75 @@
 	<%@include file="/WEB-INF/views/topMenu.jsp"%>
 	<div id="container">
 		<h1>문의 게시판</h1>
-		<div style="text-align: center; margin-top: 20px;">
-			<input type="button" value="새글쓰기" onclick ="questionBorardWrite()">
-		</div>
 		<form action="./Notification_boardMultiDel.do" id="delmChk" method="post" onsubmit="return multiDelChk()">
+<!-- 		사용자만 보이게 -->
+		<input type="button" value="문의 글쓰기" onclick ="notiBorardWrite()">
 		<div>
 			<table class="table table-hover">
 				<tr>
-						<th>제목</th>						
+					<th><input type="checkbox" onclick="checkAll(this.checked)"></th>
+						<th>글 번호</th>
+						<th>제목</th>
+						<th>작성자</th>
+						<th>작성일</th>
+						<th>삭제여부</th>
+				</tr>
+		 		<c:forEach var="dto" items="${lists}" varStatus="vs">
+		 			<tr>
+					<td><input type="checkbox" name="chks" value="${dto.adminseq}"></td>
+						<td>${fn:length(lists) - vs.index}</td>
 						<td>
+							<a title="${dto.title}" href="./Question_boardDetail.do?adminseq=${dto.adminseq}" style="color: black;">
 									<c:choose>
 										<c:when test="${fn:length(dto.title)>10 }">
 											${fn:substring(dto.title,0,10)}...
 										</c:when>
 										<c:otherwise>${dto.title}</c:otherwise>
 									</c:choose> 
+							</a>
 						</td>
-				</tr>
-				<tr>
-						<th>작성일</th>
+						<td>관리자</td>
 						<td>${dto.writedate}</td>
-				</tr>
-				<tr>
-						<th>삭제여부</th>
+<!-- 					관리자만 보이게 -->
 						<td>${dto.delflag}</td>
-				</tr>
-				<tr>
-						<th>작성자</th>
-						<td>작성자: 수정 필요</td>
-				</tr>
-				<tr>
-						<td style="text-align: center; margin-top: 20px;">
-							<input type="button" value="수정">
-							<input type="button" value="삭제">
-<!-- 							관리자만 -->
-							<input type="button" value="답변">
-						</td>
-				</tr>
-				 <c:if test="${empty lists}">
-		 		<tr>
-		 		<th colspan="5">문의 글을 남겨주세요.</th>
-		 		</tr>
-		 		</c:if>
+					</tr>
+		 		</c:forEach>
 			</table>
 		</div>
+<!-- 			관리자만 보이게-->
+		<div style="text-align: center; margin-top: 20px;">
+			<input type="submit" value="삭제" >
+		</div>
 		</form>
-		
 		<script type="text/javascript">
-			function questionBorardWrite(){
-				location.href="./Question_boardWrite.do";
+			function notiBorardWrite(){
+				location.href="./Notification_boardWrite.do";
 			}
+			function checkAll(bool) {
+				var chks = document.getElementsByName('chk');
+				for (var i = 0; i < chks.length; i++) {
+					chks[i].checked=bool;
+				}
+			}
+			function multiDelChk(){
+				   var chks = document.getElementsByName('chks');
+				   var cntChecked = 0;
+				   var delChk = new Array();
+				   for (var i = 0; i < chks.length; i++) {
+				      if (chks[i].checked) {
+				         cntChecked++;
+				         delChk.push(chks[i].value);
+				      }
+				   }
+				   if (cntChecked>0) {
+					  var mchk = document.getElementById("delmChk").action;
+					  mchk = mchk + "?chks="+delChk;
+				      return true;
+				   }else{
+				      alert("선택된 글이 없습니다.");
+				      return false;
+				   }
+				}
 		</script>
 	</div>
 	<%@include file="/WEB-INF/views/footer.jsp"%>

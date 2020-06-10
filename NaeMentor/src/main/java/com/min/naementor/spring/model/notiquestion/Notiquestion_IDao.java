@@ -66,7 +66,7 @@ public interface Notiquestion_IDao {
 	 * 1:1 문의 게시판 전체글 조회 (사용자)
 	 * @return 1:1 문의 게시판 전체글 리스트 정보
 	 */
-	public List<NotiQuestionDto> allOneToOneU();
+	public List<NotiQuestionDto> allOneToOneU(String memberseq);
 	
 	/**
 	 * 1:1 문의 게시판 상세글 조회 (searchOneToOne)

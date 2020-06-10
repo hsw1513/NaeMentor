@@ -22,11 +22,15 @@
 		<div style="text-align: center; margin-top: 20px;">
 <!-- 			관리자만 보이게-->
 			<input type="button" name="btn" onclick="notidel()" value="삭제" >
+			<input type="button" name="btn" onclick="notilist()" value="목록보기" >
 			<input type="button" name="btn" onclick="notimod()" value="수정">
 		</div>
 		<script type="text/javascript">
 			function notidel(){
 				location.href="./Notification_boardDelete.do?adminseq="+${dto.adminseq};
+			}
+			function notilist(){
+				location.href="./Notification_board.do";
 			}
 			function notimod(){
 				location.href="./Notification_boardModify.do?adminseq="+${dto.adminseq};

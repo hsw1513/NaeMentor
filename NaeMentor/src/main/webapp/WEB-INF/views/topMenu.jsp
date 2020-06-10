@@ -21,6 +21,7 @@
     		<li><a href="./boardList.do">게시판</a></li>
     		<li><a href="./FindingMentor_board.do">FindgingMentor보드로 이동</a></li>
     		<li><a href="./Notification_board.do">공지사항</a></li>
+    		<li><a href="./Question_board.do">1:1 문의</a></li>
 <%--     	<c:if test="${fn:trim(mem.auth) eq 'U'}"> --%>
 <%--     	</c:if> --%>
 <%--     	<c:if test="${fn:trim(mem.auth) eq 'A'}"> --%>

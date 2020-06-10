@@ -11,7 +11,7 @@
 <body>
 	<%@include file="/WEB-INF/views/topMenu.jsp"%>
 	<div id="container">
-		<h1>자 이제 시작!</h1>
+		<h1>공지사항 게시판</h1>
 		<form action="./Notification_boardMultiDel.do" id="delmChk" method="post" onsubmit="return multiDelChk()">
 		<div>
 			<table class="table table-hover">
@@ -21,7 +21,9 @@
 						<th>제목</th>
 						<th>작성자</th>
 						<th>작성일</th>
+					<c:if test="${userinfo.auth eq 'ROLE_A'}">	
 						<th>삭제여부</th>
+					</c:if>
 				</tr>
 		 		<c:forEach var="dto" items="${lists}" varStatus="vs">
 		 			<tr>
@@ -39,8 +41,9 @@
 						</td>
 						<td>관리자</td>
 						<td>${dto.writedate}</td>
-<!-- 					관리자만 보이게 -->
-						<td>${dto.delflag}</td>
+						<c:if test="${userinfo.auth eq 'ROLE_A'}">
+							<td>${dto.delflag}</td>
+						</c:if>
 					</tr>
 		 		</c:forEach>
 			</table>
