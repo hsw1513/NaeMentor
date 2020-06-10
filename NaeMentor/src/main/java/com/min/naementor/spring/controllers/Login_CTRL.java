@@ -69,9 +69,11 @@ public class Login_CTRL {
 
 
 	@RequestMapping(value = "/result.do", method = RequestMethod.GET)
-	public String maingo(Authentication user, Model model) {
+	public String maingo(Authentication user, Model model,NaememberDto dto, HttpSession session) {
 	UserDetails userdto = (UserDetails) user.getPrincipal();
 	model.addAttribute("user", userdto.toString());
+	NaememberDto ndto = service.encLogin(userdto.getUsername());
+	session.setAttribute("userinfo", ndto);
 	return "Naemember/login";
 	}
 	
