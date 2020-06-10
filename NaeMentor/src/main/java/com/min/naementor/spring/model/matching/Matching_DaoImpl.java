@@ -14,8 +14,8 @@ public class Matching_DaoImpl implements Matching_IDao{
 	private SqlSessionTemplate session;
 	private final String NS = "com.min.naementor.matching.";
 	@Override
-	public List<MatchingDto> chkMatching(String boardseq) {
-		return session.selectList(NS+"chkMatching", boardseq);
+	public MatchingDto chkMatching(String boardseq) {
+		return session.selectOne(NS+"chkMatching", boardseq);
 	}
 	
 }

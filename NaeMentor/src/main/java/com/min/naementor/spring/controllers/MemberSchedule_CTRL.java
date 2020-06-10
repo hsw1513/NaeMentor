@@ -21,6 +21,10 @@ public class MemberSchedule_CTRL {
 	@RequestMapping("/schedule.do")
 	public String schedule(String boardseq, Model model) {
 		model.addAttribute("boardseq", boardseq);
+		MemberScheduleDto dto = service.chkSchedule(boardseq);
+		if(dto != null) {
+			model.addAttribute("schedule", dto);	
+		}
 		return "MemberSchedule/schedule";
 	}
 	

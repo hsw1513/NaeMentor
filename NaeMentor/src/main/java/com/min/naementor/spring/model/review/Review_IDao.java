@@ -1,8 +1,8 @@
 package com.min.naementor.spring.model.review;
 
 import java.util.List;
+import java.util.Map;
 
-import com.min.naementor.dtos.MemberScheduleDto;
 import com.min.naementor.dtos.ReviewDto;
 
 public interface Review_IDao {
@@ -19,9 +19,39 @@ public interface Review_IDao {
 	 */
 	public List<ReviewDto> denyMSearch(String menteeseq);
 	/**
-	 * 
-	 * @param dto
-	 * @return
+	 * 멘토의 후기입력 조회
+	 * @param boardseq
+	 * @return boolean(true: 입력 가능)
 	 */
-	public boolean insertReview(ReviewDto dto);
+	public boolean chkReviewMentor(String boardseq);
+	/**
+	 * 멘토의 후기 입력
+	 * @param dto
+	 * @return boolean(true: 입력 성공)
+	 */
+	public boolean insertReviewMentor(ReviewDto dto);
+	/**
+	 * 멘티의 누적별점 추가
+	 * @param map(memberseq, menteeaccstar)
+	 * @return boolean(true: 갱신 성공)
+	 */
+	public boolean updateMenteeAccStar(Map<String,String> map);
+	/**
+	 * 멘티의 후기입력 조회
+	 * @param boardseq
+	 * @return boolean(true: 입력 가능)
+	 */
+	public boolean chkReviewMentee(String boardseq);
+	/**
+	 * 멘티의 후기 입력
+	 * @param dto
+	 * @return boolean(true: 입력 성공)
+	 */
+	public boolean insertReviewMentee(ReviewDto dto);
+	/**
+	 * 멘토의 누적별점 추가
+	 * @param map(memberseq, mentoaccstar)
+	 * @return boolean(true: 갱신 성공)
+	 */
+	public boolean updateMentoAccStar(Map<String,String> map);
 }

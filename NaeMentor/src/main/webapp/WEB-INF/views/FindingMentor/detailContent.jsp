@@ -87,10 +87,12 @@
 	</c:if>
 	
 	<c:if test="${detail.matchingchk eq 'N'}">
+	<c:if test="${userinfo.memberseq eq detail.memberseq}">
 	<button onclick="applyMentor()">멘토링 신청</button>
+	</c:if>
 	<div>
-		<h1>신청한 멤버수</h1>
 		<table>
+			<tr><td>신청 멘토 목록</td></tr>
 			<c:forEach var="memtors" items="${findMentor}">
 			<tr><td>
 			<button onclick="matching(this.title, this.name)" name="${memtors.nickname}" title="${memtors.memberseq}">${memtors.nickname}</button>

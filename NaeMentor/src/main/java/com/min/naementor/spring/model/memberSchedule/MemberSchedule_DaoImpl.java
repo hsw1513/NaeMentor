@@ -27,4 +27,9 @@ public class MemberSchedule_DaoImpl implements MemberSchedule_IDao{
 		return session.delete(NS+"deleteSchedule", boardseq)>0?true:false;
 	}
 
+	@Override
+	public MemberScheduleDto chkSchedule(String boardseq) {
+		return session.selectOne(NS+"chkSchedule", boardseq);
+	}
+
 }

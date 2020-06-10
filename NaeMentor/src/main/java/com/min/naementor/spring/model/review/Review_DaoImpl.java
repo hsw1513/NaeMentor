@@ -1,12 +1,12 @@
 package com.min.naementor.spring.model.review;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.min.naementor.dtos.MemberScheduleDto;
 import com.min.naementor.dtos.ReviewDto;
 @Repository
 public class Review_DaoImpl implements Review_IDao {
@@ -25,8 +25,36 @@ public class Review_DaoImpl implements Review_IDao {
 	}
 
 	@Override
-	public boolean insertReview(ReviewDto dto) {
-		return session.insert(NS+"insertReview", dto)>0?true:false;
+	public boolean chkReviewMentor(String boardseq) {
+		int i = session.selectOne(NS+"chkReviewMentor", boardseq);
+		return (i==0)?true:false;
 	}
+
+	@Override
+	public boolean insertReviewMentor(ReviewDto dto) {
+		return session.insert(NS+"insertReviewMentor", dto)>0?true:false;
+	}
+
+	@Override
+	public boolean chkReviewMentee(String boardseq) {
+		int i = session.selectOne(NS+"chkReviewMentee", boardseq);
+		return (i==0)?true:false;
+	}
+
+	@Override
+	public boolean insertReviewMentee(ReviewDto dto) {
+		return session.insert(NS+"insertReviewMentee", dto)>0?true:false;
+	}
+
+	@Override
+	public boolean updateMenteeAccStar(Map<String, String> map) {
+		return session.update(NS+"updateMenteeAccStar", map)>0?true:false;
+	}
+
+	@Override
+	public boolean updateMentoAccStar(Map<String, String> map) {
+		return session.update(NS+"updateMentoAccStar", map)>0?true:false;
+	}
+
 
 }

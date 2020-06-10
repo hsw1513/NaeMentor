@@ -17,7 +17,7 @@ public class Matching_ServiceImpl implements Matching_IService{
 	private Matching_IDao dao;
 	
 	@Override
-	public List<MatchingDto> chkMatching(String boardseq) {
+	public MatchingDto chkMatching(String boardseq) {
 		log.info("Matching_ServiceImpl chkMatching \t {}",boardseq);
 		return dao.chkMatching(boardseq);
 	}

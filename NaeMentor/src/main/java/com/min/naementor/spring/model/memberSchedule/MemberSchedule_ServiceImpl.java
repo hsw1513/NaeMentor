@@ -31,4 +31,10 @@ public class MemberSchedule_ServiceImpl implements MemberSchedule_IService{
 		return dao.deleteSchedule(boardseq);
 	}
 
+	@Override
+	public MemberScheduleDto chkSchedule(String boardseq) {
+		log.info("MemberSchedule_ServiceImpl chkSchedule {}",boardseq);
+		return dao.chkSchedule(boardseq);
+	}
+
 }
