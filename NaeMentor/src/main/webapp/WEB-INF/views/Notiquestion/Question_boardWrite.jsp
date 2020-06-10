@@ -4,13 +4,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>공지사항 작성</title>
+<title>문의글 작성</title>
 </head>
 <script src="//cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
 <body>
 <%@include file="/WEB-INF/views/topMenu.jsp"%>
 	<div id="container">
-	<form action="./NotiWrite.do" method="post">
+	<form action="./QuesWrite.do" method="post">
 		<table class="table talbe-bordered">
 			<tr>
 				<th>제목</th>
@@ -22,6 +22,7 @@
 			</tr>
 		</table>
 		<div>
+			<input type="reset" value="초기화"/>
 			<input type="button" value="글 작성" onclick="save()"/>
 		</div>
 	</form>
