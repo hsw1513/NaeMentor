@@ -17,20 +17,18 @@ public class ProfileDto implements Serializable {
 	private String mentorcnt   ;
 	private String mentoaccstar;
 	private String filechk     ;
-	
-
+	private String email;
 
 	private AttachFileDto attachfiledto;
 	
 	public ProfileDto() {
 		// TODO Auto-generated constructor stub
 	}
-
-	
 	
 
 	public ProfileDto(String memberseq, String photo, String school, String major, String career, String certificate,
-			String specialfield, String pmdate, String mentorcnt, String mentoaccstar, String filechk, AttachFileDto attachfiledto) {
+			String specialfield, String pmdate, String mentorcnt, String mentoaccstar, String filechk, String email,
+			AttachFileDto attachfiledto) {
 		super();
 		this.memberseq = memberseq;
 		this.photo = photo;
@@ -43,17 +41,28 @@ public class ProfileDto implements Serializable {
 		this.mentorcnt = mentorcnt;
 		this.mentoaccstar = mentoaccstar;
 		this.filechk = filechk;
+		this.email = email;
 		this.attachfiledto = attachfiledto;
 	}
+
+	
 
 	@Override
 	public String toString() {
 		return "ProfileDto [memberseq=" + memberseq + ", photo=" + photo + ", school=" + school + ", major=" + major
 				+ ", career=" + career + ", certificate=" + certificate + ", specialfield=" + specialfield + ", pmdate="
 				+ pmdate + ", mentorcnt=" + mentorcnt + ", mentoaccstar=" + mentoaccstar + ", filechk=" + filechk
-				+ ", attachfiledto=" + attachfiledto + "]";
+				+ ", email=" + email + ", attachfiledto=" + attachfiledto + "]";
 	}
 
+	public String getEmail() {
+		return email;
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
 	public String getMemberseq() {
 		return memberseq;
 	}
