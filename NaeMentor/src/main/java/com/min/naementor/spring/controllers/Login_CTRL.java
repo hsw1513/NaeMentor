@@ -100,7 +100,7 @@ public class Login_CTRL {
 	
 		// 아이디 찾기
 		@RequestMapping(value = "/searchId.do", method = RequestMethod.GET)
-		public String idSearch() {
+		public String idSearch(String phone) {
 			return "Naemember/searchId";
 		}
 		
