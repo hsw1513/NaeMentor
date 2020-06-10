@@ -21,4 +21,10 @@ public interface MemberSchedule_IDao {
 	 * @return boolean(true: 삭제 성공)
 	 */
 	public boolean deleteSchedule(String boardseq);
+	/**
+	 * 일정 조회
+	 * @param boardseq
+	 * @return MemberScheduleDto(일정/장소)
+	 */
+	public MemberScheduleDto chkSchedule(String boardseq);
 }

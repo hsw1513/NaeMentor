@@ -9,7 +9,7 @@ public interface Matching_IService {
 	/**
 	 * 매칭 정보 가져오기
 	 * @param boardseq
-	 * @return List<MatchingDto>
+	 * @return MatchingDto
 	 */
-	public List<MatchingDto> chkMatching(String boardseq);
+	public MatchingDto chkMatching(String boardseq);
 }
