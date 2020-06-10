@@ -1,9 +1,11 @@
 package com.min.naementor.spring.controllers;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.management.Notification;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,13 +55,31 @@ public class Notiquestion_CTRL {
 	
 	@RequestMapping(value="Notification_boardDelete.do", method = RequestMethod.GET)
 	public String notiDel(String adminseq) {
+		log.info("notiboard notiDel:\t", adminseq);
 		service.deleteNoti(adminseq);
 		return "redirect:/Notification_board.do";
 	}
 	
-//	public String notiMultiDel(String[] chks) {
-//		
-//		return "redirect:/Notification_board.do";
-//	}
+	@RequestMapping(value="Notification_boardMultiDel.do", method = RequestMethod.POST)
+	public String notiMultiDel(Model model, String[] chks) {
+		log.info("notiboard notiMultiDel:\t {}", Arrays.toString(chks));
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("adminseqs", chks);
+		int n = service.multiDeleteNoti(map);
+		if(n>0) {
+			return "redirect:/Notification_board.do";
+		}else {
+			model.addAttribute("url", "index.jsp");
+			model.addAttribute("msg", "삭제 실패");
+			return "redirect:/Notification_board.do";
+		}
+	}
+	
+	public String notiModify(NotiQuestionDto dto) {
+		log.info("notiboard notiModify:\t {}", dto);
+		service.modifyNoti(dto);
+		return "redirect:/Notification_boardDetail.do";
+	}
+	
 	
 } 
