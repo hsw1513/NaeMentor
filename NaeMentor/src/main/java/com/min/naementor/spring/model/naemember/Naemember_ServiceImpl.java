@@ -26,7 +26,7 @@ public class Naemember_ServiceImpl implements Naemember_IService {
 	 */
 	@Override
 	public boolean signUp(NaememberDto dto) {
-		log.info("signUp 회원가입, {}", dto);
+		log.info("signUp 회원가입, \n {}", dto);
 		return dao.signUp(dto);
 	}
 
@@ -40,17 +40,29 @@ public class Naemember_ServiceImpl implements Naemember_IService {
 		log.info("idDupleChk 아이디 중복체크, {}", email);
 		return dao.idDupleChk(email);
 	}
-
+	
 	/**
 	 * <h2>프로필 입력</h2>
 	 * @param 사진, 학교, 전공, 경력, 증명서, 전문분야
-	 * @return 데이터 입력 성공시 true, 실패시 false
+	 * @return 입력 성공시 true, 입력 실패시 false
 	 */
 	@Override
 	public boolean insertProFile(ProfileDto dto) {
 		log.info("insertProFile 프로필 입력, {}", dto);
 		return dao.insertProFile(dto);
 	}
+
+	/**
+	 * <h2>회원기입 취소</h2>
+	 * @param 회원번호
+	 * @return 취소 성공시 true, 취소 실패시 false
+	 */
+	@Override
+	public boolean cancelSignUp(String memberseq) {
+		log.info("cancelSignUp 회원가입 취소, {}", memberseq);
+		return dao.cancelSignUp(memberseq);
+	}
+
 
 	/**
 	 * <h2>닉네임 중복체크</h2>
@@ -95,5 +107,7 @@ public class Naemember_ServiceImpl implements Naemember_IService {
 		log.info("loginCount 로그인 카운트 증가, {}", map);
 		return dao.loginCount(map);
 	}
+
+	
 
 }

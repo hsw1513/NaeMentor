@@ -31,6 +31,13 @@ public interface Naemember_IDao {
 	public boolean insertProFile(ProfileDto dto);
 	
 	/**
+	 * 회원가입취소(cancelSignUp)
+	 * @param 회원번호
+	 * @return 회원가입 취소 여부(true 성공)
+	 */
+	public boolean cancelSignUp(String memberseq);
+	
+	/**
 	 * 닉네임 중복검사(nickDupleChk)
 	 * @param 중복확인 값(닉네임)
 	 * @return 사용가능 여부(true 사용가능)

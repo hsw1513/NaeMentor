@@ -29,6 +29,12 @@
 				#{major}, #{career}, #{certificate}, #{specialfield}, '', 0, 0, 'N')
 	</insert>
 	
+	<!-- 프로필 취소시 회원정보 입력한 것 취소 -->
+	<delete id="cancelSignUp" parameterType="java.lang.String">
+		DELETE FROM NAEMEMBER
+			WHERE MEMBERSEQ=#{memberseq}
+	</delete>	
+		
 	<!-- 닉네임 중복검사 -->
 	<select id="nickDupleChk" parameterType="java.lang.String" resultType="java.lang.Integer">
 		SELECT COUNT(NICKNAME)

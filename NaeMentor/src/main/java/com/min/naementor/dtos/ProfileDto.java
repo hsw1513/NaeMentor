@@ -18,6 +18,8 @@ public class ProfileDto implements Serializable {
 	private String mentoaccstar;
 	private String filechk     ;
 	
+	
+
 	private AttachFileDto attachfiledto;
 	
 	public ProfileDto() {
@@ -25,8 +27,7 @@ public class ProfileDto implements Serializable {
 	}
 
 	public ProfileDto(String memberseq, String photo, String school, String major, String career, String certificate,
-			String specialfield, String pmdate, String mentorcnt, String mentoaccstar, String filechk,
-			ProfileDto profiledto) {
+			String specialfield, String pmdate, String mentorcnt, String mentoaccstar, String filechk, ProfileDto profiledto) {
 		super();
 		this.memberseq = memberseq;
 		this.photo = photo;
@@ -41,14 +42,16 @@ public class ProfileDto implements Serializable {
 		this.filechk = filechk;
 		this.attachfiledto = attachfiledto;
 	}
+	
 
 	@Override
 	public String toString() {
 		return "ProfileDto [memberseq=" + memberseq + ", photo=" + photo + ", school=" + school + ", major=" + major
 				+ ", career=" + career + ", certificate=" + certificate + ", specialfield=" + specialfield + ", pmdate="
 				+ pmdate + ", mentorcnt=" + mentorcnt + ", mentoaccstar=" + mentoaccstar + ", filechk=" + filechk
-				+ ", profiledto=" + attachfiledto + "]";
+				+ ",  attachfiledto=" + attachfiledto + "]";
 	}
+	
 
 	public String getMemberseq() {
 		return memberseq;

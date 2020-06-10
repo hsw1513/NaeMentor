@@ -44,7 +44,12 @@ public class Naemember_DaoImpl implements Naemember_IDao {
 		int cnt = sqlSession.insert(NS+"insertProFile", dto);
 		return (cnt>0)?true:false;
 	}
-
+	
+	@Override
+	public boolean cancelSignUp(String memberseq) { // 회원가입 취소
+		int cnt = sqlSession.delete(NS+"cancelSignUp", memberseq);
+		return (cnt>0)?true:false;
+	}
 	
 	@Override
 	public boolean nickDupleChk(String nickname) { // 닉네임 중복체크
@@ -68,5 +73,7 @@ public class Naemember_DaoImpl implements Naemember_IDao {
 		int cnt = sqlSession.update(NS+"loginCount", map);
 		return (cnt>0)?true:false;
 	}
+
+	
 
 }
