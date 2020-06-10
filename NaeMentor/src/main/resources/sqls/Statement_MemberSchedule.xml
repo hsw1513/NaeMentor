@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.min.naementor.memberSchedule">
+
+<insert id="insertSchedule" parameterType="MSDto">
+	INSERT INTO MEMBERSCHEDULE
+	(BOARDSEQ, MENTORINGPLACE, MENTORINGTIME)
+	VALUES(#{boardseq}, #{mentoringplace}, TO_DATE (#{mentoringtime}, 'yyyymmddhh24mi'))
+</insert>
+<update id="modifySchedule" parameterType="MSDto">
+	UPDATE MEMBERSCHEDULE
+	SET MENTORINGPLACE=#{mentoringplace}, MENTORINGTIME= TO_DATE (#{mentoringtime}, 'yyyymmddhh24mi')
+	WHERE BOARDSEQ=#{boardseq}
+</update>
+<update id="deleteSchedule" parameterType="java.lang.String">
+	DELETE FROM MEMBERSCHEDULE
+	WHERE BOARDSEQ=#{boardseq}
+</update>
+
 </mapper>

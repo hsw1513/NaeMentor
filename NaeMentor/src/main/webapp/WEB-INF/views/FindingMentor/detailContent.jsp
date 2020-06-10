@@ -87,6 +87,7 @@
 	</div>
 	<div>
 		<h1><a href="./review.do">후기게시판 이동</a></h1>
+		<h1><a href="./schedule.do">스케줄게시판 이동</a></h1>
 	</div>
 </div>
 <%@include file="/WEB-INF/views/footer.jsp"%>

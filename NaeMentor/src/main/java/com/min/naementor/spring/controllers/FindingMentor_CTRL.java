@@ -30,11 +30,14 @@ public class FindingMentor_CTRL {
 	@Autowired
 	private FindingMentor_IService service;
 	
+	// 게시판 리스트 
 	@RequestMapping("FindingMentor_board.do")
 	public String board(Model model) {
 		model.addAttribute("board_lists", service.selectAll());
 		return "FindingMentor/FindingMentor_board";
 	}
+	
+	// 상세보기
 	@RequestMapping(value = "detailContent.do", method = RequestMethod.GET)
 	public String detailContent(Model model, String memberseq, String boardseq , SplitUserComm comm) {
 		log.info("{}, {}",memberseq, boardseq);
@@ -50,6 +53,8 @@ public class FindingMentor_CTRL {
 		model.addAttribute("detail", dto);
 		return "FindingMentor/detailContent";
 	}
+	
+	// 단일 삭제
 	@RequestMapping("deleteContent.do")
 	public String deleteContent(String boardseq, String memberseq) {
 		Map<String, String> map = new HashMap<String, String>();
@@ -58,17 +63,23 @@ public class FindingMentor_CTRL {
 		service.deleteContent(map);
 		return "redirect:/FindingMentor_board.do";
 	}
+	
+	// 수정하기
 	@RequestMapping(value="modifyContent.do", method = RequestMethod.POST)
 	public String modifyContent(FindingMentorDto dto) {
 		log.info("{}",dto);
 		service.modifyContent(dto);
 		return "redirect:/FindingMentor_board.do";
 	}
+	
+	// 작성페이지로 이동
 	@RequestMapping("writeForm.do")
 	public String writeForm() {
 		log.info("{}",new Date());
 		return "FindingMentor/writeForm";
 	}
+	
+	// 글 작성하기
 	@RequestMapping(value="insertContent.do",method = RequestMethod.POST)
 	public String insertContent(FindingMentorDto dto) {
 		dto.setMemberseq("1");
@@ -76,6 +87,8 @@ public class FindingMentor_CTRL {
 		boolean chk = service.insertContent(dto);
 		return chk?"redirect:/FindingMentor_board.do":"redirect:/writeForm.do";
 	}
+	
+	// 게시글 신고
 	@RequestMapping(value="reportContentChk.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String reportContentChk( String boardseq, HttpServletResponse res) {
@@ -92,6 +105,8 @@ public class FindingMentor_CTRL {
 			return "false";
 		}
 	}
+	
+	// 멘토링 지원
 	@RequestMapping(value="applyMentor.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String applyMentor(String boardseq, HttpServletResponse res) {
@@ -108,6 +123,8 @@ public class FindingMentor_CTRL {
 			return "false";
 		}
 	}
+	
+	// 매칭 입력
 	@RequestMapping(value="matching.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String matching(MatchingDto dto, HttpServletResponse res) {
