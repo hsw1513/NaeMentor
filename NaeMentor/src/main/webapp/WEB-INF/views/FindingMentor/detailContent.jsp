@@ -71,24 +71,41 @@
 	전문분야<input type="text" name="specialfield" value="${detail.specialfield}"><br>
 	장소<input type="text" name="location" value="${detail.location}"><br>
 	내용<textarea rows="3" cols="20" name="content">${detail.content}</textarea><br>
+	
+	<c:if test="${userinfo.memberseq eq detail.memberseq}">
+	<c:if test="${detail.matchingchk eq 'N'}">
 	<button onclick="del()">삭제하기</button>
 	<input type="submit" value="제출하기">
+	</c:if>
+	</c:if>
 	</form>
+	
 	<button onclick="javascript:history.back(-1)">뒤로가기</button>
+	
+	<c:if test="${userinfo.memberseq ne detail.memberseq}">
 	<button onclick="report()">신고하기</button>
+	</c:if>
+	
+	<c:if test="${detail.matchingchk eq 'N'}">
 	<button onclick="applyMentor()">멘토링 신청</button>
 	<div>
 		<h1>신청한 멤버수</h1>
 		<table>
 			<c:forEach var="memtors" items="${findMentor}">
-			<tr><td><a onclick="matching(this.title, this.name)" name="${memtors.nickname}" title="${memtors.memberseq}">${memtors.nickname}</a></td></tr>
+			<tr><td>
+			<button onclick="matching(this.title, this.name)" name="${memtors.nickname}" title="${memtors.memberseq}">${memtors.nickname}</button>
+			</td></tr>
 			</c:forEach>
 		</table>
 	</div>
+	</c:if>
+	
+	<c:if test="${detail.matchingchk eq 'Y'}">
 	<div>
-		<h1><a href="./review.do">후기게시판 이동</a></h1>
-		<h1><a href="./schedule.do">스케줄게시판 이동</a></h1>
+		<h1><a href="./review.do?boardseq=${detail.boardseq}">후기게시판 이동</a></h1>
+		<h1><a href="./schedule.do?boardseq=${detail.boardseq}">스케줄게시판 이동</a></h1>
 	</div>
+	</c:if>
 </div>
 <%@include file="/WEB-INF/views/footer.jsp"%>
 </body>

@@ -1,12 +1,12 @@
 package com.min.naementor.spring.controllers;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,8 +81,9 @@ public class FindingMentor_CTRL {
 	
 	// 글 작성하기
 	@RequestMapping(value="insertContent.do",method = RequestMethod.POST)
-	public String insertContent(FindingMentorDto dto) {
-		dto.setMemberseq("1");
+	public String insertContent(FindingMentorDto dto, HttpSession session) {
+		NaememberDto ndto = (NaememberDto) session.getAttribute("userinfo");
+		dto.setMemberseq(ndto.getMemberseq());
 		log.info("{}",dto);
 		boolean chk = service.insertContent(dto);
 		return chk?"redirect:/FindingMentor_board.do":"redirect:/writeForm.do";
@@ -91,8 +92,9 @@ public class FindingMentor_CTRL {
 	// 게시글 신고
 	@RequestMapping(value="reportContentChk.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String reportContentChk( String boardseq, HttpServletResponse res) {
-		String memberseq = "1";
+	public String reportContentChk( String boardseq, HttpServletResponse res, HttpSession session) {
+		NaememberDto ndto = (NaememberDto) session.getAttribute("userinfo");
+		String memberseq = ndto.getMemberseq();
 		log.info("{}, {}",memberseq,boardseq);
 		res.setContentType("text/html; charset=utf-8");
 		Map<String, String> map = new HashMap<String, String>();
@@ -109,8 +111,9 @@ public class FindingMentor_CTRL {
 	// 멘토링 지원
 	@RequestMapping(value="applyMentor.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String applyMentor(String boardseq, HttpServletResponse res) {
-		String memberseq = "1";
+	public String applyMentor(String boardseq, HttpServletResponse res, HttpSession session) {
+		NaememberDto ndto = (NaememberDto) session.getAttribute("userinfo");
+		String memberseq = ndto.getMemberseq();
 		log.info("{}, {}",memberseq,boardseq);
 		res.setContentType("text/html; charset=utf-8");
 		Map<String, String> map = new HashMap<String, String>();
@@ -125,11 +128,12 @@ public class FindingMentor_CTRL {
 	}
 	
 	// 매칭 입력
-	@RequestMapping(value="matching.do", method = RequestMethod.POST)
+	@RequestMapping(value="/matching.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String matching(MatchingDto dto, HttpServletResponse res) {
+	public String matching(MatchingDto dto, HttpServletResponse res, HttpSession session) {
 		// 세션에 있는 memberseq를 사용합니다.
-		String memberseq = "1";
+		NaememberDto ndto = (NaememberDto) session.getAttribute("userinfo");
+		String memberseq = ndto.getMemberseq();
 		dto.setMenteeseq(memberseq);
 		log.info("{}",dto);
 		res.setContentType("text/html; charset=utf-8");
