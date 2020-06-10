@@ -9,8 +9,8 @@
 <body>
 
 	<form action="./logingo.do" method="POST">
-	아이디 : <input type="text" name="email"> <br>
-	비밀번호 : <input type="text" name="password"> <br>
+	아이디 : <input type="email" name="email"> <br>
+	비밀번호 : <input type="password" name="password"> <br>
 	<br>
 	<input name ="remember-me" type = "checkbox"/>로그인 유지
 	<input type="submit" value="제출"><br>

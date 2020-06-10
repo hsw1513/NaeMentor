@@ -9,9 +9,9 @@ import com.min.naementor.dtos.ProfileDto;
 public interface Naemember_IService {
 	
 	/**
-	 * 회원가입(signUp)
-	 * @param 회원가입 정보
-	 * @return 회원등록 성공 여부(true 성공)
+	 * 회원가입(signUp), 프로필 입력(insertProFile)
+	 * @param 회원가입 정보, 프로필 입력 정보
+	 * @return 회원등록 성공 여부(true 성공), 프로필 입력 성공여부(true 성공)
 	 */
 	public boolean signUp(NaememberDto dto);
 	
@@ -28,6 +28,13 @@ public interface Naemember_IService {
 	 * @return 프로필 입력 성공여부(true 성공)
 	 */
 	public boolean insertProFile(ProfileDto dto);
+	
+	/**
+	 * 회원가입취소(cancelSignUp)
+	 * @param 회원번호
+	 * @return 회원가입 취소 여부(true 성공)
+	 */
+	public boolean cancelSignUp(String memberseq);
 	
 	/**
 	 * 닉네임 중복검사(nickDupleChk)
