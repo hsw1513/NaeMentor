@@ -30,7 +30,8 @@
     <ul class="nav navbar-nav navbar-right">
       <li>
      	 <a href="./userInfo.do">
-      		<span class="glyphicon glyphicon-user">${mem.name}님 환영합니다.(${mem.auth eq 'U'?'일반':'관리자'})</span> 
+      		<span class="glyphicon glyphicon-user">${userinfo.nickname}님 환영합니다.</span> 
+<%--       		(${mem.auth eq 'U'?'일반':'관리자'}) --%>
       	</a>
      </li>
       <li>

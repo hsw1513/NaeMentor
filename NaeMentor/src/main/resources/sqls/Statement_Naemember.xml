@@ -83,7 +83,7 @@
 	
 	<!-- 암호화 로그인 -->
 	<select id="encLogin" parameterType="java.lang.String" resultMap="joinEncLogin">
-		SELECT p.MEMBERSEQ , EMAIL, PASSWORD , NICKNAME , 
+		SELECT p.MEMBERSEQ , n.EMAIL, PASSWORD , NICKNAME , 
 		  	 INTRODUCE , PHONE , BIRTHDAY ,
 		  	 GENDER , AUTH , USERSTATUS ,
 		   	 MENTORTIER , LOGINCNT , REPORTCNT, 
