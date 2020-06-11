@@ -80,6 +80,24 @@ public class Naemember_DaoImpl implements Naemember_IDao {
 		return (cnt>0)?true:false;
 	}
 
+	@Override
+	public String searchId(NaememberDto dto) {
+		return sqlSession.selectOne(NS+"searchId", dto);
+	}
+
+	@Override
+	public String searchPassword(NaememberDto dto) {
+		return sqlSession.selectOne(NS+"searchPassword", dto);
+	}
+
+	@Override
+	public boolean changePassword(NaememberDto dto) {
+		String encPassword = passwordEncoder.encode(dto.getPassword());
+		dto.setPassword(encPassword);
+		int cnt = sqlSession.update(NS+"changePassword", dto);
+		return (cnt>0)?true:false;
+	}
+
 	
 
 }

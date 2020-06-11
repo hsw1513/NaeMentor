@@ -71,5 +71,25 @@ public interface Naemember_IService {
 	 */
 	public boolean wakeUp(String memberseq);
 	
+	/**
+	 * 아이디 찾기
+	 * @param 휴대전화 번호(phone), 생년월일(birthday)
+	 * @return 아이디 정보(email)
+	 */
+	public String searchId(NaememberDto dto); 
 	
+	/**
+	 * 비밀번호 찾기
+	 * @param 이메일(email), 생년월일(birthday)
+	 * @return 보낼 이메일 주소(email)
+	 */
+	public String searchPassword(NaememberDto dto); 
+	
+	/**
+	 * 비밀번호 변경하기
+	 * @param 이메일(email)
+	 * @return 비밀번호 변경
+	 */
+	public boolean changePassword(NaememberDto dto);
+
 }

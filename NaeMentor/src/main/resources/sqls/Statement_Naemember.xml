@@ -29,7 +29,7 @@
 				#{major}, #{career}, #{certificate}, #{specialfield}, '', 0, 0, 'N')
 	</insert>
 	
-<!-- 	프로필 취소시 회원정보 입력한 것 취소 -->
+	<!-- 	프로필 취소시 회원정보 입력한 것 취소 -->
 	<delete id="cancelSignUp" parameterType="java.lang.String">
 		DELETE FROM NAEMEMBER
 			WHERE MEMBERSEQ=(SELECT MEMBERSEQ FROM NAEMEMBER n WHERE EMAIL = #{email})
@@ -119,22 +119,22 @@
 			WHERE MEMBERSEQ = #{memberseq} AND USERSTATUS = 'R'
 	</update>
 	
-	<!-- 아이디 찾기 -->
-	<select id="searchId" parameterType="java.lang.String" resultType="java.lang.String">
+	<!-- 아이디 찾기(휴대전화 번호, 생년월일로 Email 찾기) -->
+	<select id="searchId" parameterType="NMDto" resultType="java.lang.String">
 	  SELECT EMAIL
 		FROM NAEMEMBER 
-		  WHERE PHONE = #{phone} AND NOT USERSTATUS = 'D'
-	</select>
-		
-	<!-- 비밀번호 찾기 -->
-	<select id="searchPassword" parameterType="NMDto" resultType="java.lang.String">
-		SELECT EMAIL 
-			FROM NAEMEMBER  
-				WHERE EMAIL = #{email} AND BIRTHDAY = #{birthday} AND NOT USERSTATUS = 'D'	
+		  WHERE PHONE = #{phone} AND BIRTHDAY = #{birthday} AND NOT USERSTATUS = 'D'
 	</select>
 	
+	<!-- 비밀번호 찾기(이메일, 생년월일로 Email 찾기) -->
+	<select id="searchPassword" parameterType="NMDto" resultType="java.lang.String">
+	  SELECT EMAIL
+		FROM NAEMEMBER 
+		  WHERE EMAIL = #{email} AND BIRTHDAY = #{birthday} AND NOT USERSTATUS = 'D'
+	</select>
+		
 	<!-- 비밀번호 변경 -->
-	<update id="changePassword" parameterType="java.util.Map">
+	<update id="changePassword" parameterType="NMDto">
 		UPDATE NAEMEMBER 
 			SET PASSWORD = #{password}
 				WHERE EMAIL = #{email}

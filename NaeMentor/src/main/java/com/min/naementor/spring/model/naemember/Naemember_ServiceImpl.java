@@ -108,10 +108,43 @@ public class Naemember_ServiceImpl implements Naemember_IService {
 		return dao.loginCount(map);
 	}
 
+	/**
+	 * <h2>휴면회원 로그인시 회원상태 변경</h2>
+	 * @param 회원번호(memberseq)
+	 * @return 휴면회원 상태 변경(R->A)
+	 */
 	@Override
 	public boolean wakeUp(String memberseq) {
 		log.info("loginCount 회원상태 변경, {}", memberseq);
 		return dao.wakeUp(memberseq);
+	}
+
+	/**
+	 * <h2>아이디 찾기</h2>
+	 * @param 휴대전화 번호, 생년월일(phone, birthday)
+	 * @return 아이디(Email)
+	 */
+	@Override
+	public String searchId(NaememberDto dto) {
+		log.info("searchId 아이디 찾기, {}", dto);
+		return dao.searchId(dto);
+	}
+
+	/**
+	 * <h2>아이디 찾기</h2>
+	 * @param 이메일, 생년월일(phone, birthday)
+	 * @return 보낼 아이디(Email)
+	 */
+	@Override
+	public String searchPassword(NaememberDto dto) {
+		log.info("searchPassword 아이디 찾기, {}", dto);
+		return dao.searchPassword(dto);
+	}
+
+	@Override
+	public boolean changePassword(NaememberDto dto) {
+		log.info("searchPassword 비밀번호 변경, {}", dto);
+		return dao.changePassword(dto);
 	}
 
 	

@@ -1,8 +1,5 @@
 package com.min.naementor.spring.controllers;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -15,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.min.naementor.dtos.NaememberDto;
 import com.min.naementor.dtos.ProfileDto;
@@ -25,8 +21,11 @@ import com.min.naementor.spring.model.naemember.Naemember_IService;
 public class Login_CTRL {
 
 	private Logger log = LoggerFactory.getLogger(this.getClass());
+	
 	@Autowired
 	Naemember_IService service;
+	
+	
 	
 	// 로그인 페이지로 이동(기본페이지)
 	@RequestMapping(value = "/index.do", method = RequestMethod.GET)
@@ -98,10 +97,23 @@ public class Login_CTRL {
 		return "Naemember/login";
 		}
 	
-		// 아이디 찾기
-		@RequestMapping(value = "/searchId.do", method = RequestMethod.GET)
-		public String idSearch(String phone) {
-			return "Naemember/searchId";
+		// 아이디/비밀번호 찾기 페이지로 이동
+		@RequestMapping(value = "/searchIdPW.do", method = RequestMethod.GET)
+		public String idPwSearch(String phone) {
+			return "Naemember/searchIdPw";
 		}
+		
+		@RequestMapping(value = "/changePassword.do", method = RequestMethod.GET)
+		public String changePassword() {
+			return "Naemember/changePassword";
+		}
+		
+		@RequestMapping(value = "/newPassword.do", method = RequestMethod.POST)
+		public String newPassword(NaememberDto dto) {
+			service.changePassword(dto);
+			return "Naemember/loginPage";
+		}
+		
+		
 		
 }

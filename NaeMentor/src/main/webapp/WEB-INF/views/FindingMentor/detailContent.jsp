@@ -75,7 +75,7 @@
 	<c:if test="${userinfo.memberseq eq detail.memberseq}">
 	<c:if test="${detail.matchingchk eq 'N'}">
 	<button onclick="del()">삭제하기</button>
-	<input type="submit" value="제출하기">
+	<input type="submit" value="수정하기">
 	</c:if>
 	</c:if>
 	</form>

@@ -10,7 +10,7 @@
 <body>
 <%@include file="/WEB-INF/views/topMenu.jsp"%>
 <div id="container">
-	<form action="./insertContent.do" method="post">
+	<form action="./insertContent.do" method="post" enctype="multipart/form-data">
 		TITLE<input type="text" name="title"><br>
 		SPECIALFIELD
 		<select name="specialfield">
@@ -53,7 +53,9 @@
 			<option value="N">비대면</option>
 		</select><br>
 		LOCATION<input type="text" name="location"><br>
-		CONTENT<textarea id="editor" rows="20" cols="40" name="content"></textarea><br>
+		
+	CONTENT<textarea id="editor" rows="20" cols="40" name="content"></textarea><br>	
+		<input type="file" multiple="multiple" name="file">
 		<input type="submit" value="작성완료">
 	</form>
 </div>
@@ -65,14 +67,7 @@ window.onload = function(){
 			{filebrowserUploadUrl: "./upload.do",
 			 width: "800px"
 			});
-	
-	// select박스 설정
 	}
-	CKEDITOR.on('dialogDefinition', function ( ev ){
-	   if(ev.data.name == 'link'){
-	      ev.data.definition.getContents('target').get('linkTargetType')['default']='_blank';
-	   }
-		});
 
 </script>
 </body>
