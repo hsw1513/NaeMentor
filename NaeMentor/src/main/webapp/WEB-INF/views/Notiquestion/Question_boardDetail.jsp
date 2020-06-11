@@ -31,6 +31,9 @@
 			function queslist(){
 				location.href="./Question_board.do";
 			}
+			function quesreply(){
+				location.href="./Question_boardReply.do?adminseq="+${dto.adminseq};
+			}
 		</script>
 	</div>
 	<%@include file="/WEB-INF/views/footer.jsp"%>

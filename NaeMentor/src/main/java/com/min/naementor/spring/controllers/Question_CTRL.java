@@ -1,6 +1,9 @@
 package com.min.naementor.spring.controllers;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -68,5 +71,49 @@ public class Question_CTRL {
 		return "redirect:/Question_board.do";
 	}
 	
+	@RequestMapping(value="Question_boardMultiDel.do", method = RequestMethod.POST)
+	public String quesMultiDel(Model model, String[] chks) {
+		log.info("notiboard notiMultiDel:\t {}", Arrays.toString(chks));
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("adminseqs", chks);
+		int n = service.multiDeleteNoti(map);
+		if(n>0) {
+			return "redirect:/Question_board.do";
+		}else {
+			model.addAttribute("url", "index.jsp");
+			model.addAttribute("msg", "삭제 실패");
+			return "redirect:/Question_board.do";
+		}
+	}
+	
+	@RequestMapping(value="Question_boardModify.do", method = RequestMethod.GET)
+	public String quesboardModify(Model model, String adminseq) {
+		log.info("quesboard quesboardModify:\t {}", new Date());
+		model.addAttribute("dto", service.searchOneToOne(adminseq));
+		return "Notiquestion/Question_boardModify";
+	}
+
+	@RequestMapping(value="QuesModify.do", method = RequestMethod.POST)
+	public String quesModify(NotiQuestionDto dto) {
+		log.info("quesboard quesModify:\t {}", dto);
+		service.modifyOneToOne(dto);
+		return "redirect:/Question_board.do";
+	}
+	
+	@RequestMapping(value = "/Question_boardReply.do", method = RequestMethod.GET)
+	 public String replyForm(Model model, String adminseq) {
+	      NotiQuestionDto dto = service.searchOneToOne(adminseq);
+	      model.addAttribute("dto", dto);
+	      return "Notiquestion/Question_boardReply";
+	}
+
+	@RequestMapping(value = "/QuesReply.do", method = RequestMethod.POST)
+	public String quesReply(NotiQuestionDto dto, HttpSession session) {
+			log.info("quesboard quesReply:\t {}", dto);
+			NaememberDto ndto = (NaememberDto)session.getAttribute("userinfo");
+			dto.setMemberseq(ndto.getMemberseq());
+			int n = service.insertReply(dto);
+			return "redirect:/Question_board.do";
+	}
 	
 }
