@@ -17,6 +17,7 @@
 				<tr><th>등록일</th><td>${dto.writedate}</td></tr>
 				<tr><th>제목</th><td>${dto.title}</td></tr>
 				<tr><th>내용</th><td>${dto.content}</td></tr>
+				<tr><th>첨부파일</th><td><a href="${dto.attachfiledto.filepath}${dto.attachfiledto.searchfile}">${dto.attachfiledto.userfile}</a></td></tr>
 			</table>
 		</div>
 			<div style="text-align: center; margin-top: 20px;">

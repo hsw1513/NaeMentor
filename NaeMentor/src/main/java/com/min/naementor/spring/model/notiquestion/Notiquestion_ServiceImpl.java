@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.min.naementor.dtos.AttachFileDto;
 import com.min.naementor.dtos.NotiQuestionDto;
 
 @Service
@@ -86,7 +87,7 @@ public class Notiquestion_ServiceImpl implements Notiquestion_IService {
 	 * @return 성공여부 (성공 true)
 	 */
 	@Override
-	public int insertFile(NotiQuestionDto dto) {
+	public int insertFile(AttachFileDto dto) {
 		log.info("insertFile 첨부파일 등록", dto);
 		return dao.insertFile(dto);
 	}
@@ -97,7 +98,7 @@ public class Notiquestion_ServiceImpl implements Notiquestion_IService {
 	 * @return 성공여부 (성공 true)
 	 */
 	@Override
-	public int modifyFile(NotiQuestionDto dto) {
+	public int modifyFile(AttachFileDto dto) {
 		log.info("modifyFile 첨부파일 수정", dto);
 		return dao.modifyFile(dto);
 	}

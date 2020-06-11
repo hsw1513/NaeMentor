@@ -3,9 +3,13 @@ package com.min.naementor.spring.controllers;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.management.Notification;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,14 +18,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.min.naementor.dtos.AttachFileDto;
+import com.min.naementor.dtos.NaememberDto;
 import com.min.naementor.dtos.NotiQuestionDto;
+import com.min.naementor.spring.comm.AttachFile_Module;
 import com.min.naementor.spring.model.notiquestion.Notiquestion_IService;
 
 @Controller
 public class Notification_CTRL {
 
 	private Logger log = LoggerFactory.getLogger(this.getClass());
+	
+	@Autowired
+	private AttachFile_Module module;
 	
 	@Autowired
 	private Notiquestion_IService service;
@@ -47,9 +59,19 @@ public class Notification_CTRL {
 	}
 	
 	@RequestMapping(value="NotiWrite.do", method = RequestMethod.POST)
-	public String notiWrite(NotiQuestionDto dto) {
+	public String notiWrite(NotiQuestionDto dto, HttpSession session, @RequestParam("file") List<MultipartFile> files, HttpServletRequest request, HttpServletResponse resp) {
 		log.info("notiboard notiWrite:\t {}", dto);
+		
+		NaememberDto nDto = ((NaememberDto)session.getAttribute("userinfo"));
+		module.setMemberseq(nDto.getMemberseq());
+		
 		service.insertNoti(dto);
+		if(files.size()>0) {
+			List<AttachFileDto> lists = module.attachFile(files, request, resp);
+			for (AttachFileDto attachFileDto : lists) {
+				service.insertFile(attachFileDto);
+			}
+		}
 		return "redirect:/Notification_board.do";
 	}
 	

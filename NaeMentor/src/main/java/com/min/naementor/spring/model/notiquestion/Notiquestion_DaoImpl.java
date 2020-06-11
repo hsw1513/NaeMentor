@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.min.naementor.dtos.AttachFileDto;
 import com.min.naementor.dtos.NotiQuestionDto;
 
 @Repository
@@ -48,17 +49,15 @@ public class Notiquestion_DaoImpl implements Notiquestion_IDao {
 	public int multiDeleteNoti(Map<String, Object> adminseqs) {
 		return sqlSession.update(NS+"multiDeleteNoti", adminseqs);
 	}
-
-	
 	
 	@Override
-	public int insertFile(NotiQuestionDto dto) {
+	public int insertFile(AttachFileDto dto) {
 		int n = sqlSession.insert(NS+"insertFile", dto);
 		return n;
 	}
 
 	@Override
-	public int modifyFile(NotiQuestionDto dto) {
+	public int modifyFile(AttachFileDto dto) {
 		int n = sqlSession.update(NS+"modifyFile", dto);
 		return n;
 	}
