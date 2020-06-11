@@ -16,7 +16,6 @@
 	<input type="submit" value="제출"><br>
 </form>
 	<a href="./singUpGo.do">회원가입</a>
-	<a href="./searchId.do">아이디 찾기</a>
-	<a href="./searchPassword.do">비밀번호 찾기</a>
+	<a href="./searchIdPW.do">아이디/비밀번호 찾기</a>
 </body>
 </html>

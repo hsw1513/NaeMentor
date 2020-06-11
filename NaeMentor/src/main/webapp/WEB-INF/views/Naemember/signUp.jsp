@@ -25,13 +25,14 @@
 				<input type="password" id="password" name="password" placeholder="비밀번호"><br>
 				<input type="password" id="passOk" placeholder="비밀번호 확인 "><br>
 				<span id="result_pw"></span>
-				<input type="text" id="nickname" name="nickname" placeholder="닉네임"><input type="button" onclick="nickChk()"><br>
+				<input type="text" id="nickname" name="nickname" placeholder="닉네임"><br>
+				<span id="result_nickname"></span>
 				<textarea rows="5" cols="30" id="introduce" name="introduce" placeholder="자기소개"></textarea><br>
-				<input type="text" id="phone" name="phone" placeholder="휴대폰 번호입력(- 포함)"><br>
-				<input type="button" class="btn btn-primary" onclick="sendSms()" id="send" value="전송"/> <br>
-				<input type="text" name="sms" id="sms" placeholder="인증 번호 입력" />
-				<input type="button" class="btn btn-info" onclick="numberCheck()" value="인증"/><br> 
-				<input type="text" id="birthday" name="birthday" placeholder="생년월일"><br>
+				<input type="text" id="phone" name="phone" placeholder="휴대폰 번호입력(- 포함)">
+<!-- 				<input type="button" class="btn btn-primary" onclick="sendSms()" id="send" value="전송"/> <br> -->
+<!-- 				<input type="text" name="sms" id="sms" placeholder="인증 번호 입력" /> -->
+<!-- 				<input type="button" id="smsCheck" class="btn btn-info" onclick="numberCheck()" value="인증"/><br>  -->
+				<br><input type="text" id="birthday" name="birthday" placeholder="생년월일"><br>
 				성별:
 				<select name="gender">
 					<option value="M">남자</option>
