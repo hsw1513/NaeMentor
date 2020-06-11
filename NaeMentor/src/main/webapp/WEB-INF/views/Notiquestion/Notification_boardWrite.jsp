@@ -10,7 +10,7 @@
 <body>
 <%@include file="/WEB-INF/views/topMenu.jsp"%>
 	<div id="container">
-	<form action="./NotiWrite.do" method="post">
+	<form action="./NotiWrite.do" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="command" value="write">
 		<input type="hidden" name="adminseq" value="${dto.adminseq}">
 		<table class="table talbe-bordered">
@@ -22,8 +22,13 @@
 				<th>내용</th>
 				<td><textarea id="editor" rows="20" cols="40" name="content"></textarea></td>
 			</tr>
+			<tr>
+				<th>첨부파일</th>
+				<td><input type="file" name="file" multiple="multiple"></td>
+			</tr>
 		</table>
 		<div style="text-align: center; margin-top: 20px;">
+		<input type="button" value="취소" onclick="javascript:history.back(-1);">
 			<input type="button" value="글 작성" onclick="save()"/>
 		</div>
 	</form>

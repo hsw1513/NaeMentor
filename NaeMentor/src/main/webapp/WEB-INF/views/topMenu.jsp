@@ -22,17 +22,17 @@
     		<li><a href="./FindingMentor_board.do">FindgingMentor보드로 이동</a></li>
     		<li><a href="./Notification_board.do">공지사항</a></li>
     		<li><a href="./Question_board.do">1:1 문의</a></li>
-<%--     	<c:if test="${fn:trim(mem.auth) eq 'U'}"> --%>
-<%--     	</c:if> --%>
-<%--     	<c:if test="${fn:trim(mem.auth) eq 'A'}"> --%>
-    		<li><a href="./memberListMAV.do">회원리스트</a></li>
-<%--     	</c:if> --%>
+    	<c:if test="${fn:trim(userinfo.auth) eq 'ROLE_A'}">
+    		<li><a href="./adminBoard.do">관리자페이지</a></li>
+    	</c:if>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li>
      	 <a href="./userInfo.do">
       		<span class="glyphicon glyphicon-user">${userinfo.nickname}님 환영합니다.</span> 
-<%--       		(${mem.auth eq 'U'?'일반':'관리자'}) --%>
+      		<c:if test="${userinfo.auth eq 'ROLE_E'}">(멘티)</c:if>
+      		<c:if test="${userinfo.auth eq 'ROLE_R'}">(멘토)</c:if>
+      		<c:if test="${userinfo.auth eq 'ROLE_A'}">(관리자)</c:if>
       	</a>
      </li>
       <li>

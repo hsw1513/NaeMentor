@@ -3,13 +3,13 @@
 <mapper namespace="com.min.naementor.naemember.admin">
 	
 	<!-- 회원정보조회(기본) -->
-	<select id="userBasicInfo" resultType="NMDto">
+	<select id="userBasicInfo" parameterType="java.lang.String" resultType="NMDto">
 		SELECT MEMBERSEQ, EMAIL , NICKNAME , PHONE , BIRTHDAY , 
 			GENDER , AUTH , USERSTATUS ,MENTORTIER, REPORTCNT ,
 			TO_CHAR(JOINDATE, 'YYYY-MM-DD') AS JOINDATE , MENTEECNT, 
 			MENTEEACCSTAR, LASTACCESS , BYEBYE 
 				FROM NAEMEMBER
-					WHERE AUTH = 'ROLE_E'
+					WHERE AUTH = #{auth}
 	</select>
 	
 	<!-- 회원정보조회(상세) -->
@@ -24,8 +24,8 @@
 	SELECT BOARDSEQ, TITLE , CONTENT , WRITESDATE , REPORTCNT , 
   			SPECIALFIELD, TARGET , MENTEELEVEL , HOWTO, 
   			LOCATION , DELFLAG , MENTORLIST , FINDREPORTER
-  		FROM FINDINGMENTOR f 
-			WHERE REPORTCNT >= 1 AND DELFLAG  = 'N'
+  				FROM FINDINGMENTOR f 
+					WHERE REPORTCNT >= 1 AND DELFLAG  = 'N'
 	</select>
 	
 	<!-- 신고게시글 삭제 -->
@@ -45,7 +45,7 @@
 	</select>
 	
 	<!-- 계정상태 변경(관리자) -->
-	<update id="changeStatus" parameterType="java.util.Map">
+	<update id="changeStatus" parameterType="NMDto">
 		UPDATE NAEMEMBER 
 			SET USERSTATUS = #{userstatus}
 				WHERE MEMBERSEQ = #{memberseq} 
@@ -58,7 +58,7 @@
  				WHERE MEMBERSEQ =#{memberseq}
 	</update>
 	
-	<!-- 멘토승인시 승급일 기록 -->
+	<!-- 멘토승급시 승급일 기록 -->
 	<update id="promotionDate" parameterType="java.util.Map">
 		UPDATE PROFILE 
  			SET PMDATE = SYSDATE
@@ -89,7 +89,7 @@
 	</resultMap>
 	
 	<!-- 멘토신청자 조회 -->
-	<select id="searchApplier" parameterType="java.lang.String" resultMap="joinsearchApplier">
+	<select id="searchApplier" resultMap="joinsearchApplier">
 		SELECT n.MEMBERSEQ, EMAIL, NICKNAME, INTRODUCE, PHONE, BIRTHDAY,
 			   GENDER, REPORTCNT, JOINDATE, PHOTO, SCHOOL, MAJOR, CAREER,
 			   CERTIFICATE, SPECIALFIELD, MENTOACCSTAR, FILECHK, USERFILE, UPLOADDATE
