@@ -140,11 +140,4 @@
 				WHERE EMAIL = #{email}
 	</update>
 	
-	<!-- 탈퇴신청시 탈퇴신청 여부 변경 -->
-	<update id="changeBye" parameterType="java.util.Map">
-		UPDATE NAEMEMBER 
- 			SET BYEBYE = Y
- 				WHERE EMAIL = #{email}	
-	</update>
-	
 </mapper>
