@@ -3,6 +3,7 @@ package com.min.naementor.spring.model.notiquestion;
 import java.util.List;
 import java.util.Map;
 
+import com.min.naementor.dtos.AttachFileDto;
 import com.min.naementor.dtos.NotiQuestionDto;
 
 public interface Notiquestion_IDao {
@@ -48,13 +49,13 @@ public interface Notiquestion_IDao {
 	 * 공지 게시판 첨부파일 입력
 	 * @return int(true: 첨부)
 	 */
-	public int insertFile(NotiQuestionDto dto);
+	public int insertFile(AttachFileDto dto);
 	
 	/**
 	 * 공지 게시판 첨부파일 수정
 	 * @return int(true: 수정)
 	 */
-	public int modifyFile(NotiQuestionDto dto);
+	public int modifyFile(AttachFileDto dto);
 	
 	/**
 	 * 1:1 문의 게시판 전체글 조회 (관리자)

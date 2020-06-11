@@ -55,8 +55,8 @@ public class AttachFile_Module {
 		List<AttachFileDto> lists = new ArrayList<AttachFileDto>();
 		String url = request.getContextPath()+"/files/";
 		String filepath = request.getRealPath("/files");
-		System.out.println(filepath);
-		File file = new File(filepath);
+		System.out.println(url);
+		File file = new File(url);
 		if(!file.exists()) { file.mkdir();	}
 		// 파일 넣기
 		for (MultipartFile multipartFile : files) {
@@ -65,7 +65,7 @@ public class AttachFile_Module {
 		String searchfile = UUID.randomUUID().toString() + userfile;
 		String filesize ="" ;
 		dto = new AttachFileDto();
-		File f = new File(filepath, searchfile);
+		File f = new File(url, searchfile);
 		boolean isc = false;
 		try {
 			filesize = String.valueOf(multipartFile.getSize());
@@ -75,7 +75,7 @@ public class AttachFile_Module {
 			e.printStackTrace();
 		}
 		if(isc) {
-		dto.setFilepath(filepath);
+		dto.setFilepath(url);
 		dto.setFilesize(filesize);
 		dto.setSearchfile(searchfile);
 		dto.setUserfile(userfile);
