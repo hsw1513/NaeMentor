@@ -18,11 +18,9 @@
 		<div>
 			<table class="table table-hover">
 				<c:forEach var="dto" items="${lists}">
+				<c:if test="${dto.delflag=='N'}">
 						<tr>
-						<th>제목</th>
-						<td>
-							${dto.title}
-						</td>
+						<th>제목</th>	<td>${dto.title}</td>
 						</tr>
 						<tr>
 						<th>작성일</th><td>${dto.writedate}</td>
@@ -32,10 +30,13 @@
 						</tr>
 						<tr>
 						<td>
+						<c:if test="${dto.namemberdto.memberseq==userinfo.memberseq}">
 							<input type="button" name="btn" onclick="quesdel(${dto.adminseq})" value="삭제" >
 							<input type="button" name="btn" onclick="quesmod(${dto.adminseq})" value="수정">
+						</c:if>
 						</td>
 						</tr>
+						</c:if>
 					</c:forEach>
 			</table>
 		</div>
@@ -52,7 +53,7 @@
 				location.href="./Question_boardDelete.do?adminseq="+seq;
 			}
 			
-			function quesmod(){
+			function quesmod(seq){
 				location.href="./Question_boardModify.do?adminseq="+seq;
 			}
 		</script>

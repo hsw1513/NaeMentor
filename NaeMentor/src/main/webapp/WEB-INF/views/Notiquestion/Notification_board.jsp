@@ -67,7 +67,7 @@
 				location.href="./Notification_boardWrite.do";
 			}
 			function checkAll(bool) {
-				var chks = document.getElementsByName('chk');
+				var chks = document.getElementsByName('chks');
 				for (var i = 0; i < chks.length; i++) {
 					chks[i].checked=bool;
 				}
