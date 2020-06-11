@@ -36,6 +36,7 @@
 			</tr>
 		</table>
 			<div style="text-align: center; margin-top: 20px;">
+			<input type="button" value="취소" onclick="javascript:history.back(-1);">
 			<input type="submit" value="답변 작성">
 		</div>
 	</form>

@@ -6,7 +6,7 @@
 	width: auto;
 	height: 1000px;
 	margin: auto;
-	background: yellow;
+	border: 2px solid yellow;
 }
 
 .myButton {

@@ -134,7 +134,7 @@ UPDATE NOTIQUESTION SET TITLE = #{title}, CONTENT = #{content}, WRITEDATE=SYSDAT
 <!-- 1:1 문의 게시판 게시글 삭제 -->
 <update id="deleteOneToOne"  parameterType="java.lang.String">
 UPDATE NOTIQUESTION SET DELFLAG = 'Y'
-	WHERE ADMINSEQ=#{adminseq}
+	WHERE ADMINSEQ=#{adminseq} OR REFERENCE = (SELECT REFERENCE FROM NOTIQUESTION n2 WHERE ADMINSEQ = #{adminseq})
 </update>
 
 <!-- 1:1 문의 게시판 게시글 다중 삭제 -->
