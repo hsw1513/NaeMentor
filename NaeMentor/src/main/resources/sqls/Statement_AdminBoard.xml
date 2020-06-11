@@ -7,16 +7,16 @@
 		SELECT MEMBERSEQ, EMAIL , NICKNAME , PHONE , BIRTHDAY , 
 			GENDER , AUTH , USERSTATUS ,MENTORTIER, REPORTCNT ,
 			TO_CHAR(JOINDATE, 'YYYY-MM-DD') AS JOINDATE , MENTEECNT, 
-			MENTEEACCSTAR, LASTACCESS , BYEBYE 
+			MENTEEACCSTAR, TO_CHAR(LASTACCESS, 'YYYY-YY-DD') AS LASTACCESS, BYEBYE 
 				FROM NAEMEMBER
-				<if test="email != null">
-					WHERE EMAIL = #{email}
+				<if test="auth != admin">
+					WHERE AUTH = #{auth}
 				</if>
 					ORDER BY AUTH
 	</select>
 	
 	<!-- 회원정보조회(상세) -->
-	<select id="userDetail" parameterType="java.util.Map" resultType="PRDto">
+	<select id="userDetail" parameterType="java.lang.String" resultType="PRDto">
 		SELECT PHOTO, SCHOOL, MAJOR, CAREER, CERTIFICATE, SPECIALFIELD, PMDATE, MENTORCNT, MENTOACCSTAR
   			 FROM PROFILE
   				WHERE MEMBERSEQ = #{memberseq}

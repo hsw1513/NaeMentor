@@ -21,7 +21,7 @@ public interface AdminBoard_IService {
 	 * @param 회원 번호
 	 * @return 회원프로필 정보
 	 */
-	public ProfileDto userDetail(Map<String, String> map);
+	public ProfileDto userDetail(String memberseq);
 	
 	/**
 	 * 신고게시글 조회(SearchRC)
