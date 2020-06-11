@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.min.naementor.dtos.FindingMentorDto;
@@ -15,6 +16,8 @@ import com.min.naementor.dtos.ProfileDto;
 public class AdminBoard_ServiceImpl implements AdminBoard_IService {
 	
 	private Logger log = LoggerFactory.getLogger(this.getClass());
+	
+	@Autowired
 	private AdminBoard_IDao dao;
 	
 	@Override
@@ -23,8 +26,8 @@ public class AdminBoard_ServiceImpl implements AdminBoard_IService {
 	}
 
 	@Override
-	public ProfileDto userDetail(Map<String, String> map) {
-		return dao.userDetail(map);
+	public ProfileDto userDetail(String memberseq) {
+		return dao.userDetail(memberseq);
 	}
 
 	@Override

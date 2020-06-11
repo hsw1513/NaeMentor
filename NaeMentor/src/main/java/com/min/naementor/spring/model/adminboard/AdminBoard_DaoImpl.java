@@ -27,8 +27,8 @@ public class AdminBoard_DaoImpl implements AdminBoard_IDao {
 
 	// 회원정보 조회 상세
 	@Override
-	public ProfileDto userDetail(Map<String, String> map) {
-		return sqlSession.selectOne(NS+"userDetail", map);
+	public ProfileDto userDetail(String memberseq) {
+		return sqlSession.selectOne(NS+"userDetail", memberseq);
 	}
 
 	// 신고게시글 조회
