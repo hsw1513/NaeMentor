@@ -1,13 +1,21 @@
 package com.min.naementor.spring.controllers;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +23,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+import com.min.naementor.dtos.AttachFileDto;
 import com.min.naementor.dtos.FindingMentorDto;
 import com.min.naementor.dtos.MatchingDto;
 import com.min.naementor.dtos.NaememberDto;
+import com.min.naementor.spring.comm.AttachFile_Module;
 import com.min.naementor.spring.comm.SplitUserComm;
 import com.min.naementor.spring.model.findingMentor.FindingMentor_IService;
 
@@ -78,15 +92,31 @@ public class FindingMentor_CTRL {
 		log.info("{}",new Date());
 		return "FindingMentor/writeForm";
 	}
-	
 	// 글 작성하기
+	@Autowired
+	private AttachFile_Module module;
 	@RequestMapping(value="insertContent.do",method = RequestMethod.POST)
-	public String insertContent(FindingMentorDto dto, HttpSession session) {
+	public String insertContent(FindingMentorDto dto, HttpSession session,@RequestParam("file") List<MultipartFile> files, HttpServletRequest request, HttpServletResponse resp) {
 		NaememberDto ndto = (NaememberDto) session.getAttribute("userinfo");
 		dto.setMemberseq(ndto.getMemberseq());
-		log.info("{}",dto);
-		boolean chk = service.insertContent(dto);
+		List<AttachFileDto> lists = null;
+		int fileCnt = files.size();
+		log.info("fileCnt{}::::::{}",fileCnt,dto);
+		module.setMemberseq(ndto.getMemberseq());
+		if(fileCnt!=0) {
+		 lists = module.attachFile(files, request, resp);
+		}
+		boolean chk =  service.insertContent(dto);
+		
 		return chk?"redirect:/FindingMentor_board.do":"redirect:/writeForm.do";
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value="/upload.do",method=RequestMethod.POST)
+	@ResponseBody
+	public JSONObject upload(@RequestParam MultipartFile upload, HttpServletRequest request, HttpServletResponse resp) {
+		log.info("ajax image upload");
+		return module.ckImgUpload(upload, request, resp);
 	}
 	
 	// 게시글 신고
