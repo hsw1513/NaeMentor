@@ -11,6 +11,7 @@ function check(){
 	var idx = gender.selectedIndex;
 	var genderValue = gender.options[idx].value;
 	var chkId = document.getElementById("chkval").value;
+	var smsCheck = document.getElementById("smsCheck").value;
 	
 	if(email == "") {
 		swal("회원가입 오류", "이메일을 확인해주세요");
@@ -33,6 +34,8 @@ function check(){
 	}else if(genderValue == ""){
 		swal("회원가입 오류", "성별을 선택해주세요");
 		return false;
+	}else if(smsCheck == ""){
+		alert("휴대전화 본인 인증을 진행해주세요");
 	}else{
 		return true;
 	}
@@ -77,3 +80,37 @@ $(function(){
 	});
 });
 
+$(function(){
+	$("#nickname").keyup(function(){
+		var inputLength = $(this).val().length;
+		var nickname = $(this).val();
+		
+		if(nickname.indexOf(" ") != -1){
+			$("#result_nickname").css("color", "red");
+			$("#result_nickname").html("공백이 포함된 아이디는 입력하실 수 없습니다<br>");
+		}else {
+			jQuery.ajax({
+				type:"post",
+				url:"./nickNameCheck.do",
+				data:"nickname="+$(this).val(),
+				async:true,
+				success: function(msg){
+					if(msg.isc == "false"){
+						$("#result_nickname").css("color", "blue");
+						$("#result_nickname").html("사용가능한 닉네임입니다<br>");
+						$("#chkval").val("1");
+					}else if(msg.isc == "true"){
+						$("#result_nickname").css("color", "red");
+						$("#result_nickname").html("사용 불가능한 닉네임입니다<br>");
+						$("#chkval").val("");
+						$(this).val("");
+					}
+				},
+				error:function(){
+					alert("잘못된 요청값입니다.");
+				}
+			});
+		}
+		
+	});
+});
