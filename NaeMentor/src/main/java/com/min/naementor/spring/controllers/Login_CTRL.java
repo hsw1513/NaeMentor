@@ -1,5 +1,9 @@
 package com.min.naementor.spring.controllers;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -12,9 +16,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.min.naementor.dtos.NaememberDto;
 import com.min.naementor.dtos.ProfileDto;
+import com.min.naementor.spring.comm.AttachFile_Module;
 import com.min.naementor.spring.model.naemember.Naemember_IService;
 
 @Controller
@@ -23,8 +29,10 @@ public class Login_CTRL {
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
-	Naemember_IService service;
+	private Naemember_IService service;
 	
+	@Autowired
+	private AttachFile_Module module;
 	
 	
 	// 로그인 페이지로 이동(기본페이지)
@@ -52,7 +60,9 @@ public class Login_CTRL {
 	
 	// 프로필 입력 후 로그인페이지로 이동
 	@RequestMapping(value = "/proFile.do", method = RequestMethod.POST)
-	public String insertProfile(ProfileDto dto, Model model, String email) {
+	public String insertProfile(ProfileDto dto, Model model, String email, 
+								@RequestParam("image") MultipartFile upload, 
+								HttpServletRequest request, HttpServletResponse resp) {
 		log.info("회원가입 프로필 입력 insertProfile: ,{}", dto);
 		service.insertProFile(dto);
 		return "Naemember/loginPage";

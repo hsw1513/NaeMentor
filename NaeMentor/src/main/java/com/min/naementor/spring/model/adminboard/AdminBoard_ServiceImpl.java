@@ -1,65 +1,65 @@
 package com.min.naementor.spring.model.adminboard;
 
+import java.util.List;
 import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import com.min.naementor.dtos.FindingMentorDto;
 import com.min.naementor.dtos.NaememberDto;
 import com.min.naementor.dtos.ProfileDto;
 
+@Service
 public class AdminBoard_ServiceImpl implements AdminBoard_IService {
-
+	
+	private Logger log = LoggerFactory.getLogger(this.getClass());
+	private AdminBoard_IDao dao;
+	
 	@Override
-	public NaememberDto userBasicInfo(String auth) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<NaememberDto> userBasicInfo() {
+		return dao.userBasicInfo();
 	}
 
 	@Override
 	public ProfileDto userDetail(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.userDetail(map);
 	}
 
 	@Override
 	public FindingMentorDto SearchRC() {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.SearchRC();
 	}
 
 	@Override
 	public boolean deleteReport(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
+		return dao.deleteReport(map);
 	}
 
 	@Override
 	public NaememberDto searchByeU() {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.searchByeU();
 	}
 
 	@Override
 	public boolean changeStatus(NaememberDto dto) {
-		// TODO Auto-generated method stub
-		return false;
+		return dao.changeStatus(dto);
 	}
 
 	@Override
 	public boolean mentorPromotion(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
+		return dao.mentorPromotion(map);
 	}
 
 	@Override
 	public boolean promotionDate(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
+		return dao.promotionDate(map);
 	}
 
 	@Override
 	public NaememberDto searchApplier() {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.searchApplier();
 	}
 
 }

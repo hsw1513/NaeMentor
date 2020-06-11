@@ -1,5 +1,6 @@
 package com.min.naementor.spring.model.adminboard;
 
+import java.util.List;
 import java.util.Map;
 
 import com.min.naementor.dtos.FindingMentorDto;
@@ -11,9 +12,9 @@ public interface AdminBoard_IDao {
 	/**
 	 * 회원정보조회 기본(userBasicInfo)
 	 * @param 회원 권한
-	 * @return 회원 기본 정보
+	 * @return 회원 기본 정보 조회
 	 */
-	public NaememberDto userBasicInfo(String auth);
+	public List<NaememberDto> userBasicInfo();
 	
 	/**
 	 * 회원정보조회 상세(userDetail)
