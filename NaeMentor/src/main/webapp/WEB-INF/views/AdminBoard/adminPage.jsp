@@ -22,7 +22,7 @@
 		</select>
 	</span>
 	</div>
-	<c:if test="allMember">
+	<c:if test="${userinfo.auth eq 'ROLE_A'}">
 		<table>
 			<thead>
 				<tr>
