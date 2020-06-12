@@ -33,16 +33,45 @@
 	
 	<select id="encLogin" parameterType="java.lang.String" resultMap="joinEncLogin">
 		SELECT p.MEMBERSEQ , n.EMAIL, NICKNAME , 
-		  	 NVL(INTRODUCE, 0) , PHONE , BIRTHDAY ,
+		  	 NVL(INTRODUCE, 0) INTRODUCE , PHONE , BIRTHDAY ,
 		  	 GENDER , AUTH , USERSTATUS ,
-		   	  NVL(MENTORTIER) , LOGINCNT , REPORTCNT, 
-		   	 JOINDATE , MENTEECNT , MENTEEACCSTAR,  NVL(BYEBYE,0),  NVL(MAJOR,0),
-		      NVL(CAREER,0),  NVL(CERTIFICATE,0),  NVL(SPECIALFIELD,0),  NVL(PMDATE,0), MENTORCNT, MENTOACCSTAR,
-		   	  FILECHK,  NVL(PHOTO,0)
+		   	  NVL(MENTORTIER, 0) MENTORTIER, LOGINCNT , REPORTCNT, 
+		   	 JOINDATE , MENTEECNT , MENTEEACCSTAR,  NVL(BYEBYE,0) BYEBYE,  NVL(MAJOR,0) MAJOR,
+		      NVL(CAREER,0) CAREER,  NVL(CERTIFICATE,0) CERTIFICATE,  NVL(SPECIALFIELD,0) SPECIALFIELD, TO_DATE(NVL(PMDATE, '99991231')) PMDATE, MENTORCNT, MENTOACCSTAR,
+		   	  FILECHK,  NVL(PHOTO,0) PHOTO
 		   	FROM NAEMEMBER n JOIN PROFILE p
 		   			ON n.MEMBERSEQ = p.MEMBERSEQ 
-		   				AND MEMBERSEQ = #{memberseq}
+		   				AND n.MEMBERSEQ = #{memberseq}
 	</select>
+	
+	<update id="applyBye" parameterType="java.lang.String">
+	UPDATE NAEMEMBER 
+       SET BYEBYE = 'Y'
+          WHERE MEMBERSEQ = #{memberseq}
+	</update>
 
+	<insert id="insertProfile" parameterType="PRDto">
+	UPDATE PROFILE
+	SET PHOTO=#{photo}, SCHOOL=#{school}, MAJOR=#{major}, CAREER=#{career}, CERTIFICATE=#{certificate}, SPECIALFIELD=#{specialfield}
+	WHERE MEMBERSEQ=#{memberseq}
+	</insert>
+
+	<insert id="insertFile" parameterType="AFDto">
+	INSERT INTO ATTACHFILE
+	(FILESEQ, USERFILE, SEARCHFILE, FILESIZE, UPLOADDATE, FILEPATH, ADMINSEQ, MEMBERSEQ)
+	VALUES(FILESEQ.NEXTVAL, #{userfile}, #{searchfile}, #{filesize}, SYSDATE, #{filepath}, #{adminseq}, #{memberseq})
+	</insert>
+
+	<update id="updateFilechk" parameterType="java.lang.String">
+	UPDATE PROFILE
+	SET FILECHK='Y'
+	WHERE MEMBERSEQ=#{memberseq}
+	</update>
+
+	<update id="updateAuth" parameterType="java.lang.String">
+	UPDATE NAEMEMBER SET AUTH = 'ROLE_R' WHERE MEMBERSEQ = #{memberseq}
+	</update>
+
+	
 
 </mapper>
