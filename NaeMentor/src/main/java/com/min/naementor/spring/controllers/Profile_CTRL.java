@@ -1,6 +1,5 @@
 package com.min.naementor.spring.controllers;
 
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,10 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller
-public class Profile_CTRL {
-
-import com.min.naementor.dtos.NaememberDto;
 
 @Controller
 public class Profile_CTRL {
