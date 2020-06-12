@@ -13,7 +13,7 @@
 		<result property="gender" column="GENDER"/>
 		<result property="auth" column="AUTH"/>
 		<result property="userstatus" column="USERSTATUS"/>
-		<result property="mentotier" column="MENTORTIER"/>
+		<result property="mentortier" column="MENTORTIER"/>
 		<result property="logincnt" column="LOGINCNT"/>
 		<result property="reportcnt" column="REPORTCNT"/>
 		<result property="joindate" column="JOINDATE"/>

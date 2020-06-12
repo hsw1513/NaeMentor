@@ -87,8 +87,8 @@
 	</c:if>
 	
 	<c:if test="${detail.matchingchk eq 'N'}">
-	<c:if test="${userinfo.memberseq eq detail.memberseq}">
 	<button onclick="applyMentor()">멘토링 신청</button>
+	<c:if test="${userinfo.memberseq eq detail.memberseq}">
 	</c:if>
 	<div>
 		<table>
