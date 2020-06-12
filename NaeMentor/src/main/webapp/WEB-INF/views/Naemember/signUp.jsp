@@ -16,7 +16,7 @@
 	<div id="container">
 		<input type="hidden" id="chkval" value="0">
 	
-	<form action="./signUp.do" method="post" id="frm" name="frm" enctype="multipart/form-data" onsubmit="return check()">
+	<form action="./signUp.do" method="post" id="frm" name="frm" onsubmit="return check()">
 		<div id="info">
 			<div id="leftInfo">회원가입</div>
 			<div id="centerInfo">

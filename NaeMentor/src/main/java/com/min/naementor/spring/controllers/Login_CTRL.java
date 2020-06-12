@@ -61,7 +61,6 @@ public class Login_CTRL {
 	// 프로필 입력 후 로그인페이지로 이동
 	@RequestMapping(value = "/proFile.do", method = RequestMethod.POST)
 	public String insertProfile(ProfileDto dto, Model model, String email, 
-								@RequestParam("image") MultipartFile upload, 
 								HttpServletRequest request, HttpServletResponse resp) {
 		log.info("회원가입 프로필 입력 insertProfile: ,{}", dto);
 		service.insertProFile(dto);
@@ -98,8 +97,12 @@ public class Login_CTRL {
 		public String maingo(Authentication user, Model model,NaememberDto dto, HttpSession session) {
 		UserDetails userdto = (UserDetails) user.getPrincipal();
 		model.addAttribute("user", userdto.toString());
+		
 		NaememberDto ndto = service.encLogin(userdto.getUsername());
+		ndto.setPassword("password");
 		session.setAttribute("userinfo", ndto);
+		
+		
 		NaememberDto gdto = (NaememberDto) session.getAttribute("userinfo");
 		if(gdto.getUserstatus().equals("R")) {
 			service.wakeUp(gdto.getMemberseq());
