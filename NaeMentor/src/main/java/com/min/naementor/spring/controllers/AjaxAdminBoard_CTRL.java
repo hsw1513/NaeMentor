@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.min.naementor.dtos.FindingMentorDto;
 import com.min.naementor.dtos.NaememberDto;
 import com.min.naementor.dtos.ProfileDto;
 import com.min.naementor.spring.model.adminboard.AdminBoard_IService;
@@ -43,12 +44,28 @@ public class AjaxAdminBoard_CTRL {
 		return json;
 	}
 	
-	@RequestMapping(value = "/memberList.do", method = RequestMethod.GET)
+		
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/reportContent.do", method = RequestMethod.GET)
 	@ResponseBody
-	public String memberList(Model model, String memList) {
-		return null;
+	public JSONObject memberList(Model model, String reportMember) {
+		JSONObject json = new JSONObject();
+		FindingMentorDto fdto = service.SearchRC();
+		json.put("boardseq", fdto.getBoardseq());
+		json.put("title", fdto.getTitle());
+		json.put("content", fdto.getContent());
+		json.put("writesdate", fdto.getWritesdate());
+		json.put("specialfield", fdto.getSpecialfield());
+		json.put("target", fdto.getTarget());
+		json.put("menteelevel", fdto.getMenteelevel());
+		json.put("howto", fdto.getHowto());
+		json.put("location", fdto.getLocation());
+		json.put("delflag", fdto.getDelflag());
+		json.put("mentorlist", fdto.getMentorlist());
+		json.put("findreporter", fdto.getFindreporter());
+		return json;
 	}
 	
 	
-	
 }
+	

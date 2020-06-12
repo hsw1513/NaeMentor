@@ -14,7 +14,7 @@
 	<div id="container">
 	<div id="select"> <!-- select는 selected로 가져옴 -->
 	<span>
-		<select class="btn btn-primary" id="memberList" name="memberList" onchange="memberList()">
+		<select class="btn btn-primary" id="memberList" name="memberList" onchange="ajaxReportMember()">
 			<option value="allMember">전체회원 조회</option>
 			<option value="reportMember">신고게시글 조회</option>
 			<option value="byeMember">탈퇴신청 회원 조회</option>
