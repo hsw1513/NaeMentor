@@ -67,7 +67,7 @@ public class Question_CTRL {
 	@RequestMapping(value="Question_boardDelete.do", method = RequestMethod.GET)
 	public String quesDel(String adminseq) {
 		log.info("quesboard quesDel:\t", adminseq);
-		service.deleteOneToOne(adminseq);
+		service.deleteNoti(adminseq);
 		return "redirect:/Question_board.do";
 	}
 	
