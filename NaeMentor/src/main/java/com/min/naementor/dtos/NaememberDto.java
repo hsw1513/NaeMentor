@@ -1,6 +1,13 @@
 package com.min.naementor.dtos;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 public class NaememberDto implements Serializable {
 	                            

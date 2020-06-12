@@ -1,4 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.min.naementor.profile">
+
+<resultMap type="com.min.naementor.dtos.NaememberDto" id="joinEncLogin">
+		<result property="memberseq" column="MEMBERSEQ"/>
+		<result property="email" column="EMAIL"/>
+		<result property="password" column="PASSWORD"/>
+		<result property="nickname" column="NICKNAME"/>
+		<result property="introduce" column="INTRODUCE"/>
+		<result property="phone" column="PHONE"/>
+		<result property="birthday" column="BIRTHDAY"/>
+		<result property="gender" column="GENDER"/>
+		<result property="auth" column="AUTH"/>
+		<result property="userstatus" column="USERSTATUS"/>
+		<result property="mentotier" column="MENTORTIER"/>
+		<result property="logincnt" column="LOGINCNT"/>
+		<result property="reportcnt" column="REPORTCNT"/>
+		<result property="joindate" column="JOINDATE"/>
+		<result property="menteecnt" column="MENTEECNT"/>
+		<result property="menteeaccstar" column="MENTEEACCSTAR"/>
+		<result property="byebye" column="BYEBYE"/>
+		<result property="profiledto.photo" column="PHOTO"/>
+		<result property="profiledto.major" column="MAJOR"/>
+		<result property="profiledto.career" column="CAREER"/>
+		<result property="profiledto.certificate" column="CERTIFICATE"/>
+		<result property="profiledto.specialfield" column="SPECIALFIELD"/>
+		<result property="profiledto.pmdate" column="PMDATE"/>
+		<result property="profiledto.mentorcnt" column="MENTORCNT"/>
+		<result property="profiledto.mentoaccstar" column="MENTOACCSTAR"/>
+		<result property="profiledto.filechk" column="FILECHK"/>
+	</resultMap>
+	
+	<select id="encLogin" parameterType="java.lang.String" resultMap="joinEncLogin">
+		SELECT p.MEMBERSEQ , n.EMAIL, NICKNAME , 
+		  	 NVL(INTRODUCE, 0) , PHONE , BIRTHDAY ,
+		  	 GENDER , AUTH , USERSTATUS ,
+		   	  NVL(MENTORTIER) , LOGINCNT , REPORTCNT, 
+		   	 JOINDATE , MENTEECNT , MENTEEACCSTAR,  NVL(BYEBYE,0),  NVL(MAJOR,0),
+		      NVL(CAREER,0),  NVL(CERTIFICATE,0),  NVL(SPECIALFIELD,0),  NVL(PMDATE,0), MENTORCNT, MENTOACCSTAR,
+		   	  FILECHK,  NVL(PHOTO,0)
+		   	FROM NAEMEMBER n JOIN PROFILE p
+		   			ON n.MEMBERSEQ = p.MEMBERSEQ 
+		   				AND MEMBERSEQ = #{memberseq}
+	</select>
+
+
 </mapper>
