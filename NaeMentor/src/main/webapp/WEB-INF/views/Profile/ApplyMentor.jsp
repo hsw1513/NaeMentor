@@ -10,15 +10,16 @@
 <%@include file="/WEB-INF/views/topMenu.jsp"%>
 <div id="container">
 	
-	<form action="./applymentor.do" method="post">
-	<input type="hidden" name="memberseq" value="${userinfo.memberseq}">
-	<input type="image" name="photo" value="${userinfo.photo}">
-	<input type="text" name="content" value="${userinfo.content}">
-	<input type="text" name="school" value="${userinfo.school}">
-	<input type="text" name="major" value="${userinfo.major}">
-	<input type="text" name="career" value="${userinfo.career}">
-	<input type="text" name="certificate" value="${userinfo.certificate}">
-	<input type="text" name="specialfield" value="${userinfo.specialfield}">
+	<form action="./applymentor.do" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="memberseq" value="${profile.memberseq}">
+	photo<input type="text" name="photo" value="${profile.profiledto.photo}"><br>
+	school<input type="text" name="school" value="${profile.profiledto.school}"><br>
+	major<input type="text" name="major" value="${profile.profiledto.major}"><br>
+	career<input type="text" name="career" value="${profile.profiledto.career}"><br>
+	certificate<input type="text" name="certificate" value="${profile.profiledto.certificate}"><br>
+	specialfield<input type="text" name="specialfield" value="${profile.profiledto.specialfield}"><br>
+	files<input type="file" name="files"><br>
+	<input type="submit" value="멘토신청">
 	</form>
 	
 </div>

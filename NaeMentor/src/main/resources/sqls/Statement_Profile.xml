@@ -21,6 +21,7 @@
 		<result property="menteeaccstar" column="MENTEEACCSTAR"/>
 		<result property="byebye" column="BYEBYE"/>
 		<result property="profiledto.photo" column="PHOTO"/>
+		<result property="profiledto.school" column="SCHOOL"/>
 		<result property="profiledto.major" column="MAJOR"/>
 		<result property="profiledto.career" column="CAREER"/>
 		<result property="profiledto.certificate" column="CERTIFICATE"/>
@@ -36,8 +37,8 @@
 		  	 NVL(INTRODUCE, 0) INTRODUCE , PHONE , BIRTHDAY ,
 		  	 GENDER , AUTH , USERSTATUS ,
 		   	  NVL(MENTORTIER, 0) MENTORTIER, LOGINCNT , REPORTCNT, 
-		   	 JOINDATE , MENTEECNT , MENTEEACCSTAR,  NVL(BYEBYE,0) BYEBYE,  NVL(MAJOR,0) MAJOR,
-		      NVL(CAREER,0) CAREER,  NVL(CERTIFICATE,0) CERTIFICATE,  NVL(SPECIALFIELD,0) SPECIALFIELD, TO_DATE(NVL(PMDATE, '99991231')) PMDATE, MENTORCNT, MENTOACCSTAR,
+		   	 JOINDATE , MENTEECNT , MENTEEACCSTAR,  NVL(BYEBYE,0) BYEBYE,  NVL(MAJOR,0) MAJOR, NVL(SCHOOL,0) SCHOOL,
+		      NVL(CAREER,0) CAREER,  NVL(CERTIFICATE,0) CERTIFICATE,  NVL(SPECIALFIELD,0) SPECIALFIELD, TO_DATE(NVL(PMDATE, '21201231'), 'YYYY-MM-DD') PMDATE, MENTORCNT, MENTOACCSTAR,
 		   	  FILECHK,  NVL(PHOTO,0) PHOTO
 		   	FROM NAEMEMBER n JOIN PROFILE p
 		   			ON n.MEMBERSEQ = p.MEMBERSEQ 
@@ -59,7 +60,7 @@
 	<insert id="insertFile" parameterType="AFDto">
 	INSERT INTO ATTACHFILE
 	(FILESEQ, USERFILE, SEARCHFILE, FILESIZE, UPLOADDATE, FILEPATH, ADMINSEQ, MEMBERSEQ)
-	VALUES(FILESEQ.NEXTVAL, #{userfile}, #{searchfile}, #{filesize}, SYSDATE, #{filepath}, #{adminseq}, #{memberseq})
+	VALUES(FILESEQ.NEXTVAL, #{userfile}, #{searchfile}, #{filesize}, SYSDATE, #{filepath}, '0', #{memberseq})
 	</insert>
 
 	<update id="updateFilechk" parameterType="java.lang.String">

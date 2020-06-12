@@ -15,13 +15,15 @@
 	}
 	function updateAuth(){
 // 		alert('updateAuth');
-	location.href="";
+	location.href="./goingApplyMentor.do";
 	}
 </script>
 <body>
 <%@include file="/WEB-INF/views/topMenu.jsp"%>
 <div id="container">
 	<button onclick="updateAuth()">멘토신청</button>
+	<c:if test="${profile.profiledto.filechk eq 'N'}">
+	</c:if>
 	<button onclick="applyBye()">회원탈퇴</button>
 	<table class="table">
 	    <thead>
@@ -69,64 +71,70 @@
 	        <td>${profile.mentortier}</td>
 	      </tr>
 	      <tr>
-	        <td></td>
+	        <td>logincnt</td>
 	        <td>${profile.logincnt}</td>
 	      </tr>
 	      <tr>
-	        <td></td>
+	        <td>reportcnt</td>
 	        <td>${profile.reportcnt}</td>
 	      </tr>
 	      <tr>
-	        <td></td>
+	        <td>joindate</td>
 	        <td>${profile.joindate}</td>
 	      </tr>
 	      <tr>
-	        <td></td>
+	        <td>menteecnt</td>
 	        <td>${profile.menteecnt}</td>
 	      </tr>
 	      <tr>
-	        <td></td>
+	        <td>menteeaccstar</td>
 	        <td>${profile.menteeaccstar}</td>
 	      </tr>
 	      <tr>
-	        <td></td>
+	        <td>byebye</td>
 	        <td>${profile.byebye}</td>
 	      </tr>
 	      <tr>
-	        <td></td>
+	        <td>photo</td>
 	        <td>${profile.profiledto.photo}</td>
 	      </tr>
 	      <tr>
-	        <td></td>
+	        <td>school</td>
+	        <td>${profile.profiledto.school}</td>
+	      </tr>
+	      <tr>
+	        <td>major</td>
 	        <td>${profile.profiledto.major}</td>
 	      </tr>
 	      <tr>
-	        <td></td>
+	        <td>career</td>
 	        <td>${profile.profiledto.career}</td>
 	      </tr>
 	      <tr>
-	        <td></td>
+	        <td>certificate</td>
 	        <td>${profile.profiledto.certificate}</td>
 	      </tr>
 	      <tr>
-	        <td></td>
+	        <td>specialfield</td>
 	        <td>${profile.profiledto.specialfield}</td>
 	      </tr>
 	      <tr>
-	        <td></td>
+	        <td>pmdate</td>
 	        <td>${profile.profiledto.pmdate}</td>
 	      </tr>
 	      <tr>
-	        <td></td>
+	        <td>mentorcnt</td>
 	        <td>${profile.profiledto.mentorcnt}</td>
 	      </tr>
 	      <tr>
-	        <td></td>
+	        <td>mentoaccstar</td>
 	        <td>${profile.profiledto.mentoaccstar}</td>
 	      </tr>
 	      <tr>
-	        <td></td>
+	        <td>filechk</td>
 	        <td>${profile.profiledto.filechk}</td>
+	        <td>올린 파일이름</td>
+	        <td>${userfile.userfile}</td>
 	      </tr>
 	    </tbody>
   	</table>
