@@ -1,10 +1,6 @@
 package com.min.naementor.spring.controllers;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,12 +31,7 @@ public class AdminBoard_CTRL {
 		return "AdminBoard/adminPage";
 	}
 	
-	@RequestMapping(value = "/userDetail.do", method = RequestMethod.GET)
-	public String userDetail(Model model, NaememberDto dto) {
-		
-		service.userDetail(dto.getMemberseq());
-		return "AdminBoard/adminPage";
-	}
+	
 	
 	
 	

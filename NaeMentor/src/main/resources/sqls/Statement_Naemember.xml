@@ -9,7 +9,7 @@
 								BIRTHDAY, GENDER, AUTH, USERSTATUS, MENTORTIER, LOGINCNT, 
 								REPORTCNT, JOINDATE, MENTEECNT, MENTEEACCSTAR, BYEBYE)
 			VALUES(MEMBERSEQ.NEXTVAL, #{email}, #{password}, #{nickname}, #{introduce}, #{phone}, 
-					#{birthday}, #{gender}, 'ROLE_E', 'A', '', 0, 
+					#{birthday}, #{gender}, 'ROLE_E', 'A', 'NONE', 0, 
 						0, SYSDATE, 0, 0, 'N')
 	</insert>
 	
@@ -26,7 +26,7 @@
 							CAREER, CERTIFICATE, SPECIALFIELD, PMDATE, 
 							MENTORCNT, MENTOACCSTAR, FILECHK)
 		VALUES((SELECT MEMBERSEQ FROM NAEMEMBER WHERE EMAIL = #{email}), #{photo}, #{school}, 
-				#{major}, #{career}, #{certificate}, #{specialfield}, '', 0, 0, 'N')
+				#{major}, #{career}, #{certificate}, #{specialfield}, '00000000', 0, 0, 'N')
 	</insert>
 	
 	<!-- 	프로필 취소시 회원정보 입력한 것 취소 -->
@@ -70,6 +70,7 @@
 		<result property="menteeaccstar" column="MENTEEACCSTAR"/>
 		<result property="byebye" column="BYEBYE"/>
 		<result property="profiledto.photo" column="PHOTO"/>
+		<result property="profiledto.school" column="SCHOOL"/>
 		<result property="profiledto.major" column="MAJOR"/>
 		<result property="profiledto.career" column="CAREER"/>
 		<result property="profiledto.certificate" column="CERTIFICATE"/>
@@ -86,9 +87,9 @@
 		  	 INTRODUCE , PHONE , BIRTHDAY ,
 		  	 GENDER , AUTH , USERSTATUS ,
 		   	 MENTORTIER , LOGINCNT , REPORTCNT, 
-		   	 JOINDATE , MENTEECNT , MENTEEACCSTAR, BYEBYE, MAJOR,
+		   	 JOINDATE , MENTEECNT , MENTEEACCSTAR, BYEBYE, PHOTO, SCHOOL, MAJOR,
 		     CAREER, CERTIFICATE, SPECIALFIELD, PMDATE, MENTORCNT, MENTOACCSTAR,
-		   	 FILECHK, PHOTO
+		   	 FILECHK
 		   	FROM NAEMEMBER n JOIN PROFILE p
 		   			ON n.MEMBERSEQ = p.MEMBERSEQ 
 		   				AND EMAIL =#{email} AND NOT USERSTATUS = 'D' AND NOT USERSTATUS = 'S'

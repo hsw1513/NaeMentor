@@ -8,8 +8,21 @@
 <meta charset="UTF-8">
 <title>관리자 페이지</title>
 </head>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="./js/adminBoard.js"></script>
 <body>
 	<div id="container">
+	<div id="select"> <!-- select는 selected로 가져옴 -->
+	<span>
+		<select class="btn btn-primary" id="memberList" name="memberList" onchange="memberList()">
+			<option value="allMember">전체회원 조회</option>
+			<option value="reportMember">신고게시글 조회</option>
+			<option value="byeMember">탈퇴신청 회원 조회</option>
+			<option value="mentorMember">멘토신청자 조회</option>
+		</select>
+	</span>
+	</div>
+	<c:if test="allMember">
 		<table>
 			<thead>
 				<tr>
@@ -30,11 +43,16 @@
 					<td>${userinfo.auth}</td><td>${userinfo.userstatus}</td><td>${userinfo.mentortier}</td>
 					<td>${userinfo.reportcnt}</td><td>${userinfo.joindate}</td><td>${userinfo.lastaccess}</td>
 					<td>${userinfo.byebye}</td>
-					<td><button onclick="./userDetail.do?memberseq="+${userinfo.memberseq}>보기</button></td>
+					<td><button onclick="userDetail(${userinfo.memberseq}, ${vs.count})">보기</button></td>
+				</tr>
+				<tr class="profile">
+					
 				</tr>
 				</c:forEach>
 			</tbody>
 		</table>
+		</c:if>
+	
 	</div>
 	
 </body>

@@ -39,7 +39,7 @@
 		/>
 		<security:logout 
 			invalidate-session="true"
-			logout-url="/logout.do" 
+			logout-url="/logout.do"
 			logout-success-url="/loginPage.do?logout"
 			delete-cookies="JSESSIONID,SPRING_SECURITY_REMEMBER_ME_COOKIE" 
 		/>	
