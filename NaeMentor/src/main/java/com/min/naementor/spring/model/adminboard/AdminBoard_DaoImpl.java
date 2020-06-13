@@ -33,8 +33,8 @@ public class AdminBoard_DaoImpl implements AdminBoard_IDao {
 
 	// 신고게시글 조회
 	@Override
-	public FindingMentorDto SearchRC() {
-		return sqlSession.selectOne(NS+"SearchRC");
+	public List<FindingMentorDto> SearchRC() {
+		return sqlSession.selectList(NS+"SearchRC");
 	}
 
 	// 신고게시글 삭제
@@ -46,8 +46,8 @@ public class AdminBoard_DaoImpl implements AdminBoard_IDao {
 
 	// 탈퇴신청 회원 조회
 	@Override
-	public NaememberDto searchByeU() {
-		return sqlSession.selectOne(NS+"searchByeU");
+	public List<NaememberDto> searchByeU() {
+		return sqlSession.selectList(NS+"searchByeU");
 	}
 	
 	// 회원 계정 상태 변경
@@ -73,8 +73,8 @@ public class AdminBoard_DaoImpl implements AdminBoard_IDao {
 
 	// 멘토신청자 조회
 	@Override
-	public NaememberDto searchApplier() {
-		return sqlSession.selectOne(NS+"searchApplier");
+	public List<NaememberDto> searchApplier() {
+		return sqlSession.selectList(NS+"searchApplier");
 	}
 
 }

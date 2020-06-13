@@ -27,7 +27,7 @@ public interface AdminBoard_IDao {
 	 * 신고게시글 조회(SearchRC)
 	 * @return 신고당한 게시글
 	 */
-	public FindingMentorDto SearchRC();
+	public List<FindingMentorDto> SearchRC();
 	
 	/**
 	 * 신고게시글 삭제(deleteReport)
@@ -40,7 +40,7 @@ public interface AdminBoard_IDao {
 	 * 탈퇴신청 회원 조회(searchByeU)
 	 * @return 탈퇴신청한 회원의 정보
 	 */
-	public NaememberDto searchByeU();
+	public List<NaememberDto> searchByeU();
 	
 	/**
 	 * 회원의 계정 상태 변경(changeStatus)
@@ -67,7 +67,7 @@ public interface AdminBoard_IDao {
 	 * 멘토신청자 조회
 	 * @return 멘토 신청한 회원의 정보
 	 */
-	public NaememberDto searchApplier();
+	public List<NaememberDto> searchApplier();
 	
 	
 	
