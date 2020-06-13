@@ -31,7 +31,7 @@ public class AdminBoard_ServiceImpl implements AdminBoard_IService {
 	}
 
 	@Override
-	public FindingMentorDto SearchRC() {
+	public List<FindingMentorDto> SearchRC() {
 		return dao.SearchRC();
 	}
 
@@ -41,7 +41,7 @@ public class AdminBoard_ServiceImpl implements AdminBoard_IService {
 	}
 
 	@Override
-	public NaememberDto searchByeU() {
+	public List<NaememberDto> searchByeU() {
 		return dao.searchByeU();
 	}
 
@@ -61,7 +61,7 @@ public class AdminBoard_ServiceImpl implements AdminBoard_IService {
 	}
 
 	@Override
-	public NaememberDto searchApplier() {
+	public List<NaememberDto> searchApplier() {
 		return dao.searchApplier();
 	}
 
