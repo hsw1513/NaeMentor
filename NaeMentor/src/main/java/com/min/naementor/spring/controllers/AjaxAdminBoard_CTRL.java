@@ -132,7 +132,6 @@ public class AjaxAdminBoard_CTRL {
 				jsono.put("mentor", jLists);
 			}
 		} // 멘토신청 회원 조회
-		
 		return jsono;
 	}
 	
