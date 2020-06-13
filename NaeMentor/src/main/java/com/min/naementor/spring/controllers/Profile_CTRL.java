@@ -62,6 +62,7 @@ public class Profile_CTRL {
 		model.addAttribute("profile", service.encLogin(ndto.getMemberseq()));
 		return "Profile/ApplyMentor";
 	}
+	//이걸 보시오. 멘토신청
 	@Autowired
 	private AttachFile_Module module;
 	@RequestMapping(value="/applymentor.do", method = RequestMethod.POST)
