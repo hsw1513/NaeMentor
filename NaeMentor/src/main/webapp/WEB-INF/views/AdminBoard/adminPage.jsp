@@ -23,7 +23,7 @@
 	</span>
 	</div>
 	<c:if test="${userinfo.auth eq 'ROLE_A'}">
-		<table>
+		<table class="table">
 			<thead>
 				<tr>
 					<th>연번</th>
