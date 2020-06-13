@@ -34,6 +34,11 @@
 			}
 		}
 	}
+	function apply(){
+		if(confirm('당신 관리자잖아? 정말 멘토신청 할거야?')){
+			applyMentor();
+		}
+	}
 	
 	function applyMentor(){
 		xhr = new XMLHttpRequest();
@@ -87,7 +92,8 @@
 	</c:if>
 	
 	<c:if test="${detail.matchingchk eq 'N'}">
-	<button onclick="applyMentor()">멘토링 신청</button>
+	
+	<button onclick="apply()">멘토링 신청</button>
 	<c:if test="${userinfo.memberseq eq detail.memberseq}">
 	</c:if>
 	<div>
@@ -101,7 +107,6 @@
 		</table>
 	</div>
 	</c:if>
-	
 	<c:if test="${detail.matchingchk eq 'Y'}">
 	<div>
 		<h1><a href="./review.do?boardseq=${detail.boardseq}">후기게시판 이동</a></h1>
