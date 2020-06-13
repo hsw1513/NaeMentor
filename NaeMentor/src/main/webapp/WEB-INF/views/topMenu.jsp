@@ -13,7 +13,7 @@
 	<nav class="navbar navbar-inverse">
   <div class="container-fluid" style="height: 100px;">
     <div class="navbar-header">
-      <a class="navbar-brand" href="./boardList.do">
+      <a class="navbar-brand" href="./result.do">
       	<img alt="logo" src="./img/naementor.png" style="width:auto; height: 50px;">
       </a>
     </div>
