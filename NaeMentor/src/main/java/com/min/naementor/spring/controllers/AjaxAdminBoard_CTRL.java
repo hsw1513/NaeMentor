@@ -106,7 +106,7 @@ public class AjaxAdminBoard_CTRL {
 		} // 탈퇴신청 회원 조회
 		
 		else if(memberList.equalsIgnoreCase("mentorMember")) {
-			List<NaememberDto> ldto2 = service.searchByeU();
+			List<NaememberDto> ldto2 = service.searchApplier();
 			for (int i = 0; i < ldto2.size(); i++) {
 				JSONObject json = new JSONObject();
 				json.put("memberseq", ldto2.get(i).getMemberseq());
