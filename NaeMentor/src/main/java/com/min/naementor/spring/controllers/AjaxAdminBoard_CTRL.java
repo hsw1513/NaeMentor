@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.min.naementor.dtos.FindingMentorDto;
 import com.min.naementor.dtos.NaememberDto;
 import com.min.naementor.dtos.ProfileDto;
+import com.min.naementor.dtos.ReportDto;
 import com.min.naementor.spring.model.adminboard.AdminBoard_IService;
+import com.min.naementor.spring.model.report.Report_ServiceImpl;
 
 @Controller
 public class AjaxAdminBoard_CTRL {
@@ -27,6 +29,9 @@ public class AjaxAdminBoard_CTRL {
 	
 	@Autowired
 	private AdminBoard_IService service;
+	
+	@Autowired
+	private Report_ServiceImpl rservice;
 	
 	
 	@SuppressWarnings("unchecked")
@@ -60,7 +65,7 @@ public class AjaxAdminBoard_CTRL {
 		JSONObject jsono = new JSONObject();
 		
 //		NaememberDto dto = (NaememberDto) session.getAttribute("userinfo");
-		if(memberList.equalsIgnoreCase("reportMember")) {
+		if(memberList.equalsIgnoreCase("reportContent")) {
 			List<FindingMentorDto> fdto = service.SearchRC();
 			for (int i = 0; i < fdto.size(); i++) {
 				JSONObject json = new JSONObject();
@@ -132,6 +137,10 @@ public class AjaxAdminBoard_CTRL {
 				jsono.put("mentor", jLists);
 			}
 		} // 멘토신청 회원 조회
+		
+		
+		
+		
 		return jsono;
 	}
 	
