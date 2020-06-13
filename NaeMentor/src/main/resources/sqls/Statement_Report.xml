@@ -15,21 +15,28 @@
 	</resultMap>
 
 <!-- 신고당한 회원 조회 -->
-<select id="searchReportU" parameterType="java.util.Map">
+<select id="searchReportU" parameterType="java.util.Map" resultMap="joinsearchReportU">
 	SELECT SINGOMEMBER , SINGOEDMEMBER , SINGOREASON , SINGOCHK , r.REVIEWSEQ , r.BOARDSEQ 
 			, CONTENT, WRITEDATE, DELFLAG, 
 			(SELECT MENTORINGPLACE FROM MEMBERSCHEDULE m2 WHERE r2.BOARDSEQ =m2.BOARDSEQ), 
 			TO_CHAR((SELECT MENTORINGTIME FROM MEMBERSCHEDULE m WHERE r2.BOARDSEQ = m.BOARDSEQ),'YYYY-MM-DD')
 		FROM REPORT r JOIN REVIEW r2 
 			ON r.REVIEWSEQ = r2.REVIEWSEQ
-				WHERE r2.BOARDSEQ = #{boardseq}
+				WHERE SINGOCHK = 'N'
 </select>
 
 <!-- 신고당한 회원 카운트 증가 -->
 <update id="addReportCnt" parameterType="java.util.Map">
 	UPDATE NAEMEMBER 
 		SET REPORTCNT = REPORTCNT +1
-			WHERE MEMBERSEQ = #{memberseq}
+			WHERE SINGOEDMEMBER = #{singoedmember}
+</update>
+
+<!-- 신고당한 회원 카운트 증가시 신고체크 초기화(Y로)  -->
+<update id="addReportCnt" parameterType="java.util.Map">
+	UPDATE NAEMEMBER 
+		SET SINGOCHK = 'Y'
+			WHERE SINGOEDMEMBER = #{singoedmember}
 </update>
 
 <!-- 페이징은 나중에... -->
