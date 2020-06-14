@@ -25,12 +25,6 @@ public class Payment_CTRL {
 
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	
-//	
-//	@RequestMapping(value = "Payment.do", method = RequestMethod.GET)
-//	public String payment() {
-//		log.info("payment Payment:\t {}", new Date());
-//		return "Payment/Payment_pay";
-//	}
 	
 	private int price = 1;
 	private final String NUM = "naementor";
@@ -41,8 +35,9 @@ public class Payment_CTRL {
 		
 		log.info("payment Payment_pay.do:\n {}", new Date());
 		
-		boardseq = "000040011";
+		boardseq = "000040017";
 		String payNum = NUM+boardseq;
+		System.out.println("payNum: "+payNum);
 		
 		URL url = null;
 		URLConnection connection = null;
@@ -95,46 +90,38 @@ public class Payment_CTRL {
 		}
 		JSONObject jsonresult = (JSONObject) obj;
 		String paytoken = (String) jsonresult.get("payToken");
-		String menteepay = (String) jsonresult.get("paidAmount");
-		String menteepaytime = (String) jsonresult.get("paidTs");
 		String checkoutPage = (String) jsonresult.get("checkoutPage");
 		
 		System.out.println("token 값: "+paytoken);
-		System.out.println("결제금액: "+menteepay);
-		System.out.println("결제시간: "+menteepaytime);
 		System.out.println("checkoutPage: "+checkoutPage);
 
-		session.setAttribute("payNum", payNum);
 		session.setAttribute("payUrl", checkoutPage);
 
 //		model.addAttribute("payed", checkoutPage);
-		session.setAttribute("token", paytoken);
-		session.setAttribute("menteepay", menteepay);
-		session.setAttribute("menteepaytime", menteepaytime);
+//		session.setAttribute("token", paytoken);
+//		session.setAttribute("menteepay", menteepay);
+//		session.setAttribute("menteepaytime", menteepaytime);
 		
 		return "Payment/Payment_pay";
 	}
-	
+
 	@RequestMapping(value = "Payment_result.do", method = RequestMethod.GET)
 	public String paymentResult(String status, String payToken, String paidAmount, String paidTs, HttpSession session) {
 		log.info("paymentResult Payment_result.do:\t {}", new Date());
 		
-		System.out.println("결제상태 :"+status);
-		String paytoken = (String)session.getAttribute("paytoken");
-		String menteepay = (String)session.getAttribute("menteepay");
-		String menteepaytime = (String)session.getAttribute("menteepaytime");
-
-		System.out.println("token 값: "+paytoken);
-		System.out.println("결제금액: "+menteepay);
-		System.out.println("결제시간: "+menteepaytime);
-		
+		System.out.println("**************결제 상태: "+status);
+		System.out.println("**************결제 토큰: "+payToken);
+		System.out.println("**************승인 금액: "+paidAmount);
+		System.out.println("**************승인 시간: "+paidTs);
+			
 		return "Payment/Payment_result";
 	}
+	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "Payment_close.do", method = {RequestMethod.POST, RequestMethod.GET})
 	public String paymentClose(HttpSession session) {
 		log.info("paymentClose Payment_close.do:\t {}", new Date());
-		System.out.println("나 취소했다 리말이야");
+		System.out.println("취소했음");
 		
 		URL url = null;
 		URLConnection connection = null;

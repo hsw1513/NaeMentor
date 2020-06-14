@@ -32,7 +32,9 @@
 			<tr>
 				<th>내용</th>
 				<td>
-				<textarea style="color: gray;" id="editor" rows="20" cols="40" name="content">문의글: ${dto.content}</textarea></td>
+				<textarea style="color: gray;" id="editor" rows="20" cols="40" name="content">
+				========================================================<br>	
+				문의글: ${dto.content}</textarea></td>
 			</tr>
 		</table>
 			<div style="text-align: center; margin-top: 20px;">

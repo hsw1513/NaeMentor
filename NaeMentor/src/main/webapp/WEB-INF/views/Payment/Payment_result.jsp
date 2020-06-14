@@ -8,7 +8,7 @@
 </head>
 <body>
 	<h1>결제가 완료되었습니다.</h1>
-	<button onclick ="location.href='./result.do'">확인</button>
+	<button onclick ="location.href='./Payment_check.do'">확인</button>
 	<button onclick ="location.href='./Payment_close.do'">환불</button>
 </body>
 </html>
