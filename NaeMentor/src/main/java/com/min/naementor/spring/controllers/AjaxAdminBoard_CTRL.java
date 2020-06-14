@@ -16,11 +16,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.min.naementor.dtos.FindingMentorDto;
+import com.min.naementor.dtos.MemberScheduleDto;
 import com.min.naementor.dtos.NaememberDto;
 import com.min.naementor.dtos.ProfileDto;
 import com.min.naementor.dtos.ReportDto;
 import com.min.naementor.spring.model.adminboard.AdminBoard_IService;
-import com.min.naementor.spring.model.report.Report_ServiceImpl;
+import com.min.naementor.spring.model.report.Report_IService;
 
 @Controller
 public class AjaxAdminBoard_CTRL {
@@ -31,7 +32,7 @@ public class AjaxAdminBoard_CTRL {
 	private AdminBoard_IService service;
 	
 	@Autowired
-	private Report_ServiceImpl rservice;
+	private Report_IService rservice;
 	
 	
 	@SuppressWarnings("unchecked")
@@ -59,7 +60,6 @@ public class AjaxAdminBoard_CTRL {
 	@RequestMapping(value = "/reportContent.do", method = RequestMethod.GET)
 	@ResponseBody
 	public JSONObject memberList(Model model, String memberList, HttpSession session) {
-		
 		JSONArray jLists = new JSONArray();
 		log.info("******회원고르기"+memberList);
 		JSONObject jsono = new JSONObject();
@@ -82,7 +82,7 @@ public class AjaxAdminBoard_CTRL {
 				json.put("mentorlist", fdto.get(i).getMentorlist());
 				json.put("findreporter", fdto.get(i).getFindreporter());
 				jLists.add(json);
-				jsono.put("report", jLists); // {"report":jLists}
+				jsono.put("reportC", jLists); // {"report":jLists}
 				}
 			} // 신고당한 글 조회
 		
@@ -138,7 +138,25 @@ public class AjaxAdminBoard_CTRL {
 			}
 		} // 멘토신청 회원 조회
 		
-		
+		else if(memberList.equalsIgnoreCase("reportMember")) {
+			List<ReportDto> rdto = rservice.searchReportU();
+			for (int i = 0; i < rdto.size(); i++) {
+				JSONObject json = new JSONObject();
+				json.put("singomember", rdto.get(i).getSingomember());
+				json.put("singoedmember", rdto.get(i).getSingoedmember());
+				json.put("singoreason", rdto.get(i).getSingochk());
+				json.put("singochk", rdto.get(i).getSingochk());
+				json.put("reviewseq", rdto.get(i).getReviewseq());
+				json.put("boardseq", rdto.get(i).getBoardseq());
+				json.put("content", rdto.get(i).getReviewdto().getContent());
+				json.put("writedate", rdto.get(i).getReviewdto().getWritedate());
+				json.put("delflag", rdto.get(i).getReviewdto().getDelflag());
+				json.put("mentoringplace", rdto.get(i).getReviewdto().getMatchingdto().getMemberscheduledto().getMentoringplace());
+				json.put("mentoringtime", rdto.get(i).getReviewdto().getMatchingdto().getMemberscheduledto().getMentoringtime());
+				jLists.add(json);
+				jsono.put("reportM", jLists);
+			}
+		}
 		
 		
 		return jsono;

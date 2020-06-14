@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.min.naementor.report">
 
-<resultMap type="com.min.naementor.dtos.NaememberDto" id="joinsearchReportU">
+<resultMap type="com.min.naementor.dtos.ReportDto" id="joinsearchReportU">
 		<result property="singomember" column="SINGOMEMBER"/>
 		<result property="singoedmember" column="SINGOEDMEMBER"/>
 		<result property="singoreason" column="SINGOREASON"/>
@@ -12,14 +12,16 @@
 		<result property="reviewdto.content" column="CONTENT"/>
 		<result property="reviewdto.writedate" column="WRITEDATE"/>
 		<result property="reviewdto.delflag" column="DELFLAG"/>
+		<result property="reviewdto.matchingdto.memberscheduledto.mentoringplace" column="MENTORINGPLACE"/>
+		<result property="reviewdto.matchingdto.memberscheduledto.mentoringtime" column="MENTORINGTIME"/>
 	</resultMap>
 
 <!-- 신고당한 회원 조회 -->
-<select id="searchReportU" parameterType="java.util.Map" resultMap="joinsearchReportU">
+<select id="searchReportU" resultMap="joinsearchReportU">
 	SELECT SINGOMEMBER , SINGOEDMEMBER , SINGOREASON , SINGOCHK , r.REVIEWSEQ , r.BOARDSEQ 
-			, CONTENT, WRITEDATE, DELFLAG, 
-			(SELECT MENTORINGPLACE FROM MEMBERSCHEDULE m2 WHERE r2.BOARDSEQ =m2.BOARDSEQ), 
-			TO_CHAR((SELECT MENTORINGTIME FROM MEMBERSCHEDULE m WHERE r2.BOARDSEQ = m.BOARDSEQ),'YYYY-MM-DD')
+			, CONTENT, WRITEDATE, DELFLAG,
+			(SELECT MENTORINGPLACE FROM MEMBERSCHEDULE m2 WHERE r2.BOARDSEQ =m2.BOARDSEQ) MENTORINGPLACE, 
+			TO_CHAR((SELECT MENTORINGTIME FROM MEMBERSCHEDULE m WHERE r2.BOARDSEQ = m.BOARDSEQ),'YYYY-MM-DD') MENTORINGTIME 
 		FROM REPORT r JOIN REVIEW r2 
 			ON r.REVIEWSEQ = r2.REVIEWSEQ
 				WHERE SINGOCHK = 'N'
@@ -29,12 +31,15 @@
 <update id="addReportCnt" parameterType="java.util.Map">
 	UPDATE NAEMEMBER 
 		SET REPORTCNT = REPORTCNT +1
-			WHERE SINGOEDMEMBER = #{singoedmember}
+			WHERE MEMBERSEQ = (SELECT MEMBERSEQ
+								FROM NAEMEMBER n , REPORT r
+									WHERE n.MEMBERSEQ = r.SINGOEDMEMBER
+										AND r.SINGOEDMEMBER = #{singoedmember})
 </update>
 
 <!-- 신고당한 회원 카운트 증가시 신고체크 초기화(Y로)  -->
-<update id="addReportCnt" parameterType="java.util.Map">
-	UPDATE NAEMEMBER 
+<update id="changeSingoChk" parameterType="java.util.Map">
+	UPDATE REPORT 
 		SET SINGOCHK = 'Y'
 			WHERE SINGOEDMEMBER = #{singoedmember}
 </update>

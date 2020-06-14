@@ -52,8 +52,8 @@ public class AdminBoard_DaoImpl implements AdminBoard_IDao {
 	
 	// 회원 계정 상태 변경
 	@Override
-	public boolean changeStatus(NaememberDto dto) {
-		int cnt = sqlSession.update(NS+"changeStatus", dto);
+	public boolean changeStatus(Map<String, String> map) {
+		int cnt = sqlSession.update(NS+"changeStatus", map);
 		return (cnt>0)?true:false;
 	}
 

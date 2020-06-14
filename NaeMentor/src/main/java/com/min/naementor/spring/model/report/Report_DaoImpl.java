@@ -18,13 +18,19 @@ public class Report_DaoImpl implements Report_IDao {
 	
 	
 	@Override
-	public List<ReportDto> searchReportU(Map<String, String> map) {
-		return sqlSession.selectList(NS+"searchReportU", map);
+	public List<ReportDto> searchReportU() {
+		return sqlSession.selectList(NS+"searchReportU");
 	}
 
 	@Override
 	public boolean addReportCnt(Map<String, String> map) {
 		int cnt = sqlSession.update(NS+"addReportCnt", map);
+		return (cnt>0)?true:false;
+	}
+
+	@Override
+	public boolean changeSingoChk(Map<String, String> map) {
+		int cnt = sqlSession.update(NS+"changeSingoChk", map);
 		return (cnt>0)?true:false;
 	}
 

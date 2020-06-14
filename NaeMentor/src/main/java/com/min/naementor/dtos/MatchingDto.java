@@ -12,12 +12,14 @@ public class MatchingDto implements Serializable{
 	private String payflag;
 	
 	private FindingMentorDto findingmentordto;
+	private MemberScheduleDto memberscheduledto;
 	
 	public MatchingDto() {
+		super();
 	}
-
+	
 	public MatchingDto(String boardseq, String menteeseq, String mentorseq, String matchingdate, String payflag,
-			FindingMentorDto findingmentordto) {
+			FindingMentorDto findingmentordto, MemberScheduleDto memberscheduledto) {
 		super();
 		this.boardseq = boardseq;
 		this.menteeseq = menteeseq;
@@ -25,62 +27,58 @@ public class MatchingDto implements Serializable{
 		this.matchingdate = matchingdate;
 		this.payflag = payflag;
 		this.findingmentordto = findingmentordto;
+		this.memberscheduledto = memberscheduledto;
 	}
-
+	public String getBoardseq() {
+		return boardseq;
+	}
+	public void setBoardseq(String boardseq) {
+		this.boardseq = boardseq;
+	}
+	public String getMenteeseq() {
+		return menteeseq;
+	}
+	public void setMenteeseq(String menteeseq) {
+		this.menteeseq = menteeseq;
+	}
+	public String getMentorseq() {
+		return mentorseq;
+	}
+	public void setMentorseq(String mentorseq) {
+		this.mentorseq = mentorseq;
+	}
+	public String getMatchingdate() {
+		return matchingdate;
+	}
+	public void setMatchingdate(String matchingdate) {
+		this.matchingdate = matchingdate;
+	}
+	public String getPayflag() {
+		return payflag;
+	}
+	public void setPayflag(String payflag) {
+		this.payflag = payflag;
+	}
+	public FindingMentorDto getFindingmentordto() {
+		return findingmentordto;
+	}
+	public void setFindingmentordto(FindingMentorDto findingmentordto) {
+		this.findingmentordto = findingmentordto;
+	}
+	public MemberScheduleDto getMemberscheduledto() {
+		return memberscheduledto;
+	}
+	public void setMemberscheduledto(MemberScheduleDto memberscheduledto) {
+		this.memberscheduledto = memberscheduledto;
+	}
 	@Override
 	public String toString() {
 		return "MatchingDto [boardseq=" + boardseq + ", menteeseq=" + menteeseq + ", mentorseq=" + mentorseq
 				+ ", matchingdate=" + matchingdate + ", payflag=" + payflag + ", findingmentordto=" + findingmentordto
-				+ "]";
+				+ ", memberscheduledto=" + memberscheduledto + "]";
 	}
-
-	public String getBoardseq() {
-		return boardseq;
-	}
-
-	public void setBoardseq(String boardseq) {
-		this.boardseq = boardseq;
-	}
-
-	public String getMenteeseq() {
-		return menteeseq;
-	}
-
-	public void setMenteeseq(String menteeseq) {
-		this.menteeseq = menteeseq;
-	}
-
-	public String getMentorseq() {
-		return mentorseq;
-	}
-
-	public void setMentorseq(String mentorseq) {
-		this.mentorseq = mentorseq;
-	}
-
-	public String getMatchingdate() {
-		return matchingdate;
-	}
-
-	public void setMatchingdate(String matchingdate) {
-		this.matchingdate = matchingdate;
-	}
-
-	public String getPayflag() {
-		return payflag;
-	}
-
-	public void setPayflag(String payflag) {
-		this.payflag = payflag;
-	}
-
-	public FindingMentorDto getFindingmentordto() {
-		return findingmentordto;
-	}
-
-	public void setFindingmentordto(FindingMentorDto findingmentordto) {
-		this.findingmentordto = findingmentordto;
-	}
+	
+	
 	
 	
 	
