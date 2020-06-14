@@ -141,6 +141,7 @@ public class AjaxAdminBoard_CTRL {
 		
 		else if(memberList.equalsIgnoreCase("reportMember")) {
 			List<ReportDto> rdto = rservice.searchReportU();
+			List<NaememberDto> ldto = service.userBasicInfo();
 			for (int i = 0; i < rdto.size(); i++) {
 				JSONObject json = new JSONObject();
 				json.put("singomember", rdto.get(i).getSingomember());
@@ -156,7 +157,7 @@ public class AjaxAdminBoard_CTRL {
 				json.put("mentoringtime", rdto.get(i).getReviewdto().getMatchingdto().getMemberscheduledto().getMentoringtime());
 				jLists.add(json);
 				jsono.put("reportM", jLists);
-			}
+			} // 신고당한 회원 조회
 		}else {
 			List<NaememberDto> ldto = service.userBasicInfo();
 			for (int i = 0; i < ldto.size(); i++) {
@@ -221,6 +222,20 @@ public class AjaxAdminBoard_CTRL {
 			map.put("memberseq", memberseq);
 			if(service.mentorPromotion(map)) {
 				service.promotionDate(map);
+				return "true";
+			}else {
+				return "false";
+			}
+		}
+		
+		// 신고된 게시글 삭제
+		@RequestMapping(value = "/deleteReport.do", method = RequestMethod.GET)
+		@ResponseBody
+		public String deleteReport(String boardseq) {
+			log.info("신고 게시글 삭제");
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("boardseq", boardseq);
+			if(service.deleteReport(map)) {
 				return "true";
 			}else {
 				return "false";

@@ -79,6 +79,22 @@ function mentorPromotion(val){
 	}
 }
 
+function deleteReport(val){
+	if(confirm("게시글을 삭제하시겠습니까?")){
+		$.ajax({
+			url: "./deleteReport.do",
+			data: "boardseq="+val,
+			type: "get",
+			success: function(msg){
+				alert("게시글이 삭제되었습니다.");
+			},
+			error: function(){
+				alert("오류");
+			}
+		});
+	}
+}
+
 
 var ajaxReportMember = function(){
 	$.ajax({
@@ -100,6 +116,7 @@ var ajaxReportMember = function(){
 			html += "<td>"+v.menteelevel+"</td>"+"<td>"+v.howto+"</td>";
 			html += "<td>"+v.location+"</td>"+"<td>"+v.delflag+"</td>";
 			html += "<td>"+v.mentorlist+"</td>"+"<td>"+v.findreporter+"</td>";
+			html += "<td><input class='btn btn-primary' type='button' value='삭제' onclick='deleteReport(\""+v.boardseq+"\")'></td>";
 			html += "</tr>";
 			$(".table").prepend(html);
 				});
