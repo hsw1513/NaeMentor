@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.min.naementor.dtos.AttachFileDto;
@@ -76,10 +77,20 @@ public class Profile_CTRL {
 			for (AttachFileDto attachFileDto : lists) {
 			 isc = service.insertFile(attachFileDto);
 			}
+			if(files.size()==0) {
+				isc = false;
+			}
 		}
-		return isc?"redirect:/goingApplyMentor.do":"redirect:/Profile.do";
+		return isc?"redirect:/Profile.do":"redirect:/goingApplyMentor.do";
 	}
 	
+	@RequestMapping(value="/download.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String filedown(AttachFileDto dto, HttpServletResponse response) {
+		log.info("Profile_filedown \t {} ",dto);
+		module.fileDown2(response, dto);
+		return "true";
+	}
 	
 	
 }

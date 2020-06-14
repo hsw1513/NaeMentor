@@ -36,6 +36,7 @@ import com.min.naementor.dtos.NaememberDto;
 import com.min.naementor.spring.comm.AttachFile_Module;
 import com.min.naementor.spring.comm.SplitUserComm;
 import com.min.naementor.spring.model.findingMentor.FindingMentor_IService;
+import com.min.naementor.spring.model.matching.Matching_IService;
 
 @Controller
 public class FindingMentor_CTRL {
@@ -43,6 +44,8 @@ public class FindingMentor_CTRL {
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	private FindingMentor_IService service;
+	@Autowired
+	private Matching_IService mservice;
 	
 	// 게시판 리스트 
 	@RequestMapping("FindingMentor_board.do")
@@ -57,14 +60,21 @@ public class FindingMentor_CTRL {
 		log.info("{}, {}",memberseq, boardseq);
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("boardseq", boardseq);
+		// 게시물 조회
 		FindingMentorDto dto = service.detailContent(map);
+		
+		// 멘토 지원자 조회
 		String[] _memberseq = comm.splitId(dto.getMentorlist());
-//		System.out.println(Arrays.toString(_memberseq)+"--------------------------------------------------------------------------");
 		Map<String, String[]> map2 = new HashMap<String, String[]>();
 		map2.put("_memberseq", _memberseq);
 		List<NaememberDto> lists = service.chkMentor(map2);
+		
+		// 매칭 정보 확인
+		MatchingDto mdto = mservice.chkMatching(boardseq);
+		
 		model.addAttribute("findMentor", lists);
 		model.addAttribute("detail", dto);
+		model.addAttribute("matching", mdto);
 		return "FindingMentor/detailContent";
 	}
 	
