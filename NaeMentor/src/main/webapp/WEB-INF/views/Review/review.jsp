@@ -10,9 +10,9 @@
 <script type="text/javascript">
 	var xhr = null;	
 	window.onload = function(){
-		
 		function chkBtn(){
 			var btn1 = document.getElementById("reviewChk");
+			var btn2 = document.getElementById("reportChk");
 			xhr = new XMLHttpRequest();
 			xhr.onreadystatechange = function(){
 				if(xhr.readyState==4){
@@ -20,8 +20,10 @@
 //	 					alert(xhr.responseText);
 						if(xhr.responseText == "false"){
 							btn1.style.display = "none";
+							btn2.style.display = "";
 						}else{
 							btn1.style.display = "";
+							btn2.style.display = "none";
 						}
 					}
 				}
@@ -54,6 +56,34 @@
 			hidDiv.style.display = '';
 		}else{
 			hidDiv.style.display = 'none';
+		}
+	}
+	
+	function report(obj, myseq){
+// 		alert('신고할 상대의 회원번호'+obj+"\n 나의 회원번호"+myseq);
+		if(confirm('신고할 상대의 회원번호'+obj+"\n 나의 회원번호"+myseq)){
+			let singoreason = prompt('신고하시는 이유를 입력해주세요.');
+			if(singoreason != ''){
+				
+			
+			xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function(){
+				if(xhr.readyState==4){
+					if(xhr.status==200){
+						if(xhr.responseText == "true"){
+							alert('신고되었습니다.');
+						}else{
+							alert('신고에 실패했습니다.');
+						}
+					}
+				}
+			}
+			xhr.open("post","./insertReport.do");
+			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			xhr.send("singoedmember="+obj+"&singomember="+myseq+"&boardseq="+${boardseq}+"&auth=${userinfo.auth}&singoreason="+singoreason);
+			}else{
+				alert('신고내용을 입력해주세요.');
+			}
 		}
 	}
 </script>
@@ -103,6 +133,7 @@
 	<hr>
 	<div>
 		<button id="reviewChk" onclick="insertReview()">후기남기기</button>
+		<button id="reportChk" onclick="report(${oppositeSeq},${userinfo.memberseq})">신고하기</button>
 		<div id="hDiv" style="display:none;">
 			<form action="./insertReview.do" method="post">
 				<input type="hidden" value="${boardseq}" name="boardseq">
