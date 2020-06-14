@@ -6,11 +6,23 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<script type="text/javascript">
+	function chkVal(){
+		let inputs = document.getElementsByTagName("input");
+		let flag = true;
+		for(var i = 0; i<inputs.length-1; i++){
+			if(inputs[i].value==''){
+				flag = false;
+			}
+		}
+		return flag;
+	}
+</script>
 <body>
 <%@include file="/WEB-INF/views/topMenu.jsp"%>
 <div id="container">
 	
-	<form action="./applymentor.do" method="post" enctype="multipart/form-data">
+	<form action="./applymentor.do" method="post" enctype="multipart/form-data" onsubmit="return chkVal()">
 	<input type="hidden" name="memberseq" value="${profile.memberseq}">
 	photo<input type="text" name="photo" value="${profile.profiledto.photo}"><br>
 	school<input type="text" name="school" value="${profile.profiledto.school}"><br>

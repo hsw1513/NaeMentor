@@ -17,6 +17,26 @@
 // 		alert('updateAuth');
 	location.href="./goingApplyMentor.do";
 	}
+	
+	function downFile(){
+		let sendFile = "filepath=${userfile.filepath}&userfile=${userfile.userfile}&searchfile=${userfile.searchfile}";
+// 		alert(sendFile);
+	let xhr = new XMLHttpRequest();
+	xhr.open("post","./download.do");
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4){
+// 			alert(xhr.status);
+			if(xhr.status == 200){
+				alert(xhr.responseText);
+			}
+		}else{
+// 			alert(xhr.responseText);
+		}
+	}
+	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	xhr.send(sendFile);
+	}
+	
 </script>
 <body>
 <%@include file="/WEB-INF/views/topMenu.jsp"%>
@@ -133,8 +153,11 @@
 	      <tr>
 	        <td>filechk</td>
 	        <td>${profile.profiledto.filechk}</td>
+	        <c:if test="${profile.profiledto.filechk eq 'Y'}">
 	        <td>올린 파일이름</td>
-	        <td>${userfile.userfile}</td>
+	        <td><a onclick="downFile()">
+	        		${userfile.userfile} : ${userfile.filesize}</a></td>
+	        </c:if>
 	      </tr>
 	    </tbody>
   	</table>
