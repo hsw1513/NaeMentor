@@ -34,4 +34,27 @@ public class Report_DaoImpl implements Report_IDao {
 		return (cnt>0)?true:false;
 	}
 
+	@Override
+	public boolean chkReport(Map<String, String> map) {
+		int i = (int) sqlSession.selectOne(NS+"chkReport", map);
+		return i==0?true:false;
+	}
+
+	@Override
+	public boolean insertReport(ReportDto dto) {
+		return sqlSession.insert(NS+"insertReport", dto)>0?true:false;
+	}
+
+	@Override
+	public int findReviewOfMentor(Map<String, String> map) {
+		int reviewseq = (int) sqlSession.selectList(NS+"findReviewOfMentor", map).get(0);
+		return reviewseq;
+	}
+
+	@Override
+	public int findReviewOfMentee(Map<String, String> map) {
+		int reviewseq = (int) sqlSession.selectList(NS+"findReviewOfMentee", map).get(0);
+		return reviewseq;
+	}
+
 }
