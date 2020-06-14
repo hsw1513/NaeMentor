@@ -38,7 +38,7 @@
       	</a>
      </li>
       <li>
-      	<a href="./logout.do">
+      	<a href="./logoutgo.do?email=${userinfo.email}">
       		<span class="glyphicon glyphicon-log-out">로그아웃</span> 
       	</a>
       </li>

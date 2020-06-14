@@ -98,6 +98,12 @@ public class Naemember_DaoImpl implements Naemember_IDao {
 		return (cnt>0)?true:false;
 	}
 
+	@Override
+	public boolean logoutTime(Map<String, String> map) {
+		int cnt = sqlSession.update(NS+"logoutTime", map);
+		return (cnt>0)?true:false;
+	}
+
 	
 
 }

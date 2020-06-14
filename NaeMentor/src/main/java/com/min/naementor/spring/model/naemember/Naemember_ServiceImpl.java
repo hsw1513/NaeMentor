@@ -146,6 +146,17 @@ public class Naemember_ServiceImpl implements Naemember_IService {
 		log.info("searchPassword 비밀번호 변경, {}", dto);
 		return dao.changePassword(dto);
 	}
+	
+	/**
+	 * <h2>로그아웃 시간 기록</h2>
+	 * @param 이메일
+	 * @return 로그아웃 시간 기록
+	 */
+	@Override
+	public boolean logoutTime(Map<String, String> map) {
+		log.info("logoutTime 로그아웃 시간 기록, {}", map);
+		return dao.logoutTime(map);
+	}
 
 	
 

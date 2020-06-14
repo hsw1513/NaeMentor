@@ -35,7 +35,7 @@
 		}
 	}
 	function apply(){
-		if(confirm('당신 관리자잖아? 정말 멘토신청 할거야?')){
+		if(confirm(${detail.memberseq}+'님에게 멘토링을 신청합니다.')){
 			applyMentor();
 		}
 	}
@@ -92,9 +92,10 @@
 	</c:if>
 	
 	<c:if test="${detail.matchingchk eq 'N'}">
-	
+	<c:if test="${userinfo.memberseq eq 'ROLE_R'}">
 	<button onclick="apply()">멘토링 신청</button>
 	<c:if test="${userinfo.memberseq eq detail.memberseq}">
+	</c:if>
 	</c:if>
 	<div>
 		<table>

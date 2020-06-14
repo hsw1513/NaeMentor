@@ -1,6 +1,8 @@
 package com.min.naementor.spring.controllers;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -16,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.min.naementor.dtos.FindingMentorDto;
-import com.min.naementor.dtos.MemberScheduleDto;
 import com.min.naementor.dtos.NaememberDto;
 import com.min.naementor.dtos.ProfileDto;
 import com.min.naementor.dtos.ReportDto;
@@ -140,6 +141,7 @@ public class AjaxAdminBoard_CTRL {
 		
 		else if(memberList.equalsIgnoreCase("reportMember")) {
 			List<ReportDto> rdto = rservice.searchReportU();
+			List<NaememberDto> ldto = service.userBasicInfo();
 			for (int i = 0; i < rdto.size(); i++) {
 				JSONObject json = new JSONObject();
 				json.put("singomember", rdto.get(i).getSingomember());
@@ -155,12 +157,90 @@ public class AjaxAdminBoard_CTRL {
 				json.put("mentoringtime", rdto.get(i).getReviewdto().getMatchingdto().getMemberscheduledto().getMentoringtime());
 				jLists.add(json);
 				jsono.put("reportM", jLists);
+			} // 신고당한 회원 조회
+		}else {
+			List<NaememberDto> ldto = service.userBasicInfo();
+			for (int i = 0; i < ldto.size(); i++) {
+				JSONObject json = new JSONObject();
+				json.put("memberseq", ldto.get(i).getMemberseq());
+				json.put("email", ldto.get(i).getEmail());
+				json.put("nickname", ldto.get(i).getNickname());
+				json.put("phone", ldto.get(i).getPhone());
+				json.put("birthday", ldto.get(i).getBirthday());
+				json.put("gender", ldto.get(i).getGender());
+				json.put("auth", ldto.get(i).getAuth());
+				json.put("userstatus", ldto.get(i).getUserstatus());
+				json.put("mentortier", ldto.get(i).getMentortier());
+				json.put("reportcnt", ldto.get(i).getReportcnt());
+				json.put("joindate", ldto.get(i).getJoindate());
+				json.put("lastaccess", ldto.get(i).getLastaccess());
+				json.put("byebye", ldto.get(i).getByebye());
+				jLists.add(json);
+				jsono.put("allUser", jLists);
 			}
 		}
 		
 		
 		return jsono;
 	}
+	
+	// 신고카운트 증가, 신고체크 초기화(Y)
+		@RequestMapping(value = "/changeSingoChk.do", method = RequestMethod.GET)
+		@ResponseBody
+		public String changeSingoChk(String singoedmember) {
+			log.info("신고카운트 증가");
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("singoedmember", singoedmember);
+			if(rservice.addReportCnt(map)) {
+				rservice.changeSingoChk(map);
+				return "true";
+				
+			}
+				return "false";
+		}
+		
+		// 탈퇴회원 탈퇴 승인 => 회원권한 변경
+		@RequestMapping(value = "/changeBye.do", method = RequestMethod.GET)
+		@ResponseBody
+		public String changeBye(String email, String userstatus) {
+			log.info("탈퇴회원 승인시 권한 변경");
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("email", email);
+			if(service.changeStatus(map)) {
+				return "true";
+			}else {
+				return "false";
+			}
+		}
+		
+		// 멘토승급 승인 + 승급시간 기록
+		@RequestMapping(value = "/mentorPromotion.do", method = RequestMethod.GET)
+		@ResponseBody
+		public String changeBye(String memberseq) {
+			log.info("멘토승급 승인 및 승급시간 기록");
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("memberseq", memberseq);
+			if(service.mentorPromotion(map)) {
+				service.promotionDate(map);
+				return "true";
+			}else {
+				return "false";
+			}
+		}
+		
+		// 신고된 게시글 삭제
+		@RequestMapping(value = "/deleteReport.do", method = RequestMethod.GET)
+		@ResponseBody
+		public String deleteReport(String boardseq) {
+			log.info("신고 게시글 삭제");
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("boardseq", boardseq);
+			if(service.deleteReport(map)) {
+				return "true";
+			}else {
+				return "false";
+			}
+		}
 	
 	
 }

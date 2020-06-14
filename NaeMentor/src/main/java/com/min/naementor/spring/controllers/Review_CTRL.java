@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.min.naementor.dtos.MatchingDto;
 import com.min.naementor.dtos.NaememberDto;
+import com.min.naementor.dtos.ReportDto;
 import com.min.naementor.dtos.ReviewDto;
 import com.min.naementor.spring.model.matching.Matching_IService;
+import com.min.naementor.spring.model.report.Report_IService;
 import com.min.naementor.spring.model.review.Review_IService;
 
 @Controller
@@ -29,6 +31,8 @@ public class Review_CTRL {
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	private Matching_IService mservice;
+	@Autowired
+	private Report_IService rservice;
 	
 	// 리뷰게시판으로 이동(session 정보 탐색 후 분기)
 	@RequestMapping("/review.do")
@@ -52,6 +56,7 @@ public class Review_CTRL {
 		// 여기서부터 작업!
 		log.info("Review_CTRL_searchMStar \t {}",mentorseq);
 		List<ReviewDto> lists = service.searchMStar(mentorseq);
+		model.addAttribute("oppositeSeq", mentorseq);
 		model.addAttribute("reviews", lists);
 		model.addAttribute("boardseq", boardseq);
 		return "Review/review";
@@ -62,6 +67,7 @@ public class Review_CTRL {
 	public String denyMSearch(Model model,String menteeseq, String boardseq) {
 		log.info("Review_CTRL_denyMSearch \t {}",menteeseq);
 		List<ReviewDto> lists = service.denyMSearch(menteeseq);
+		model.addAttribute("oppositeSeq", menteeseq);
 		model.addAttribute("reviews", lists);
 		model.addAttribute("boardseq", boardseq);
 		return "Review/review";
@@ -117,5 +123,33 @@ public class Review_CTRL {
 		}
 	}
 	
+	// 신고하기
+	@RequestMapping(value= "/insertReport.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String insertReport(ReportDto dto, String auth) {
+		log.info("Review_CTRL_insertReport \t {} \t{}",dto,auth);
+		Map<String, String> map = new HashMap<String, String>();
+		MatchingDto mdto = mservice.chkMatching(dto.getBoardseq());
+		map.put("mentorseq", mdto.getMentorseq());
+		map.put("menteeseq", mdto.getMenteeseq());
+		int reviewSeq = 0;
+		boolean isc = false;
+		if(auth.equals("ROLE_E")) {
+			reviewSeq = rservice.findReviewOfMentor(map);
+			dto.setReviewseq(String.valueOf(reviewSeq));
+			if(rservice.insertReport(dto)) {
+				isc = true;
+			}
+		}else{
+			reviewSeq = rservice.findReviewOfMentee(map);
+			dto.setReviewseq(String.valueOf(reviewSeq));
+			if(rservice.insertReport(dto)) {
+				isc = true;
+			}
+		}
+		return isc?"true":"false";
+	}
 
+	
+	
 }
