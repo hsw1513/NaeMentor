@@ -92,7 +92,7 @@
 	</c:if>
 	
 	<c:if test="${detail.matchingchk eq 'N'}">
-	<c:if test="${userinfo.memberseq eq 'ROLE_R'}">
+	<c:if test="${userinfo.auth eq 'ROLE_R'}">
 	<button onclick="apply()">멘토링 신청</button>
 	<c:if test="${userinfo.memberseq eq detail.memberseq}">
 	</c:if>

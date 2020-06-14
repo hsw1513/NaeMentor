@@ -194,7 +194,6 @@ public class AjaxAdminBoard_CTRL {
 			if(rservice.addReportCnt(map)) {
 				rservice.changeSingoChk(map);
 				return "true";
-				
 			}
 				return "false";
 		}
