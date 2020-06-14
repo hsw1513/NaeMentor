@@ -15,6 +15,9 @@
 <body>
 <%@include file="/WEB-INF/views/topMenu.jsp"%>
 <div id="container">
+	<c:if test="${userinfo.auth eq 'ROLE_E'}">
+	<button onclick="writeBoard()">글 작성하기</button>
+	</c:if>
 	<table class="table table-hover">
     <thead>
       <tr>
@@ -42,9 +45,6 @@
       </tr>
 	</c:forEach>
     </tbody>
-    <tfoot>
-    	<button onclick="writeBoard()">글 작성하기</button>
-    </tfoot>
   </table>
 </div>
 <%@include file="/WEB-INF/views/footer.jsp"%>

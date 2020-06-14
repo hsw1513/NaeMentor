@@ -91,12 +91,13 @@
 	<button onclick="report()">신고하기</button>
 	</c:if>
 	
+	
 	<c:if test="${detail.matchingchk eq 'N'}">
 	<c:if test="${userinfo.auth eq 'ROLE_R'}">
 	<button onclick="apply()">멘토링 신청</button>
+	</c:if>
 	<c:if test="${userinfo.memberseq eq detail.memberseq}">
-	</c:if>
-	</c:if>
+	<c:if test="${userinfo.auth eq 'ROLE_E'}">
 	<div>
 		<table>
 			<tr><td>신청 멘토 목록</td></tr>
@@ -108,11 +109,18 @@
 		</table>
 	</div>
 	</c:if>
+	</c:if>
+	</c:if>
+	
 	<c:if test="${detail.matchingchk eq 'Y'}">
+	<c:if test="${userinfo.memberseq eq matching.menteeseq || userinfo.memberseq eq matching.mentorseq}">
 	<div>
 		<h1><a href="./review.do?boardseq=${detail.boardseq}">후기게시판 이동</a></h1>
+		<c:if test="${userinfo.auth eq 'ROLE_R'}">
 		<h1><a href="./schedule.do?boardseq=${detail.boardseq}">스케줄게시판 이동</a></h1>
+		</c:if>
 	</div>
+	</c:if>
 	</c:if>
 </div>
 <%@include file="/WEB-INF/views/footer.jsp"%>
