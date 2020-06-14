@@ -4,10 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>결제 close</title>
+<title>결제상태 확인</title>
 </head>
 <body>
-결제가 취소되었습니다.
-<button onclick ="location.href='./result.do'">확인</button>
+<h1>결제상태 확인</h1>
 </body>
 </html>

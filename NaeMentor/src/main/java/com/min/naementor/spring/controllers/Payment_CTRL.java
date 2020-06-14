@@ -37,11 +37,11 @@ public class Payment_CTRL {
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "Payment_pay.do", method = RequestMethod.GET)
-	public String paymentPay(String boardseq, HttpSession session) {
+	public String paymentPay(Model model, String boardseq, HttpSession session) {
 		
 		log.info("payment Payment_pay.do:\n {}", new Date());
 		
-		boardseq = "000020000";
+		boardseq = "000040011";
 		String payNum = NUM+boardseq;
 		
 		URL url = null;
@@ -94,43 +94,58 @@ public class Payment_CTRL {
 			e.printStackTrace();
 		}
 		JSONObject jsonresult = (JSONObject) obj;
-		String token = (String) jsonresult.get("payToken");
+		String paytoken = (String) jsonresult.get("payToken");
+		String menteepay = (String) jsonresult.get("paidAmount");
+		String menteepaytime = (String) jsonresult.get("paidTs");
 		String checkoutPage = (String) jsonresult.get("checkoutPage");
 		
-		System.out.println("token 값: "+token);
+		System.out.println("token 값: "+paytoken);
+		System.out.println("결제금액: "+menteepay);
+		System.out.println("결제시간: "+menteepaytime);
 		System.out.println("checkoutPage: "+checkoutPage);
-		
+
+		session.setAttribute("payNum", payNum);
 		session.setAttribute("payUrl", checkoutPage);
 
 //		model.addAttribute("payed", checkoutPage);
-//		session.setAttribute("token", token);
-//		
+		session.setAttribute("token", paytoken);
+		session.setAttribute("menteepay", menteepay);
+		session.setAttribute("menteepaytime", menteepaytime);
+		
 		return "Payment/Payment_pay";
 	}
 	
 	@RequestMapping(value = "Payment_result.do", method = RequestMethod.GET)
-	public String paymentResult(String status, HttpSession session) {
+	public String paymentResult(String status, String payToken, String paidAmount, String paidTs, HttpSession session) {
 		log.info("paymentResult Payment_result.do:\t {}", new Date());
-		System.out.println("결제 완료: "+status);
-		String token = (String)session.getAttribute("token");
-		System.out.println("승인된 결제 토큰: "+token);
 		
-		session.setAttribute("token", token);
+		System.out.println("결제상태 :"+status);
+		String paytoken = (String)session.getAttribute("paytoken");
+		String menteepay = (String)session.getAttribute("menteepay");
+		String menteepaytime = (String)session.getAttribute("menteepaytime");
 
+		System.out.println("token 값: "+paytoken);
+		System.out.println("결제금액: "+menteepay);
+		System.out.println("결제시간: "+menteepaytime);
+		
 		return "Payment/Payment_result";
 	}
-	
-	@RequestMapping(value = "/cancel.do", method = {RequestMethod.POST, RequestMethod.GET})
-	public String cancel(HttpSession session) {
-		log.info("Welcome cancel.do:\t {}", new Date());
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "Payment_close.do", method = {RequestMethod.POST, RequestMethod.GET})
+	public String paymentClose(HttpSession session) {
+		log.info("paymentClose Payment_close.do:\t {}", new Date());
 		System.out.println("나 취소했다 리말이야");
 		
 		URL url = null;
 		URLConnection connection = null;
 		StringBuilder responseBody = new StringBuilder();
 		
-		String token = (String)session.getAttribute("token");
-		System.out.println(token + "나 환불 토큰이야 이것드라");
+		String paytoken = (String)session.getAttribute("paytoken");
+//		String payNum = (String)session.getAttribute("payNum");
+		String menteepay = (String)session.getAttribute("menteepay");
+		System.out.println("환불토큰: "+paytoken);
+		System.out.println("환불금액: "+menteepay);
+		
 		try {
 			url = new URL("https://pay.toss.im/api/v2/refunds");
 			connection = url.openConnection();
@@ -139,8 +154,8 @@ public class Payment_CTRL {
 			connection.setDoInput(true);
 
 			org.json.simple.JSONObject jsonBody = new JSONObject();
-			jsonBody.put("payToken",token);
-			jsonBody.put("amount", "5000");
+			jsonBody.put("payToken",paytoken);
+			jsonBody.put("amount", menteepay);
 			jsonBody.put("apiKey", "sk_test_w5lNQylNqa5lNQe013Nq");
 
 			BufferedOutputStream bos = new BufferedOutputStream(connection.getOutputStream());
@@ -162,15 +177,15 @@ public class Payment_CTRL {
 		System.out.println("&&&&&&&&&&&&&&&&&&&&&&&"+responseBody.toString());
 		String s = responseBody.toString();
 		
-		return "cancel";
+		return "Payment/Payment_close";
 		
 	}
-	
-	@RequestMapping(value = "payCheck.do", method = RequestMethod.GET)
-	public String payCheck() {
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "Payment_check.do", method = RequestMethod.GET)
+	public String paymentCheck(String orderNo, HttpSession session) {
 		
-		log.info("Welcome payCheck.do:\t {}", new Date());
-		System.out.println("나 결제상태 왔어");
+		log.info("paymentCheck Payment_check.do:\t {}", new Date());
+		System.out.println("결제상태");
 		
 		URL url = null;
 		URLConnection connection = null;
@@ -183,7 +198,7 @@ public class Payment_CTRL {
 			connection.setDoInput(true);
 
 			org.json.simple.JSONObject jsonBody = new JSONObject();
-			jsonBody.put("orderNo", null);
+			jsonBody.put("orderNo", orderNo);
 			jsonBody.put("apiKey", "sk_test_w5lNQylNqa5lNQe013Nq");
 
 			BufferedOutputStream bos = new BufferedOutputStream(connection.getOutputStream());
@@ -203,7 +218,7 @@ public class Payment_CTRL {
 			responseBody.append(e);
 		}
 		System.out.println(responseBody.toString());
-		return "payCheck";
+		return "Payment/Payment_check";
 	}
 	
 }
