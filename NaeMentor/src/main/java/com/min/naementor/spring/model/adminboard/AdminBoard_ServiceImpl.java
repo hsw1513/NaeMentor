@@ -46,8 +46,8 @@ public class AdminBoard_ServiceImpl implements AdminBoard_IService {
 	}
 
 	@Override
-	public boolean changeStatus(NaememberDto dto) {
-		return dao.changeStatus(dto);
+	public boolean changeStatus(Map<String, String> map) {
+		return dao.changeStatus(map);
 	}
 
 	@Override

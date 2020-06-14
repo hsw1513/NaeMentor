@@ -19,13 +19,21 @@ public class Report_ServiceImpl implements Report_IService {
 	private Report_IDao dao;
 
 	@Override
-	public List<ReportDto> searchReportU(Map<String, String> map) {
-		return dao.searchReportU(map);
+	public List<ReportDto> searchReportU() {
+		log.info("신고당한 회원 조회 searchReportU");
+		return dao.searchReportU();
 	}
 
 	@Override
 	public boolean addReportCnt(Map<String, String> map) {
+		log.info("신고당한 회원 카운트 증가 addReportCnt, {}", map);
 		return dao.addReportCnt(map);
+	}
+
+	@Override
+	public boolean changeSingoChk(Map<String, String> map) {
+		log.info("신고당한 회원 신고체크 변경(Y) changeSingoChk, {}", map);
+		return dao.changeSingoChk(map);
 	}
 
 }

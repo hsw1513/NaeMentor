@@ -47,11 +47,11 @@
 					WHERE BYEBYE = 'Y'		
 	</select>
 	
-	<!-- 계정상태 변경(관리자) -->
-	<update id="changeStatus" parameterType="NMDto">
+	<!-- 탈퇴회원 승인시 권한 변경 -->
+	<update id="changeStatus" parameterType="java.util.Map">
 		UPDATE NAEMEMBER 
-			SET USERSTATUS = #{userstatus}
-				WHERE MEMBERSEQ = #{memberseq} 
+			SET USERSTATUS = 'D'
+				WHERE EMAIL = #{email} 
 	</update>
 	
 	<!-- 멘토 승인시 권한 변경 -->
@@ -93,16 +93,17 @@
 	
 	<!-- 멘토신청자 조회 -->
 	<select id="searchApplier" resultMap="joinsearchApplier">
-		SELECT n.MEMBERSEQ, EMAIL, NICKNAME, INTRODUCE, PHONE, BIRTHDAY,
+		SELECT n.MEMBERSEQ, AUTH, EMAIL, NICKNAME, INTRODUCE, PHONE, BIRTHDAY,
 			   GENDER, REPORTCNT, JOINDATE, PHOTO, SCHOOL, MAJOR, CAREER,
 			   CERTIFICATE, SPECIALFIELD, MENTOACCSTAR, FILECHK, USERFILE, UPLOADDATE
 			FROM NAEMEMBER n JOIN PROFILE p
 				ON n.MEMBERSEQ = p.MEMBERSEQ 
 			JOIN ATTACHFILE a 
 				ON n.MEMBERSEQ = a.MEMBERSEQ
-			WHERE FILECHK = 'Y'
+				WHERE FILECHK = 'Y' AND NOT AUTH = 'ROLE_R'
 	</select>
 	
+	<!-- 회원탈퇴 승인시 상태변경 -->
 	
 	
 </mapper>

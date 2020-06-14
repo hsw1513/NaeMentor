@@ -47,7 +47,7 @@ public interface AdminBoard_IService {
 	 * @param 유저 상태, 회원번호
 	 * @return 상태변경 성공 여부(true: 성공)
 	 */
-	public boolean changeStatus(NaememberDto dto);
+	public boolean changeStatus(Map<String, String> map);
 	
 	/**
 	 * 멘토승인시 권한 변경(mentorPromotion)
