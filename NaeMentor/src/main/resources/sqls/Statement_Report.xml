@@ -64,7 +64,7 @@
 	SELECT r.REVIEWSEQ
 		FROM REVIEW r 
 		JOIN MATCHING m ON r.BOARDSEQ = m.BOARDSEQ
-		WHERE m.MENTORSEQ = #{mentorseq} AND m.MENTEESEQ = #{menteeseq} AND r.MENTORSTAR = '0'
+		WHERE m.MENTORSEQ = #{mentorseq} AND m.MENTEESEQ = #{menteeseq} AND r.MENTEESTAR = '0'
 		ORDER BY r.WRITEDATE DESC
 </select>
 <!-- 멘토: 신고를 위해 멘토가 남긴 후기번호 가져오기 -->
@@ -72,7 +72,7 @@
 	SELECT r.REVIEWSEQ
 		FROM REVIEW r 
 		JOIN MATCHING m ON r.BOARDSEQ = m.BOARDSEQ
-		WHERE m.MENTORSEQ = #{mentorseq} AND m.MENTEESEQ = #{menteeseq} AND r.MENTEESTAR = '0'
+		WHERE m.MENTORSEQ = #{mentorseq} AND m.MENTEESEQ = #{menteeseq} AND r.MENTORSTAR = '0'
 		ORDER BY r.WRITEDATE DESC
 </select>
 
