@@ -65,6 +65,14 @@ public interface Naemember_IService {
 	public boolean loginCount(Map<String, Object> map);
 	
 	/**
+	 * 로그인시 시간 기록
+	 * @param 아이디(email)
+	 * @return 시간기록 성공 여부(성공시 true)
+	 */
+	public boolean logoutTime(Map<String, String> map);
+
+	
+	/**
 	 * 휴면회원(R)이 로그인 시 상태 변경(A)
 	 * @param memberseq
 	 * @return 휴면회원 상태 변경(A)

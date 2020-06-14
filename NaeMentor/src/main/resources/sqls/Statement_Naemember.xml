@@ -107,7 +107,7 @@
 	</update>
 	
 	<!-- 로그아웃시 시간 기록 -->
-	<update id="logoutTime" parameterType="java.lang.String">
+	<update id="logoutTime" parameterType="java.util.Map">
 	  UPDATE NAEMEMBER 
 		SET LASTACCESS = SYSDATE
 			WHERE EMAIL = #{email}

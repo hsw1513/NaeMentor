@@ -1,6 +1,8 @@
 package com.min.naementor.spring.controllers;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -90,6 +92,17 @@ public class Login_CTRL {
 		}
 		
 		return "Naemember/loginPage";
+		}
+		
+		
+		// 로그아웃시 시간 기록
+		@RequestMapping(value = "/logoutgo.do", method = RequestMethod.GET)
+		public String logoutTime(Model model, String email) {
+			log.info("**************logout.do 들어왔다"+email);
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("email", email);
+			service.logoutTime(map);
+			return "redirect:/logout.do";
 		}
 
 		// 로그인 성공시 메인으로 이동
