@@ -50,7 +50,7 @@
 				location.href="./Question_boardWrite.do";
 			}
 			function quesdel(seq){
-				location.href="./Question_boardDelete.do?adminseq="+seq;
+				location.href="./Question_boardDeleteU.do?adminseq="+seq;
 			}
 			
 			function quesmod(seq){
