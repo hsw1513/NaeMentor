@@ -11,30 +11,27 @@
 <script type="text/javascript">
 var xhr = null;
 	window.onload = function(){
-// 		reviewOnload();
+		reviewOnload();
 	}		
 	
-// 	reviewOnload = function(){
-// 		xhr = new XMLHttpRequest();
-// 		xhr.onreadystatechange = function(){
-// 			if(xhr.readyState==4){
-// 				if(xhr.status==200){
-// 					let res = JSON.parse(xhr.responseText);
-// 					if(res.result == true){
-// 							let rightclass = document.getElementsByClassName("reviews")[0];
-// 							rightclass.innerHTML = res.reviews;
-// 					}
-// 				}
-// 			}
-// 		}
-// 		xhr.open("get","./review.do?memberseq="+${detail.memberseq}+"&boardseq="+${detail.boardseq});
-// 		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-// 		xhr.send();
+	reviewOnload = function(){
+		xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState==4){
+				if(xhr.status==200){
+					let val = JSON.parse(xhr.responseText);
+					document.getElementsByClassName("reviews")[0].innerHTML = val.reviews;
+				}
+			}
+		}
+		xhr.open("get","./review.do?menteeseq="+${detail.memberseq}+"&boardseq="+${detail.boardseq});
+		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		xhr.send();
 		
-// 	}
+	}
 	
 	function del(){
-		location.href="./deleteContent.do?menteeseq="+${detail.memberseq}+"&boardseq="+${detail.boardseq};
+		location.href="./deleteContent.do?memberseq="+${detail.memberseq}+"&boardseq="+${detail.boardseq};
 	}
 	function modify(){
 		var from1 = document.getElementsByTagName("form")[0];

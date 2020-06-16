@@ -9,7 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.min.naementor.dtos.MatchingDto;
@@ -28,50 +30,51 @@ public class AjaxFindingMentor_CTRL {
 	private Review_IService service;
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	@Autowired
-	private Matching_IService mservice;
-	@Autowired
-	private Report_IService rservice;
-	@Autowired
-	private FindingMentor_IService fservice;
-	@Autowired
 	private FindingMentor_MakeArrayList converter;
-	// 리뷰게시판으로 이동(session 정보 탐색 후 분기)
 	
 	
 	// 멘토와 멘티 분기
-	@SuppressWarnings("unchecked")
 	@RequestMapping("/review.do")
 	public String review(HttpSession session, String boardseq, String menteeseq) {
 		log.info("review.do : {}:{}",boardseq,menteeseq);
 		NaememberDto dto = (NaememberDto)session.getAttribute("userinfo");
 		boolean isc = false;
+		String mentorseq = "0";
 		if(dto.getAuth().equalsIgnoreCase("ROLE_E")) {
-			isc = false;
-		}else if(dto.getAuth().equalsIgnoreCase("ROLE_R")) {
 			isc = true;
+		}else if(dto.getAuth().equalsIgnoreCase("ROLE_R")) {
+			isc = false;
 		}
-		return isc?"redirect:/Menteereview.do":"redirect:/Menteereview.do";
+		return isc?"redirect:/Menteereview.do?boardseq="+boardseq+"&mentorseq="+mentorseq
+						:"redirect:/Mentorreview.do?boardseq="+boardseq+"&menteeseq="+menteeseq;
 	}
 	
-//	// 멘티가 멘토의 후기 보기
-//	@RequestMapping(value = "/searchMStar.do", method=RequestMethod.GET)
-//	public String searchMStar(Model model, String mentorseq, String boardseq) {
-//		log.info("Review_CTRL_searchMStar \t {}",mentorseq);
-//		List<ReviewDto> lists = service.searchMStar(mentorseq);
-//		model.addAttribute("oppositeSeq", mentorseq);
-//		model.addAttribute("reviews", lists);
-//		model.addAttribute("boardseq", boardseq);
-//		return "Review/review";
-//	}
-//	
-//	// 멘토가 멘티의 후기 보기
-//	@RequestMapping(value = "/denyMSearch.do", method=RequestMethod.GET)
-//	public String denyMSearch(Model model,String menteeseq, String boardseq) {
-//		log.info("Review_CTRL_denyMSearch \t {}",menteeseq);
-//		List<ReviewDto> lists = service.denyMSearch(menteeseq);
-//		model.addAttribute("oppositeSeq", menteeseq);
-//		model.addAttribute("reviews", lists);
-//		model.addAttribute("boardseq", boardseq);
-//		return "Review/review";
-//	}
+	// 멘토가 멘티의 후기 보기
+	@RequestMapping(value = "/Mentorreview.do", method=RequestMethod.GET)
+	@ResponseBody
+	public JSONObject denyMSearch(Model model,String menteeseq, String boardseq) {
+		log.info("Review_CTRL_denyMSearch \t {}{}",menteeseq, boardseq);
+		JSONObject obj = new JSONObject();
+		List<ReviewDto> lists = service.denyMSearch(menteeseq);
+		obj.put("reviews",converter.convertReviewList(lists));
+		return obj;
+	}
+	
+	// 멘티가 멘토의 후기 보기
+	@RequestMapping(value = "/Menteereview.do", method=RequestMethod.GET)
+	@ResponseBody
+	public JSONObject searchMStar(Model model, String mentorseq, String boardseq) {
+		log.info("Review_CTRL_searchMStar \t {}:{}",mentorseq, boardseq);
+		JSONObject obj = new JSONObject();
+		if(!mentorseq.equals("0")) {
+			List<ReviewDto> lists = service.denyMSearch(mentorseq);
+			obj.put("reviews",converter.convertReviewList(lists));
+		}else {
+			obj.put("reviews","후기가 없습니다.");
+		}
+		return obj;
+	}
+	
+	
+	
 }
