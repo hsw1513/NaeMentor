@@ -44,7 +44,9 @@
 			delete-cookies="JSESSIONID,SPRING_SECURITY_REMEMBER_ME_COOKIE" 
 		/>	
 		
-		<security:remember-me key="nobrand" token-validity-seconds="2419200"
+		<security:remember-me 
+		key="nobrand" 
+		token-validity-seconds="2419200"
 		remember-me-parameter="remember-me"/>
 		
 		<security:csrf disabled="true" />

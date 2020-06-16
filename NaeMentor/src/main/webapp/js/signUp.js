@@ -13,32 +13,32 @@ function check(){
 	var chkId = document.getElementById("chkval").value;
 	var smsCheck = document.getElementById("smsCheck").value;
 	
-	if(email == "") {
-		swal("회원가입 오류", "이메일을 확인해주세요");
-		return false;
-	}else if(password != passOk){
-		swal("회원가입 오류", "비밀번호가 일치하지 않습니다");
-		return false;
-	}else if(nickname == ""){
-		alert("회원가입 오류", "사용할 수 없는 닉네임입니다.");
-		return false;
-	}else if(introduce == ""){
-		swal("회원가입 오류", "자기소개를 필히 작성해주세요");
-		return false;
-	}else if(phone == ""){
-		swal("회원가입 오류", "전화번호를 입력해주세요");
-		return false;
-	}else if(birthday == ""){
-		swal("회원가입 오류","생년월일을 입력해주세요");
-		return false;
-	}else if(genderValue == ""){
-		swal("회원가입 오류", "성별을 선택해주세요");
-		return false;
-	}else if(smsCheck == ""){
-		alert("휴대전화 본인 인증을 진행해주세요");
-	}else{
-		return true;
-	}
+//	if(email == "") {
+//		swal("회원가입 오류", "이메일을 확인해주세요");
+//		return false;
+//	}else if(password != passOk){
+//		swal("회원가입 오류", "비밀번호가 일치하지 않습니다");
+//		return false;
+//	}else if(nickname == ""){
+//		alert("회원가입 오류", "사용할 수 없는 닉네임입니다.");
+//		return false;
+//	}else if(introduce == ""){
+//		swal("회원가입 오류", "자기소개를 필히 작성해주세요");
+//		return false;
+//	}else if(phone == ""){
+//		swal("회원가입 오류", "전화번호를 입력해주세요");
+//		return false;
+//	}else if(birthday == ""){
+//		swal("회원가입 오류","생년월일을 입력해주세요");
+//		return false;
+//	}else if(genderValue == ""){
+//		swal("회원가입 오류", "성별을 선택해주세요");
+//		return false;
+//	}else if(smsCheck == ""){
+//		alert("휴대전화 본인 인증을 진행해주세요");
+//	}else{
+//		return true;
+//	}
 }
 
 $(function(){
@@ -79,6 +79,48 @@ $(function(){
 		
 	});
 });
+
+function emailConfirm1() {
+		$.ajax({ 
+			type: "post", 
+    		url: "./emailConfirm.do",
+    		data: "email="+$("#email").val(), 
+    		success: function(msg) { 
+    			if (msg == "true") { 
+    				console.log(msg);
+    				swal("이메일 인증","인증번호 전송 성공"); 
+    				$("#emailConfirm").val("재전송");
+    			} else { 
+    				swal("SMS인증 오류","인증번호 전송 실패","error"); 
+    			} 
+    		},
+    		error: function(){
+    			swal("오류","잘못된 요청입니다.","warning");
+    		}
+	}); 
+}
+
+function emailChk1(){
+	$.ajax({
+		type: "post",
+		url: "./emailChk.do",
+		data: "emailNum="+$("#emailNum").val(),
+		success: function(msg){
+			if(msg == "ok"){
+				swal("EMAIL 인증", "EMAIL 인증 성공");
+			} else{
+				swal("EMAIL 인증 오류", "정확한 인증번호를 입력해주세요");
+			}
+		},
+		error: function(){
+			alert("잘못된 요청입니다.");
+		}
+	});
+}
+
+
+
+
 
 $(function(){
 	$("#nickname").keyup(function(){
