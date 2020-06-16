@@ -11,31 +11,30 @@
 <script type="text/javascript">
 var xhr = null;
 	window.onload = function(){
-		reviewOnload();
+// 		reviewOnload();
 	}		
 	
-	reviewOnload = function(){
-		xhr = new XMLHttpRequest();
-		xhr.onreadystatechange = function(){
-			if(xhr.readyState==4){
-				if(xhr.status==200){
-					let res = JSON.parse(xhr.responseText);
-					if(res.result == true){
-							let rightclass = document.getElementsByClassName("rightDiv")[0];
-							rightclass.innerHTML = res.reviews;
-					}
-					
-				}
-			}
-		}
-		xhr.open("get","./review.do?boardseq="+${detail.boardseq});
-		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		xhr.send();
+// 	reviewOnload = function(){
+// 		xhr = new XMLHttpRequest();
+// 		xhr.onreadystatechange = function(){
+// 			if(xhr.readyState==4){
+// 				if(xhr.status==200){
+// 					let res = JSON.parse(xhr.responseText);
+// 					if(res.result == true){
+// 							let rightclass = document.getElementsByClassName("reviews")[0];
+// 							rightclass.innerHTML = res.reviews;
+// 					}
+// 				}
+// 			}
+// 		}
+// 		xhr.open("get","./review.do?memberseq="+${detail.memberseq}+"&boardseq="+${detail.boardseq});
+// 		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+// 		xhr.send();
 		
-	}
+// 	}
 	
 	function del(){
-		location.href="./deleteContent.do?memberseq="+${detail.memberseq}+"&boardseq="+${detail.boardseq};
+		location.href="./deleteContent.do?menteeseq="+${detail.memberseq}+"&boardseq="+${detail.boardseq};
 	}
 	function modify(){
 		var from1 = document.getElementsByTagName("form")[0];
@@ -85,10 +84,17 @@ var xhr = null;
 			xhr.open("POST","./matching.do");
 			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 			xhr.send(info);
-			
 		}else{
 			alert("취소되었습니다.");
 		}
+	}
+	function modifyDate(e){
+		e.stopPropagation();
+		let obj = document.createElement("INPUT");
+		obj.type="date";
+		obj.name="mentoringdate"
+		document.getElementById("objDiv").innerHTML = '일시';
+		document.getElementById("objDiv").appendChild(obj);
 	}
 </script>
 <body>
@@ -103,6 +109,9 @@ var xhr = null;
 	작성일<input type="text" value="${detail.writesdate}"><br>
 	전문분야<input type="text" name="specialfield" value="${detail.specialfield}"><br>
 	장소<input type="text" name="location" value="${detail.location}"><br>
+	<div id="objDiv"></div>
+	일시<input type="text" value="${detail.mentoringdate}"><br>
+
 	내용<textarea rows="3" cols="20" name="content">${detail.content}</textarea><br>
 	
 	<c:if test="${userinfo.memberseq eq detail.memberseq}">
@@ -115,30 +124,23 @@ var xhr = null;
 	
 	
 	<button onclick="javascript:history.back(-1)">뒤로가기</button>
-	
+	<button onclick="modifyDate(event)">날짜수정</button>
 	<c:if test="${userinfo.memberseq ne detail.memberseq}">
 	<button onclick="report()">신고하기</button>
 	</c:if>
 	</div>
 	
 	<div class="rightDiv">
+	<div class="reviews">
+	<%@include file="/WEB-INF/views/FindingMentor/ajaxReview.jsp"%>
+	</div>
 	<c:if test="${detail.matchingchk eq 'N'}">
 	<c:if test="${userinfo.auth eq 'ROLE_R'}">
 	<button onclick="apply()">멘토링 신청</button>
 	</c:if>
 	<c:if test="${userinfo.memberseq eq detail.memberseq}">
 	<c:if test="${userinfo.auth eq 'ROLE_E'}">
-	<div>
-		<table>
 	
-			<tr><td>신청 멘토 목록</td></tr>
-			<c:forEach var="memtors" items="${findMentor}">
-			<tr><td>
-			<button onclick="matching(this.title, this.name)" name="${memtors.nickname}" title="${memtors.memberseq}">${memtors.nickname}</button>
-			</td></tr>
-			</c:forEach>
-		</table>
-	</div>
 	</c:if>
 	</c:if>
 	</c:if>

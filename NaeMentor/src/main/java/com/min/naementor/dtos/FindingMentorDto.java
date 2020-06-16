@@ -20,6 +20,7 @@ public class FindingMentorDto implements Serializable{
 	private String memberseq;
 	private String findreporter;
 	private String matchingchk;
+	private String mentoringdate;
 	
 	private NaememberDto naememberdto;
 
@@ -28,7 +29,8 @@ public class FindingMentorDto implements Serializable{
 
 	public FindingMentorDto(String boardseq, String title, String content, String writesdate, String reportcnt,
 			String specialfield, String target, String menteelevel, String howto, String location, String delflag,
-			String mentorlist, String memberseq, String findreporter, String matchingchk, NaememberDto naememberdto) {
+			String mentorlist, String memberseq, String findreporter, String matchingchk, String mentoringdate,
+			NaememberDto naememberdto) {
 		super();
 		this.boardseq = boardseq;
 		this.title = title;
@@ -45,6 +47,7 @@ public class FindingMentorDto implements Serializable{
 		this.memberseq = memberseq;
 		this.findreporter = findreporter;
 		this.matchingchk = matchingchk;
+		this.mentoringdate = mentoringdate;
 		this.naememberdto = naememberdto;
 	}
 
@@ -54,7 +57,8 @@ public class FindingMentorDto implements Serializable{
 				+ writesdate + ", reportcnt=" + reportcnt + ", specialfield=" + specialfield + ", target=" + target
 				+ ", menteelevel=" + menteelevel + ", howto=" + howto + ", location=" + location + ", delflag="
 				+ delflag + ", mentorlist=" + mentorlist + ", memberseq=" + memberseq + ", findreporter=" + findreporter
-				+ ", matchingchk=" + matchingchk + ", naememberdto=" + naememberdto + "]";
+				+ ", matchingchk=" + matchingchk + ", mentoringdate=" + mentoringdate + ", naememberdto=" + naememberdto
+				+ "]";
 	}
 
 	public String getBoardseq() {
@@ -177,6 +181,14 @@ public class FindingMentorDto implements Serializable{
 		this.matchingchk = matchingchk;
 	}
 
+	public String getMentoringdate() {
+		return mentoringdate;
+	}
+
+	public void setMentoringdate(String mentoringdate) {
+		this.mentoringdate = mentoringdate;
+	}
+
 	public NaememberDto getNaememberdto() {
 		return naememberdto;
 	}
@@ -184,6 +196,7 @@ public class FindingMentorDto implements Serializable{
 	public void setNaememberdto(NaememberDto naememberdto) {
 		this.naememberdto = naememberdto;
 	}
+
 	
 	
 	

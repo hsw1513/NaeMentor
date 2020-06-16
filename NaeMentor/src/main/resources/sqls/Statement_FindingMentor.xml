@@ -6,7 +6,7 @@
 <select id="selectAll" resultType="FMDto">
  SELECT BOARDSEQ, TITLE, CONTENT, WRITESDATE, 
 			REPORTCNT, SPECIALFIELD, TARGET, MENTEELEVEL, HOWTO, 
-			LOCATION, DELFLAG, MEMBERSEQ, FINDREPORTER, MENTORLIST, MATCHINGCHK
+			LOCATION, DELFLAG, MEMBERSEQ, FINDREPORTER, MENTORLIST, MATCHINGCHK, MENTORINGDATE
 FROM FINDINGMENTOR
 WHERE DELFLAG = 'N'
 ORDER BY BOARDSEQ DESC
@@ -16,7 +16,7 @@ ORDER BY BOARDSEQ DESC
 <select id="detailContent" parameterType="java.util.Map" resultType="FMDto">
 	SELECT MENTORLIST ,BOARDSEQ, TITLE, CONTENT, WRITESDATE, REPORTCNT, 
 		   SPECIALFIELD, TARGET, MENTEELEVEL, HOWTO, LOCATION, DELFLAG, 
-		   MEMBERSEQ, FINDREPORTER, MATCHINGCHK
+		   MEMBERSEQ, FINDREPORTER, MATCHINGCHK, MENTORINGDATE
 	FROM FINDINGMENTOR 
 	WHERE BOARDSEQ = #{boardseq} AND DELFLAG ='N'
 </select>
@@ -54,15 +54,15 @@ ORDER BY BOARDSEQ DESC
 <!-- 멘토찾기 글입력 -->
 <insert id="insertContent" parameterType="FMDto">
 	INSERT INTO FINDINGMENTOR
-	(BOARDSEQ, TITLE, CONTENT, WRITESDATE, REPORTCNT, SPECIALFIELD, TARGET, MENTEELEVEL, HOWTO, LOCATION, DELFLAG, MENTORLIST, MEMBERSEQ, FINDREPORTER, MATCHINGCHK)
-	VALUES(BOARDSEQ.NEXTVAL, #{title}, #{content}, SYSDATE, 0, #{specialfield}, #{target}, #{menteelevel}, #{howto}, #{location}, 'N', '0,', #{memberseq}, '0,', 'N')
+	(BOARDSEQ, TITLE, CONTENT, WRITESDATE, REPORTCNT, SPECIALFIELD, TARGET, MENTEELEVEL, HOWTO, LOCATION, DELFLAG, MENTORLIST, MEMBERSEQ, FINDREPORTER, MATCHINGCHK, MENTORINGDATE)
+	VALUES(BOARDSEQ.NEXTVAL, #{title}, #{content}, SYSDATE, 0, #{specialfield}, #{target}, #{menteelevel}, #{howto}, #{location}, 'N', '0,', #{memberseq}, '0,', 'N', #{mentoringdate})
 </insert>
 
 <!-- 게시글 수정 -->
 <!-- 1. 불러오기 -->
 <select id="modifyContentSelect" parameterType="java.util.Map" resultType="FMDto">
 	SELECT BOARDSEQ , CONTENT , WRITESDATE , SPECIALFIELD,
-  			TARGET ,MENTEELEVEL ,HOWTO ,LOCATION , MENTORLIST , MEMBERSEQ 
+  			TARGET ,MENTEELEVEL ,HOWTO ,LOCATION , MENTORLIST , MEMBERSEQ, MENTORINGDATE
 	FROM FINDINGMENTOR f
 	WHERE BOARDSEQ =#{boardseq} AND DELFLAG ='N'
 </select>
@@ -87,6 +87,10 @@ ORDER BY BOARDSEQ DESC
 		<if test="location != null">
 		, LOCATION=#{location}
 		</if>
+		<if test="mentoringdate != null">
+		, MENTORINGDATE=#{mentoringdate}
+		</if>
+		
   		WHERE BOARDSEQ = #{boardseq}
 </update>
 
@@ -104,6 +108,10 @@ ORDER BY BOARDSEQ DESC
  		#{boardseq}
  	</foreach>
 </update>
+
+
+
+
 
 <!-- 멘토 선택(Matching게시판 insert) -->
 <insert id="matching" parameterType="MTDto">

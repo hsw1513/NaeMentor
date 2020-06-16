@@ -11,8 +11,16 @@
 <%@include file="/WEB-INF/views/topMenu.jsp"%>
 <div id="container">
 	<form action="./insertContent.do" method="post" enctype="multipart/form-data">
-		TITLE<input type="text" name="title"><br>
-		SPECIALFIELD
+		관심분야
+		<select name="target">
+			<option value="실무">실무</option>
+			<option value="취업">취업</option>
+			<option value="자격증">자격증</option>
+			<option value="취미">취미</option>
+			<option value="교육">교육</option>
+		</select><br>
+		글 제목<input type="text" name="title"><br>
+		전문분야
 		<select name="specialfield">
 			<option value="엑셀">엑셀</option>
 			<option value="파워포인트">파워포인트</option>
@@ -33,29 +41,20 @@
 			<option value="Python">Python</option>
 			<option value="기타프로그래밍">기타프로그래밍</option>
 		</select><br>
-		TARGET
-		<select name="target">
-			<option value="실무">실무</option>
-			<option value="취업">취업</option>
-			<option value="자격증">자격증</option>
-			<option value="취미">취미</option>
-			<option value="교육">교육</option>
-		</select><br>
-		MENTEELEVEL
+		내수준
 		<select name="menteelevel">
 			<option value="H">상</option>
 			<option value="M">중</option>
 			<option value="L">하</option>
 		</select><br>
-		HOWTO
+		방식
 		<select name="howto">
 			<option value="Y">대면</option>
 			<option value="N">비대면</option>
 		</select><br>
-		LOCATION<input type="text" name="location"><br>
-		
-	CONTENT<textarea id="editor" rows="20" cols="40" name="content"></textarea><br>	
-		<input type="file" multiple="multiple" name="file">
+		장소<input type="text" name="location"><br>
+		일시<input type="date" name="mentoringdate"><br>
+		내용<textarea id="editor" rows="20" cols="40" name="content"></textarea><br>	
 		<input type="submit" value="작성완료">
 	</form>
 </div>
