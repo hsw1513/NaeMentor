@@ -4,11 +4,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,5 +97,61 @@ public class AjaxLogin_CTRL {
 			
 			return "<script>alert('비밀번호 변경 페이지 메일이 발송되었습니다. 확인해주세요.');</script>";
 		}
+		
+		
+		// UUID 생성
+		private String makeUUID() {
+			String emailUUID = UUID.randomUUID().toString().substring(0, 8);
+			return emailUUID;
+		}
+		
+		private String randomEmail = null;
+		
+		// 아이디 확인 UUID 이메일 발송
+		@RequestMapping(value = "/emailConfirm.do", method = RequestMethod.POST)
+		@ResponseBody
+		public String emailConfirm(HttpServletResponse response, String email) throws IOException {
+			
+			String setFrom = "hsw1513@gmail.com"; // 보낼 아이디
+			log.info(email);
+			String toEmail = email;// 받을 아이디
+			this.randomEmail = makeUUID();
+			
+			log.info("*****"+randomEmail);
+			
+			String content = "<h2>내멘토 인증번호는</h2>"+randomEmail+"입니다"; // 받을 내용
+			String title= "Naementor 아이디 인증"; // 메일제목
+			MimeMessage message = mailSender.createMimeMessage(); //메일 내용
+			
+			try {
+				MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+				messageHelper.setFrom(setFrom);
+				messageHelper.setTo(toEmail);
+				messageHelper.setSubject(title);
+				messageHelper.setText(content, true);
+				mailSender.send(message);
+				
+			} catch (MessagingException e) {
+				e.printStackTrace();
+			}
+			
+			return "true";
+		}
+		
+		@RequestMapping(value = "/emailChk.do", method = RequestMethod.POST)
+		@ResponseBody
+		public String emailChk(String emailNum) {
+			String chkCode = this.randomEmail;
+			if(emailNum.equals(chkCode)) {
+				log.info("Welcome emailChk.do 인증성공: \t 인증번호 : {} , 입력값 : {}", chkCode, emailNum);
+				return "ok";
+			}else {
+				log.info("Welcome emailChk.do 인증실패: \t 인증번호 : {} , 입력값 : {}", chkCode, emailNum);
+				return "no";
+			}
+		}
+		
+		
+		
 		
 }
