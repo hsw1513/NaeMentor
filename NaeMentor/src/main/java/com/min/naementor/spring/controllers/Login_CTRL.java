@@ -44,6 +44,13 @@ public class Login_CTRL {
 		return "Naemember/loginPage";
 	}
 	
+	//약관 페이지로 이동
+	@RequestMapping(value = "/yakGwanGo.do", method = RequestMethod.GET)
+	public String YakGwango() {
+		log.info("약관 페이지로 이동: SignUpgo");
+		return "Naemember/yakGWan";
+	}
+	
 	//회원가입 페이지로 이동
 	@RequestMapping(value = "/singUpGo.do", method = RequestMethod.GET)
 	public String SignUpgo() {
