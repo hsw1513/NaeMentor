@@ -29,7 +29,7 @@
 		</table>
 		<div style="text-align: center; margin-top: 20px;">
 		<input type="button" value="취소" onclick="javascript:history.back(-1);">
-			<input type="button" value="글 작성" onclick="save()"/>
+			<input type="button" class="myButton" value="글 작성" onclick="save()"/>
 		</div>
 	</form>
 	<script type="text/javascript">

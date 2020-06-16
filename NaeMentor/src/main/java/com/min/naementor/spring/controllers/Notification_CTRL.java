@@ -105,9 +105,15 @@ public class Notification_CTRL {
 	}
 	
 	@RequestMapping(value="NotiModify.do", method = RequestMethod.POST)
-	public String notiModify(NotiQuestionDto dto) {
+	public String notiModify(NotiQuestionDto dto, HttpSession session, @RequestParam("file") List<MultipartFile> files, HttpServletRequest request, HttpServletResponse resp) {
 		log.info("notiboard notiModify:\t {}", dto);
 		service.modifyNoti(dto);
+		if(files.size()>0) {
+			List<AttachFileDto> lists = module.attachFile(files, request, resp);
+			for (AttachFileDto attachFileDto : lists) {
+				service.modifyFile(attachFileDto);
+			}
+		}
 		return "redirect:/Notification_boardDetail.do?adminseq="+dto.getAdminseq();
 	}
 	

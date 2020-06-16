@@ -11,7 +11,8 @@
 <body>
 	<%@include file="/WEB-INF/views/topMenu.jsp"%>
 	<div id="container">
-		<h1>공지사항 게시판</h1>
+		 <h2>공지사항</h2>
+  			<p>내멘토의 공지사항이 올라오는 곳입니다. 자주 확인해 주세요.</p>  
 		<form action="./Notification_boardMultiDel.do" id="delmChk" method="post" onsubmit="return multiDelChk()">
 		<div>
 			<table class="table table-hover">
@@ -57,8 +58,8 @@
 <!-- 			관리자만 보이게-->
 		<div style="text-align: center; margin-top: 20px;">
 			<c:if test="${userinfo.auth eq 'ROLE_A'}">
-				<input type="submit" value="삭제" >
-				<input type="button" value="글쓰기" onclick ="notiBoardWrite()">
+				<input type="submit" class="myButton" value="삭제" >
+				<input type="button" class="myButton" value="글쓰기" onclick ="notiBoardWrite()">
 			</c:if>
 		</div>
 		</form>
@@ -85,7 +86,7 @@
 				   if (cntChecked>0) {
 					  var mchk = document.getElementById("delmChk").action;
 					  mchk = mchk + "?chks="+delChk;
-				      return true;
+				      return confirm("정말로 삭제하시겠습니까?");
 				   }else{
 				      alert("선택된 글이 없습니다.");
 				      return false;

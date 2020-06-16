@@ -8,8 +8,10 @@
 </head>
 <script type="text/javascript">
 	function cancel(){
+		if(confirm("프로필 작성을 취소하시면 회원가입이 취소됩니다. 정말 진행하시겠습니까?")){
 		var emailname = document.getElementById("email").value;
 		location.href = "./cancel.do?email="+emailname;
+		}
 	}
 </script>
 <body>

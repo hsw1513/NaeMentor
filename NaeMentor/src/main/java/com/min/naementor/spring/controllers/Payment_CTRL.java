@@ -25,7 +25,6 @@ public class Payment_CTRL {
 
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	
-	
 	private int price = 1;
 	private final String NUM = "naementor";
 	
@@ -35,7 +34,7 @@ public class Payment_CTRL {
 		
 		log.info("payment Payment_pay.do:\n {}", new Date());
 		
-		boardseq = "000040017";
+		boardseq = "000040031";
 		String payNum = NUM+boardseq;
 		System.out.println("payNum: "+payNum);
 		
@@ -97,6 +96,8 @@ public class Payment_CTRL {
 
 		session.setAttribute("payUrl", checkoutPage);
 
+		
+		
 //		model.addAttribute("payed", checkoutPage);
 //		session.setAttribute("token", paytoken);
 //		session.setAttribute("menteepay", menteepay);
@@ -105,14 +106,11 @@ public class Payment_CTRL {
 		return "Payment/Payment_pay";
 	}
 
-	@RequestMapping(value = "Payment_result.do", method = RequestMethod.GET)
+	@RequestMapping(value = "Payment_result.do", method = {RequestMethod.POST, RequestMethod.GET})
 	public String paymentResult(String status, String payToken, String paidAmount, String paidTs, HttpSession session) {
 		log.info("paymentResult Payment_result.do:\t {}", new Date());
 		
 		System.out.println("**************결제 상태: "+status);
-		System.out.println("**************결제 토큰: "+payToken);
-		System.out.println("**************승인 금액: "+paidAmount);
-		System.out.println("**************승인 시간: "+paidTs);
 			
 		return "Payment/Payment_result";
 	}
@@ -168,7 +166,7 @@ public class Payment_CTRL {
 		
 	}
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "Payment_check.do", method = RequestMethod.GET)
+	@RequestMapping(value = "Payment_check.do", method = {RequestMethod.POST, RequestMethod.GET})
 	public String paymentCheck(String orderNo, HttpSession session) {
 		
 		log.info("paymentCheck Payment_check.do:\t {}", new Date());

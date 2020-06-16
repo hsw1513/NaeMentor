@@ -7,10 +7,10 @@
 	<insert id="signUp" parameterType="NMDto">
 		INSERT INTO NAEMEMBER(MEMBERSEQ, EMAIL, PASSWORD, NICKNAME, INTRODUCE, PHONE, 
 								BIRTHDAY, GENDER, AUTH, USERSTATUS, MENTORTIER, LOGINCNT, 
-								REPORTCNT, JOINDATE, MENTEECNT, MENTEEACCSTAR, BYEBYE)
+								REPORTCNT, JOINDATE, MENTEECNT, MENTEEACCSTAR, BYEBYE, TARGET)
 			VALUES(MEMBERSEQ.NEXTVAL, #{email}, #{password}, #{nickname}, #{introduce}, #{phone}, 
 					#{birthday}, #{gender}, 'ROLE_E', 'A', 'N', 0, 
-						0, SYSDATE, 0, 0, 'N')
+						0, SYSDATE, 0, 0, 'N', #{target})
 	</insert>
 	
 	<!-- 아이디 중복검사 -->
@@ -69,6 +69,7 @@
 		<result property="menteecnt" column="MENTEECNT"/>
 		<result property="menteeaccstar" column="MENTEEACCSTAR"/>
 		<result property="byebye" column="BYEBYE"/>
+		<result property="target" column="TARGET"/>
 		<result property="profiledto.photo" column="PHOTO"/>
 		<result property="profiledto.school" column="SCHOOL"/>
 		<result property="profiledto.major" column="MAJOR"/>
@@ -87,7 +88,7 @@
 		  	 INTRODUCE , PHONE , BIRTHDAY ,
 		  	 GENDER , AUTH , USERSTATUS ,
 		   	 MENTORTIER , LOGINCNT , REPORTCNT, 
-		   	 JOINDATE , MENTEECNT , MENTEEACCSTAR, BYEBYE, PHOTO, SCHOOL, MAJOR,
+		   	 JOINDATE , MENTEECNT , MENTEEACCSTAR, BYEBYE, TARGET, PHOTO, SCHOOL, MAJOR,
 		     CAREER, CERTIFICATE, SPECIALFIELD, PMDATE, MENTORCNT, MENTOACCSTAR,
 		   	 FILECHK
 		   	FROM NAEMEMBER n JOIN PROFILE p
