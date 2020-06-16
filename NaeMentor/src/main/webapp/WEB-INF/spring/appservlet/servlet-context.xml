@@ -4,10 +4,12 @@
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
-		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 
 	<!-- Component 객체를 bean으로 찾아서 등록해주는 ns -->
 	<context:component-scan
@@ -20,6 +22,19 @@
 		<property name="prefix" value="/WEB-INF/views/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
+	
+	<bean class="java.lang.String" id="apiURL">
+	 <constructor-arg value="https://openapi.naver.com/v1/captcha/nkey?code="/>
+	</bean>
+	
+	<util:map id="capchaMap" map-class="java.util.HashMap">
+		<entry key="X-Naver-Client-Id">
+			<value>N9nXoUFXIe10HTnjzjXC</value>
+		</entry>
+		<entry key="X-Naver-Client-Secret">
+			<value>JjAU7DDGV3</value>
+		</entry>
+	</util:map>
 
 
 </beans>

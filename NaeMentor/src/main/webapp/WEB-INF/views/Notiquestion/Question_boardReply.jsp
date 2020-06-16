@@ -24,7 +24,7 @@
 		<table class="table talbe-bordered">
 			<tr>
 				<th>제목</th>
-				<td><input type="text" name="title" value="RE:${dto.title}"></td>
+				<td><input type="text" name="title" value="RE:${dto.title}" readonly="readonly"></td>
 			</tr>
 			<tr>
 			<th>작성일</th><td>${dto.writedate}</td>
@@ -33,13 +33,13 @@
 				<th>내용</th>
 				<td>
 				<textarea style="color: gray;" id="editor" rows="20" cols="40" name="content">
-				========================================================<br>	
-				문의글: ${dto.content}</textarea></td>
+				문의글: ${dto.content}
+				========================================================<br></textarea></td>
 			</tr>
 		</table>
 			<div style="text-align: center; margin-top: 20px;">
-			<input type="button" value="취소" onclick="javascript:history.back(-1);">
-			<input type="submit" value="답변 작성">
+			<input type="button" class="myButton" value="취소" onclick="javascript:history.back(-1);">
+			<input type="submit" class="myButton" value="답변 작성">
 		</div>
 	</form>
 	

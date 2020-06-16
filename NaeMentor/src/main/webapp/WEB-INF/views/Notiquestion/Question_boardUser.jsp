@@ -11,14 +11,23 @@
 <body>
 	<%@include file="/WEB-INF/views/topMenu.jsp"%>
 	<div id="container">
-		<h1>문의 게시판</h1>
+		 <h2>1:1 문의</h2>
+  		<p>궁금하신 사항이 있으시면 글을 작성해 주세요. 관리자가 답변해 드립니다.</p>  
 		<div>
-		<input type="button" value="문의 글쓰기" onclick ="questBoardWrite()">
+		<input type="button" class="myButton" value="문의 글쓰기" onclick ="questBoardWrite()">
 		</div>
 		<div>
 			<table class="table table-hover">
 				<c:forEach var="dto" items="${lists}">
 				<c:if test="${dto.delflag=='N'}">
+						<tr>
+						<td>
+						<c:if test="${dto.namemberdto.memberseq==userinfo.memberseq}">
+							<input type="button" class="myButton" name="btn" onclick="quesdel(${dto.adminseq})" value="삭제" >
+							<input type="button" class="myButton" name="btn" onclick="quesmod(${dto.adminseq})" value="수정">
+						</c:if>
+						</td>
+						</tr>
 						<tr>
 						<th>제목</th>	<td>${dto.title}</td>
 						</tr>
@@ -28,14 +37,7 @@
 						<tr>
 						<th>내용</th><td>${dto.content}</td>
 						</tr>
-						<tr>
-						<td>
-						<c:if test="${dto.namemberdto.memberseq==userinfo.memberseq}">
-							<input type="button" name="btn" onclick="quesdel(${dto.adminseq})" value="삭제" >
-							<input type="button" name="btn" onclick="quesmod(${dto.adminseq})" value="수정">
-						</c:if>
-						</td>
-						</tr>
+						
 						</c:if>
 					</c:forEach>
 			</table>
@@ -50,7 +52,9 @@
 				location.href="./Question_boardWrite.do";
 			}
 			function quesdel(seq){
+				if (confirm("정말로 삭제하시겠습니까?")){
 				location.href="./Question_boardDeleteU.do?adminseq="+seq;
+				}
 			}
 			
 			function quesmod(seq){
