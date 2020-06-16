@@ -10,7 +10,8 @@
 <body>
 	<%@include file="/WEB-INF/views/topMenu.jsp"%>
 	<div id="container">
-		<h1>상세보기</h1>
+		 <h2>1:1 문의 상세보기</h2>
+  		<p>문의글을 읽고 답변을 달아주세요.</p>
 		<div>
 			<table class="table table-bordered">
 				<tr><th>작성자</th><td>${userinfo.nickname}</td></tr>
@@ -20,13 +21,19 @@
 			</table>
 		</div>
 		<div style="text-align: center; margin-top: 20px;">
-			<input type="button" name="btn" onclick="quesdel()" value="삭제" >
-			<input type="button" name="btn" onclick="queslist()" value="목록보기" >
-			<input type="button" name="btn" onclick="quesreply()" value="답변" >
+			<c:if test="${dto.delflag=='N'}">
+			<input type="button" class="myButton" name="btn" onclick="quesdel()" value="삭제" >
+			</c:if>
+			<input type="button" class="myButton" name="btn" onclick="queslist()" value="목록보기" >
+			<c:if test="${dto.delflag=='N'}">
+			<input type="button" class="myButton" name="btn" onclick="quesreply()" value="답변" >
+			</c:if>
 		</div>
 		<script type="text/javascript">
 			function quesdel(){
+				if (confirm("정말로 삭제하시겠습니까?")){
 				location.href="./Question_boardDelete.do?adminseq="+${dto.adminseq};
+				}
 			}
 			function queslist(){
 				location.href="./Question_board.do";

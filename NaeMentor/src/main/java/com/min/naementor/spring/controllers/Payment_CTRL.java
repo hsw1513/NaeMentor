@@ -25,7 +25,6 @@ public class Payment_CTRL {
 
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	
-	
 	private int price = 1;
 	private final String NUM = "naementor";
 	
@@ -35,7 +34,7 @@ public class Payment_CTRL {
 		
 		log.info("payment Payment_pay.do:\n {}", new Date());
 		
-		boardseq = "000040018";
+		boardseq = "000040031";
 		String payNum = NUM+boardseq;
 		System.out.println("payNum: "+payNum);
 		
@@ -97,6 +96,8 @@ public class Payment_CTRL {
 
 		session.setAttribute("payUrl", checkoutPage);
 
+		
+		
 //		model.addAttribute("payed", checkoutPage);
 //		session.setAttribute("token", paytoken);
 //		session.setAttribute("menteepay", menteepay);
@@ -110,9 +111,6 @@ public class Payment_CTRL {
 		log.info("paymentResult Payment_result.do:\t {}", new Date());
 		
 		System.out.println("**************결제 상태: "+status);
-		System.out.println("**************결제 토큰: "+payToken);
-		System.out.println("**************승인 금액: "+paidAmount);
-		System.out.println("**************승인 시간: "+paidTs);
 			
 		return "Payment/Payment_result";
 	}
