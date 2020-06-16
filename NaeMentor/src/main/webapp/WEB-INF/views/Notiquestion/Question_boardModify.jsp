@@ -23,8 +23,8 @@
 			</tr>
 		</table>
 		<div style="text-align: center; margin-top: 20px;">
-		<input type="button" value="취소" onclick="javascript:history.back(-1);">
-			<input type="submit" value="수정 완료"/>
+		<input type="button" class="myButton" value="취소" onclick="javascript:history.back(-1);">
+			<input type="submit" class="myButton" value="수정 완료"/>
 		</div>
 	</form>
 	<script type="text/javascript">

@@ -11,7 +11,8 @@
 <body>
 	<%@include file="/WEB-INF/views/topMenu.jsp"%>
 	<div id="container">
-		<h1>문의 게시판</h1>
+		 <h2>1:1 문의</h2>
+  		<p>1:1 문의 관리자 페이지입니다. RE: 표시가 없는 곳을 확인해 답글을 달아주세요.</p>
 		<form action="./Question_boardMultiDel.do" id="delmChk" method="post" onsubmit="return multiDelChk()">
 		<div>
 			<table class="table table-hover">
@@ -47,7 +48,7 @@
 			</table>
 		</div>
 			<div style="text-align: center; margin-top: 20px;">
-				<input type="submit" value="삭제" >
+				<input type="submit" class="myButton" value="삭제" >
 			</div>
 		</form>
 		<script type="text/javascript">
@@ -70,7 +71,7 @@
 				   if (cntChecked>0) {
 					  var mchk = document.getElementById("delmChk").action;
 					  mchk = mchk + "?chks="+delChk;
-				      return true;
+					 return true;
 				   }else{
 				      alert("선택된 글이 없습니다.");
 				      return false;

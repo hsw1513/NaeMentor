@@ -18,7 +18,6 @@
       </a>
     </div>
     <ul class="nav navbar-nav">
-    		<li><a href="./boardList.do">게시판</a></li>
     		<li><a href="./FindingMentor_board.do">FindgingMentor보드로 이동</a></li>
     		<li><a href="./Notification_board.do">공지사항</a></li>
     		<li><a href="./Question_board.do">1:1 문의</a></li>
@@ -31,7 +30,7 @@
     <ul class="nav navbar-nav navbar-right">
       <li>
      	 <a href="./userInfo.do">
-      		<span class="glyphicon glyphicon-user">${userinfo.nickname}님 환영합니다.</span> 
+      		<span class="glyphicon glyphicon-user">${userinfo.nickname}님, 환영합니다.</span> 
       		<c:if test="${userinfo.auth eq 'ROLE_E'}">(멘티)</c:if>
       		<c:if test="${userinfo.auth eq 'ROLE_R'}">(멘토)</c:if>
       		<c:if test="${userinfo.auth eq 'ROLE_A'}">(관리자)</c:if>
