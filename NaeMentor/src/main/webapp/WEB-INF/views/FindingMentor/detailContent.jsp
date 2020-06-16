@@ -6,8 +6,34 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="./css/findingMentor/findingMentor.css">
 </head>
 <script type="text/javascript">
+var xhr = null;
+	window.onload = function(){
+		reviewOnload();
+	}		
+	
+	reviewOnload = function(){
+		xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState==4){
+				if(xhr.status==200){
+					let res = JSON.parse(xhr.responseText);
+					if(res.result == true){
+							let rightclass = document.getElementsByClassName("rightDiv")[0];
+							rightclass.innerHTML = res.reviews;
+					}
+					
+				}
+			}
+		}
+		xhr.open("get","./review.do?boardseq="+${detail.boardseq});
+		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		xhr.send();
+		
+	}
+	
 	function del(){
 		location.href="./deleteContent.do?memberseq="+${detail.memberseq}+"&boardseq="+${detail.boardseq};
 	}
@@ -17,7 +43,7 @@
 		from1.action = "./modifyContent.do";
 		return true;
 	}
-	var xhr = null;
+	
 	
 	function report(){
 		xhr = new XMLHttpRequest();
@@ -68,6 +94,8 @@
 <body>
 <%@include file="/WEB-INF/views/topMenu.jsp"%>
 <div id="container">
+	<div>
+	<div class="leftdiv">
 	<form action="" onsubmit="return modify()">
 	제목<input type="text" name="title" value="${detail.title}"><br>
 	글번호<input type="text" name="boardseq" value="${detail.boardseq}"><br>
@@ -85,13 +113,15 @@
 	</c:if>
 	</form>
 	
+	
 	<button onclick="javascript:history.back(-1)">뒤로가기</button>
 	
 	<c:if test="${userinfo.memberseq ne detail.memberseq}">
 	<button onclick="report()">신고하기</button>
 	</c:if>
+	</div>
 	
-	
+	<div class="rightDiv">
 	<c:if test="${detail.matchingchk eq 'N'}">
 	<c:if test="${userinfo.auth eq 'ROLE_R'}">
 	<button onclick="apply()">멘토링 신청</button>
@@ -100,6 +130,7 @@
 	<c:if test="${userinfo.auth eq 'ROLE_E'}">
 	<div>
 		<table>
+	
 			<tr><td>신청 멘토 목록</td></tr>
 			<c:forEach var="memtors" items="${findMentor}">
 			<tr><td>
@@ -122,6 +153,8 @@
 	</div>
 	</c:if>
 	</c:if>
+	</div>
+	</div>
 </div>
 <%@include file="/WEB-INF/views/footer.jsp"%>
 </body>
