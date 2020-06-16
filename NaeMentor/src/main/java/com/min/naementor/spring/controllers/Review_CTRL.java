@@ -35,7 +35,7 @@ public class Review_CTRL {
 	private Report_IService rservice;
 	
 	// 리뷰게시판으로 이동(session 정보 탐색 후 분기)
-	@RequestMapping("/review.do")
+//	@RequestMapping("/review.do")
 	public String review(HttpSession session, String boardseq) {
 		NaememberDto dto = (NaememberDto)session.getAttribute("userinfo");
 		MatchingDto mdto = (MatchingDto) mservice.chkMatching(boardseq);
@@ -51,9 +51,8 @@ public class Review_CTRL {
 	}
 
 	// 멘티가 멘토의 후기 보기
-	@RequestMapping(value = "/searchMStar.do", method=RequestMethod.GET)
+//	@RequestMapping(value = "/searchMStar.do", method=RequestMethod.GET)
 	public String searchMStar(Model model, String mentorseq, String boardseq) {
-		// 여기서부터 작업!
 		log.info("Review_CTRL_searchMStar \t {}",mentorseq);
 		List<ReviewDto> lists = service.searchMStar(mentorseq);
 		model.addAttribute("oppositeSeq", mentorseq);
@@ -63,7 +62,7 @@ public class Review_CTRL {
 	}
 	
 	// 멘토가 멘티의 후기 보기
-	@RequestMapping(value = "/denyMSearch.do", method=RequestMethod.GET)
+//	@RequestMapping(value = "/denyMSearch.do", method=RequestMethod.GET)
 	public String denyMSearch(Model model,String menteeseq, String boardseq) {
 		log.info("Review_CTRL_denyMSearch \t {}",menteeseq);
 		List<ReviewDto> lists = service.denyMSearch(menteeseq);
