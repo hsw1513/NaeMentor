@@ -112,6 +112,7 @@ public class AjaxLogin_CTRL {
 		@ResponseBody
 		public String emailConfirm(HttpServletResponse response, String email) throws IOException {
 			
+			if(!service.idDupleChk(email)) {
 			String setFrom = "hsw1513@gmail.com"; // 보낼 아이디
 			log.info(email);
 			String toEmail = email;// 받을 아이디
@@ -134,8 +135,10 @@ public class AjaxLogin_CTRL {
 			} catch (MessagingException e) {
 				e.printStackTrace();
 			}
-			
 			return "true";
+			}else {
+				return "false";
+			}
 		}
 		
 		@RequestMapping(value = "/emailChk.do", method = RequestMethod.POST)

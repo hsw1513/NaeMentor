@@ -32,6 +32,7 @@ public class NaememberDto implements Serializable {
 	private String menteeaccstar ;
 	private String lastaccess    ;
 	private String byebye        ;
+	private String target		 ;
 	
 	private ProfileDto profiledto;
 	
@@ -39,10 +40,12 @@ public class NaememberDto implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
+	
+
 	public NaememberDto(String memberseq, String email, String password, String nickname, String introduce,
 			String phone, String birthday, String gender, String auth, String userstatus, String mentortier,
 			String logincnt, String reportcnt, String joindate, String menteecnt, String menteeaccstar,
-			String lastaccess, String byebye, ProfileDto profiledto) {
+			String lastaccess, String byebye, String target, ProfileDto profiledto) {
 		super();
 		this.memberseq = memberseq;
 		this.email = email;
@@ -62,8 +65,13 @@ public class NaememberDto implements Serializable {
 		this.menteeaccstar = menteeaccstar;
 		this.lastaccess = lastaccess;
 		this.byebye = byebye;
+		this.target = target;
 		this.profiledto = profiledto;
 	}
+
+
+
+	
 
 	@Override
 	public String toString() {
@@ -72,162 +80,248 @@ public class NaememberDto implements Serializable {
 				+ gender + ", auth=" + auth + ", userstatus=" + userstatus + ", mentortier=" + mentortier
 				+ ", logincnt=" + logincnt + ", reportcnt=" + reportcnt + ", joindate=" + joindate + ", menteecnt="
 				+ menteecnt + ", menteeaccstar=" + menteeaccstar + ", lastaccess=" + lastaccess + ", byebye=" + byebye
-				+ ", profiledto=" + profiledto + "]";
+				+ ", target=" + target + ", profiledto=" + profiledto + "]";
 	}
+
+
 
 	public String getMemberseq() {
 		return memberseq;
 	}
 
+
+
 	public void setMemberseq(String memberseq) {
 		this.memberseq = memberseq;
 	}
+
+
 
 	public String getEmail() {
 		return email;
 	}
 
+
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+
 
 	public String getPassword() {
 		return password;
 	}
 
+
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+
 
 	public String getNickname() {
 		return nickname;
 	}
 
+
+
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
+
+
 
 	public String getIntroduce() {
 		return introduce;
 	}
 
+
+
 	public void setIntroduce(String introduce) {
 		this.introduce = introduce;
 	}
+
+
 
 	public String getPhone() {
 		return phone;
 	}
 
+
+
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+
+
 
 	public String getBirthday() {
 		return birthday;
 	}
 
+
+
 	public void setBirthday(String birthday) {
 		this.birthday = birthday;
 	}
+
+
 
 	public String getGender() {
 		return gender;
 	}
 
+
+
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
+
+
 
 	public String getAuth() {
 		return auth;
 	}
 
+
+
 	public void setAuth(String auth) {
 		this.auth = auth;
 	}
+
+
 
 	public String getUserstatus() {
 		return userstatus;
 	}
 
+
+
 	public void setUserstatus(String userstatus) {
 		this.userstatus = userstatus;
 	}
+
+
 
 	public String getMentortier() {
 		return mentortier;
 	}
 
+
+
 	public void setMentortier(String mentortier) {
 		this.mentortier = mentortier;
 	}
+
+
 
 	public String getLogincnt() {
 		return logincnt;
 	}
 
+
+
 	public void setLogincnt(String logincnt) {
 		this.logincnt = logincnt;
 	}
+
+
 
 	public String getReportcnt() {
 		return reportcnt;
 	}
 
+
+
 	public void setReportcnt(String reportcnt) {
 		this.reportcnt = reportcnt;
 	}
+
+
 
 	public String getJoindate() {
 		return joindate;
 	}
 
+
+
 	public void setJoindate(String joindate) {
 		this.joindate = joindate;
 	}
+
+
 
 	public String getMenteecnt() {
 		return menteecnt;
 	}
 
+
+
 	public void setMenteecnt(String menteecnt) {
 		this.menteecnt = menteecnt;
 	}
+
+
 
 	public String getMenteeaccstar() {
 		return menteeaccstar;
 	}
 
+
+
 	public void setMenteeaccstar(String menteeaccstar) {
 		this.menteeaccstar = menteeaccstar;
 	}
+
+
 
 	public String getLastaccess() {
 		return lastaccess;
 	}
 
+
+
 	public void setLastaccess(String lastaccess) {
 		this.lastaccess = lastaccess;
 	}
+
+
 
 	public String getByebye() {
 		return byebye;
 	}
 
+
+
 	public void setByebye(String byebye) {
 		this.byebye = byebye;
 	}
+
+
+
+	public String getTarget() {
+		return target;
+	}
+
+
+
+	public void setTarget(String target) {
+		this.target = target;
+	}
+
+
 
 	public ProfileDto getProfiledto() {
 		return profiledto;
 	}
 
+
+
 	public void setProfiledto(ProfileDto profiledto) {
 		this.profiledto = profiledto;
 	}
-	
-	
-	
+
 	
 }
