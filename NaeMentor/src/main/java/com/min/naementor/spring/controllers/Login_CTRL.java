@@ -82,6 +82,8 @@ public class Login_CTRL {
 		@RequestMapping(value = "/logingo.do", method = {RequestMethod.POST,RequestMethod.GET})
 		public String login(@RequestParam(value = "error", required = false) String error,
 		@RequestParam(value = "logout", required = false) String logout, Model model, Authentication user) {
+		
+			
 			
 		if (error != null) {
 		model.addAttribute("msg", "로그인 에러");
@@ -108,6 +110,8 @@ public class Login_CTRL {
 		// 로그인 성공시 메인으로 이동
 		@RequestMapping(value = "/result.do", method = RequestMethod.GET)
 		public String maingo(Authentication user, Model model,NaememberDto dto, HttpSession session) {
+		
+		if(user != null) {
 		UserDetails userdto = (UserDetails) user.getPrincipal();
 		model.addAttribute("user", userdto.toString());
 		
@@ -121,7 +125,11 @@ public class Login_CTRL {
 			service.wakeUp(gdto.getMemberseq());
 		}
 		return "Naemember/login";
+		}else {
+			return "Naemember/loginPage";
 		}
+		}
+		
 	
 		// 아이디/비밀번호 찾기 페이지로 이동
 		@RequestMapping(value = "/searchIdPW.do", method = RequestMethod.GET)
