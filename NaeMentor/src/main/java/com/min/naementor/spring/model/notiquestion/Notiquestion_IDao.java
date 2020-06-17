@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.min.naementor.dtos.AttachFileDto;
 import com.min.naementor.dtos.NotiQuestionDto;
+import com.min.naementor.spring.comm.RowNumUtil;
 
 public interface Notiquestion_IDao {
 
@@ -12,7 +13,13 @@ public interface Notiquestion_IDao {
 	 * 공지 게시판 전체글 조회 (notiAll)
 	 * @return 공지 게시판 전체글 리스트 정보
 	 */
-	public List<NotiQuestionDto> notiAll();
+	public List<NotiQuestionDto> notiAll(RowNumUtil rUtil);
+	
+	/**
+	 *공지게시판 전체글 개수
+	 * @return int
+	 */
+	public int notiBoardListTotal();
 	
 	/**
 	 * 공지 게시판 상세글 조회 (searchNoti)
@@ -23,37 +30,37 @@ public interface Notiquestion_IDao {
 	
 	/**
 	 * 공지 게시판 게시글 입력
-	 * @return int(true: 입력)
+	 * @return int
 	 */
 	public int insertNoti(NotiQuestionDto dto);
 	
 	/**
 	 * 공지 게시판 게시글 수정
-	 * @return int(true: 수정)
+	 * @return int
 	 */
 	public int modifyNoti(NotiQuestionDto dto);
 	
 	/**
 	 * 공지 게시판 게시글 삭제
-	 * @return int(true: 삭제)
+	 * @return int
 	 */
 	public int deleteNoti(String adminseq);
 	
 	/**
 	 * 공지 게시판 게시글 다중 삭제
-	 * @return int(true: 삭제)
+	 * @return int
 	 */
 	public int multiDeleteNoti(Map<String, Object> adminseqs);
 	
 	/**
 	 * 공지 게시판 첨부파일 입력
-	 * @return int(true: 첨부)
+	 * @return int
 	 */
 	public int insertFile(AttachFileDto dto);
 	
 	/**
 	 * 공지 게시판 첨부파일 수정
-	 * @return int(true: 수정)
+	 * @return int
 	 */
 	public int modifyFile(AttachFileDto dto);
 	
@@ -61,7 +68,13 @@ public interface Notiquestion_IDao {
 	 * 1:1 문의 게시판 전체글 조회 (관리자)
 	 * @return 1:1 문의 게시판 전체글 리스트 정보
 	 */
-	public List<NotiQuestionDto> allOneToOneA();
+	public List<NotiQuestionDto> allOneToOneA(RowNumUtil rUtil);
+	
+	/**
+	 *공지게시판 전체글 개수
+	 * @return int
+	 */
+	public int OtOBoardListTotal();
 	
 	/**
 	 * 1:1 문의 게시판 전체글 조회 (사용자)
@@ -78,31 +91,31 @@ public interface Notiquestion_IDao {
 	
 	/**
 	 * 1:1 문의 게시판 게시글 입력
-	 * @return int(true: 입력)
+	 * @return int
 	 */
 	public int insertOneToOne(NotiQuestionDto dto);
 	
 	/**
 	 * 1:1 문의 게시판 게시글 수정
-	 * @return int(true: 수정)
+	 * @return int
 	 */
 	public int modifyOneToOne(NotiQuestionDto dto);
 	
 	/**
 	 * 1:1 문의 게시판 게시글 삭제
-	 * @return int(true: 삭제)
+	 * @return int
 	 */
 	public int deleteOneToOne(String adminseq);
 	
 	/**
 	 * 1:1 문의 게시판 답글 입력
-	 * @return int(true: 입력)
+	 * @return int
 	 */
 	public int insertReply(NotiQuestionDto dto);
 	
 	/**
 	 * 1:1 문의 게시판 답글 수정
-	 * @return int(true: 수정)
+	 * @return int
 	 */
 	public int modifyReply(NotiQuestionDto dto);
 }

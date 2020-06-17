@@ -3,6 +3,7 @@ package com.min.naementor.spring.controllers;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.min.naementor.dtos.NaememberDto;
 import com.min.naementor.dtos.NotiQuestionDto;
+import com.min.naementor.spring.comm.RowNumUtil;
 import com.min.naementor.spring.model.notiquestion.Notiquestion_IService;
 
 @Controller
@@ -30,9 +32,15 @@ public class Question_CTRL {
 	@RequestMapping("Question_board.do")
 	public String quesboard(Model model, HttpSession session) {
 		log.info("quesboard quesboardMain:\t {}", new Date());
+		
+		RowNumUtil rUtil = new RowNumUtil();
+		List<NotiQuestionDto> lists = null;
 		NaememberDto ndto = (NaememberDto)session.getAttribute("userinfo");
+		
 		if(ndto.getAuth().equals("ROLE_A")) {
-			model.addAttribute("lists", service.allOneToOneA());
+			rUtil.setTotal(service.OtOBoardListTotal());
+			model.addAttribute("row", rUtil);
+			model.addAttribute("lists", service.allOneToOneA(rUtil));
 			return "Notiquestion/Question_boardAdmin";
 		}else if(ndto.getAuth().equals("ROLE_E") | ndto.getAuth().equals("ROLE_R")){
 			model.addAttribute("lists", service.allOneToOneU(ndto.getMemberseq()));
