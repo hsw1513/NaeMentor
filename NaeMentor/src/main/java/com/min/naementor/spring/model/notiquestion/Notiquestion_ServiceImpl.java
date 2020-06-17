@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.min.naementor.dtos.AttachFileDto;
 import com.min.naementor.dtos.NotiQuestionDto;
+import com.min.naementor.spring.comm.RowNumUtil;
 
 @Service
 public class Notiquestion_ServiceImpl implements Notiquestion_IService {
@@ -24,10 +25,11 @@ public class Notiquestion_ServiceImpl implements Notiquestion_IService {
 	 * @return 전체글에 대한 리스트
 	 */
 	@Override
-	public List<NotiQuestionDto> notiAll() {
-		log.info("notiAll 전체 글 조회");
-		return dao.notiAll();
+	public List<NotiQuestionDto> notiAll(RowNumUtil rUtil) {
+		log.info("notiAll 전체 글 조회", rUtil);
+		return dao.notiAll(rUtil);
 	}
+	
 	/**
 	 * <h2>공지 게시판 상세글 조회</h2>
 	 * @param 식별자 adminseq, 닉네임, 제목, 내용
@@ -109,9 +111,9 @@ public class Notiquestion_ServiceImpl implements Notiquestion_IService {
 	 * @return 성공여부 (성공 true)
 	 */
 	@Override
-	public List<NotiQuestionDto> allOneToOneA() {
-		log.info("allOneToOneA 전체글 조회 (관리자)");
-		return dao.allOneToOneA();
+	public List<NotiQuestionDto> allOneToOneA(RowNumUtil rUtil) {
+		log.info("allOneToOneA 전체글 조회 (관리자)", rUtil);
+		return dao.allOneToOneA(rUtil);
 	}
 
 	/**
@@ -189,6 +191,20 @@ public class Notiquestion_ServiceImpl implements Notiquestion_IService {
 	public int modifyReply(NotiQuestionDto dto) {
 		log.info("modifyReply 답글 수정", dto);
 		return dao.modifyReply(dto);
+	}
+
+	@Override
+	public int notiBoardListTotal() {
+		log.info("notiBoardListTotal 공지사항 전체 글의 개수");
+		return dao.notiBoardListTotal();
+	}
+
+
+
+	@Override
+	public int OtOBoardListTotal() {
+		log.info("OtOBoardListTotal 1:1 문의사항 전체 글의 개수");
+		return dao.OtOBoardListTotal();
 	}
 
 }

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.min.naementor.dtos.AttachFileDto;
 import com.min.naementor.dtos.NotiQuestionDto;
+import com.min.naementor.spring.comm.RowNumUtil;
 
 public interface Notiquestion_IService {
 
@@ -12,7 +13,13 @@ public interface Notiquestion_IService {
 	 * 공지 게시판 전체글 조회 (notiAll)
 	 * @return 공지 게시판 전체글 리스트 정보
 	 */
-	public List<NotiQuestionDto> notiAll();
+	public List<NotiQuestionDto> notiAll(RowNumUtil rUtil);
+	
+	/**
+	 *공지게시판 전체글 개수
+	 * @return int
+	 */
+	public int notiBoardListTotal();
 	
 	/**
 	 * 공지 게시판 상세글 조회 (searchNoti)
@@ -61,8 +68,12 @@ public interface Notiquestion_IService {
 	 * 1:1 문의 게시판 전체글 조회 (관리자)
 	 * @return 1:1 문의 게시판 전체글 리스트 정보
 	 */
-	public List<NotiQuestionDto> allOneToOneA();
-	
+	public List<NotiQuestionDto> allOneToOneA(RowNumUtil rUtil);
+	/**
+	 *공지게시판 전체글 개수
+	 * @return int
+	 */
+	public int OtOBoardListTotal();
 	/**
 	 * 1:1 문의 게시판 전체글 조회 (사용자)
 	 * @return 1:1 문의 게시판 전체글 리스트 정보

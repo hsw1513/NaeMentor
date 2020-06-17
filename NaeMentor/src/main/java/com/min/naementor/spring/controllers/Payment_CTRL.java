@@ -34,7 +34,7 @@ public class Payment_CTRL {
 		
 		log.info("payment Payment_pay.do:\n {}", new Date());
 		
-		boardseq = "000040031";
+		boardseq = "000040032";
 		String payNum = NUM+boardseq;
 		System.out.println("payNum: "+payNum);
 		

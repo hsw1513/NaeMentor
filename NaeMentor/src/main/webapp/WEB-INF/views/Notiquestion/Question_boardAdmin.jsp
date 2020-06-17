@@ -47,6 +47,35 @@
 		 		</c:forEach>
 			</table>
 		</div>
+		
+		<!-- 		페이징 관련 -->
+		<input type="hidden" name="notiPageindex" id="notiPageindex" value="${row.index}">
+			<input type="hidden" name="pageNum" id="notiPageNum"
+				value="${row.pageNum}"> <input type="hidden" name="listNum"
+				id="notiListNum" value="${row.listNum}">
+			<script type="text/javascript">
+         var listNum = document.getElementById("listNum").value;
+         var list = document.getElementById("list");
+//          alert(list.options[listNum/5-1].selected = 'selected');
+      </script>
+		<div class="center">
+				<ul class="pagination">
+					<li><a href="#" onclick="pageFirst()">&laquo;</a></li>
+					<li><a href="#"
+						onclick="pagePre(${row.pageNum},${row.pageList})">&lsaquo;</a></li>
+					<c:forEach var='i' begin="${row.pageNum}" end="${row.count}"
+						step="1">
+						<li><a href="#" onclick="pageIndex(${i})">${i}</a></li>
+					</c:forEach>
+					<li><a href="#"
+						onclick="pageNext(${row.pageNum},${row.total},${row.listNum}, ${row.pageList})">&rsaquo;</a></li>
+					<li><a href="#"
+						onclick="pageLast(${row.pageNum},${row.total},${row.listNum}, ${row.pageList})">&raquo;</a></li>
+				</ul>
+			</div>
+		
+		
+<!-- 		글삭제 -->
 			<div style="text-align: center; margin-top: 20px;">
 				<input type="submit" class="myButton" value="삭제" >
 			</div>

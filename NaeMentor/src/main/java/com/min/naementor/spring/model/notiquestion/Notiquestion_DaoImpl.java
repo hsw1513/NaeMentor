@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.min.naementor.dtos.AttachFileDto;
 import com.min.naementor.dtos.NotiQuestionDto;
+import com.min.naementor.spring.comm.RowNumUtil;
 
 @Repository
 public class Notiquestion_DaoImpl implements Notiquestion_IDao {
@@ -19,8 +20,8 @@ public class Notiquestion_DaoImpl implements Notiquestion_IDao {
 	private SqlSessionTemplate sqlSession;
 	
 	@Override
-	public List<NotiQuestionDto> notiAll() {
-		return sqlSession.selectList(NS+"notiAll");
+	public List<NotiQuestionDto> notiAll(RowNumUtil rUtil) {
+		return sqlSession.selectList(NS+"notiAll", rUtil);
 	}
 
 	@Override
@@ -63,8 +64,8 @@ public class Notiquestion_DaoImpl implements Notiquestion_IDao {
 	}
 
 	@Override
-	public List<NotiQuestionDto> allOneToOneA() {
-		return sqlSession.selectList(NS+"allOneToOneA");
+	public List<NotiQuestionDto> allOneToOneA(RowNumUtil rUtil) {
+		return sqlSession.selectList(NS+"allOneToOneA", rUtil);
 	}
 
 	@Override
@@ -106,5 +107,16 @@ public class Notiquestion_DaoImpl implements Notiquestion_IDao {
 		int n = sqlSession.update(NS+"modifyReply", dto);
 		return n;
 	}
+
+	@Override
+	public int notiBoardListTotal() {
+		return sqlSession.selectOne(NS+"notiBoardListTotal");
+	}
+
+	@Override
+	public int OtOBoardListTotal() {
+		return sqlSession.selectOne(NS+"OtOBoardListTotal");
+	}
+	
 
 }
