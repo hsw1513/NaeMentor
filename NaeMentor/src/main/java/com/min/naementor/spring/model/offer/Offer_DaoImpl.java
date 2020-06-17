@@ -1,6 +1,7 @@
 package com.min.naementor.spring.model.offer;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,14 @@ public class Offer_DaoImpl implements Offer_IDao{
 	}
 
 	@Override
-	public List<OfferDto> viewOffer(String boardseq) {
-		return session.selectList(NS+"viewOffer", boardseq);
+	public OfferDto viewOffer(Map<String, String> map) {
+		return session.selectOne(NS+"viewOffer", map);
+	}
+
+	@Override
+	public boolean chkOffer(Map<String, String> map) {
+		int i = session.selectOne(NS+"chkOffer", map);
+		return i==0?true:false;
 	}
 
 }

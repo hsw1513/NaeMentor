@@ -13,6 +13,7 @@
 var xhr = null;
 	window.onload = function(){
 		reviewOnload();
+		chkOffer();
 	}		
 	
 	reviewOnload = function(){
@@ -28,8 +29,28 @@ var xhr = null;
 		xhr.open("get","./review.do?menteeseq="+${detail.memberseq}+"&boardseq="+${detail.boardseq});
 		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		xhr.send();
-		
 	}
+	
+	chkOffer = function(){
+		let xhr2 = new XMLHttpRequest();
+		xhr2.onreadystatechange = function(){
+			if(xhr2.readyState==4){
+				if(xhr2.status==200){
+					let val2 = xhr2.responseText;
+					if(val2 == "true"){
+						document.getElementById("offerchk").style.display = '';
+					}else{
+						document.getElementById("offerchk").style.display = 'none';
+						document.getElementById("offerchk2").innerHTML = '<b>멘토링을 신청하셨습니다.</b>';
+					}
+				}
+			}
+		}
+		xhr2.open("get","./chkOffer.do?boardseq="+${detail.boardseq});
+		xhr2.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		xhr2.send();
+	}
+	
 	
 	function del(){
 		location.href="./deleteContent.do?memberseq="+${detail.memberseq}+"&boardseq="+${detail.boardseq};
@@ -105,6 +126,7 @@ var xhr = null;
 			objSt.style.display = 'none';
 		}
 	}
+	
 </script>
 <body>
 <%@include file="/WEB-INF/views/topMenu.jsp"%>
@@ -176,6 +198,7 @@ var xhr = null;
 		</tbody>
 	</table>
 		<span class="reviews"></span>
+	<div id="offerchk">
 		<form action="./insertOffer.do" method="post" onsubmit="return chkVal()">
 			<input type="hidden" name="memberseq" value="${userinfo.memberseq}">
 			<input type="hidden" name="boardseq" value="${detail.boardseq}">
@@ -184,6 +207,8 @@ var xhr = null;
 			<input type="submit" value="요청서 제출">
 		</form>
 	<button onclick="apply()">멘토링 신청</button>
+	</div>
+	<div id="offerchk2"></div>
 	</c:if>
 	
 	
@@ -216,7 +241,7 @@ var xhr = null;
 		</tr>
 		<tr id="a${applyMentors.memberseq}st" style="display:none;">
 			<td colspan="1">자기소개</td>
-			<td colspan="4">안녕하세요. 아직 개발중입니다.</td>
+			<td colspan="4"></td>
 			<td><button onclick="matching(this.title,this.name)" name="${applyMentors.nickname}" title="${applyMentors.memberseq}">멘토선택</button></td>
 		</tr>	
 	</c:forEach>

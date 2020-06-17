@@ -33,10 +33,12 @@ import com.min.naementor.dtos.AttachFileDto;
 import com.min.naementor.dtos.FindingMentorDto;
 import com.min.naementor.dtos.MatchingDto;
 import com.min.naementor.dtos.NaememberDto;
+import com.min.naementor.dtos.OfferDto;
 import com.min.naementor.spring.comm.AttachFile_Module;
 import com.min.naementor.spring.comm.SplitUserComm;
 import com.min.naementor.spring.model.findingMentor.FindingMentor_IService;
 import com.min.naementor.spring.model.matching.Matching_IService;
+import com.min.naementor.spring.model.offer.Offer_IService;
 
 @Controller
 public class FindingMentor_CTRL {
@@ -46,6 +48,8 @@ public class FindingMentor_CTRL {
 	private FindingMentor_IService service;
 	@Autowired
 	private Matching_IService mservice;
+	@Autowired
+	private Offer_IService oservice;
 	
 	// 게시판 리스트 
 	@RequestMapping("FindingMentor_board.do")
@@ -87,6 +91,7 @@ public class FindingMentor_CTRL {
 		}
 		// 매칭 정보 확인
 		MatchingDto mdto = mservice.chkMatching(boardseq);
+		
 		lists = service.chkUser(map2);
 		model.addAttribute("findMentor", lists);
 		model.addAttribute("detail", dto);
