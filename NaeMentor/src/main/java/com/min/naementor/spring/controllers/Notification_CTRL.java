@@ -25,6 +25,7 @@ import com.min.naementor.dtos.AttachFileDto;
 import com.min.naementor.dtos.NaememberDto;
 import com.min.naementor.dtos.NotiQuestionDto;
 import com.min.naementor.spring.comm.AttachFile_Module;
+import com.min.naementor.spring.comm.RowNumUtil;
 import com.min.naementor.spring.model.notiquestion.Notiquestion_IService;
 
 @Controller
@@ -41,7 +42,14 @@ public class Notification_CTRL {
 	@RequestMapping("Notification_board.do")
 	public String notiboard(Model model) {
 		log.info("notiboard notiboardMain:\t {}", new Date());
-		model.addAttribute("lists", service.notiAll());
+		
+		RowNumUtil rUtil = new RowNumUtil();
+		List<NotiQuestionDto> lists = null;
+		
+		rUtil.setTotal(service.notiBoardListTotal());
+		
+		model.addAttribute("row", rUtil);
+		model.addAttribute("lists", service.notiAll(rUtil));
 		return "Notiquestion/Notification_board";
 	}
 	
