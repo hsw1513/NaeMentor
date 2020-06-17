@@ -11,16 +11,17 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-@Component(value = "getKey")
+@Component(value = "gotKey")
 public class CapchaGetKey implements Capcha_IService {
 	
-	@Resource(name = "capchaMap")
+	@Qualifier("cMap")
 	private Map<String, String> requestHeaders;
 	
-	@Resource(name = "apiURL")
-	private String apiURL			;
+	@Qualifier("apiURL")
+	private String apiURL;
 	
 	@Override
 	public String get(String attach) { // 캡차이미지 key 받아오기
