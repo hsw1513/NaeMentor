@@ -11,4 +11,10 @@ public interface Matching_IDao {
 	 * @return MatchingDto
 	 */
 	public MatchingDto chkMatching(String boardseq);
+	/**
+	 * 매칭 정보가 있는지 조회
+	 * @param boardseq
+	 * @return boolean(매칭 정보 없음)
+	 */
+	public boolean chkMatchingCount(String boardseq);
 }

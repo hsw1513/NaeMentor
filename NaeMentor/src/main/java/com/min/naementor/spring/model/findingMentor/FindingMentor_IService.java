@@ -77,6 +77,31 @@ public interface FindingMentor_IService {
 	 * @return 멘토의 닉네임과 회원번호
 	 */
 	public List<NaememberDto> chkMentor(Map<String, String[]> map);
+//	public boolean updateMatching(String boardseq);
 	
-	
+	// 2020.06.16 추가 내용
+	/**
+	 * 매칭이 되어있는 글들을 조회
+	 * @param String(memberseq)
+	 * @return List<FindingMentorDto>
+	 */
+	public List<FindingMentorDto> chkMatching(String memberseq);
+	/**
+	 * 멘토링이 종료된 글 중 후기가 모두 입력되지 않은 글 조회
+	 * @param String(memberseq)
+	 * @return List<FindingMentorDto>
+	 */
+	public List<FindingMentorDto> chkComplete(String memberseq);
+	/**
+	 * 후기가 모두 남겨진 글 삭제
+	 * @param boardseq
+	 * @return boolean(true:삭제 완료)
+	 */
+	public boolean updateComplete(String boardseq);
+	/**
+	 * 매칭이 안되었을 시 글 삭제
+	 * @param boardseq
+	 * @return boolean(true:삭제 성공)
+	 */
+	public boolean updateNoMatching(String boardseq);
 }

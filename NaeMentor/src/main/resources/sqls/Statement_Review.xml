@@ -51,4 +51,11 @@
 		UPDATE PROFILE SET MENTOACCSTAR = MENTOACCSTAR + #{mentoaccstar}
 		WHERE MEMBERSEQ = #{memberseq}
 	</update>
+
+
+<!-- 리뷰가 둘 다 남겨진 게시글 삭제 카운트 조회 -->
+<select id="chkReviewCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+	SELECT COUNT(BOARDSEQ) FROM REVIEW r WHERE BOARDSEQ = #{boardseq}
+</select>
+
 </mapper>

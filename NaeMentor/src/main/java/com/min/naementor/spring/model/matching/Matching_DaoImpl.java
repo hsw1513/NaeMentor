@@ -17,5 +17,10 @@ public class Matching_DaoImpl implements Matching_IDao{
 	public MatchingDto chkMatching(String boardseq) {
 		return session.selectOne(NS+"chkMatching", boardseq);
 	}
+	@Override
+	public boolean chkMatchingCount(String boardseq) {
+		int i = session.selectOne(boardseq);
+		return i>0?true:false;
+	}
 	
 }

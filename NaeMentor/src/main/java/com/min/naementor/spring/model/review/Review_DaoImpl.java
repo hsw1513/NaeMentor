@@ -56,5 +56,11 @@ public class Review_DaoImpl implements Review_IDao {
 		return session.update(NS+"updateMentoAccStar", map)>0?true:false;
 	}
 
+	@Override
+	public boolean chkReviewCount(String boardseq) {
+		int i = session.selectOne(NS+"chkReviewCount", boardseq);
+		return (i==2)?true:false;
+	}
+
 
 }

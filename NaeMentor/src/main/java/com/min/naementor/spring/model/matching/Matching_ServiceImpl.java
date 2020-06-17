@@ -22,4 +22,10 @@ public class Matching_ServiceImpl implements Matching_IService{
 		return dao.chkMatching(boardseq);
 	}
 
+	@Override
+	public boolean chkMatchingCount(String boardseq) {
+		log.info("Matching_ServiceImpl chkMatchingCount \t {}",boardseq);
+		return dao.chkMatchingCount(boardseq);
+	}
+
 }

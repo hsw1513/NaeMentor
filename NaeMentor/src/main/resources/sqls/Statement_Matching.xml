@@ -6,4 +6,9 @@
 	FROM MATCHING m 
 	WHERE BOARDSEQ = #{BOARDSEQ}
 </select>
+
+<!-- 매칭 확인 -->
+<select id="chkMatchingCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+	SELECT COUNT(BOARDSEQ) FROM MATCHING m WHERE BOARDSEQ = #{boardseq}
+</select>
 </mapper>

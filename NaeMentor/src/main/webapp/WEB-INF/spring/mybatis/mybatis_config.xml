@@ -13,6 +13,7 @@
 		<typeAlias type="com.min.naementor.dtos.MemberScheduleDto" alias="MSDto"/>
 		<typeAlias type="com.min.naementor.dtos.ReportDto" alias="RPDto"/>
 		<typeAlias type="com.min.naementor.dtos.ReviewDto" alias="RVDto"/>
+		<typeAlias type="com.min.naementor.dtos.Offer" alias="OFDto"/>
 	</typeAliases>
 	
 	<mappers>
@@ -27,6 +28,7 @@
 		<mapper resource="/sqls/Statement_MemberSchedule.xml"/>
 		<mapper resource="/sqls/Statement_Report.xml"/>
 		<mapper resource="/sqls/Statement_Review.xml"/>
+		<mapper resource="/sqls/Statement_Offer.xml"/>
 	</mappers>
 	
 </configuration>

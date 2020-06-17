@@ -4,6 +4,7 @@
 
 <resultMap type="com.min.naementor.dtos.NaememberDto" id="joinEncLogin">
 		<result property="memberseq" column="MEMBERSEQ"/>
+		<result property="target" column="TARGET"/>
 		<result property="email" column="EMAIL"/>
 		<result property="password" column="PASSWORD"/>
 		<result property="nickname" column="NICKNAME"/>

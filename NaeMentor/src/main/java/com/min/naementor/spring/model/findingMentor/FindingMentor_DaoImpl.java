@@ -93,4 +93,24 @@ public class FindingMentor_DaoImpl implements FindingMentor_IDao{
 		return session.update(NS+"updateMatching", boardseq)>0?true:false;
 	}
 
+	@Override
+	public List<FindingMentorDto> chkMatching(String memberseq) {
+		return session.selectList(NS+"chkMatching", memberseq);
+	}
+
+	@Override
+	public List<FindingMentorDto> chkComplete(String memberseq) {
+		return session.selectList(NS+"chkComplete", memberseq);
+	}
+
+	@Override
+	public boolean updateComplete(String boardseq) {
+		return session.update(NS+"updateComplete", boardseq)>0?true:false;
+	}
+
+	@Override
+	public boolean updateNoMatching(String boardseq) {
+		return session.update(NS+"updateNoMatching", boardseq)>0?true:false;
+	}
+
 }
