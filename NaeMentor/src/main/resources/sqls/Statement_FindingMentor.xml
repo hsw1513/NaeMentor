@@ -130,8 +130,34 @@ ORDER BY BOARDSEQ DESC
 	</where>
 </select>
 
+
 <update id="updateMatching" parameterType="java.lang.String">
 	UPDATE FINDINGMENTOR SET MATCHINGCHK = 'Y' WHERE BOARDSEQ = #{boardseq}
 </update>
+
+<!-- 매칭 글 조회 -->
+<select id="chkMatching" parameterType="java.lang.String" resultType="FMDto" >
+	SELECT BOARDSEQ, TITLE, CONTENT, WRITESDATE, 
+			REPORTCNT, SPECIALFIELD, TARGET, MENTEELEVEL, HOWTO, 
+			LOCATION, DELFLAG, MEMBERSEQ, FINDREPORTER, MENTORLIST, MATCHINGCHK, MENTORINGDATE 
+		FROM FINDINGMENTOR f WHERE MEMBERSEQ=#{memberseq} AND DELFLAG = 'M'
+</select>
+<select id="chkComplete" parameterType="java.lang.String" resultType="FMDto">
+	SELECT BOARDSEQ, TITLE, CONTENT, WRITESDATE, 
+			REPORTCNT, SPECIALFIELD, TARGET, MENTEELEVEL, HOWTO, 
+			LOCATION, DELFLAG, MEMBERSEQ, FINDREPORTER, MENTORLIST, MATCHINGCHK, MENTORINGDATE 
+		FROM FINDINGMENTOR f WHERE MEMBERSEQ=#{memberseq} AND DELFLAG = 'C'
+</select>
+
+<!-- 후기가 남겨진 글 삭제 -->
+<update id="updateComplete" parameterType="java.lang.String">
+	UPDATE FINDINGMENTOR SET DELFLAG = 'R' WHERE BOARDSEQ = #{boardseq}
+</update>
+
+<!-- 매칭x시 상태변경 -->
+<update id="updateNoMatching" parameterType="java.lang.Integer">
+	UPDATE FINDINGMENTOR SET DELFLAG = 'Y' WHERE BOARDSEQ = #{boardseq}
+</update>
+
 
 </mapper>

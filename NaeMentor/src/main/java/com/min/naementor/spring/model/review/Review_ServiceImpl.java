@@ -64,5 +64,11 @@ public class Review_ServiceImpl implements Review_IService{
 		return dao.updateMentoAccStar(map);
 	}
 
+	@Override
+	public boolean chkReviewCount(String boardseq) {
+		log.info("chkReviewCount{}",boardseq);
+		return dao.chkReviewCount(boardseq);
+	}
+
 
 }

@@ -100,4 +100,28 @@ public class FindingMentor_ServiceImpl implements FindingMentor_IService{
 		return dao.chkMentor(map);
 	}
 
+	@Override
+	public List<FindingMentorDto> chkMatching(String memberseq) {
+		log.info("chkMatching {}",memberseq);
+		return dao.chkMatching(memberseq);
+	}
+
+	@Override
+	public List<FindingMentorDto> chkComplete(String memberseq) {
+		log.info("chkComplete {}",memberseq);
+		return dao.chkComplete(memberseq);
+	}
+
+	@Override
+	public boolean updateComplete(String boardseq) {
+		log.info("updateComplete {}",boardseq);
+		return dao.updateComplete(boardseq);
+	}
+
+	@Override
+	public boolean updateNoMatching(String boardseq) {
+		log.info("updateNoMatching {}",boardseq);
+		return dao.updateNoMatching(boardseq);
+	}
+
 }

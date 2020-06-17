@@ -10,12 +10,14 @@ import com.min.naementor.dtos.ReviewDto;
 @Component
 public class FindingMentor_MakeArrayList {
 
-	public List<String> convertReviewList(List<ReviewDto> lists) {
+	public String convertReviewList(List<ReviewDto> lists) {
 		List<String> list = new ArrayList<String>();
 		String review = null;
 		String content = null;
 		String wirtedate = null;
 		String memseq = null;
+		String btn= "";
+		int i = 0;
 		list.add("<table class='table table-bordered'>");
 		list.add("<thead><tr><th>후기내용</th><th>작성일</th><th>별점</th></tr></thead><tbody>");
 	    
@@ -27,11 +29,18 @@ public class FindingMentor_MakeArrayList {
 				memseq = "<td>"+dto.getMenteestar()+"</td>";
 			}else {
 				memseq = "<td>"+dto.getMentorstar()+"</td>";
+				btn = "<br><button onclick='selMentor(${"+dto.getMatchingdto().getMentorseq()+"})'>멘토선택</button>";
 			}
-			review = review +content +wirtedate+memseq+"</tr>";
+			
+			
+			review = review +content +wirtedate+memseq+btn+"</tr>";
 			list.add(review);
 		}
 		list.add("</tbody></table>");
-		return list;
+		String result = "";
+		for (String string : list) {
+			result += string;
+		}
+		return result;
 	}
 }

@@ -54,4 +54,10 @@ public interface Review_IDao {
 	 * @return boolean(true: 갱신 성공)
 	 */
 	public boolean updateMentoAccStar(Map<String,String> map);
+	/**
+	 * 리뷰글이 모두 달렸는지 확인(200616 츄가)
+	 * @param boardseq
+	 * @return boolean(true: 2개의 리뷰글이 달림)
+	 */
+	public boolean chkReviewCount(String boardseq);
 }
