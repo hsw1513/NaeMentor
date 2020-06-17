@@ -10,6 +10,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
 	<context:component-scan base-package="com.min.naementor"/>
+	
 	<mvc:annotation-driven/>
 	
 	<!-- auto-config: 서비스 사용, use-expression: 보안 메소드 사용 -->
