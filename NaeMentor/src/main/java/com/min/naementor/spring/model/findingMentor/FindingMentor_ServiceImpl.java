@@ -95,21 +95,21 @@ public class FindingMentor_ServiceImpl implements FindingMentor_IService{
 	}
 
 	@Override
-	public List<NaememberDto> chkMentor(Map<String, String[]> map) {
+	public List<NaememberDto> chkUser(Map<String, String[]> map) {
 		log.info("chkMentor {}",map);
-		return dao.chkMentor(map);
+		return dao.chkUser(map);
 	}
 
 	@Override
-	public List<FindingMentorDto> chkMatching(String memberseq) {
-		log.info("chkMatching {}",memberseq);
-		return dao.chkMatching(memberseq);
+	public List<FindingMentorDto> chkMatching(Map<String, String> map) {
+		log.info("chkMatching {}",map);
+		return dao.chkMatching(map);
 	}
 
 	@Override
-	public List<FindingMentorDto> chkComplete(String memberseq) {
-		log.info("chkComplete {}",memberseq);
-		return dao.chkComplete(memberseq);
+	public List<FindingMentorDto> chkComplete(Map<String, String> map) {
+		log.info("chkComplete {}",map);
+		return dao.chkComplete(map);
 	}
 
 	@Override

@@ -18,7 +18,7 @@ ORDER BY BOARDSEQ DESC
 		   SPECIALFIELD, TARGET, MENTEELEVEL, HOWTO, LOCATION, DELFLAG, 
 		   MEMBERSEQ, FINDREPORTER, MATCHINGCHK, MENTORINGDATE
 	FROM FINDINGMENTOR 
-	WHERE BOARDSEQ = #{boardseq} AND DELFLAG ='N'
+	WHERE BOARDSEQ = #{boardseq}
 </select>
 
 <!-- 멘토링 신청 -->
@@ -110,7 +110,36 @@ ORDER BY BOARDSEQ DESC
 </update>
 
 
-
+<resultMap type="com.min.naementor.dtos.NaememberDto" id="chkMentorInfo">
+		<result property="memberseq" column="MEMBERSEQ"/>
+		<result property="target" column="TARGET"/>
+		<result property="email" column="EMAIL"/>
+		<result property="password" column="PASSWORD"/>
+		<result property="nickname" column="NICKNAME"/>
+		<result property="introduce" column="INTRODUCE"/>
+		<result property="phone" column="PHONE"/>
+		<result property="birthday" column="BIRTHDAY"/>
+		<result property="gender" column="GENDER"/>
+		<result property="auth" column="AUTH"/>
+		<result property="userstatus" column="USERSTATUS"/>
+		<result property="mentortier" column="MENTORTIER"/>
+		<result property="logincnt" column="LOGINCNT"/>
+		<result property="reportcnt" column="REPORTCNT"/>
+		<result property="joindate" column="JOINDATE"/>
+		<result property="menteecnt" column="MENTEECNT"/>
+		<result property="menteeaccstar" column="MENTEEACCSTAR"/>
+		<result property="byebye" column="BYEBYE"/>
+		<result property="profiledto.photo" column="PHOTO"/>
+		<result property="profiledto.school" column="SCHOOL"/>
+		<result property="profiledto.major" column="MAJOR"/>
+		<result property="profiledto.career" column="CAREER"/>
+		<result property="profiledto.certificate" column="CERTIFICATE"/>
+		<result property="profiledto.specialfield" column="SPECIALFIELD"/>
+		<result property="profiledto.pmdate" column="PMDATE"/>
+		<result property="profiledto.mentorcnt" column="MENTORCNT"/>
+		<result property="profiledto.mentoaccstar" column="MENTOACCSTAR"/>
+		<result property="profiledto.filechk" column="FILECHK"/>
+	</resultMap>
 
 
 <!-- 멘토 선택(Matching게시판 insert) -->
@@ -118,10 +147,18 @@ ORDER BY BOARDSEQ DESC
 	INSERT INTO MATCHING(BOARDSEQ, MENTEESEQ, MENTORSEQ, MATCHINGDATE, PAYFLAG)
 	VALUES(#{boardseq}, #{menteeseq}, #{mentorseq}, SYSDATE, 'N')
 </insert>
-<select id="chkMentor" parameterType="java.util.Map" resultType="NMDto">
-	SELECT MEMBERSEQ,NICKNAME FROM NAEMEMBER
+<select id="chkUser" parameterType="java.util.Map" resultMap="chkMentorInfo">
+	SELECT p.MEMBERSEQ , n.EMAIL, NICKNAME , 
+		  	 NVL(INTRODUCE, 0) INTRODUCE , PHONE , BIRTHDAY ,
+		  	 GENDER , AUTH , USERSTATUS ,
+		   	  NVL(MENTORTIER, 0) MENTORTIER, LOGINCNT , REPORTCNT, 
+		   	 JOINDATE , MENTEECNT , MENTEEACCSTAR,  NVL(BYEBYE,0) BYEBYE,  NVL(MAJOR,0) MAJOR, NVL(SCHOOL,0) SCHOOL,
+		      NVL(CAREER,0) CAREER,  NVL(CERTIFICATE,0) CERTIFICATE,  NVL(SPECIALFIELD,0) SPECIALFIELD, TO_DATE(NVL(PMDATE, '21201231'), 'YYYY-MM-DD') PMDATE, MENTORCNT, MENTOACCSTAR,
+		   	  FILECHK,  NVL(PHOTO,0) PHOTO
+		   	  FROM NAEMEMBER n JOIN PROFILE p
+		   			ON n.MEMBERSEQ = p.MEMBERSEQ
 	<where>
-		MEMBERSEQ IN
+		p.MEMBERSEQ IN
 		<foreach collection="_memberseq" item="memberseq" open="(" separator="," close=")">
 			<if test="memberseq != ''">
 			#{memberseq}
@@ -132,21 +169,35 @@ ORDER BY BOARDSEQ DESC
 
 
 <update id="updateMatching" parameterType="java.lang.String">
-	UPDATE FINDINGMENTOR SET MATCHINGCHK = 'Y' WHERE BOARDSEQ = #{boardseq}
+	UPDATE FINDINGMENTOR SET MATCHINGCHK = 'Y', DELFLAG = 'M' WHERE BOARDSEQ = #{boardseq}
 </update>
 
 <!-- 매칭 글 조회 -->
-<select id="chkMatching" parameterType="java.lang.String" resultType="FMDto" >
-	SELECT BOARDSEQ, TITLE, CONTENT, WRITESDATE, 
+<select id="chkMatching" parameterType="java.util.Map" resultType="FMDto" >
+	SELECT f.BOARDSEQ, TITLE, CONTENT, WRITESDATE, 
 			REPORTCNT, SPECIALFIELD, TARGET, MENTEELEVEL, HOWTO, 
 			LOCATION, DELFLAG, MEMBERSEQ, FINDREPORTER, MENTORLIST, MATCHINGCHK, MENTORINGDATE 
-		FROM FINDINGMENTOR f WHERE MEMBERSEQ=#{memberseq} AND DELFLAG = 'M'
+		FROM FINDINGMENTOR f JOIN MATCHING m
+		ON f.BOARDSEQ = m.BOARDSEQ
+		<if test="mentorseq != null">
+		WHERE m.MENTORSEQ =#{mentorseq} AND DELFLAG = 'M'
+		</if>
+		<if test="MENTEESEQ != null">
+		WHERE m.MENTEESEQ =#{menteeseq} AND DELFLAG = 'M'
+		</if>
 </select>
-<select id="chkComplete" parameterType="java.lang.String" resultType="FMDto">
-	SELECT BOARDSEQ, TITLE, CONTENT, WRITESDATE, 
+<select id="chkComplete" parameterType="java.util.Map" resultType="FMDto">
+	SELECT f.BOARDSEQ, TITLE, CONTENT, WRITESDATE, 
 			REPORTCNT, SPECIALFIELD, TARGET, MENTEELEVEL, HOWTO, 
 			LOCATION, DELFLAG, MEMBERSEQ, FINDREPORTER, MENTORLIST, MATCHINGCHK, MENTORINGDATE 
-		FROM FINDINGMENTOR f WHERE MEMBERSEQ=#{memberseq} AND DELFLAG = 'C'
+		FROM FINDINGMENTOR f JOIN MATCHING m
+		ON f.BOARDSEQ = m.BOARDSEQ
+		<if test="mentorseq != null">
+		WHERE m.MENTORSEQ =#{mentorseq} AND DELFLAG = 'C'
+		</if>
+		<if test="MENTEESEQ != null">
+		WHERE m.MENTEESEQ =#{menteeseq} AND DELFLAG = 'C'
+		</if>
 </select>
 
 <!-- 후기가 남겨진 글 삭제 -->

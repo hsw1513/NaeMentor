@@ -31,21 +31,26 @@ public class AjaxFindingMentor_CTRL {
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	private FindingMentor_MakeArrayList converter;
-	
+	@Autowired
+	private Matching_IService mservice;
 	
 	// 멘토와 멘티 분기
 	@RequestMapping("/review.do")
 	public String review(HttpSession session, String boardseq, String menteeseq) {
-		log.info("review.do : {}:{}",boardseq,menteeseq);
+		log.info("review.do : {}:{}",boardseq, menteeseq);
 		NaememberDto dto = (NaememberDto)session.getAttribute("userinfo");
+		MatchingDto mdto = mservice.chkMatching(boardseq);
 		boolean isc = false;
-		String mentorseq = "0";
 		if(dto.getAuth().equalsIgnoreCase("ROLE_E")) {
 			isc = true;
 		}else if(dto.getAuth().equalsIgnoreCase("ROLE_R")) {
 			isc = false;
 		}
-		return isc?"redirect:/Menteereview.do?boardseq="+boardseq+"&mentorseq="+mentorseq
+		String mentorseq = "0";
+		if(mdto != null) {
+			mentorseq = mdto.getMentorseq();
+		}
+		return isc?"redirect:/Menteereview.do?boardseq="+boardseq+"&mentorseq="+ mentorseq
 						:"redirect:/Mentorreview.do?boardseq="+boardseq+"&menteeseq="+menteeseq;
 	}
 	
@@ -70,7 +75,7 @@ public class AjaxFindingMentor_CTRL {
 			List<ReviewDto> lists = service.denyMSearch(mentorseq);
 			obj.put("reviews",converter.convertReviewList(lists));
 		}else {
-			obj.put("reviews","후기가 없습니다.");
+			obj.put("reviews","");
 		}
 		return obj;
 	}

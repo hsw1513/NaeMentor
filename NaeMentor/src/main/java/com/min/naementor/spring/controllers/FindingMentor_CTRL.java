@@ -49,29 +49,45 @@ public class FindingMentor_CTRL {
 	
 	// 게시판 리스트 
 	@RequestMapping("FindingMentor_board.do")
-	public String board(Model model) {
+	public String board(Model model, HttpSession session) {
+		NaememberDto dto = (NaememberDto) session.getAttribute("userinfo");
 		model.addAttribute("board_lists", service.selectAll());
+		Map<String,String> map = new HashMap<String, String>();
+		if(dto.getAuth().equalsIgnoreCase("ROLE_E")) {
+			map.put("menteeseq", dto.getMemberseq());
+		}else {
+			map.put("mentorseq", dto.getMemberseq());
+		}
+		model.addAttribute("matching_lists", service.chkMatching(map));
+		model.addAttribute("complete_lists", service.chkComplete(map));
 		return "FindingMentor/FindingMentor_board";
 	}
 	
 	// 상세보기
 	@RequestMapping(value = "detailContent.do", method = RequestMethod.GET)
-	public String detailContent(Model model, String memberseq, String boardseq , SplitUserComm comm) {
+	public String detailContent(HttpSession session,Model model, String memberseq, String boardseq , SplitUserComm comm) {
 		log.info("{}, {}",memberseq, boardseq);
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("boardseq", boardseq);
+		NaememberDto ndto = (NaememberDto) session.getAttribute("userinfo");
+		String[] _memberseq = null;
+		List<NaememberDto> lists = null;
+		Map<String, String[]> map2 = new HashMap<String, String[]>();
 		// 게시물 조회
 		FindingMentorDto dto = service.detailContent(map);
-		
+		if(ndto.getAuth().equalsIgnoreCase("ROLE_E")) {
 		// 멘토 지원자 조회
-		String[] _memberseq = comm.splitId(dto.getMentorlist());
-		Map<String, String[]> map2 = new HashMap<String, String[]>();
+		_memberseq = comm.splitId(dto.getMentorlist());
 		map2.put("_memberseq", _memberseq);
-		List<NaememberDto> lists = service.chkMentor(map2);
-		
+		// 멘티 정보 조회
+		}else {
+		_memberseq = new String[1];
+		_memberseq[0] = ndto.getMemberseq();
+		map2.put("_memberseq", _memberseq);
+		}
 		// 매칭 정보 확인
 		MatchingDto mdto = mservice.chkMatching(boardseq);
-		
+		lists = service.chkUser(map2);
 		model.addAttribute("findMentor", lists);
 		model.addAttribute("detail", dto);
 		model.addAttribute("matching", mdto);

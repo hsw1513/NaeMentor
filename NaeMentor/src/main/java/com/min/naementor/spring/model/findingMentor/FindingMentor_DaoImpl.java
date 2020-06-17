@@ -84,8 +84,8 @@ public class FindingMentor_DaoImpl implements FindingMentor_IDao{
 	}
 
 	@Override
-	public List<NaememberDto> chkMentor(Map<String, String[]> map) {
-		return session.selectList(NS+"chkMentor", map);
+	public List<NaememberDto> chkUser(Map<String, String[]> map) {
+		return session.selectList(NS+"chkUser", map);
 	}
 
 	@Override
@@ -94,13 +94,13 @@ public class FindingMentor_DaoImpl implements FindingMentor_IDao{
 	}
 
 	@Override
-	public List<FindingMentorDto> chkMatching(String memberseq) {
-		return session.selectList(NS+"chkMatching", memberseq);
+	public List<FindingMentorDto> chkMatching(Map<String,String> map) {
+		return session.selectList(NS+"chkMatching", map);
 	}
 
 	@Override
-	public List<FindingMentorDto> chkComplete(String memberseq) {
-		return session.selectList(NS+"chkComplete", memberseq);
+	public List<FindingMentorDto> chkComplete(Map<String,String> map) {
+		return session.selectList(NS+"chkComplete", map);
 	}
 
 	@Override

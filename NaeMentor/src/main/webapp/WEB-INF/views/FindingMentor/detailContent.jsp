@@ -93,11 +93,22 @@ var xhr = null;
 		document.getElementById("objDiv").innerHTML = '일시';
 		document.getElementById("objDiv").appendChild(obj);
 	}
+	
+	function openApply(val){
+		let objSt = document.getElementById(val.name);
+		if(objSt.style.display == 'none'){
+			val.value='멘토의 소개글 접기';
+			objSt.style.display = '';
+		}else{
+			val.value='멘토의 소개글 보기';
+			objSt.style.display = 'none';
+		}
+	}
 </script>
 <body>
 <%@include file="/WEB-INF/views/topMenu.jsp"%>
 <div id="container">
-	<div>
+	<div class="detailDiv">
 	<div class="leftdiv">
 	<form action="" onsubmit="return modify()">
 	제목<input type="text" name="title" value="${detail.title}"><br>
@@ -118,34 +129,96 @@ var xhr = null;
 	</c:if>
 	</c:if>
 	</form>
-	
+	<c:if test="${userinfo.memberseq eq detail.memberseq}">
+	<c:if test="${detail.matchingchk eq 'N'}">
+	<button onclick="modifyDate(event)">날짜수정</button>
+	</c:if>
+	</c:if>
 	
 	<button onclick="javascript:history.back(-1)">뒤로가기</button>
-	<button onclick="modifyDate(event)">날짜수정</button>
+	
 	<c:if test="${userinfo.memberseq ne detail.memberseq}">
 	<button onclick="report()">신고하기</button>
 	</c:if>
 	</div>
 	
 	<div class="rightDiv">
+	<c:if test="${userinfo.auth eq 'ROLE_E'}">
 	<div class="reviews">
 	<%@include file="/WEB-INF/views/FindingMentor/ajaxReview.jsp"%>
 	</div>
+	</c:if>
+	<!-- 매칭이 되지 않은 글/멘토의 관점 -->
 	<c:if test="${detail.matchingchk eq 'N'}">
 	<c:if test="${userinfo.auth eq 'ROLE_R'}">
+	<table class="table table-bordered">
+		<thead>
+			<c:forEach items="${findMentor}" var="mentee">
+			<tr>
+				<th>닉네임</th><td>${mentee.nickname}</td>
+			</tr>
+			<tr>
+				<th>멘토링 횟수</th><td>${mentee.menteecnt}</td>
+			</tr>
+			<tr>
+				<th>취소 횟수</th><td>${mentee.nickname}</td>
+			</tr>
+			<tr>	
+				<th>누적 별점</th><td>${mentee.menteeaccstar}</td>
+			</tr>
+			</c:forEach>
+		</thead>
+			<tr><td colspan="2">멘티의 후기 보기</td></tr>
+		<tbody>
+		</tbody>
+	</table>
+		<span class="reviews"></span>
 	<button onclick="apply()">멘토링 신청</button>
 	</c:if>
 	<c:if test="${userinfo.memberseq eq detail.memberseq}">
 	<c:if test="${userinfo.auth eq 'ROLE_E'}">
 	
+	<b>멘토지원자 명단</b>
+	<table class="table table-bordered">
+	<thead><tr>
+	<th>멘토번호</th>
+	<th>닉네임</th>
+	<th>누적별점</th>
+	<th>멘토링횟수</th>
+	<th>금액</th>
+	<th>버튼영역</th>
+	</tr></thead>
+	
+	<!-- 신청한 멘토의 목록 표시 -->
+	<tbody>
+	<c:forEach items="${findMentor}" var="applyMentors">
+		<tr>
+			<td>${applyMentors.memberseq}</td>
+			<td>${applyMentors.nickname}</td>
+			<td>${applyMentors.profiledto.mentoaccstar}</td>
+			<td>${applyMentors.profiledto.mentorcnt}</td>
+			<td>0원(개발중)</td>
+			<td><input type="button" value="멘토의 소개글 보기" onclick="openApply(this)" name="a${applyMentors.memberseq}st"></td>
+		</tr>
+		<tr id="a${applyMentors.memberseq}st" style="display:none;">
+			<td colspan="1">자기소개</td>
+			<td colspan="4">안녕하세요. 아직 개발중입니다.</td>
+			<td><button onclick="matching(this.title,this.name)" name="${applyMentors.nickname}" title="${applyMentors.memberseq}">멘토선택</button></td>
+		</tr>	
+	</c:forEach>
+	</tbody>
+	</table>
 	</c:if>
 	</c:if>
 	</c:if>
 	
+	
+	
+	
 	<c:if test="${detail.matchingchk eq 'Y'}">
 	<c:if test="${userinfo.memberseq eq matching.menteeseq || userinfo.memberseq eq matching.mentorseq}">
 	<div>
-		<h1><a href="./review.do?boardseq=${detail.boardseq}">후기게시판 이동</a></h1>
+		<h1><a href="./reviewBoard.do?boardseq=${detail.boardseq}">후기게시판 이동</a></h1>
 		<c:if test="${userinfo.auth eq 'ROLE_R'}">
 		<h1><a href="./schedule.do?boardseq=${detail.boardseq}">스케줄게시판 이동</a></h1>
 		</c:if>
