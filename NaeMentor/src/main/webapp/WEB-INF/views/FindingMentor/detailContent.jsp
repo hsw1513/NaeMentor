@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -130,7 +131,7 @@ var xhr = null;
 	</c:if>
 	</form>
 	<c:if test="${userinfo.memberseq eq detail.memberseq}">
-	<c:if test="${detail.matchingchk eq 'N'}">
+	<c:if test="${fn:length(findMentor) == 0}">
 	<button onclick="modifyDate(event)">날짜수정</button>
 	</c:if>
 	</c:if>
@@ -142,13 +143,15 @@ var xhr = null;
 	</c:if>
 	</div>
 	
+	
+	<!-- 오른쪽 영역 시작--------------------------------------------------------------------------- -->
 	<div class="rightDiv">
 	<c:if test="${userinfo.auth eq 'ROLE_E'}">
 	<div class="reviews">
 	<%@include file="/WEB-INF/views/FindingMentor/ajaxReview.jsp"%>
 	</div>
 	</c:if>
-	<!-- 매칭이 되지 않은 글/멘토의 관점 -->
+	<!-- 매칭이 되지 않은 글/멘토의 관점---------------------------------------------------------------- -->
 	<c:if test="${detail.matchingchk eq 'N'}">
 	<c:if test="${userinfo.auth eq 'ROLE_R'}">
 	<table class="table table-bordered">
@@ -173,8 +176,19 @@ var xhr = null;
 		</tbody>
 	</table>
 		<span class="reviews"></span>
+		<form action="./insertOffer.do" method="post" onsubmit="return chkVal()">
+			<input type="hidden" name="memberseq" value="${userinfo.memberseq}">
+			<input type="hidden" name="boardseq" value="${detail.boardseq}">
+			<textarea name="content" rows="2" cols="50" placeholder="멘티님께 하고싶은 말을 적어주세요." required="required"></textarea><br>
+			<input type="number" name="price" placeholder="금액을 입력해주세요" required="required">원
+			<input type="submit" value="요청서 제출">
+		</form>
 	<button onclick="apply()">멘토링 신청</button>
 	</c:if>
+	
+	
+	
+	<!-- 오른쪽 영역 멘티의 관점 ---------------------------------------------------------->
 	<c:if test="${userinfo.memberseq eq detail.memberseq}">
 	<c:if test="${userinfo.auth eq 'ROLE_E'}">
 	
@@ -189,7 +203,7 @@ var xhr = null;
 	<th>버튼영역</th>
 	</tr></thead>
 	
-	<!-- 신청한 멘토의 목록 표시 -->
+	
 	<tbody>
 	<c:forEach items="${findMentor}" var="applyMentors">
 		<tr>
