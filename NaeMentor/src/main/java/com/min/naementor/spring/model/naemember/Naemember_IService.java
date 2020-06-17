@@ -62,7 +62,21 @@ public interface Naemember_IService {
 	 * @param 로그인 정보 값(email)
 	 * @return 로그인 시도 횟수
 	 */
-	public boolean loginCount(Map<String, Object> map);
+	public boolean loginCount(Map<String, String> map);
+	
+	/**
+	 * 로그인 성공시 카운트 초기화(loginCount)
+	 * @param 로그인 정보 값(email)
+	 * @return 로그인 시도 횟수 초기화 성공여부
+	 */
+	public boolean initLoginCount(Map<String, String> map);
+	
+	/**
+	 * 로그인 시도 횟수 조회
+	 * @param 로그인 정보 값(email)
+	 * @return 로그인 시도 횟수
+	 */
+	public int searchLoginCnt(Map<String, String> map);
 	
 	/**
 	 * 로그인시 시간 기록

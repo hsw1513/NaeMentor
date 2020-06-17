@@ -32,12 +32,13 @@
 		<security:form-login
 			login-processing-url="/logingo.do" 
 			login-page="/index.do"
-			default-target-url="/result.do"
+			default-target-url="/loginresult.do"
 			username-parameter="email"
 			password-parameter="password"
-			authentication-failure-url="/index.do"
+			authentication-failure-handler-ref="LoginFailureHandler"
 			always-use-default-target='true' 
 		/>
+		
 		<security:logout 
 			invalidate-session="true"
 			logout-url="/logout.do"
@@ -56,6 +57,13 @@
 			<security:concurrency-control max-sessions="1" expired-url="/index.do"/>
 		</security:session-management>
 	</security:http>
+	
+	<bean id="LoginFailureHandler" class="com.min.naementor.spring.comm.LoginFailureHandler">
+		<property value="email" name="email"/>
+		<property value="password" name="password"/>
+		<property value="ERRORMSG" name="errormsgname"/>
+		<property value="/logingo.do?error" name="defaultFailureUrl"/>
+	</bean>
 	
 	<!-- UserDetailsService를 상속받아 코스튬한 컨트롤러 bean 생성 -->
 	<bean id="securityController" class="com.min.naementor.spring.controllers.Security_CTRL" />

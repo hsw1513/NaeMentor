@@ -103,7 +103,7 @@ public class Naemember_ServiceImpl implements Naemember_IService {
 	 * @return 로그인 실패시 카운트증가 true, 성공시 false
 	 */
 	@Override
-	public boolean loginCount(Map<String, Object> map) {
+	public boolean loginCount(Map<String, String> map) {
 		log.info("loginCount 로그인 카운트 증가, {}", map);
 		return dao.loginCount(map);
 	}
@@ -156,6 +156,28 @@ public class Naemember_ServiceImpl implements Naemember_IService {
 	public boolean logoutTime(Map<String, String> map) {
 		log.info("logoutTime 로그아웃 시간 기록, {}", map);
 		return dao.logoutTime(map);
+	}
+
+	/**
+	 * <h2>로그인 시도 카운트 초기화</h2>
+	 * @param 이메일
+	 * @return 로그인 시도 초기화(0)
+	 */
+	@Override
+	public boolean initLoginCount(Map<String, String> map) {
+		log.info("initLoginCount 로그인 시도 카운트 초기화, {}", map);
+		return dao.initLoginCount(map);
+	}
+
+	/**
+	 * <h2>로그인 시도 횟수 조회</h2>
+	 * @param 이메일
+	 * @return 로그인 시도 횟수
+	 */
+	@Override
+	public int searchLoginCnt(Map<String, String> map) {
+		log.info("searchLoginCnt 로그인 시도 횟수 조회, {}", map);
+		return dao.searchLoginCnt(map);
 	}
 
 	

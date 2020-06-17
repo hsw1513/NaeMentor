@@ -96,16 +96,26 @@
 		   				AND EMAIL =#{email} AND NOT USERSTATUS = 'D' AND NOT USERSTATUS = 'S'
 	</select>
 	
-	<!-- 로그인 실패시 로그인 시도 카운트 증가, 성공시 카운트 초기화 -->
+	<!-- 로그인 실패시 로그인 시도 카운트 증가 -->
 	<update id="loginCount" parameterType="java.util.Map">
 	  UPDATE NAEMEMBER 
-		SET LOGINCNT =
-			CASE WHEN EMAIL != #{email}
-				THEN LOGINCNT +1
-					ELSE 0
-						END
-							WHERE EMAIL = #{email}
+		SET LOGINCNT = LOGINCNT +1
+				WHERE EMAIL = #{email}
 	</update>
+	
+	<!-- 로그인 시도 성공시 카운트 초기화 -->
+	<update id="initLoginCount" parameterType="java.util.Map">
+	  UPDATE NAEMEMBER 
+		SET LOGINCNT = 0
+				WHERE EMAIL = #{email}
+	</update>
+	
+	<!-- 로그인 시도 횟수 조회 -->
+	<select id="searchLoginCnt" resultType="java.lang.Integer">
+		SELECT LOGINCNT
+			FROM NAEMEMBER
+				WHERE EMAIL = #{email}
+	</select>
 	
 	<!-- 로그아웃시 시간 기록 -->
 	<update id="logoutTime" parameterType="java.util.Map">

@@ -59,11 +59,27 @@ public interface Naemember_IDao {
 	public NaememberDto encLogin(String email);
 	
 	/**
-	 * 로그인 실패 시 로그인 시도 카운트 증가, 성공시 카운트 초기화(loginCount)
+	 * 로그인 실패 시 로그인 시도 카운트 증가
+	 * @param 로그인 정보 값(email)
+	 * @return 로그인 시도 횟수 증가 성공여부
+	 */
+	public boolean loginCount(Map<String, String> map);
+
+	/**
+	 * 로그인 성공시 카운트 초기화(loginCount)
+	 * @param 로그인 정보 값(email)
+	 * @return 로그인 시도 횟수 초기화 성공여부
+	 */
+	public boolean initLoginCount(Map<String, String> map);
+
+	/**
+	 * 로그인 시도 횟수 조회
 	 * @param 로그인 정보 값(email)
 	 * @return 로그인 시도 횟수
 	 */
-	public boolean loginCount(Map<String, Object> map);
+	public int searchLoginCnt(Map<String, String> map);
+	
+	
 	
 	/**
 	 * 로그인시 시간 기록
