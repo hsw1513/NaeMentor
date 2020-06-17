@@ -7,37 +7,32 @@
 <title>Insert title here</title>
 <link type="text/css" rel="stylesheet" href="./css/basic.css">
 </head>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="./js/captcha.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.js"></script>
 <body>
 <div id="container">
-	<form action="./logingo.do" method="POST">
-	아이디 : <input type="email" name="email"> <br>
+	<form id="forlogin" action="./logingo.do" method="POST">
+	아이디 : <input type="email" id="email" name="email"> <br>
 	비밀번호 : <input type="password" name="password"> <br>
 	<br>
 	<input name ="remember-me" type = "checkbox"/>로그인 유지
-	<input type="submit" value="제출"><br>
+	<input type="button" onclick="searchLoginCnt()" value="제출"><br>
 	</form>
 	
-	<!--  키가 있으면 캡챠 이미지를 띄운다. -->
-	<c:choose>
-	<c:when test="${!empty key}">
-	<img  src="https://openapi.naver.com/v1/captcha/ncaptcha.bin?key=${key}">
+<!--  캡차 -->
+<div id="captcha" style="display: none;">
+<img  src="https://openapi.naver.com/v1/captcha/ncaptcha.bin?key=${key}">
+<form method="get">
+	<input type="hidden" id="key" name="key" value="${key}">
+	입력 : 
+	<input type="text" id="chk" name="chk">	
+	<input type="button" value="제출" onclick="passCaptcha()">
+</form>
+</div>
 
-	<form action="./valchk.do" method="post">
-		<input type="hidden" name="key" value="${key}">
-		입력 : 
-		<input type="text" name="chk">
-		<input type="submit" value="제출">
-	</form>
-	</c:when>
-
-	<c:otherwise>
-	캡챠 오류입니다. 다시 시도해주세요
-	</c:otherwise>
-
-</c:choose>
 	<a href="./yakGwanGo.do">회원가입</a>
 	<a href="./searchIdPW.do">아이디/비밀번호 찾기</a>
 </div>
-<%@include file="/WEB-INF/views/footer.jsp"%>	
 </body>
 </html>

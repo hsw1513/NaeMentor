@@ -69,7 +69,7 @@ public class Naemember_DaoImpl implements Naemember_IDao {
 	}
 
 	@Override
-	public boolean loginCount(Map<String, Object> map) {
+	public boolean loginCount(Map<String, String> map) {
 		int cnt = sqlSession.update(NS+"loginCount", map);
 		return (cnt>0)?true:false;
 	}
@@ -102,6 +102,18 @@ public class Naemember_DaoImpl implements Naemember_IDao {
 	public boolean logoutTime(Map<String, String> map) {
 		int cnt = sqlSession.update(NS+"logoutTime", map);
 		return (cnt>0)?true:false;
+	}
+
+	@Override
+	public boolean initLoginCount(Map<String, String> map) {
+		int cnt = sqlSession.update(NS+"initLoginCount", map);
+		return (cnt>0)?true:false;
+	}
+
+	@Override
+	public int searchLoginCnt(Map<String, String> map) {
+		int cnt = sqlSession.selectOne(NS+"searchLoginCnt", map);
+		return cnt;
 	}
 
 	

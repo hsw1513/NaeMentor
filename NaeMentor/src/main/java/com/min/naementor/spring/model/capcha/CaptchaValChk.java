@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -16,20 +17,21 @@ import org.springframework.stereotype.Component;
 
 @Component(value = "valChk")
 public class CaptchaValChk implements Capcha_IService {
-
-	@Qualifier("cMap")
-	private Map<String, String> requestHeaders;
 	
-	@Qualifier("apiURL")
-	private String apiURL;
-	
+	private String clientId = "N9nXoUFXIe10HTnjzjXC"; //애플리케이션 클라이언트 아이디값";
+    private String clientSecret = "JjAU7DDGV3"; //애플리케이션 클라이언트 시크릿값";
+    private String apiURL = "https://openapi.naver.com/v1/captcha/nkey?code=";
+    private Map<String, String> requestHeaders = new HashMap<String, String>();
+    
 	@Override
 	public String get(String attach) {
-		System.out.println(apiURL+attach); 
+		requestHeaders.put("X-Naver-Client-Id", clientId);
+		requestHeaders.put("X-Naver-Client-Secret", clientSecret);
+		System.out.println("들어온 값 확인"+apiURL+attach); 
+		HttpURLConnection con = connect(apiURL+attach);
 		//서버 통신
 		// 0이면 이미지 key 받아오기 1이면 유저가 입력한 값과 비교하기
 		// "https://openapi.naver.com/v1/captcha/nkey?code=" + code + "&key=" + key + "&value=" + value;
-		HttpURLConnection con = connect(apiURL+attach);
 		 
 		 try {
 				con.setRequestMethod("GET");

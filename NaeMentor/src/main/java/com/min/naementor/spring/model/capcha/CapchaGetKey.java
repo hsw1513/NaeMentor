@@ -7,9 +7,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Map;
 
-import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -17,32 +17,33 @@ import org.springframework.stereotype.Component;
 @Component(value = "gotKey")
 public class CapchaGetKey implements Capcha_IService {
 	
-	@Qualifier("cMap")
-	private Map<String, String> requestHeaders;
+	private String clientId = "N9nXoUFXIe10HTnjzjXC"; //애플리케이션 클라이언트 아이디값";
+    private String clientSecret = "JjAU7DDGV3"; //애플리케이션 클라이언트 시크릿값";
+    private String apiURL = "https://openapi.naver.com/v1/captcha/nkey?code=";
+    private Map<String, String> requestHeaders = new HashMap<String, String>();
 	
-	@Qualifier("apiURL")
-	private String apiURL;
-	
+    //캡차 이미지 Key를 받아오기
 	@Override
-	public String get(String attach) { // 캡차이미지 key 받아오기
+	public String get(String attach) { 
 		// 0이면 이미지 키 받아오기, 1이면 유저가 입력한 값과 비교하기
-		HttpURLConnection connection = connect(apiURL+attach);
-		
+		HttpURLConnection con = connect(apiURL+attach);
+		requestHeaders.put("X-Naver-Client-Id", clientId);
+		requestHeaders.put("X-Naver-Client-Secret", clientSecret);
 		// 키 받아오기
 				try {
 					for(Map.Entry<String, String> header :requestHeaders.entrySet()) {
-						connection.setRequestProperty(header.getKey(), header.getValue());
+						con.setRequestProperty(header.getKey(), header.getValue());
 					}
-					int responseCode = connection.getResponseCode();
+					int responseCode = con.getResponseCode();
 					if (responseCode == HttpURLConnection.HTTP_OK) { // 정상 호출
-						return readBody(connection.getInputStream());
+						return readBody(con.getInputStream());
 					} else { // 에러 발생
-						return readBody(connection.getErrorStream());
+						return readBody(con.getErrorStream());
 					}
 				}catch (IOException e) {
 					throw new RuntimeException("API 요청과 응답 실패", e);
 				}finally {
-					connection.disconnect();
+					con.disconnect();
 				}
 	}
 

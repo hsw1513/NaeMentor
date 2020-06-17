@@ -64,6 +64,17 @@ public class AjaxLogin_CTRL {
 			String email = service.searchId(dto);
 			return email;
 		}
+		
+		@RequestMapping(value = "/searchLoginCnt.do", method = RequestMethod.POST)
+		@ResponseBody
+		public int searchLoginCnt(String email) {
+			log.info("로그인 횟수 조회*********************"+email);
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("email", email);
+			int cnt = service.searchLoginCnt(map);
+			log.info("로그인 횟수는???*************"+cnt);
+			return cnt;
+		}
 				
 				
 				

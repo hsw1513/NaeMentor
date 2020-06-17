@@ -22,19 +22,5 @@
 		<property name="prefix" value="/WEB-INF/views/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
-	
-	<bean class="java.lang.String" id="apiURL">
-	 <constructor-arg value="https://openapi.naver.com/v1/captcha/nkey?code="/>
-	</bean>
-	
-	<util:map id="cMap" map-class="java.util.HashMap">
-		<entry key="X-Naver-Client-Id">
-			<value>N9nXoUFXIe10HTnjzjXC</value>
-		</entry>
-		<entry key="X-Naver-Client-Secret">
-			<value>JjAU7DDGV3</value>
-		</entry>
-	</util:map>
-
 
 </beans>
