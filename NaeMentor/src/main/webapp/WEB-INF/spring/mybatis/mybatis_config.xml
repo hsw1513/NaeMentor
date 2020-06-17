@@ -13,7 +13,7 @@
 		<typeAlias type="com.min.naementor.dtos.MemberScheduleDto" alias="MSDto"/>
 		<typeAlias type="com.min.naementor.dtos.ReportDto" alias="RPDto"/>
 		<typeAlias type="com.min.naementor.dtos.ReviewDto" alias="RVDto"/>
-		<typeAlias type="com.min.naementor.dtos.Offer" alias="OFDto"/>
+		<typeAlias type="com.min.naementor.dtos.OfferDto" alias="OFDto"/>
 	</typeAliases>
 	
 	<mappers>
