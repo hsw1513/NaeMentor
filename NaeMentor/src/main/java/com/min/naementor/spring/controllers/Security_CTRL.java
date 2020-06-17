@@ -36,7 +36,6 @@ public class Security_CTRL implements UserDetailsService {
 		
 		// 아이디, 비밀번호, 권한을 담은 위의 객체를 담아 생성
 		UserDetails user = new User(username, dto.getPassword(), roles);
-		
 		return user;
 	}
 
