@@ -8,8 +8,11 @@
 }
 .rightDiv{
 	border: 1px solid gray;
-	width: 35%;
+	width: 45%;
 	position: absolute;
 	margin-left: 50%;
 	margin-top: 30px;
+}
+.detailDiv{
+	height: 500px;
 }
