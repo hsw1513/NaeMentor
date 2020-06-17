@@ -178,6 +178,7 @@ var xhr = null;
 		<span class="reviews"></span>
 		<form action="./insertOffer.do" method="post" onsubmit="return chkVal()">
 			<input type="hidden" name="memberseq" value="${userinfo.memberseq}">
+			<input type="hidden" name="boardseq" value="${detail.boardseq}">
 			<textarea name="content" rows="2" cols="50" placeholder="멘티님께 하고싶은 말을 적어주세요." required="required"></textarea><br>
 			<input type="number" name="price" placeholder="금액을 입력해주세요" required="required">원
 			<input type="submit" value="요청서 제출">
