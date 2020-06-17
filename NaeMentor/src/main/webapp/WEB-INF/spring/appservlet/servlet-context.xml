@@ -27,7 +27,7 @@
 	 <constructor-arg value="https://openapi.naver.com/v1/captcha/nkey?code="/>
 	</bean>
 	
-	<util:map id="capchaMap" map-class="java.util.HashMap">
+	<util:map id="cMap" map-class="java.util.HashMap">
 		<entry key="X-Naver-Client-Id">
 			<value>N9nXoUFXIe10HTnjzjXC</value>
 		</entry>

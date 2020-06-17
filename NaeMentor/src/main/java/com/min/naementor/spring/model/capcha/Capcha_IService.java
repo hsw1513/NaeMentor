@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 
 public interface Capcha_IService {
+	
 
 	
 	/**
