@@ -22,7 +22,6 @@
     		<li><a href="./Notification_board.do">공지사항</a></li>
     		<li><a href="./Question_board.do">1:1 문의</a></li>
     		<li><a href="./Profile.do">나의 프로필 관리</a></li>
-    		<li><a href="./Payment_pay.do">결제</a></li>
     	<c:if test="${fn:trim(userinfo.auth) eq 'ROLE_A'}">
     		<li><a href="./adminBoard.do">관리자페이지</a></li>
     	</c:if>
