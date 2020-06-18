@@ -7,8 +7,14 @@
 		VALUES (#{memberseq},#{boardseq},#{content},#{price})
 </insert>
 <!-- 오퍼 확인 -->
-<select id="viewOffer" parameterType="java.lang.String" resultType="OFDto">
+<select id="viewOffer" parameterType="java.util.Map" resultType="OFDto">
 	SELECT MEMBERSEQ , CONTENT , PRICE 
-		FROM OFFER o WHERE BOARDSEQ = #{boardseq}
+		FROM OFFER o WHERE BOARDSEQ = #{boardseq} AND MEMBERSEQ = #{memberseq}
+</select>
+
+<select id="chkOffer" parameterType="java.util.Map" resultType="java.lang.Integer">
+	SELECT COUNT(MEMBERSEQ) 
+		FROM OFFER o 
+			WHERE BOARDSEQ = #{boardseq} AND MEMBERSEQ = #{memberseq}
 </select>
 </mapper>
