@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title>1:1 문의 게시판</title>
 </head>
+<script type="text/javascript" src="./js/QuestionBoardPaging.js"></script>
 <body>
 	<%@include file="/WEB-INF/views/topMenu.jsp"%>
 	<div id="container">
@@ -29,7 +30,7 @@
 		 		<c:forEach var="dto" items="${lists}" varStatus="vs">
 		 			<tr>
 					<td><input type="checkbox" name="chks" value="${dto.adminseq}"></td>
-						<td>${fn:length(lists) - vs.index}</td>
+						<td>${dto.adminseq}</td>
 						<td>
 							<a title="${dto.title}" href="./Question_boardDetail.do?adminseq=${dto.adminseq}" style="color: black;">
 									<c:choose>
@@ -49,16 +50,15 @@
 		</div>
 		
 		<!-- 		페이징 관련 -->
-		<input type="hidden" name="notiPageindex" id="notiPageindex" value="${row.index}">
-			<input type="hidden" name="pageNum" id="notiPageNum"
-				value="${row.pageNum}"> <input type="hidden" name="listNum"
-				id="notiListNum" value="${row.listNum}">
-			<script type="text/javascript">
+			<input type="hidden" name="index" id="index" value="${row.index}">
+		<input type="hidden" name="pageNum" id="pageNum" value="${row.pageNum}"> 
+		<input type="hidden" name="listNum" id="listNum" value="${row.listNum}">
+		<input type="hidden" name="listNum" id="listNum" value="${row.total}">
+	<script type="text/javascript">
          var listNum = document.getElementById("listNum").value;
          var list = document.getElementById("list");
-//          alert(list.options[listNum/5-1].selected = 'selected');
       </script>
-		<div class="center">
+		<div class="center" style="text-align: center;">
 				<ul class="pagination">
 					<li><a href="#" onclick="pageFirst()">&laquo;</a></li>
 					<li><a href="#"
@@ -80,33 +80,6 @@
 				<input type="submit" class="myButton" value="삭제" >
 			</div>
 		</form>
-		<script type="text/javascript">
-			function checkAll(bool) {
-				var chks = document.getElementsByName('chks');
-				for (var i = 0; i < chks.length; i++) {
-					chks[i].checked=bool;
-				}
-			}
-			function multiDelChk(){
-				   var chks = document.getElementsByName('chks');
-				   var cntChecked = 0;
-				   var delChk = new Array();
-				   for (var i = 0; i < chks.length; i++) {
-				      if (chks[i].checked) {
-				         cntChecked++;
-				         delChk.push(chks[i].value);
-				      }
-				   }
-				   if (cntChecked>0) {
-					  var mchk = document.getElementById("delmChk").action;
-					  mchk = mchk + "?chks="+delChk;
-					 return true;
-				   }else{
-				      alert("선택된 글이 없습니다.");
-				      return false;
-				   }
-				}
-		</script>
 	</div>
 	<%@include file="/WEB-INF/views/footer.jsp"%>
 </body>
