@@ -17,18 +17,18 @@ var xhr = null;
 	}		
 	
 	reviewOnload = function(){
-		xhr = new XMLHttpRequest();
-		xhr.onreadystatechange = function(){
-			if(xhr.readyState==4){
-				if(xhr.status==200){
-					let val = JSON.parse(xhr.responseText);
+		let onloadxhr = new XMLHttpRequest();
+		onloadxhr.onreadystatechange = function(){
+			if(onloadxhr.readyState==4){
+				if(onloadxhr.status==200){
+					let val = JSON.parse(onloadxhr.responseText);
 					document.getElementsByClassName("reviews")[0].innerHTML = val.reviews;
 				}
 			}
 		}
-		xhr.open("get","./review.do?menteeseq="+${detail.memberseq}+"&boardseq="+${detail.boardseq});
-		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		xhr.send();
+		onloadxhr.open("get","./review.do?menteeseq="+${detail.memberseq}+"&boardseq="+${detail.boardseq});
+		onloadxhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		onloadxhr.send();
 	}
 	
 	chkOffer = function(){
@@ -64,11 +64,17 @@ var xhr = null;
 	
 	
 	function report(){
-		xhr = new XMLHttpRequest();
-		xhr.onreadystatechange = callback
-		xhr.open("POST","./reportContentChk.do");
-		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		xhr.send("memberseq="+${detail.memberseq}+"&boardseq="+${detail.boardseq});
+		let reportxhr = new XMLHttpRequest();
+		reportxhr.onreadystatechange = function(){
+			if(reportxhr.readyState==4){
+				if(reportxhr.status==200){
+					alert(reportxhr.responseText);
+				}
+			}
+		}
+		reportxhr.open("POST","./reportContentChk.do");
+		reportxhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		reportxhr.send("memberseq="+${detail.memberseq}+"&boardseq="+${detail.boardseq});
 	}
 	function callback(){
 		if(xhr.readyState==4){
@@ -79,17 +85,29 @@ var xhr = null;
 		}
 	}
 	function apply(){
+		let num = document.getElementsByName("price")[0];
+		if(num.value.length>3 && num.value.length<7 && num.value>0){
 		if(confirm(${detail.memberseq}+'님에게 멘토링을 신청합니다.')){
 			applyMentor();
+			return true;
+			}
+		}else{
+			return false;
 		}
 	}
 	
 	function applyMentor(){
-		xhr = new XMLHttpRequest();
-		xhr.onreadystatechange = callback
-		xhr.open("POST","./applyMentor.do");
-		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		xhr.send("memberseq="+${detail.memberseq}+"&boardseq="+${detail.boardseq});
+		let applyxhr = new XMLHttpRequest();
+		applyxhr.onreadystatechange = function(){
+			if(applyxhr.readyState==4){
+				if(applyxhr.status==200){
+					alert(applyxhr.responseText);
+				}
+			}
+		}
+		applyxhr.open("POST","./applyMentor.do");
+		applyxhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		applyxhr.send("memberseq="+${detail.memberseq}+"&boardseq="+${detail.boardseq});
 	}
 	function matching(title, name){
 // 		alert(title);
@@ -98,11 +116,17 @@ var xhr = null;
 		if(confirm(name+"님과 멘토링을 진행하시겠습니까?")){
 			let info = "boardseq="+${detail.boardseq}+"&mentorseq="+title.trim();
 // 			alert(info);
-			xhr = new XMLHttpRequest();
-			xhr.onreadystatechange = callback
-			xhr.open("POST","./matching.do");
-			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-			xhr.send(info);
+			let matchingxhr = new XMLHttpRequest();
+			matchingxhr.onreadystatechange = function(){
+				if(matchingxhr.readyState==4){
+					if(matchingxhr.status==200){
+						location.href="detailContent.do?boardseq="+${detail.boardseq}+"&memberseq="+${detail.memberseq};
+					}
+				}
+			}
+			matchingxhr.open("POST","./matching.do");
+			matchingxhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			matchingxhr.send(info);
 		}else{
 			alert("취소되었습니다.");
 		}
@@ -117,14 +141,30 @@ var xhr = null;
 	}
 	
 	function openApply(val){
-		let objSt = document.getElementById(val.name);
+		let objSt = document.getElementById("a"+val.name+"st");
 		if(objSt.style.display == 'none'){
 			val.value='멘토의 소개글 접기';
 			objSt.style.display = '';
+			viewOffer(val);
 		}else{
 			val.value='멘토의 소개글 보기';
 			objSt.style.display = 'none';
 		}
+	}
+	function viewOffer(val){
+		let xhr3 = new XMLHttpRequest();
+		xhr3.onreadystatechange = function(){
+			if(xhr3.readyState==4){
+				if(xhr3.status==200){
+				let val3 = JSON.parse(xhr3.responseText);
+				document.getElementsByName("intro_"+val.name)[0].innerHTML = val3.offer.price;
+				document.getElementsByName("intro_"+val.name)[1].innerHTML = val3.offer.content;
+				}
+			}
+		}
+		xhr3.open("get","./viewOffer.do?mentorseq="+val.name+"&boardseq="+${detail.boardseq});
+		xhr3.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		xhr3.send();
 	}
 	
 </script>
@@ -199,14 +239,13 @@ var xhr = null;
 	</table>
 		<span class="reviews"></span>
 	<div id="offerchk">
-		<form action="./insertOffer.do" method="post" onsubmit="return chkVal()">
+		<form action="./insertOffer.do" method="post" onsubmit="return apply()">
 			<input type="hidden" name="memberseq" value="${userinfo.memberseq}">
 			<input type="hidden" name="boardseq" value="${detail.boardseq}">
 			<textarea name="content" rows="2" cols="50" placeholder="멘티님께 하고싶은 말을 적어주세요." required="required"></textarea><br>
 			<input type="number" name="price" placeholder="금액을 입력해주세요" required="required">원
 			<input type="submit" value="요청서 제출">
 		</form>
-	<button onclick="apply()">멘토링 신청</button>
 	</div>
 	<div id="offerchk2"></div>
 	</c:if>
@@ -236,12 +275,12 @@ var xhr = null;
 			<td>${applyMentors.nickname}</td>
 			<td>${applyMentors.profiledto.mentoaccstar}</td>
 			<td>${applyMentors.profiledto.mentorcnt}</td>
-			<td>0원(개발중)</td>
-			<td><input type="button" value="멘토의 소개글 보기" onclick="openApply(this)" name="a${applyMentors.memberseq}st"></td>
+			<td name="intro_${applyMentors.memberseq}">멘토정보를 확인하세요.</td>
+			<td><input type="button" value="멘토의 소개글 보기" onclick="openApply(this)" name="${applyMentors.memberseq}"></td>
 		</tr>
 		<tr id="a${applyMentors.memberseq}st" style="display:none;">
 			<td colspan="1">자기소개</td>
-			<td colspan="4"></td>
+			<td colspan="4" name="intro_${applyMentors.memberseq}"></td>
 			<td><button onclick="matching(this.title,this.name)" name="${applyMentors.nickname}" title="${applyMentors.memberseq}">멘토선택</button></td>
 		</tr>	
 	</c:forEach>

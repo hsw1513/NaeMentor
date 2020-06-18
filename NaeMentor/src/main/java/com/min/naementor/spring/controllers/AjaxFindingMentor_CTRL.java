@@ -1,6 +1,8 @@
 package com.min.naementor.spring.controllers;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -16,10 +18,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.min.naementor.dtos.MatchingDto;
 import com.min.naementor.dtos.NaememberDto;
+import com.min.naementor.dtos.OfferDto;
 import com.min.naementor.dtos.ReviewDto;
 import com.min.naementor.spring.comm.FindingMentor_MakeArrayList;
 import com.min.naementor.spring.model.findingMentor.FindingMentor_IService;
 import com.min.naementor.spring.model.matching.Matching_IService;
+import com.min.naementor.spring.model.offer.Offer_IService;
 import com.min.naementor.spring.model.report.Report_IService;
 import com.min.naementor.spring.model.review.Review_IService;
 
@@ -33,6 +37,8 @@ public class AjaxFindingMentor_CTRL {
 	private FindingMentor_MakeArrayList converter;
 	@Autowired
 	private Matching_IService mservice;
+	@Autowired
+	private Offer_IService oservice;
 	
 	// 멘토와 멘티 분기
 	@RequestMapping("/review.do")
@@ -79,7 +85,17 @@ public class AjaxFindingMentor_CTRL {
 		}
 		return obj;
 	}
-	
-	
+	// 멘티가 선택한 멘토의 오퍼 확인하기
+	@RequestMapping(value = "/viewOffer.do", method=RequestMethod.GET)
+	@ResponseBody
+	public JSONObject viewOffer(String mentorseq, String boardseq) {
+		JSONObject obj = new JSONObject();
+		Map<String,String> map = new HashMap<String, String>();
+		map.put("boardseq", boardseq);
+		map.put("memberseq", mentorseq);
+		OfferDto odto = oservice.viewOffer(map);
+		obj.put("offer", odto);
+		return obj;
+	}
 	
 }
