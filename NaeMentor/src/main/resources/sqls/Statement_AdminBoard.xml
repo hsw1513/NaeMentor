@@ -7,7 +7,7 @@
 		SELECT MEMBERSEQ, EMAIL , NICKNAME , PHONE , BIRTHDAY , 
 			GENDER , AUTH , USERSTATUS ,MENTORTIER, REPORTCNT ,
 			TO_CHAR(JOINDATE, 'YYYY-MM-DD') AS JOINDATE , MENTEECNT, 
-			MENTEEACCSTAR, TO_CHAR(LASTACCESS, 'YYYY-YY-DD') AS LASTACCESS, BYEBYE 
+			MENTEEACCSTAR, TO_CHAR(LASTACCESS, 'YYYY-MM-DD') AS LASTACCESS, BYEBYE 
 				FROM NAEMEMBER
 				<if test="auth != admin">
 					WHERE AUTH = #{auth}
@@ -61,6 +61,21 @@
  				WHERE MEMBERSEQ =#{memberseq}
 	</update>
 	
+	<!-- 멘토승급 취소시 FILECHK를 다시 변경  -->
+	<update id="mentorCancel" parameterType="java.util.Map">
+		UPDATE PROFILE
+			SET FILECHK = 'N'
+				WHERE MEMBERSEQ = #{memberseq}
+	</update>
+	
+	<!-- 멘토승급 거절시 메일 보낼 아이디 찾기 -->
+	<select id="denyId" parameterType="java.util.Map" resultType="java.lang.String">
+		SELECT EMAIL
+			FROM NAEMEMBER
+				WHERE MEMBERSEQ = #{memberseq}
+	</select>
+	
+	
 	<!-- 멘토승급시 승급일 기록 -->
 	<update id="promotionDate" parameterType="java.util.Map">
 		UPDATE PROFILE 
@@ -95,15 +110,15 @@
 	<select id="searchApplier" resultMap="joinsearchApplier">
 		SELECT n.MEMBERSEQ, AUTH, EMAIL, NICKNAME, INTRODUCE, PHONE, BIRTHDAY,
 			   GENDER, REPORTCNT, JOINDATE, PHOTO, SCHOOL, MAJOR, CAREER,
-			   CERTIFICATE, SPECIALFIELD, MENTOACCSTAR, FILECHK, USERFILE, UPLOADDATE
+			   CERTIFICATE, SPECIALFIELD, MENTOACCSTAR, FILECHK, USERFILE, TO_CHAR(UPLOADDATE, 'YYYY-MM-DD') AS UPLOADDATE
 			FROM NAEMEMBER n JOIN PROFILE p
 				ON n.MEMBERSEQ = p.MEMBERSEQ 
 			JOIN ATTACHFILE a 
 				ON n.MEMBERSEQ = a.MEMBERSEQ
-				WHERE FILECHK = 'Y' AND NOT AUTH = 'ROLE_R'
+				WHERE FILECHK = 'Y' AND NOT AUTH = 'ROLE_R' AND NOT AUTH = 'ROLE_A'
+					ORDER BY UPLOADDATE
 	</select>
 	
-	<!-- 회원탈퇴 승인시 상태변경 -->
 	
 	
 </mapper>
