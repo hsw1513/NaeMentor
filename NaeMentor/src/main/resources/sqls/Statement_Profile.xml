@@ -73,6 +73,27 @@
 	<update id="updateAuth" parameterType="java.lang.String">
 	UPDATE NAEMEMBER SET AUTH = 'ROLE_R' WHERE MEMBERSEQ = #{memberseq}
 	</update>
+	
+	<!-- 닉네임 변경 -->
+	<update id="changeNickName" parameterType="NMDto">
+		UPDATE NAEMEMBER
+			SET NICKNAME = #{nickname}
+				WHERE MEMBERSEQ = #{memberseq}
+	</update>
+	
+	<!-- 자기소개 변경 -->
+	<update id="changeIntro" parameterType="NMDto">
+		UPDATE NAEMEMBER
+			SET INTRODUCE = #{introduce}
+				WHERE MEMBERSEQ = #{memberseq}
+	</update>
+	
+	<!-- 휴대전화 번호 변경 -->
+	<update id="changePhone" parameterType="NMDto">
+		UPDATE NAEMEMBER
+			SET PHONE = #{phone}
+				WHERE MEMBERSEQ = #{memberseq}
+	</update>
 
 	
 

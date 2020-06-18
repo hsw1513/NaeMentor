@@ -12,6 +12,7 @@ function check(){
 	var genderValue = gender.options[idx].value;
 	var chkId = document.getElementById("chkval").value;
 	var smsCheck = document.getElementById("smsCheck").value;
+	var regexNick = /^[가-힣a-z0-9A-Z]{4,12}$/; //한글,영문,숫자포함 4-12자리 가능
 	var regExpPw = /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}$/; 
 	// 비밀번호 정규화 표현식, 숫자, 특수문자 각 1회 이상, 영문은 2개 이상 사용하여 8자리 이상 입력
 	var regExpBirthday = /^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/; // 생년월일 정규식(19930113)
@@ -24,6 +25,9 @@ function check(){
 		return false;
 	}else if(nickname == ""){
 		swal("회원가입 오류", "닉네임을 입력해주세요");
+		return false;
+	}else if(!regexNick.test(nickname)){
+		alert("닉네임을 정확히 입력해주세요(한글,영문,숫자포함 4-12자리 가능)");
 		return false;
 	}else if(introduce.trim() == ""){
 		swal("회원가입 오류", "자기소개를 필히 작성해주세요");
@@ -39,13 +43,14 @@ function check(){
 		swal("회원가입 오류", "휴대전화 본인 인증을 진행해주세요");
 		return false;
 	}
-	else if(emailchk == false){
-		swal("회원가입 오류", "이메일 인증을 완료해주세요");
-		return false;
-	}else if(smschk == false){
-		alert("sms 인증을 완료해주세요");
-		return false;
-	}
+//	else if(emailchk == false){
+//		swal("회원가입 오류", "이메일 인증을 완료해주세요");
+//		return false;
+//	}
+//	else if(smschk == false){
+//		alert("sms 인증을 완료해주세요");
+//		return false;
+//	}
 	else{
 		return true;
 	}

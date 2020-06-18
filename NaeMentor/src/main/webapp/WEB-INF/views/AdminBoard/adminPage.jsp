@@ -7,24 +7,41 @@
 <head>
 <meta charset="UTF-8">
 <title>관리자 페이지</title>
+<link type="text/css" rel="stylesheet" href="./css/naeMember/adminPage.css">
 </head>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/adminBoard.js"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight) {
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  });
+}
+</script>
 <body>
+<%@include file="/WEB-INF/views/topMenu.jsp"%>
 	<div id="container">
-	<div id="select"> <!-- select는 selected로 가져옴 -->
-	<span>
-		<select class="btn btn-primary" id="memberList" name="memberList" onchange="ajaxReportMember()">
-			<option value="allMember">전체회원 조회</option>
-			<option value="reportContent">신고게시글 조회</option>
-			<option value="byeMember">탈퇴신청 회원 조회</option>
-			<option value="mentorMember">멘토신청자 조회</option>
-			<option value="reportMember">신고당한 회원 조회</option>
-		</select>
-	</span>
+		<div id="select"> <!-- select는 selected로 가져옴 -->
+		<span>
+			<select class="btn btn-primary" id="memberList" name="memberList" onchange="ajaxReportMember()">
+				<option value="allMember">전체회원 조회</option>
+				<option value="mentorMember">멘토신청자 조회</option>
+				<option value="reportMember">신고당한 회원 조회</option>
+			</select>
+		</span>
 	</div>
 	<c:if test="${userinfo.auth eq 'ROLE_A'}">
-		<table class="table">
+				<c:forEach var="userinfo" items="${lists}" varStatus="vs">
+			<table class="table">
 			<thead>
 				<tr>
 					<th>연번</th>
@@ -36,7 +53,6 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="userinfo" items="${lists}" varStatus="vs">
 				<tr>
 					<td>${vs.count}</td>
 					<td>${userinfo.email}</td><td>${userinfo.nickname}</td>
@@ -46,8 +62,10 @@
 					<td>${userinfo.byebye}</td>
 					<td><button onclick="userDetail(${userinfo.memberseq}, ${vs.count})">보기</button></td>
 				</tr>
-				<tr class="profile">
-					
+				<div class="profile">
+				
+				</div>
+				<tr class="detail">
 				</tr>
 				</c:forEach>
 			</tbody>

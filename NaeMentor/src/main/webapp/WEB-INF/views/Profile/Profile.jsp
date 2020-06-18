@@ -5,7 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link type="text/css" rel="stylesheet" href="./css/profile/profile.css">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
+<script type="text/javascript" src="./js/profile.js"></script>
 <script type="text/javascript">
 	function applyBye(){
 // 		alert('applyBye');
@@ -41,10 +44,10 @@
 <body>
 <%@include file="/WEB-INF/views/topMenu.jsp"%>
 <div id="container">
-	<button onclick="updateAuth()">멘토신청</button>
+	<button onclick="updateAuth()" name="btn">멘토신청</button>
 	<c:if test="${profile.profiledto.filechk eq 'N'}">
 	</c:if>
-	<button onclick="applyBye()">회원탈퇴</button>
+	<button onclick="applyBye()" name="btn">회원탈퇴</button>
 	<table class="table">
 	    <thead>
 	      <tr>
@@ -65,6 +68,12 @@
 	      <tr>
 	        <td>닉네임</td>
 	        <td>${profile.nickname}</td>
+	        <td><button onclick="modifyNickname()" name="btn">수정</button> </td>
+	      </tr>
+	      <tr>
+	        <td>자기소개</td>
+	        <td>${profile.introduce}</td>
+	        <td><button onclick="modifyIntro()" name="btn">수정</button> </td>
 	      </tr>
 	      <tr>
 	        <td>생년월일</td>
@@ -77,6 +86,7 @@
 	      <tr>
 	        <td>전화번호</td>
 	        <td>${profile.phone}</td>
+	        <td><button onclick="modifyPhone()" name="btn">수정</button> </td>
 	      </tr>
 	      <tr>
 	        <td>권한</td>
@@ -161,6 +171,37 @@
 	      </tr>
 	    </tbody>
   	</table>
+  	
+  	<div id="newNick">
+	<form action="./changeNick.do" id="changeNick" method="post">
+		<input type="hidden" name="memberseq" value="${profile.memberseq}">
+		<input type="text" name="nickname" id="newNickname" placeholder="새로운 닉네임"><br>
+		<span id="result_nickname"></span>
+	</form>
+		<button class="myButton" onclick="closeWin1()">변경 완료</button>
+		<button class="myButton" onclick="goback1()">돌아가기</button>
+	</div>
+	
+	<div id="newIntro">
+	<form action="./changeIntro.do" id="changeIntro" method="post">
+		<input type="hidden" name="memberseq" value="${profile.memberseq}">
+		<textarea rows="5" cols="30" id="introduce" name="introduce" placeholder="새로운 자기소개"></textarea>
+	</form>
+		<button class="myButton" onclick="closeWin2()">변경 완료</button>
+		<button class="myButton" onclick="goback2()">돌아가기</button>
+	</div>
+	
+	<div id="newPhoneNum">
+	<form action="./changePhone.do" id="changePhone" method="post">
+		<input type="hidden" name="memberseq" value="${profile.memberseq}">
+		<input type="text" id="phone" name="phone" placeholder="새로운 휴대전화 번호(-포함)">
+		<input type="button" class="" onclick="sendSms()" id="send" value="전송"/> <br>
+		<input type="text" name="sms" id="sms" placeholder="인증 번호 입력" />
+		<input type="button" id="smsCheck" class="" onclick="numberCheck()" value="인증"/><br> 
+	</form>
+		<button class="myButton" onclick="closeWin3()">변경 완료</button>
+		<button class="myButton" onclick="goback3()">돌아가기</button>
+	</div>
 
 </div>
 <%@include file="/WEB-INF/views/footer.jsp"%>

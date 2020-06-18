@@ -108,7 +108,7 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
 		
 		request.setAttribute("email", email);
 		request.setAttribute("password", password);
-		request.setAttribute("error", errormsgname);
+		request.setAttribute("아이디와 비밀번호를 확인해주세요", errormsgname);
 		request.getRequestDispatcher(defaultFailureUrl).forward(request, response);
 	}
 	
