@@ -16,11 +16,11 @@
 		<table class="table talbe-bordered">
 			<tr>
 				<th>제목</th>
-				<td><input type="text" name="title"></td>
+				<td><input type="text" name="title" required="required"></td>
 			</tr>
 			<tr>
 				<th>내용</th>
-				<td><textarea id="editor" rows="20" cols="40" name="content"></textarea></td>
+				<td><textarea id="editor" rows="20" cols="40" name="content" required="required"></textarea></td>
 			</tr>
 			<tr>
 				<th>첨부파일</th>
