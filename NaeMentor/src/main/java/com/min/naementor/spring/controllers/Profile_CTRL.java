@@ -92,5 +92,30 @@ public class Profile_CTRL {
 		return "true";
 	}
 	
+	@RequestMapping(value = "/changeNick.do", method = RequestMethod.POST)
+	public String changeNick(NaememberDto dto) {
+		log.info("changeNick \t {}", dto);
+		service.changeNickName(dto);
+		return "redirect:/Profile.do";
+	}
+	
+	@RequestMapping(value = "/changeIntro.do", method = RequestMethod.POST)
+	public String changeIntro(NaememberDto dto) {
+		log.info("changeIntro \t {}", dto);
+		service.changeIntro(dto);
+		return "redirect:/Profile.do";
+	}
+	
+	@RequestMapping(value = "/changePhone.do", method = RequestMethod.POST)
+	public String changePhone(NaememberDto dto) {
+		log.info("changePhone\t {}", dto);
+		if(dto != null) {
+		service.changePhone(dto);
+		return "redirect:/Profile.do";
+		}else {
+			return "redirect:/Profile.do";
+		}
+	}
+	
 	
 }

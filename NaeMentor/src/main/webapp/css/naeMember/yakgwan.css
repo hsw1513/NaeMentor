@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+
+.usm-join-box {
+	height: 120px;
+	margin-top: 3px;
+	margin-bottom: 30px;
+	padding: 10px;
+	border: 1px solid #E1E1E3;
+	overflow-y: scroll;
+	background-color: #fff;
+}
+
+.usm-agree input[type="checkbox"] { cursor: pointer; }
+.usm-agree label { padding: 0 0 0 7px; cursor: pointer; }

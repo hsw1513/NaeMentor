@@ -18,6 +18,7 @@ public class AdminBoard_DaoImpl implements AdminBoard_IDao {
 	SqlSessionTemplate sqlSession;
 	
 	private final String NS = "com.min.naementor.naemember.admin.";
+	private final String NS2 = "com.min.naementor.report.";
 	
 	// 회원 기본 정보 조회
 	@Override
@@ -75,6 +76,29 @@ public class AdminBoard_DaoImpl implements AdminBoard_IDao {
 	@Override
 	public List<NaememberDto> searchApplier() {
 		return sqlSession.selectList(NS+"searchApplier");
+	}
+
+	// 멘토신청 거절시 FILECHK 상태 변경
+	@Override
+	public boolean mentorCancel(Map<String, String> map) {
+		int cnt = sqlSession.update(NS+"mentorCancel", map);
+		return (cnt>0)?true:false;
+	}
+
+	@Override
+	public String denyId(Map<String, String> map) {
+		return sqlSession.selectOne(NS+"denyId", map);
+	}
+
+	@Override
+	public boolean delSingoChk(Map<String, String> map) {
+		int cnt = sqlSession.update(NS2+"delSingoChk", map);
+		return (cnt>0)?true:false;
+	}
+
+	@Override
+	public String searchReportCnt(Map<String, String> map) {
+		return sqlSession.selectOne(NS2+"searchReportCnt", map);
 	}
 
 }

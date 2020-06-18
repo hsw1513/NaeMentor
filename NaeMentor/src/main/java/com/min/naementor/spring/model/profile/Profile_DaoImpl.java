@@ -37,4 +37,19 @@ public class Profile_DaoImpl implements Profile_IDao{
 	public boolean updateAuth(String memberseq) {
 		return session.update(NS+"updateAuth", memberseq)>0?true:false;
 	}
+	@Override
+	public boolean changeNickName(NaememberDto dto) {
+		int cnt = session.update(NS+"changeNickName", dto);
+		return (cnt>0)?true:false;
+	}
+	@Override
+	public boolean changeIntro(NaememberDto dto) {
+		int cnt = session.update(NS+"changeIntro", dto);
+		return (cnt>0)?true:false;
+	}
+	@Override
+	public boolean changePhone(NaememberDto dto) {
+		int cnt = session.update(NS+"changePhone", dto);
+		return (cnt>0)?true:false;
+	}
 }

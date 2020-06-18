@@ -44,5 +44,20 @@ public class Profile_ServiceImpl implements Profile_IService{
 		log.info("Profile_ServiceImpl updateAuth:{}",memberseq);
 		return dao.updateAuth(memberseq);
 	}
+	@Override
+	public boolean changeNickName(NaememberDto dto) {
+		log.info("Profile_ServiceImpl changeNickName:{}",dto);
+		return dao.changeNickName(dto);
+	}
+	@Override
+	public boolean changeIntro(NaememberDto dto) {
+		log.info("Profile_ServiceImpl changeIntro:{}",dto);
+		return dao.changeIntro(dto);
+	}
+	@Override
+	public boolean changePhone(NaememberDto dto) {
+		log.info("Profile_ServiceImpl changePhone:{}",dto);
+		return dao.changePhone(dto);
+	}
 	
 }

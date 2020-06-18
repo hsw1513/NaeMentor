@@ -13,7 +13,7 @@ function sendSms() { // 인증번호 전송 ajax 처리
 		return false;
 	}else{
     	$.ajax({
-    		url: "./searchLoginCnt.do",
+    		url: "./sendSms.do",
     		data: "phone="+$("#phone").val(), 
     		type: "post", 
     		success: function(msg) { 

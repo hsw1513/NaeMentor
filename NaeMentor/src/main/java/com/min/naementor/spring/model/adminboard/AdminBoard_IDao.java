@@ -70,6 +70,32 @@ public interface AdminBoard_IDao {
 	public List<NaememberDto> searchApplier();
 	
 	
+	/**
+	 * 멘토신청자 거절시 FILECHK 상태 변경
+	 * @param 회원번호
+	 * @return FILECHK 변경 성공 여부(true 성공)
+	 */
+	public boolean mentorCancel(Map<String, String> map);
 	
+	/**
+	 * 멘토신청 거절시 메일 보낼 아이디 찾기
+	 * @param 회원번호
+	 * @return 거절당한 회원 아이디
+	 */
+	public String denyId(Map<String, String> map);
+	
+	/**
+	 * 신고취소시 카운트 감소
+	 * @param 신고당한 사람 회원번호
+	 * @return 카운트 감소 성공여부
+	 */
+	public boolean delSingoChk(Map<String, String> map);
+	
+	/**
+	 * 신고당한 회원의 신고당한 횟수 조회
+	 * @param 신고당한 사람 회원번호
+	 * @return 신고당한 횟수
+	 */
+	public String searchReportCnt(Map<String, String> map);
 	
 }
