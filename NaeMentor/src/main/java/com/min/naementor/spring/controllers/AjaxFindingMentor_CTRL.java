@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
@@ -14,17 +16,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.min.naementor.dtos.MatchingDto;
 import com.min.naementor.dtos.NaememberDto;
 import com.min.naementor.dtos.OfferDto;
 import com.min.naementor.dtos.ReviewDto;
+import com.min.naementor.spring.comm.AttachFile_Module;
 import com.min.naementor.spring.comm.FindingMentor_MakeArrayList;
-import com.min.naementor.spring.model.findingMentor.FindingMentor_IService;
 import com.min.naementor.spring.model.matching.Matching_IService;
 import com.min.naementor.spring.model.offer.Offer_IService;
-import com.min.naementor.spring.model.report.Report_IService;
 import com.min.naementor.spring.model.review.Review_IService;
 
 @Controller
@@ -39,6 +42,8 @@ public class AjaxFindingMentor_CTRL {
 	private Matching_IService mservice;
 	@Autowired
 	private Offer_IService oservice;
+	@Autowired
+	private AttachFile_Module module;
 	
 	// 멘토와 멘티 분기
 	@RequestMapping("/review.do")
@@ -98,4 +103,13 @@ public class AjaxFindingMentor_CTRL {
 		return obj;
 	}
 	
+	@RequestMapping(value = "/imgUpload.do",method=RequestMethod.POST)
+	@ResponseBody
+	public JSONObject imgUpload(@RequestParam MultipartFile photofile,HttpServletRequest request, HttpServletResponse resp) {
+		JSONObject obj = null;
+		log.info("{}",photofile.toString());
+		obj = module.ckImgUpload(photofile,request, resp);
+		log.info("{}",obj.toJSONString());
+		return obj;
+	}
 }

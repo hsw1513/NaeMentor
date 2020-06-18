@@ -48,8 +48,6 @@ public class FindingMentor_CTRL {
 	private FindingMentor_IService service;
 	@Autowired
 	private Matching_IService mservice;
-	@Autowired
-	private Offer_IService oservice;
 	
 	// 게시판 리스트 
 	@RequestMapping("FindingMentor_board.do")
