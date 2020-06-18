@@ -47,6 +47,8 @@ public class AjaxLogin_CTRL {
 			return map;
 		}
 		
+		
+		//닉네임 중복검사
 		@RequestMapping(value = "/nickNameCheck.do", method = RequestMethod.POST)
 		@ResponseBody
 		public Map<String, String> nickDupleChk(String nickname) {
@@ -68,12 +70,14 @@ public class AjaxLogin_CTRL {
 		@RequestMapping(value = "/searchLoginCnt.do", method = RequestMethod.POST)
 		@ResponseBody
 		public int searchLoginCnt(String email) {
-			log.info("로그인 횟수 조회*********************"+email);
 			Map<String, String> map = new HashMap<String, String>();
 			map.put("email", email);
 			int cnt = service.searchLoginCnt(map);
-			log.info("로그인 횟수는???*************"+cnt);
-			return cnt;
+			if(cnt>0) {
+				return cnt;
+			}else {
+				return 0;
+			}
 		}
 				
 				

@@ -11,6 +11,7 @@
 <body>
 	<%@include file="/WEB-INF/views/topMenu.jsp"%>
 	<div id="container">
+	<div class="usm-join-box">
 		<div class="docs-component" data-v-4a85d731 data-v-6b2cef1c>
 			<div data-name="docs-title" data-v-4a85d731>
 				<h1 class="text-center" data-v-4a85d731>이용 약관</h1>
@@ -739,6 +740,7 @@
 				</section>
 			</article>
 		</div>
+	</div>
 		<form action="./singUpGo.do" method="get" onsubmit="return yakGwangChk()">
 		<label><input id="yakgwan" type="checkbox" value="agree">약관에 동의합니다</label><br>
 		<input type="submit" value="회원가입 페이지로 이동">

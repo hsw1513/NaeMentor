@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
@@ -11,6 +13,8 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +26,7 @@ import com.min.naementor.dtos.NaememberDto;
 import com.min.naementor.dtos.ProfileDto;
 import com.min.naementor.dtos.ReportDto;
 import com.min.naementor.spring.model.adminboard.AdminBoard_IService;
+import com.min.naementor.spring.model.naemember.Naemember_IService;
 import com.min.naementor.spring.model.report.Report_IService;
 
 @Controller
@@ -34,6 +39,9 @@ public class AjaxAdminBoard_CTRL {
 	
 	@Autowired
 	private Report_IService rservice;
+	
+	@Autowired
+	private JavaMailSender mailSender;
 	
 	
 	@SuppressWarnings("unchecked")
@@ -56,7 +64,7 @@ public class AjaxAdminBoard_CTRL {
 		return json;
 	}
 	
-		
+	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/reportContent.do", method = RequestMethod.GET)
 	@ResponseBody
@@ -86,30 +94,6 @@ public class AjaxAdminBoard_CTRL {
 				jsono.put("reportC", jLists); // {"report":jLists}
 				}
 			} // 신고당한 글 조회
-		
-		else if(memberList.equalsIgnoreCase("byeMember")) {
-			List<NaememberDto> ldto = service.searchByeU();
-			for (int i = 0; i < ldto.size(); i++) {
-				JSONObject json = new JSONObject();
-				json.put("memberseq", ldto.get(i).getMemberseq());
-				json.put("email", ldto.get(i).getEmail());
-				json.put("nickname", ldto.get(i).getNickname());
-				json.put("phone", ldto.get(i).getPhone());
-				json.put("birthday", ldto.get(i).getBirthday());
-				json.put("gender", ldto.get(i).getGender());
-				json.put("auth", ldto.get(i).getAuth());
-				json.put("userstatus", ldto.get(i).getUserstatus());
-				json.put("mentortier", ldto.get(i).getMentortier());
-				json.put("reportcnt", ldto.get(i).getReportcnt());
-				json.put("joindate", ldto.get(i).getJoindate());
-				json.put("menteecnt", ldto.get(i).getMenteecnt());
-				json.put("menteeaccstar", ldto.get(i).getMenteeaccstar());
-				json.put("lastaccess", ldto.get(i).getLastaccess());
-				json.put("byebye", ldto.get(i).getByebye());
-				jLists.add(json);
-				jsono.put("bye", jLists);
-			}
-		} // 탈퇴신청 회원 조회
 		
 		else if(memberList.equalsIgnoreCase("mentorMember")) {
 			List<NaememberDto> ldto2 = service.searchApplier();
@@ -240,6 +224,56 @@ public class AjaxAdminBoard_CTRL {
 				return "false";
 			}
 		}
+		
+		// 멘토신고 거절시 filechk 상태 변경(N)
+		@RequestMapping(value = "/mentorCancel.do", method = RequestMethod.GET)
+		@ResponseBody
+		public String mentorCancel(String memberseq) {
+
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("memberseq", memberseq);
+			
+			log.info("멘토승인 거절");
+			if(service.mentorCancel(map)) {
+			
+			// 메일보내기
+			String setFrom = "hsw1513@gmail.com"; // 보낼 아이디
+			String toEmail = service.denyId(map);// 받을 아이디
+			String content = "<h2>신청하신 멘토 승급 요청이 거절되셨습니다. 자세한 사항은 1대1문의 게시판에서 질문해주새요.</h2><br><a href='http://localhost:8093/NaeMentor/Question_board.do'>내멘토 1대1 문의게시판 이동</a>"; // 받을 내용
+			String title= "Naementor 멘토 승급 실패"; // 메일제목
+			MimeMessage message = mailSender.createMimeMessage(); //메일 내용
+			
+			try {
+				MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+				messageHelper.setFrom(setFrom);
+				messageHelper.setTo(toEmail);
+				messageHelper.setSubject(title);
+				messageHelper.setText(content, true);
+				mailSender.send(message);
+				
+			} catch (MessagingException e) {
+				e.printStackTrace();
+			}
+			return "true";
+			}else {
+				return "false";
+			}
+		}
+		
+		// 신고카운트 감소
+		@RequestMapping(value = "/delSingoChk.do", method = RequestMethod.GET)
+		public String delSingoChk(String singoedmember) {
+			log.info("신고카운트 감소"+singoedmember);
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("singoedmember", singoedmember);
+			if(service.delSingoChk(map)) {
+				rservice.changeSingoChk(map);
+				return "true";
+			}else {
+				return "false";
+			}
+		}
+		
 	
 	
 }

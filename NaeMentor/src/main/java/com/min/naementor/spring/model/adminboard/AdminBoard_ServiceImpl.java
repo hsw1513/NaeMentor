@@ -65,4 +65,24 @@ public class AdminBoard_ServiceImpl implements AdminBoard_IService {
 		return dao.searchApplier();
 	}
 
+	@Override
+	public boolean mentorCancel(Map<String, String> map) {
+		return dao.mentorCancel(map);
+	}
+
+	@Override
+	public String denyId(Map<String, String> map) {
+		return dao.denyId(map);
+	}
+
+	@Override
+	public boolean delSingoChk(Map<String, String> map) {
+		return dao.delSingoChk(map);
+	}
+
+	@Override
+	public String searchReportCnt(Map<String, String> map) {
+		return dao.searchReportCnt(map);
+	}
+
 }

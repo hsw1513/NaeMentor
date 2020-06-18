@@ -41,4 +41,26 @@ public interface Profile_IDao {
 	 * @return
 	 */
 	public boolean updateAuth(String memberseq);
+	
+	/**
+	 * 프로필 정보 수정(닉네임)
+	 * @param memberseq, nickname
+	 * @return
+	 */
+	public boolean changeNickName(NaememberDto dto);
+	
+	/**
+	 * 프로필 정보 수정(자기소개)
+	 * @param memberseq, introduce
+	 * @return
+	 */
+	public boolean changeIntro(NaememberDto dto);
+	
+	/**
+	 * 프로필 정보 수정(휴대폰 번호)
+	 * @param memberseq, phone
+	 * @return
+	 */
+	public boolean changePhone(NaememberDto dto);
+	
 }

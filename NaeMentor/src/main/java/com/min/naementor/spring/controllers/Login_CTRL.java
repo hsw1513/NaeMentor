@@ -1,5 +1,7 @@
 package com.min.naementor.spring.controllers;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,6 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.min.naementor.dtos.NaememberDto;
 import com.min.naementor.dtos.ProfileDto;
 import com.min.naementor.spring.comm.AttachFile_Module;
+import com.min.naementor.spring.comm.ProfileImg;
 import com.min.naementor.spring.model.capcha.Capcha_IService;
 import com.min.naementor.spring.model.naemember.Naemember_IService;
 
@@ -68,7 +71,6 @@ public class Login_CTRL {
 		JSONObject jsonobj = (JSONObject) obj;
 
 		key = (String) jsonobj.get("key");
-		System.out.println(key+"------------------------------------");
 		if(key != null) {
 			model.addAttribute("key",key);
 		}
@@ -79,7 +81,6 @@ public class Login_CTRL {
 	@RequestMapping(value = "/valchk.do", method = RequestMethod.GET)
 	@ResponseBody
 	public boolean chk(Model model, String chk, String key) {
-		log.info("****값을 확인해보자! chk"+chk+"이고요 키는"+key);
 		String attach = "1&key="+key+"&value="+chk;
 		String result = valchk.get(attach);
 		System.out.println("일치여부"+result);
@@ -121,9 +122,12 @@ public class Login_CTRL {
 
 	// 프로필 입력 후 로그인페이지로 이동
 	@RequestMapping(value = "/proFile.do", method = RequestMethod.POST)
-	public String insertProfile(ProfileDto dto, Model model, String email, 
+	public String insertProfile(ProfileDto dto, Model model, String email,@RequestParam(value = "filename") MultipartFile filename,
 			HttpServletRequest request, HttpServletResponse resp) {
 		log.info("회원가입 프로필 입력 insertProfile: ,{}", dto);
+		String saveFileName = ProfileImg.saveFile(filename);
+		dto.setPhoto(saveFileName);
+		log.info(saveFileName+"저장되는 파일명*****");
 		service.insertProFile(dto);
 		return "Naemember/loginPage";
 	}
@@ -141,11 +145,10 @@ public class Login_CTRL {
 	@RequestMapping(value = "/logingo.do", method = {RequestMethod.POST,RequestMethod.GET})
 	public String login(@RequestParam(value = "error", required = false) String error,
 			@RequestParam(value = "logout", required = false) String logout, Model model,
-			HttpServletRequest request, HttpServletResponse response) {
+			HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 		if (error != null) { // 로그인 실패시 로그인 카운트 증가
 			String email = request.getParameter("email");
-			log.info("%%%%%%실패 들어옴?"+email);
 			Map<String, String> map = new HashMap<String, String>();
 			map.put("email", email);
 			service.loginCount(map); // 로그인 카운트 증가
@@ -176,7 +179,6 @@ public class Login_CTRL {
 
 		if(user != null) {
 			UserDetails userdto = (UserDetails) user.getPrincipal();
-			log.info("%%%%%%들어옴?");
 			// 로그인 시도 초기화
 			Map<String, String> map = new HashMap<String, String>();
 			map.put("email", userdto.getUsername());

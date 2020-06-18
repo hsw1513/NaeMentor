@@ -31,17 +31,29 @@
 <update id="addReportCnt" parameterType="java.util.Map">
 	UPDATE NAEMEMBER 
 		SET REPORTCNT = REPORTCNT +1
-			WHERE MEMBERSEQ = (SELECT MEMBERSEQ
-								FROM NAEMEMBER n , REPORT r
-									WHERE n.MEMBERSEQ = r.SINGOEDMEMBER
-										AND r.SINGOEDMEMBER = #{singoedmember})
+			WHERE MEMBERSEQ = #{singoedmember}
 </update>
+
+
+<!-- 신고당한 회원의 신고당한 횟수 조회 -->
+<select id="searchReportCnt" parameterType="java.util.Map">
+	SELECT REPORTCNT
+		FROM NAEMEMBER
+			WHERE MEMBERSEQ = #{singoedmember}
+</select>
 
 <!-- 신고당한 회원 카운트 증가시 신고체크 초기화(Y로)  -->
 <update id="changeSingoChk" parameterType="java.util.Map">
 	UPDATE REPORT 
 		SET SINGOCHK = 'Y'
 			WHERE SINGOEDMEMBER = #{singoedmember}
+</update>
+
+<!-- 신고당한 회원 확인후 신고 취소시 카운트 감소 -->
+<update id="delSingoChk" parameterType="java.util.Map">
+	UPDATE NAEMEMBER
+		SET REPORTCNT = REPORTCNT -1
+			WHERE MEMBERSEQ = #{singoedmember}
 </update>
 
 <!-- 페이징은 나중에... -->

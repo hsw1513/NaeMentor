@@ -68,15 +68,16 @@ public class Notification_CTRL {
 	
 	@RequestMapping(value="NotiWrite.do", method = RequestMethod.POST)
 	public String notiWrite(NotiQuestionDto dto, HttpSession session, @RequestParam("file") List<MultipartFile> files, HttpServletRequest request, HttpServletResponse resp) {
-		log.info("notiboard notiWrite:\t {}", dto);
+		log.info("&&&&&notiboard notiWrite:\t {}{}", dto, files);
 		
 		NaememberDto nDto = ((NaememberDto)session.getAttribute("userinfo"));
 		module.setMemberseq(nDto.getMemberseq());
+		dto.setMemberseq(nDto.getMemberseq());
 		
 		service.insertNoti(dto);
-		if(files.size()>0) {
 			List<AttachFileDto> lists = module.attachFile(files, request, resp);
 			for (AttachFileDto attachFileDto : lists) {
+				if(!attachFileDto.getFilesize().equals("0")) {
 				service.insertFile(attachFileDto);
 			}
 		}
