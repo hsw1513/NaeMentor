@@ -14,6 +14,10 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,8 +35,8 @@ public class AttachFile_Module {
 	// 이미지 미리보기
 	@SuppressWarnings("unchecked")
 	public JSONObject ckImgUpload(MultipartFile upload, HttpServletRequest request, HttpServletResponse resp) {
-		String url = request.getContextPath()+"/img/";
-		String rootPath = request.getRealPath("/img");
+		String url = request.getContextPath()+"/resource/profileImg/";
+		String rootPath = request.getRealPath("/resource/profileImg");
 		System.out.println(rootPath);
 		File file = new File(rootPath);
 		String fileName = "";
@@ -53,6 +57,52 @@ public class AttachFile_Module {
 			obj.put("url", url+fileName);
 			obj.put("fileName", fileName);
 		return obj;	
+	}
+	@SuppressWarnings("unchecked")
+	public JSONObject ckImgUpload2(HttpServletRequest request, HttpServletResponse resp) {
+		String url = request.getContextPath()+"/resource/profileImg/";
+		String rootPath = request.getRealPath("/resource/profileImg");
+		String CHARSET="UTF-8";
+		int SIZE_FILES_BYTES= 1024*1024;
+		JSONObject obj = new JSONObject();
+		
+		File fileDir = new File("C:\\attaches");
+		if(fileDir.exists()) {
+			fileDir.mkdir();
+		}
+		
+		DiskFileItemFactory fileItemFactory = 
+				new DiskFileItemFactory(SIZE_FILES_BYTES, fileDir);
+		fileItemFactory.setDefaultCharset(CHARSET);
+		ServletFileUpload fileUpload = new ServletFileUpload(fileItemFactory);
+		
+		try {
+			List<FileItem> lists = fileUpload.parseRequest(request);
+			for (FileItem fileItem : lists) {
+				if(fileItem.isFormField()) {
+					System.out.println(fileItem);
+				}else {
+					String fileName = fileItem.getName();
+					String size = String.valueOf(fileItem.getSize());
+					if(fileItem.getSize()>0) {
+						String seperator = "";
+						seperator = File.separator;
+					File uploadfile = new File(rootPath+seperator+fileName);
+					obj.put("uploaded", 1);
+					obj.put("url", url+fileName);
+					obj.put("fileName", fileName);
+						try {
+							fileItem.write(uploadfile);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+		} catch (FileUploadException e) {
+			e.printStackTrace();
+		}
+		return obj;
 	}
 
 	public List<AttachFileDto> attachFile(List<MultipartFile> files, HttpServletRequest request, HttpServletResponse resp) {

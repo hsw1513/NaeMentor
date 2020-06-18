@@ -1,6 +1,7 @@
 package com.min.naementor.spring.model.offer;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +16,7 @@ public class Offer_ServiceImpl implements Offer_IService{
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	private Offer_IDao dao;
-	
+
 	@Override
 	public boolean insertOffer(OfferDto dto) {
 		log.info("Offer_ServiceImpl insertOffer {}",dto);
@@ -23,9 +24,15 @@ public class Offer_ServiceImpl implements Offer_IService{
 	}
 
 	@Override
-	public List<OfferDto> viewOffer(String boardseq) {
-		log.info("Offer_ServiceImpl viewOffer {}",boardseq);
-		return dao.viewOffer(boardseq);
+	public OfferDto viewOffer(Map<String, String> map) {
+		log.info("Offer_ServiceImpl viewOffer {}",map);
+		return dao.viewOffer(map);
+	}
+
+	@Override
+	public boolean chkOffer(Map<String, String> map) {
+		log.info("Offer_ServiceImpl chkOffer {}",map);
+		return dao.chkOffer(map);
 	}
 
 }
