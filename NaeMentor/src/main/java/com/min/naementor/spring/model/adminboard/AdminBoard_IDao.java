@@ -30,11 +30,18 @@ public interface AdminBoard_IDao {
 	public List<FindingMentorDto> SearchRC();
 	
 	/**
+	 * 신고게시글 자동 삭제(deleteReportAuto)
+	 * @param 신고당한 횟수
+	 * @return 게시글 삭제 성공여부(true: 삭제)
+	 */
+	public boolean deleteReportAuto();
+	
+	/**
 	 * 신고게시글 삭제(deleteReport)
 	 * @param 신고당한 횟수
 	 * @return 게시글 삭제 성공여부(true: 삭제)
 	 */
-	public boolean deleteReport();
+	public boolean deleteReport(Map<String, String> map);
 	
 	/**
 	 * 탈퇴신청 회원 조회(searchByeU)
@@ -97,5 +104,20 @@ public interface AdminBoard_IDao {
 	 * @return 신고당한 횟수
 	 */
 	public String searchReportCnt(Map<String, String> map);
+	
+	/**
+	 * 멘트 승급 회원의 티어 상승(N->B)
+	 * @param 회원번호
+	 * @return 티어 상승 성공여부
+	 */
+	public boolean tierPromotion(Map<String, String> map);
+	
+	/**
+	 * 개인회원 기본 정보 조회
+	 * @param 회원번호
+	 * @return 회원하나의 기본정보
+	 */
+	public NaememberDto personalInfo(Map<String, String> map);
+
 	
 }

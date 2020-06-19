@@ -9,10 +9,18 @@
 			TO_CHAR(JOINDATE, 'YYYY-MM-DD') AS JOINDATE , MENTEECNT, 
 			MENTEEACCSTAR, TO_CHAR(LASTACCESS, 'YYYY-MM-DD') AS LASTACCESS, BYEBYE 
 				FROM NAEMEMBER
-				<if test="auth != admin">
-					WHERE AUTH = #{auth}
-				</if>
+					WHERE AUTH != 'ROLE_A'
 					ORDER BY AUTH
+	 </select>
+	 
+	 <!-- 회원정보조회(기본) -->
+	<select id="personalInfo" parameterType="java.util.Map" resultType="NMDto">
+		SELECT MEMBERSEQ, EMAIL , NICKNAME , PHONE , BIRTHDAY , 
+			GENDER , AUTH , USERSTATUS ,MENTORTIER, REPORTCNT ,
+			TO_CHAR(JOINDATE, 'YYYY-MM-DD') AS JOINDATE , MENTEECNT, 
+			MENTEEACCSTAR, TO_CHAR(LASTACCESS, 'YYYY-MM-DD') AS LASTACCESS, BYEBYE 
+				FROM NAEMEMBER
+					WHERE MEMBERSEQ = #{memberseq}
 	 </select>
 	
 	<!-- 회원정보조회(상세) -->
@@ -32,10 +40,16 @@
 	</select>
 	
 	<!-- 신고게시글 삭제 -->
-	<update id="deleteReport">
+	<update id="deleteReportAuto">
 	 	UPDATE FINDINGMENTOR 
  			SET DELFLAG = 'Y'
  				WHERE REPORTCNT > '4'
+	</update>
+	
+	<update id="deleteReport" parameterType="java.util.Map">
+		UPDATE FINDINGMENTOR 
+ 			SET DELFLAG = 'Y'
+ 				WHERE BOARDSEQ = #{boardseq}
 	</update>
 	
 	<!-- 탈퇴신청 회원 조회 -->
@@ -59,6 +73,13 @@
  		UPDATE NAEMEMBER 
  			SET AUTH = 'ROLE_R'
  				WHERE MEMBERSEQ =#{memberseq}
+	</update>
+	
+	<!-- 멘토 승급시 멘토 티어를 B로 승급 -->
+	<update id="tierPromotion" parameterType="java.util.Map">
+		UPDATE NAEMEMBER
+			SET MENTORTIER = 'B'
+				WHERE MEMBERSEQ = #{memberseq}
 	</update>
 	
 	<!-- 멘토승급 취소시 FILECHK를 다시 변경  -->

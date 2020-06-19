@@ -7,6 +7,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.min.naementor.spring.model.adminboard.AdminBoard_IService;
+import com.min.naementor.spring.model.findingMentor.FindingMentor_IService;
 import com.min.naementor.spring.model.naemember.Naemember_IService;
 import com.min.naementor.spring.model.report.Report_IService;
 
@@ -23,6 +24,9 @@ public class Naemember_Scheduler {
 	@Autowired
 	private Report_IService rservice;
 	
+	@Autowired
+	private FindingMentor_IService fservice;
+	
 	// 탈퇴신청 회원 자동 삭제
 //	@Scheduled(cron = "0/5 * * * * *")
 	public void deleteMember() {
@@ -32,7 +36,7 @@ public class Naemember_Scheduler {
 	// 게시판 신고 5회 이상 글 자동 삭제
 //	@Scheduled(cron = "0/5 * * * * *")
 	public void deleteContent() {
-		service.deleteReport();
+		service.deleteReportAuto();
 	}
 	
 	// 경고카운트 3회 이상 회원 자동으로 자격 정지
@@ -53,5 +57,16 @@ public class Naemember_Scheduler {
 		nservice.wakeUpStop();
 	}
 	
+	// 매칭 안될 글 이틀 후 삭제
+//	@Scheduled(cron = "0/5 * * * * *")
+	public void deleteNoMatching() {
+		fservice.deleteNoMatching();
+	}
+	
+	// 멘토링 완료 후 삼일 뒤 글 삭제
+//	@Scheduled(cron = "0/5 * * * * *")
+	public void deleteCompleteMatching() {
+		fservice.deleteCompleteMatching();
+	}
 	
 }

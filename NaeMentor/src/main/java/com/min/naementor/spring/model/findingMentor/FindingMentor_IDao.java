@@ -137,4 +137,17 @@ public interface FindingMentor_IDao {
 	 * @return boolean(true:삭제 성공)
 	 */
 	public boolean updateNoMatching(String boardseq);
+	
+	/**
+	 * 매칭 안된 글 이틀 후 지우기
+	 * @return 삭제 성공 여부
+	 */
+	public boolean deleteNoMatching();
+	
+	/**
+	 * 멘토링 날짜 후 3일이 지난 글 삭제
+	 * @return 삭제 성공 여부
+	 */
+	public boolean deleteCompleteMatching();
+
 }

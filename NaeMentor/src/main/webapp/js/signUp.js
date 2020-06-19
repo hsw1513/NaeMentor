@@ -1,6 +1,7 @@
 var emailchk= false;
 var smschk = false;
 function check(){
+	var email = document.getElementById("email").value;
 	var password = document.getElementById("password").value;
 	var passOk = document.getElementById("passOk").value;
 	var nickname = document.getElementById("nickname").value;
@@ -17,7 +18,10 @@ function check(){
 	// 비밀번호 정규화 표현식, 숫자, 특수문자 각 1회 이상, 영문은 2개 이상 사용하여 8자리 이상 입력
 	var regExpBirthday = /^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/; // 생년월일 정규식(19930113)
 	
-	if(!regExpPw.test(password)){
+	if(email == ""){
+		swal("회원가입 오류", "아이디를 입력해주세요");
+		return false;
+	}else if(!regExpPw.test(password)){
 		swal("회원가입 오류", "비밀번호는 숫자, 특수문자 1회 이상, 영문은 2개 이상 사용하여 8자리 이상 입력하여야합니다.")
 		return false;
 	}else if(password != passOk){
