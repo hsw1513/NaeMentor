@@ -34,11 +34,15 @@ import com.min.naementor.dtos.FindingMentorDto;
 import com.min.naementor.dtos.MatchingDto;
 import com.min.naementor.dtos.NaememberDto;
 import com.min.naementor.dtos.OfferDto;
+import com.min.naementor.dtos.ReviewDto;
 import com.min.naementor.spring.comm.AttachFile_Module;
+import com.min.naementor.spring.comm.FindingMentor_MakeArrayList;
 import com.min.naementor.spring.comm.SplitUserComm;
 import com.min.naementor.spring.model.findingMentor.FindingMentor_IService;
 import com.min.naementor.spring.model.matching.Matching_IService;
 import com.min.naementor.spring.model.offer.Offer_IService;
+import com.min.naementor.spring.model.profile.Profile_IService;
+import com.min.naementor.spring.model.review.Review_IService;
 
 @Controller
 public class FindingMentor_CTRL {
@@ -48,6 +52,14 @@ public class FindingMentor_CTRL {
 	private FindingMentor_IService service;
 	@Autowired
 	private Matching_IService mservice;
+	@Autowired
+	private Profile_IService pservice;
+	@Autowired
+	private Offer_IService oservice;
+	@Autowired
+	private Review_IService rservice;
+	@Autowired
+	private FindingMentor_MakeArrayList makearray;
 	
 	// 게시판 리스트 
 	@RequestMapping("FindingMentor_board.do")
@@ -76,25 +88,54 @@ public class FindingMentor_CTRL {
 		String[] _memberseq = null;
 		List<NaememberDto> lists = null;
 		Map<String, String[]> map2 = new HashMap<String, String[]>();
-		// 게시물 조회
+		
+		// ------------------매칭되지 않은 게시글------------------------------
+		// 1. 게시물 조회
 		FindingMentorDto dto = service.detailContent(map);
+		model.addAttribute("detail", dto);
+		
+		// 2. 권한별 정보 조회
 		if(ndto.getAuth().equalsIgnoreCase("ROLE_E")) {
 		// 멘토 지원자 조회
-		_memberseq = comm.splitId(dto.getMentorlist());
-		map2.put("_memberseq", _memberseq);
+			_memberseq = comm.splitId(dto.getMentorlist());
+			map2.put("_memberseq", _memberseq);
 		// 멘티 정보 조회
 		}else {
-		_memberseq = new String[1];
-		_memberseq[0] = ndto.getMemberseq();
+			_memberseq = new String[1];
+			_memberseq[0] = ndto.getMemberseq();
 		map2.put("_memberseq", _memberseq);
 		}
-		// 매칭 정보 확인
-		MatchingDto mdto = mservice.chkMatching(boardseq);
+		// 지원 멘토의 정보
 		lists = service.chkUser(map2);
-		
 		model.addAttribute("findMentor", lists);
-		model.addAttribute("detail", dto);
+		
+		// ----------------------------매칭된 게시글 정보 확인 -----------------------------------------------------
+		MatchingDto mdto = mservice.chkMatching(boardseq);
+		List<ReviewDto> rlists = null;
+		
+		if(mdto != null) {
 		model.addAttribute("matching", mdto);
+		// 멘티의 관점에서 확인할 정보(멘토의 프로필, 오퍼 정보, 후기)
+		if(ndto.getAuth().equals("ROLE_E")) {
+			NaememberDto mentordto = pservice.encLogin(mdto.getMentorseq());
+		model.addAttribute("mentorInfo",mentordto);
+		
+			Map<String,String> omap = new HashMap<String, String>();
+			omap.put("boardseq", mdto.getBoardseq());
+			omap.put("memberseq", mdto.getMentorseq());
+			OfferDto offer = oservice.viewOffer(omap);
+		model.addAttribute("offer", offer);
+			
+		rlists = rservice.searchMStar(mdto.getMentorseq());
+			// 멘토의 관점에서 확인할 정보(멘티의 프로필, 후기)
+		}else if(ndto.getAuth().equals("ROLE_R")) {
+				NaememberDto menteedto = pservice.encLogin(mdto.getMenteeseq());
+			model.addAttribute("menteeInfo",menteedto);
+			rlists = rservice.denyMSearch(mdto.getMenteeseq());
+		}
+		
+		model.addAttribute("rlists", makearray.convertReviewList2(rlists));
+		}
 		return "FindingMentor/detailContent";
 	}
 	
