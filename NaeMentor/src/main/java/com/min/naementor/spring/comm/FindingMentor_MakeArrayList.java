@@ -31,8 +31,6 @@ public class FindingMentor_MakeArrayList {
 				memseq = "<td>"+dto.getMentorstar()+"</td>";
 				btn = "<br><button onclick='selMentor(${"+dto.getMatchingdto().getMentorseq()+"})'>멘토선택</button>";
 			}
-			
-			
 			review = review +content +wirtedate+memseq+btn+"</tr>";
 			list.add(review);
 		}
