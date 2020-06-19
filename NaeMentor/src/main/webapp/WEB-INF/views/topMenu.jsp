@@ -13,33 +13,36 @@
 	<nav class="navbar navbar-inverse">
   <div class="container-fluid" style="height: 100px;">
     <div class="navbar-header">
-      <a class="navbar-brand" href="./result.do">
+      <a class="navbar-brand" href="./FindingMentor_board.do">
       	<img alt="logo" src="./img/naementor.png" style="width:auto; height: 50px;">
       </a>
     </div>
     <ul class="nav navbar-nav">
-    		<li><a href="./FindingMentor_board.do">FindgingMentor보드로 이동</a></li>
-    		<li><a href="./Notification_board.do">공지사항</a></li>
-    		<li><a href="./Question_board.do">1:1 문의</a></li>
-    		<li><a href="./Profile.do">나의 프로필 관리</a></li>
     	<c:if test="${fn:trim(userinfo.auth) eq 'ROLE_A'}">
     		<li><a href="./adminBoard.do">관리자페이지</a></li>
     	</c:if>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li>
-     	 <a href="./userInfo.do">
-      		<span class="glyphicon glyphicon-user">${userinfo.nickname}님, 환영합니다.</span> 
-      		<c:if test="${userinfo.auth eq 'ROLE_E'}">(멘티)</c:if>
-      		<c:if test="${userinfo.auth eq 'ROLE_R'}">(멘토)</c:if>
-      		<c:if test="${userinfo.auth eq 'ROLE_A'}">(관리자)</c:if>
+     	 <a href="./Profile.do">
+      		<span class="glyphicon glyphicon-user">
+      		<c:if test="${userinfo.auth eq 'ROLE_E'}">멘티_</c:if>
+      		<c:if test="${userinfo.auth eq 'ROLE_R'}">멘토_</c:if>
+      		<c:if test="${userinfo.auth eq 'ROLE_A'}">관리자_</c:if>${userinfo.nickname}님, 환영합니다.</span> 
+      		
       	</a>
      </li>
       <li>
-      	<a href="./logoutgo.do?email=${userinfo.email}">
-      		<span class="glyphicon glyphicon-log-out">로그아웃</span> 
+      	<a href="./Question_board.do">
+      		<span class="glyphicon 	glyphicon glyphicon-question-sign">&nbsp;1:1 문의</span> 
       	</a>
       </li>
+      <li>
+      	<a href="./logoutgo.do?email=${userinfo.email}">
+      		<span class="glyphicon glyphicon-log-out">&nbsp;로그아웃</span> 
+      	</a>
+      </li>
+      
     </ul>
   </div>
 </nav>
