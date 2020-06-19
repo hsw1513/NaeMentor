@@ -212,7 +212,7 @@ var xhr = null;
 	
 	<!-- 오른쪽 영역 시작--------------------------------------------------------------------------- -->
 	<div class="rightDiv">
-	<c:if test="${userinfo.auth eq 'ROLE_E'}">
+	<c:if test="${userinfo.auth eq 'ROLE_R' && detail.delflag eq 'N'}">
 	<div class="reviews">
 	<%@include file="/WEB-INF/views/FindingMentor/ajaxReview.jsp"%>
 	</div>
@@ -289,12 +289,75 @@ var xhr = null;
 	</c:if>
 	</c:if>
 	
+	<!-- 매칭이 된 글 ---------------------------------------------------------------------------------------------------------------->
+	<c:if test="${detail.delflag eq 'M'}">
+	<h1>매칭된 글</h1>
+	<!-- 멘티의 관점 -->
+	<c:if test="${userinfo.auth eq 'ROLE_E' && userinfo.memberseq eq matching.menteeseq}">
+	<b>매칭된 멘토</b>
+	<table class="table table-bordered">
+	<thead>
+	<tr>
+		<th>멘토 닉네임</th>
+		<th>멘토링 횟수</th>
+		<th>누적 별점</th>
+		<th>금액</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>${mentorInfo.nickname}</td>
+		<td>${mentorInfo.profiledto.mentorcnt}</td>
+		<td>${mentorInfo.profiledto.mentoaccstar}</td>
+		<td>${offer.price}</td>
+	</tr>
+	<tr>
+		<td>신청사유</td>
+		<td colspan="3">${offer.content}</td>
+	</tr>
+	<tr>
+		<td colspan="4">멘토의 후기 보기</td>
+	</tr>
+	</tbody>
+	</table>
+	<div>${rlists}</div>
 	
 	
-	<!-- 멘토링이 종료된 글 // 후기게시판으로 이동(후기 남기기로 변경) -->
+	</c:if>
+	<!-- 멘토의 관점 -->
+	<c:if test="${userinfo.auth eq 'ROLE_R' && userinfo.memberseq eq matching.mentorseq}">
+	<table class="table table-bordered">
+	<thead>
+	<tr>
+		<th>멘토 닉네임</th>
+		<th>멘토링 횟수</th>
+		<th>누적 별점</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>${menteeInfo.nickname}</td>
+		<td>${menteeInfo.menteecnt}</td>
+		<td>${menteeInfo.menteeaccstar}</td>
+	</tr>
+	<tr>
+		<td colspan="4">멘티의 후기 보기</td>
+	</tr>
+	</tbody>
+	</table>
+	<div>${rlists}</div>
+	
+	</c:if>
+	
+	</c:if>
+	
+	
+	
+	
+	<!-- 멘토링이 종료된 글 // 후기게시판으로 이동(후기 남기기로 변경) ----------------------------------------------------->
 	<c:if test="${detail.matchingchk eq 'Y'}">
 	<c:if test="${userinfo.memberseq eq matching.menteeseq || userinfo.memberseq eq matching.mentorseq}">
-	<c:if test="${detail.delflag eq 'M'}"><!-- 테스트 이후 C로 변경 -->
+	<c:if test="${detail.delflag eq 'C'}">
 	<div>
 		<h1><a href="./reviewBoard.do?boardseq=${detail.boardseq}">후기게시판 이동</a></h1>
 	</div>

@@ -41,6 +41,11 @@
 	<logger name="org.springframework.web">
 		<level value="debug" />
 	</logger>
+
+	<logger name="org.springframework.security">
+		<level value="trace" />
+	</logger>
+	
 	
 	<!-- myBatis SQL log -->
 	<logger name="org.mybatis"> 
