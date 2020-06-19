@@ -13,31 +13,34 @@
 	<div id="container">
 		 <h2>1:1 문의</h2>
   		<p>궁금하신 사항이 있으시면 글을 작성해 주세요. 관리자가 답변해 드립니다.</p>  
-		<div>
-		<input type="button" class="myButton" value="문의 글쓰기" onclick ="questBoardWrite()">
+		<div style="text-align:center;">
+		<input type="button" class="myButton" style="padding:6px 40%;" value="문의 글쓰기" onclick ="questBoardWrite()">
 		</div>
-		<div>
+		<div style="margin-top: 30px;">
 			<table class="table table-hover">
 				<c:forEach var="dto" items="${lists}">
 				<c:if test="${dto.delflag=='N'}">
 						<tr>
-						<td>
-						<c:if test="${dto.namemberdto.memberseq==userinfo.memberseq}">
+						</tr>
+						<c:choose>
+						<c:when test="${dto.namemberdto.memberseq==userinfo.memberseq}">
+							<tr>
+								<th>제목</th>	<td>${dto.title}</td><th>작성일</th><td>${dto.writedate}</td>
+							</tr>
+							<tr>
+								<th>내용</th>	<td>${dto.content}</td>
+								<th colspan="2" style="text-align: center;">
+								<c:if test="${dto.namemberdto.memberseq==userinfo.memberseq}">
 							<input type="button" class="myButton" name="btn" onclick="quesdel(${dto.adminseq})" value="삭제" >
 							<input type="button" class="myButton" name="btn" onclick="quesmod(${dto.adminseq})" value="수정">
 						</c:if>
-						</td>
-						</tr>
-						<tr>
-						<th>제목</th>	<td>${dto.title}</td>
-						</tr>
-						<tr>
-						<th>작성일</th><td>${dto.writedate}</td>
-						</tr>
-						<tr>
-						<th>내용</th><td>${dto.content}</td>
-						</tr>
-						
+								</th>
+							</tr>
+						</c:when>
+						<c:otherwise>
+								<th>┗ 답변</th>	<td>${dto.content}</td><th>작성일</th><td>${dto.writedate}</td>
+						</c:otherwise>
+						</c:choose>
 						</c:if>
 					</c:forEach>
 			</table>

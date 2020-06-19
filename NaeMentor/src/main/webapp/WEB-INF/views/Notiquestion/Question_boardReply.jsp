@@ -32,9 +32,9 @@
 			<tr>
 				<th>내용</th>
 				<td>
-				<textarea style="color: gray;" id="editor" rows="20" cols="40" name="content">
-				문의글: ${dto.content}
-				========================================================<br></textarea></td>
+				<input type="hidden" id="hidecontent" value="${dto.content}">
+				<textarea style="color: gray;" id="editor" rows="20" cols="40" name="content" required="required">
+				</textarea></td>
 			</tr>
 		</table>
 			<div style="text-align: center; margin-top: 20px;">

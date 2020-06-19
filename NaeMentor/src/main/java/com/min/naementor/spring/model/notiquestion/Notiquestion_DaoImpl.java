@@ -31,6 +31,18 @@ public class Notiquestion_DaoImpl implements Notiquestion_IDao {
 
 	@Override
 	public int insertNoti(NotiQuestionDto dto) {
+		String title = dto.getTitle();
+		String content = dto.getContent();
+		if(title.indexOf("<script>")!=-1) {
+			title = title.replaceAll("script>", "script&gt;");
+			title = title.replaceAll("</script>", "</script&gt;");
+			dto.setTitle(title);
+		}
+		if(content.indexOf("<script>")!=-1) {
+			content = content.replaceAll("<script>", "<script&gt;");
+			content = content.replaceAll("</script>", "</script&gt;");
+			dto.setContent(content);
+		}
 		int n = sqlSession.insert(NS+"insertNoti", dto);
 		return n;
 	}
@@ -80,6 +92,18 @@ public class Notiquestion_DaoImpl implements Notiquestion_IDao {
 
 	@Override
 	public int insertOneToOne(NotiQuestionDto dto) {
+		String title = dto.getTitle();
+		String content = dto.getContent();
+		if(title.indexOf("<script>")!=-1) {
+			title = title.replaceAll("script>", "script&gt;");
+			title = title.replaceAll("</script>", "</script&gt;");
+			dto.setTitle(title);
+		}
+		if(content.indexOf("<script>")!=-1) {
+			content = content.replaceAll("script>", "script&gt;");
+			content = content.replaceAll("</script>", "</script&gt;");
+			dto.setContent(content);
+		}
 		int n = sqlSession.insert(NS+"insertOneToOne", dto);
 		return n;
 	}
@@ -98,6 +122,11 @@ public class Notiquestion_DaoImpl implements Notiquestion_IDao {
 
 	@Override
 	public int insertReply(NotiQuestionDto dto) {
+		String content = dto.getContent();
+		if(content.indexOf("<script>")!=-1) {
+			content.replaceAll("<script>", "&lt;script>");
+			dto.setContent(content);
+		}
 		int n = sqlSession.insert(NS+"insertReply", dto);
 		return n;
 	}
