@@ -56,8 +56,12 @@
 			WHERE MEMBERSEQ = #{singoedmember}
 </update>
 
-<!-- 페이징은 나중에... -->
-<!-- multiDel도 나중에.. -->
+<!-- 신고당한 횟수 3회 이상 정지 -->
+<update id="stopSingoedMember">
+	UPDATE NAEMEMBER
+		SET USERSTATUS = 'S'
+			WHERE REPORTCNT >= '3'
+</update>
 
 
 <!-- 회원신고(1.이미 신고한 회원인가 체크): 구현우 -->

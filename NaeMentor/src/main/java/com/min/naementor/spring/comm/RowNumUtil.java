@@ -11,8 +11,8 @@ public class RowNumUtil {
 	{
 		pageList = 5;
 		index = 0;
-		pageNum=1;
-		listNum=5;
+		pageNum = 1;
+		listNum = 10;
 	}
 	
 	public RowNumUtil() {

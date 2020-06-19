@@ -116,6 +116,18 @@ public class Naemember_DaoImpl implements Naemember_IDao {
 		return cnt;
 	}
 
+	@Override
+	public boolean goToBed() {
+		int cnt = sqlSession.update(NS+"goToBed");
+		return (cnt>0)?true:false;
+	}
+
+	@Override
+	public boolean wakeUpStop() {
+		int cnt = sqlSession.update(NS+"wakeUpStrop");
+		return (cnt>0)?true:false;
+	}
+
 	
 
 }

@@ -22,6 +22,12 @@ public interface Report_IDao {
 	public boolean addReportCnt(Map<String, String> map);
 	
 	/**
+	 * 3회이상 경고 누적된 회원 자격 정지
+	 * @return 회원번호
+	 */
+	public boolean stopSingoedMember();
+	
+	/**
 	 * 신고당한 회원 카운트 증가시 신고체크 초기화(Y로)
 	 * @param 회원번호
 	 * @return 초기화 성공여부

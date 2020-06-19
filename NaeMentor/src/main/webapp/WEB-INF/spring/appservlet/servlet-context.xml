@@ -5,15 +5,18 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 
 	<!-- Component 객체를 bean으로 찾아서 등록해주는 ns -->
-	<context:component-scan
-		base-package="com.min.naementor.spring" />
+	<context:component-scan	base-package="com.min.naementor.spring" />
+	<!-- 스케줄러가 실행될 컨트롤러가 속한 패키지를 component-scan 처리함 -->
+	<task:annotation-driven/>
 	<!-- mvc 흐름을 통한 bean 작동 -->
 	<mvc:annotation-driven />
 	<!-- 화면을 이동시켜주는 객체 -->

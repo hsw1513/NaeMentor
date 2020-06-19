@@ -94,6 +94,19 @@ public interface Naemember_IService {
 	public boolean wakeUp(String memberseq);
 	
 	/**
+	 * 6개월 접속 안한 계정 자동으로 휴면회원으로 전환
+	 * @return 휴면회원 전환 성공여부
+	 */
+	public boolean goToBed();
+	
+	/**
+	 * 정지회원 한달 뒤 이용 가능하게 자동 전환
+	 * @return 전환 성공 여부
+	 */
+	public boolean wakeUpStop();
+
+	
+	/**
 	 * 아이디 찾기
 	 * @param 휴대전화 번호(phone), 생년월일(birthday)
 	 * @return 아이디 정보(email)

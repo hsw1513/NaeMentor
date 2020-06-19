@@ -40,8 +40,8 @@ public class AdminBoard_DaoImpl implements AdminBoard_IDao {
 
 	// 신고게시글 삭제
 	@Override
-	public boolean deleteReport(Map<String, String> map) {
-		int cnt = sqlSession.delete(NS+"deleteReport", map);
+	public boolean deleteReport() {
+		int cnt = sqlSession.delete(NS+"deleteReport");
 		return (cnt>0)?true:false;
 	}
 
@@ -53,8 +53,8 @@ public class AdminBoard_DaoImpl implements AdminBoard_IDao {
 	
 	// 회원 계정 상태 변경
 	@Override
-	public boolean changeStatus(Map<String, String> map) {
-		int cnt = sqlSession.update(NS+"changeStatus", map);
+	public boolean changeStatusBye() {
+		int cnt = sqlSession.update(NS+"changeStatusBye");
 		return (cnt>0)?true:false;
 	}
 
