@@ -60,6 +60,7 @@ public class FindingMentor_CTRL {
 		}else {
 			map.put("mentorseq", dto.getMemberseq());
 		}
+		model.addAttribute("complete_lists", service.chkComplete(map));
 		model.addAttribute("matching_lists", service.chkMatching(map));
 		model.addAttribute("complete_lists", service.chkComplete(map));
 		return "FindingMentor/FindingMentor_board";
@@ -89,8 +90,8 @@ public class FindingMentor_CTRL {
 		}
 		// 매칭 정보 확인
 		MatchingDto mdto = mservice.chkMatching(boardseq);
-		
 		lists = service.chkUser(map2);
+		
 		model.addAttribute("findMentor", lists);
 		model.addAttribute("detail", dto);
 		model.addAttribute("matching", mdto);
@@ -125,9 +126,14 @@ public class FindingMentor_CTRL {
 	@Autowired
 	private AttachFile_Module module;
 	@RequestMapping(value="insertContent.do",method = RequestMethod.POST)
-	public String insertContent(FindingMentorDto dto, HttpSession session,@RequestParam("file") List<MultipartFile> files, HttpServletRequest request, HttpServletResponse resp) {
+	public String insertContent(String date, String time,FindingMentorDto dto, HttpSession session,@RequestParam("file") List<MultipartFile> files, HttpServletRequest request, HttpServletResponse resp) {
 		NaememberDto ndto = (NaememberDto) session.getAttribute("userinfo");
 		dto.setMemberseq(ndto.getMemberseq());
+		String[] dateA = date.split("-");
+		String[] timeA = time.split(":");
+		String conDate = dateA[0]+dateA[1]+dateA[2];
+		String conTime = timeA[0]+timeA[1];
+		dto.setMentoringdate(conDate+conTime);
 		List<AttachFileDto> lists = null;
 		int fileCnt = files.size();
 		log.info("fileCnt{}::::::{}",fileCnt,dto);

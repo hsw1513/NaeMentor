@@ -3,7 +3,7 @@
 <mapper namespace="com.min.naementor.review">
 		
 		<resultMap type="RVDto" id="findMentorseq">
-			<result column="MENTORSEQ" property="matching.mentorseq"/>
+			<result column="MENTORSEQ" property="matchingdto.mentorseq"/>
 			<result column="MENTORSTAR" property="mentorstar"/>
 			<result column="CONTENT" property="content"/>
 			<result column="WRITEDATE" property="writedate"/>

@@ -92,6 +92,7 @@ var xhr = null;
 			return true;
 			}
 		}else{
+			alert('금액은 천 원이상 백만 원 미만의 값만 입력 가능합니다.')
 			return false;
 		}
 	}
@@ -177,6 +178,7 @@ var xhr = null;
 	제목<input type="text" name="title" value="${detail.title}"><br>
 	글번호<input type="text" name="boardseq" value="${detail.boardseq}"><br>
 	작성자번호<input type="text" name="memberseq" value="${detail.memberseq}"><br>
+	작성자<input type="text" value="${detail.naememberdto.nickname}"><br>
 	작성일<input type="text" value="${detail.writesdate}"><br>
 	전문분야<input type="text" name="specialfield" value="${detail.specialfield}"><br>
 	장소<input type="text" name="location" value="${detail.location}"><br>
@@ -188,15 +190,17 @@ var xhr = null;
 	<c:if test="${userinfo.memberseq eq detail.memberseq}">
 	<c:if test="${detail.matchingchk eq 'N'}">
 	<button onclick="del()">삭제하기</button>
-	<input type="submit" value="수정하기">
 	</c:if>
 	</c:if>
-	</form>
 	<c:if test="${userinfo.memberseq eq detail.memberseq}">
 	<c:if test="${fn:length(findMentor) == 0}">
+	<input type="submit" value="수정하기">
 	<button onclick="modifyDate(event)">날짜수정</button>
 	</c:if>
 	</c:if>
+	</form>
+	
+	
 	
 	<button onclick="javascript:history.back(-1)">뒤로가기</button>
 	
@@ -218,20 +222,15 @@ var xhr = null;
 	<c:if test="${userinfo.auth eq 'ROLE_R'}">
 	<table class="table table-bordered">
 		<thead>
-			<c:forEach items="${findMentor}" var="mentee">
 			<tr>
-				<th>닉네임</th><td>${mentee.nickname}</td>
+				<th>닉네임</th><td>${detail.naememberdto.nickname}</td>
 			</tr>
 			<tr>
-				<th>멘토링 횟수</th><td>${mentee.menteecnt}</td>
-			</tr>
-			<tr>
-				<th>취소 횟수</th><td>${mentee.nickname}</td>
+				<th>멘토링 횟수</th><td>${detail.naememberdto.menteecnt}회</td>
 			</tr>
 			<tr>	
-				<th>누적 별점</th><td>${mentee.menteeaccstar}</td>
+				<th>누적 별점</th><td>${detail.naememberdto.menteeaccstar}점</td>
 			</tr>
-			</c:forEach>
 		</thead>
 			<tr><td colspan="2">멘티의 후기 보기</td></tr>
 		<tbody>
@@ -252,7 +251,7 @@ var xhr = null;
 	
 	
 	
-	<!-- 오른쪽 영역 멘티의 관점 ---------------------------------------------------------->
+	<!-- 매칭이 되지 않은 글/멘티의 관점 ---------------------------------------------------------->
 	<c:if test="${userinfo.memberseq eq detail.memberseq}">
 	<c:if test="${userinfo.auth eq 'ROLE_E'}">
 	
@@ -292,15 +291,14 @@ var xhr = null;
 	
 	
 	
-	
+	<!-- 멘토링이 종료된 글 // 후기게시판으로 이동(후기 남기기로 변경) -->
 	<c:if test="${detail.matchingchk eq 'Y'}">
 	<c:if test="${userinfo.memberseq eq matching.menteeseq || userinfo.memberseq eq matching.mentorseq}">
+	<c:if test="${detail.delflag eq 'M'}"><!-- 테스트 이후 C로 변경 -->
 	<div>
 		<h1><a href="./reviewBoard.do?boardseq=${detail.boardseq}">후기게시판 이동</a></h1>
-		<c:if test="${userinfo.auth eq 'ROLE_R'}">
-		<h1><a href="./schedule.do?boardseq=${detail.boardseq}">스케줄게시판 이동</a></h1>
-		</c:if>
 	</div>
+	</c:if>
 	</c:if>
 	</c:if>
 	</div>

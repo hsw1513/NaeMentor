@@ -12,13 +12,39 @@ WHERE DELFLAG = 'N'
 ORDER BY BOARDSEQ DESC
 </select>
 <!-- 멘토찾기 게시판 -->
+
+<resultMap type="FMDto" id="detailJoinView">
+	<result column="MENTORLIST" property="mentorlist"/>
+	<result column="BOARDSEQ" property="boardseq"/>
+	<result column="TITLE" property="title"/>
+	<result column="CONTENT" property="content"/>
+	<result column="REPORTCNT" property="reportcnt"/>
+	<result column="SPECIALFIELD" property="specialfield"/>
+	<result column="TARGET" property="target"/>
+	<result column="MENTEELEVEL" property="menteelevel"/>
+	<result column="HOWTO" property="howto"/>
+	<result column="LOCATION" property="location"/>
+	<result column="DELFLAG" property="delflag"/>
+	<result column="MEMBERSEQ" property="memberseq"/>
+	<result column="FINDREPORTER" property="findreporter"/>
+	<result column="MATCHINGCHK" property="matchingchk"/>
+	<result column="MENTORINGDATE" property="mentoringdate"/>
+	<result column="NICKNAME" property="naememberdto.nickname"/>
+	<result column="INTRODUCE" property="naememberdto.introduce"/>
+	<result column="MENTEEACCSTAR" property="naememberdto.menteeaccstar"/>
+	<result column="MENTEECNT" property="naememberdto.menteecnt"/>
+</resultMap>
+
+
 <!-- 게시글 상세조회 -->
-<select id="detailContent" parameterType="java.util.Map" resultType="FMDto">
-	SELECT MENTORLIST ,BOARDSEQ, TITLE, CONTENT, WRITESDATE, REPORTCNT, 
-		   SPECIALFIELD, TARGET, MENTEELEVEL, HOWTO, LOCATION, DELFLAG, 
-		   MEMBERSEQ, FINDREPORTER, MATCHINGCHK, MENTORINGDATE
-	FROM FINDINGMENTOR 
-	WHERE BOARDSEQ = #{boardseq}
+<select id="detailContent" parameterType="java.util.Map" resultMap="detailJoinView">
+	SELECT MENTORLIST ,BOARDSEQ, TITLE, CONTENT, WRITESDATE, f.REPORTCNT, 
+		   SPECIALFIELD, f.TARGET, MENTEELEVEL, HOWTO, LOCATION, DELFLAG, 
+		   f.MEMBERSEQ, FINDREPORTER, MATCHINGCHK, MENTORINGDATE, n.NICKNAME,
+		   n.INTRODUCE , n.MENTEEACCSTAR , n.MENTEECNT
+			FROM FINDINGMENTOR f JOIN NAEMEMBER n
+				ON f.MEMBERSEQ = n.MEMBERSEQ 
+					WHERE BOARDSEQ = #{boardseq}
 </select>
 
 <!-- 멘토링 신청 -->
@@ -54,8 +80,10 @@ ORDER BY BOARDSEQ DESC
 <!-- 멘토찾기 글입력 -->
 <insert id="insertContent" parameterType="FMDto">
 	INSERT INTO FINDINGMENTOR
-	(BOARDSEQ, TITLE, CONTENT, WRITESDATE, REPORTCNT, SPECIALFIELD, TARGET, MENTEELEVEL, HOWTO, LOCATION, DELFLAG, MENTORLIST, MEMBERSEQ, FINDREPORTER, MATCHINGCHK, MENTORINGDATE)
-	VALUES(BOARDSEQ.NEXTVAL, #{title}, #{content}, SYSDATE, 0, #{specialfield}, #{target}, #{menteelevel}, #{howto}, #{location}, 'N', '0,', #{memberseq}, '0,', 'N', #{mentoringdate})
+	(BOARDSEQ, TITLE, CONTENT, WRITESDATE, REPORTCNT, SPECIALFIELD, TARGET, 
+	MENTEELEVEL, HOWTO, LOCATION, DELFLAG, MENTORLIST, MEMBERSEQ, FINDREPORTER, MATCHINGCHK, MENTORINGDATE)
+	VALUES(BOARDSEQ.NEXTVAL, #{title}, #{content}, SYSDATE, 0, #{specialfield}, #{target}, 
+	#{menteelevel}, #{howto}, #{location}, 'N', '0,', #{memberseq}, '0,', 'N', TO_DATE (#{mentoringdate}, 'yyyymmddhh24mi'))
 </insert>
 
 <!-- 게시글 수정 -->
@@ -180,11 +208,12 @@ ORDER BY BOARDSEQ DESC
 		FROM FINDINGMENTOR f JOIN MATCHING m
 		ON f.BOARDSEQ = m.BOARDSEQ
 		<if test="mentorseq != null">
-		WHERE m.MENTORSEQ =#{mentorseq} AND DELFLAG = 'M'
+		WHERE m.MENTORSEQ =#{mentorseq} 
 		</if>
 		<if test="MENTEESEQ != null">
-		WHERE m.MENTEESEQ =#{menteeseq} AND DELFLAG = 'M'
+		WHERE m.MENTEESEQ =#{menteeseq} 
 		</if>
+		AND DELFLAG = 'M'
 </select>
 <select id="chkComplete" parameterType="java.util.Map" resultType="FMDto">
 	SELECT f.BOARDSEQ, TITLE, CONTENT, WRITESDATE, 
@@ -193,11 +222,12 @@ ORDER BY BOARDSEQ DESC
 		FROM FINDINGMENTOR f JOIN MATCHING m
 		ON f.BOARDSEQ = m.BOARDSEQ
 		<if test="mentorseq != null">
-		WHERE m.MENTORSEQ =#{mentorseq} AND DELFLAG = 'C'
+		WHERE m.MENTORSEQ =#{mentorseq}
 		</if>
 		<if test="MENTEESEQ != null">
-		WHERE m.MENTEESEQ =#{menteeseq} AND DELFLAG = 'C'
+		WHERE m.MENTEESEQ =#{menteeseq}
 		</if>
+		 AND DELFLAG = 'C'
 </select>
 
 <!-- 후기가 남겨진 글 삭제 -->

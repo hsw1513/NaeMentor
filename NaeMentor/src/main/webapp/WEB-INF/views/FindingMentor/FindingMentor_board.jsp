@@ -125,6 +125,59 @@
     </tbody>
   </table>
  
+ 	
+ 	
+ 	<hr>
+ <h1>완료가 된 글들이 위치하는 영역</h1>
+ 
+ 
+ <!-- 멘티의 영역 -->
+	
+	<table class="table table-hover">
+    <thead>
+      <tr>
+        <th>boardseq</th>
+        <th>title</th>
+        <th>memberseq</th>
+        <th>delflag</th>
+        <th>reportcnt</th>
+        <th>findreporter</th>
+        <th>mentorlist</th>
+      </tr>
+    </thead>
+    <tbody>
+	<c:forEach items="${complete_lists}" var="clists">
+	<c:if test="${userinfo.memberseq eq clists.memberseq}">
+      <tr>
+        <td>${clists.boardseq}</td>
+        <td><a href='./detailContent.do?boardseq=${clists.boardseq}&memberseq=${clists.memberseq}'>${clists.title}</a></td>
+        <td>${clists.memberseq}</td>
+        <td>${clists.delflag}</td>
+        <td>${clists.reportcnt}</td>
+        <td>${clists.findreporter}</td>
+        <td>${clists.mentorlist}</td>
+      </tr>
+       </c:if>
+       
+       
+	<!-- 멘토의 영역 -->
+       
+	<c:if test="${userinfo.auth eq 'ROLE_R'}">
+	
+      <tr>
+        <td>${clists.boardseq}</td>
+        <td><a href='./detailContent.do?boardseq=${clists.boardseq}&memberseq=${clists.memberseq}'>${clists.title}</a></td>
+        <td>${clists.memberseq}</td>
+        <td>${clists.delflag}</td>
+        <td>${clists.reportcnt}</td>
+        <td>${clists.findreporter}</td>
+        <td>${clists.mentorlist}</td>
+      </tr>
+       </c:if>
+	</c:forEach>
+    </tbody>
+  </table>
+ 	
 </div>
 <%@include file="/WEB-INF/views/footer.jsp"%>
 </body>

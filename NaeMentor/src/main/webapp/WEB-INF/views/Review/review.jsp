@@ -41,6 +41,8 @@
 // 		alert("c:"+stara+"cc:"+contenta);
 		if(stara == ''){
 			alert('별점을 입력해주세요.');
+		}else if(stara < 1 || stara > 5){
+			alert('별점은 1-5 사이의 값만 가능합니다.');
 		}else if(contenta == ''){
 			alert('후기를 작성하세요.');
 		}else{
@@ -64,8 +66,6 @@
 		if(confirm('신고할 상대의 회원번호'+obj+"\n 나의 회원번호"+myseq)){
 			let singoreason = prompt('신고하시는 이유를 입력해주세요.');
 			if(singoreason != ''){
-				
-			
 			xhr = new XMLHttpRequest();
 			xhr.onreadystatechange = function(){
 				if(xhr.readyState==4){

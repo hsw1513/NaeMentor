@@ -47,7 +47,7 @@ public class AjaxFindingMentor_CTRL {
 	
 	// 멘토와 멘티 분기
 	@RequestMapping("/review.do")
-	public String review(HttpSession session, String boardseq, String menteeseq) {
+	public String review(HttpSession session, String boardseq, String menteeseq, String mentorseq) {
 		log.info("review.do : {}:{}",boardseq, menteeseq);
 		NaememberDto dto = (NaememberDto)session.getAttribute("userinfo");
 		MatchingDto mdto = mservice.chkMatching(boardseq);
@@ -57,9 +57,9 @@ public class AjaxFindingMentor_CTRL {
 		}else if(dto.getAuth().equalsIgnoreCase("ROLE_R")) {
 			isc = false;
 		}
-		String mentorseq = "0";
 		if(mdto != null) {
 			mentorseq = mdto.getMentorseq();
+			menteeseq = mdto.getMenteeseq();
 		}
 		return isc?"redirect:/Menteereview.do?boardseq="+boardseq+"&mentorseq="+ mentorseq
 						:"redirect:/Mentorreview.do?boardseq="+boardseq+"&menteeseq="+menteeseq;
@@ -71,8 +71,12 @@ public class AjaxFindingMentor_CTRL {
 	public JSONObject denyMSearch(Model model,String menteeseq, String boardseq) {
 		log.info("Review_CTRL_denyMSearch \t {}{}",menteeseq, boardseq);
 		JSONObject obj = new JSONObject();
-		List<ReviewDto> lists = service.denyMSearch(menteeseq);
-		obj.put("reviews",converter.convertReviewList(lists));
+		if(!menteeseq.equals("null")) {
+			List<ReviewDto> lists = service.denyMSearch(menteeseq);
+			obj.put("reviews",converter.convertReviewList(lists));
+		}else {
+			obj.put("reviews","");
+		}
 		return obj;
 	}
 	
@@ -82,8 +86,8 @@ public class AjaxFindingMentor_CTRL {
 	public JSONObject searchMStar(Model model, String mentorseq, String boardseq) {
 		log.info("Review_CTRL_searchMStar \t {}:{}",mentorseq, boardseq);
 		JSONObject obj = new JSONObject();
-		if(!mentorseq.equals("0")) {
-			List<ReviewDto> lists = service.denyMSearch(mentorseq);
+		if(!mentorseq.equals("null")) {
+			List<ReviewDto> lists = service.searchMStar(mentorseq);
 			obj.put("reviews",converter.convertReviewList(lists));
 		}else {
 			obj.put("reviews","");
