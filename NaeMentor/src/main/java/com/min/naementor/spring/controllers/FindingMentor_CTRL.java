@@ -2,6 +2,7 @@ package com.min.naementor.spring.controllers;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -33,11 +34,14 @@ import com.min.naementor.dtos.AttachFileDto;
 import com.min.naementor.dtos.FindingMentorDto;
 import com.min.naementor.dtos.MatchingDto;
 import com.min.naementor.dtos.NaememberDto;
+import com.min.naementor.dtos.NotiQuestionDto;
 import com.min.naementor.dtos.OfferDto;
 import com.min.naementor.spring.comm.AttachFile_Module;
+import com.min.naementor.spring.comm.RowNumUtil;
 import com.min.naementor.spring.comm.SplitUserComm;
 import com.min.naementor.spring.model.findingMentor.FindingMentor_IService;
 import com.min.naementor.spring.model.matching.Matching_IService;
+import com.min.naementor.spring.model.notiquestion.Notiquestion_IService;
 import com.min.naementor.spring.model.offer.Offer_IService;
 
 @Controller
@@ -48,6 +52,8 @@ public class FindingMentor_CTRL {
 	private FindingMentor_IService service;
 	@Autowired
 	private Matching_IService mservice;
+	@Autowired
+	private Notiquestion_IService nservice;
 	
 	// 게시판 리스트 
 	@RequestMapping("FindingMentor_board.do")
@@ -63,6 +69,24 @@ public class FindingMentor_CTRL {
 		model.addAttribute("complete_lists", service.chkComplete(map));
 		model.addAttribute("matching_lists", service.chkMatching(map));
 		model.addAttribute("complete_lists", service.chkComplete(map));
+		
+		// 공지사항
+		RowNumUtil rUtil = new RowNumUtil();
+		rUtil.setTotal(nservice.notiBoardListTotal());
+		
+		List<NotiQuestionDto> lists = nservice.notiAll(rUtil);
+		List<NotiQuestionDto> lists2 = new ArrayList<NotiQuestionDto>();
+		
+		model.addAttribute("row", rUtil);
+		model.addAttribute("lists", lists);
+		
+		lists2.add(lists.get(0));
+		lists2.add(lists.get(1));
+		lists2.add(lists.get(2));
+		lists2.add(lists.get(3));
+		lists2.add(lists.get(4));
+		model.addAttribute("lists2", lists2);
+		
 		return "FindingMentor/FindingMentor_board";
 	}
 	

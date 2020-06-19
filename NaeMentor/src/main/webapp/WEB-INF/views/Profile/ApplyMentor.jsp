@@ -5,7 +5,25 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>멘토 신청</title>
+<style type="text/css">
+input {
+	height: 30px;
+	width: 200px;
+	margin: 5px;
+	border: 1.5px solid lightgrey;
+	border-radius: 5px;
+	}
+
+th{
+	width: 130px;
+	height: 40px;
+}	
+table{
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+</style>
 </head>
 <script type="text/javascript">
 
@@ -46,7 +64,7 @@
 </script>
 <body>
 <%@include file="/WEB-INF/views/topMenu.jsp"%>
-<div id="container">
+<div id="container" style="margin: auto; width: 350px; text-align: center;">
 	<div id="leftdiv">
 		<div id="imgdiv">
 		<c:choose>
@@ -59,25 +77,54 @@
 		</c:choose>
 		</div>
 		<form enctype="multipart/form-data">
-		<input type="file" name="photofile">
+		<input type="file" name="photofile" style="text-align: center;">
 		</form>
-		<button onclick="uploadPhoto()">사진올리기</button>
+		<button class="myButton" onclick="uploadPhoto()">사진올리기</button>
 	</div>
-	
-	
-	
 	<form action="./applymentor.do" method="post" enctype="multipart/form-data" onsubmit="return chkVal()">
 	<input type="hidden" name="memberseq" value="${profile.memberseq}">
 	<input type="hidden" name="photo" value="">
-	school<input type="text" name="school" value="${profile.profiledto.school}"><br>
-	major<input type="text" name="major" value="${profile.profiledto.major}"><br>
-	career<input type="text" name="career" value="${profile.profiledto.career}"><br>
-	certificate<input type="text" name="certificate" value="${profile.profiledto.certificate}"><br>
-	specialfield<input type="text" name="specialfield" value="${profile.profiledto.specialfield}"><br>
-	files<input type="file" name="files"><br>
-	<input type="submit" value="멘토신청">
-	</form>
 	
+	<table>
+		<tr>
+			<th>학교</th>
+			<td>
+				<input type="text" name="school" value="${profile.profiledto.school}">
+			</td>
+		</tr>
+		<tr>
+			<th>전공</th>
+			<td>
+				<input type="text" name="major" value="${profile.profiledto.major}">
+			</td>
+		</tr>
+		<tr>
+			<th>경력</th>
+			<td>
+				<input type="text" name="career" value="${profile.profiledto.career}">
+			</td>
+		</tr>
+		<tr>
+			<th>자격증</th>
+			<td>
+				<input type="text" name="certificate" value="${profile.profiledto.certificate}">
+			</td>
+		</tr>
+		<tr>
+			<th>전문 분야</th>
+			<td>
+				<input type="text" name="specialfield" value="${profile.profiledto.specialfield}">
+			</td>
+		</tr>
+		<tr>
+			<th>파일</th>
+			<td>
+				<input type="file" name="files">
+			</td>
+		</tr>
+	</table>
+			<input type="submit" class="myButton" value="멘토신청" style="text-align: center;">
+	</form>
 </div>
 <%@include file="/WEB-INF/views/footer.jsp"%>
 </body>

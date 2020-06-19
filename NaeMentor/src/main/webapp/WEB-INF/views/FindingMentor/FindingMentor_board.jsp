@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>메인 페이지</title>
+<link type="text/css" rel="stylesheet" href="./css/mainPage.css">
 </head>
 <script type="text/javascript">
 	function writeBoard(){
@@ -15,56 +16,72 @@
 <body>
 <%@include file="/WEB-INF/views/topMenu.jsp"%>
 <div id="container">
-	
-	<h1>매칭이 되지 않은 게시글들이 있는 영역</h1>
+	<div class="div1">
+<!-- 	<h1>매칭이 되지 않은 게시글들이 있는 영역</h1> -->
 	<!-- 멘티의 영역 -->
-	
+	<div class="div6">
+	<h1><b>${userinfo.nickname}님, 환영합니다.</b></h1><br>
 	<c:if test="${userinfo.auth eq 'ROLE_E'}">
-	<button onclick="writeBoard()">글 작성하기</button>
+	<p style="font-size: 30px; margin: 0px;">오늘까지 멘토링 횟수: ${userinfo.menteecnt}회</p><br>
+	<p style="font-size: 30px;">오늘까지 받은 별점: ${userinfo.menteeaccstar}★</p><br>
 	</c:if>
+	<c:if test="${userinfo.auth eq 'ROLE_R'}">
+	<p style="font-size: 30px; margin: 0px;">오늘까지 멘토링 횟수: ${userinfo.menteecnt}회</p><br>
+	<p style="font-size: 30px;">오늘까지 받은 별점: ${userinfo.menteeaccstar}★</p><br>
+	</c:if>
+	</div>
+	<div class="div7">
+	<c:if test="${userinfo.auth eq 'ROLE_E'}">
+	<button class="myButton2" onclick="writeBoard()">멘토 찾기</button>
+	</c:if>
+	</div>
+	</div>
+<!-- 	공지사항 -->
+	<div class="div2">
+	<p class="boardTitle">&nbsp;&nbsp;내멘토 공지</p>
+	<a href="./Notification_board.do" style="cursor: pointer; float: right;">더보기</a>
+	<table class="table table-hover">
+    <tbody>
+	<c:forEach items="${lists2}" var="nlists">
+      <tr>
+      	<td>공지</td>
+        <td><a href='./Notification_board.do?adminseq=${nlists.adminseq}'>${nlists.title}</a></td>
+        <td>${nlists.writedate}</td>
+      </tr>
+      </c:forEach>
+       </tbody>
+  		</table>
+	</div>
 	
+	
+	<div class="div3">
+	<p class="boardTitle">&nbsp;&nbsp;매칭 대기 중</p>
 	<table class="table table-hover">
     <thead>
       <tr>
-      	<th><input type="checkbox" id="chkall"></th>
-        <th>boardseq</th>
-        <th>title</th>
-        <th>memberseq</th>
-        <th>delflag</th>
-        <th>reportcnt</th>
-        <th>findreporter</th>
-        <th>mentorlist</th>
+        <th>제목</th>
+        <th>희망 일자</th>
+        <th>신청 멘토</th>
       </tr>
     </thead>
     <tbody>
 	<c:forEach items="${board_lists}" var="lists">
 	<c:if test="${userinfo.memberseq eq lists.memberseq}">
       <tr>
-      	<td><input type="checkbox" value="${lists.boardseq}"></td>
-        <td>${lists.boardseq}</td>
         <td><a href='./detailContent.do?boardseq=${lists.boardseq}&memberseq=${lists.memberseq}'>${lists.title}</a></td>
-        <td>${lists.memberseq}</td>
-        <td>${lists.delflag}</td>
-        <td>${lists.reportcnt}</td>
-        <td>${lists.findreporter}</td>
+        <td>${lists.mentoringdate}</td>
         <td>${lists.mentorlist}</td>
       </tr>
        </c:if>
-       
-       
+      
 	<!-- 멘토의 영역 -->
        
 	<c:if test="${userinfo.auth eq 'ROLE_R'}">
 	<c:if test="${userinfo.target eq lists.target}">
 	
       <tr>
-      	<td><input type="checkbox" value="${lists.boardseq}"></td>
-        <td>${lists.boardseq}</td>
         <td><a href='./detailContent.do?boardseq=${lists.boardseq}&memberseq=${lists.memberseq}'>${lists.title}</a></td>
-        <td>${lists.memberseq}</td>
-        <td>${lists.delflag}</td>
-        <td>${lists.reportcnt}</td>
-        <td>${lists.findreporter}</td>
+        <td>${lists.mentoringdate}</td>
         <td>${lists.mentorlist}</td>
       </tr>
        </c:if>
@@ -73,36 +90,26 @@
     </tbody>
   </table>
  
- 
- <hr>
- <h1>매칭이 된 글들이 위치하는 영역</h1>
- 
- 
+ </div>
+ <div class="div4">
+<!--  <h1>매칭이 된 글들이 위치하는 영역</h1> -->
  <!-- 멘티의 영역 -->
-	
+	<p class="boardTitle">&nbsp;&nbsp;매칭 완료</p>
 	<table class="table table-hover">
     <thead>
       <tr>
-        <th>boardseq</th>
-        <th>title</th>
-        <th>memberseq</th>
-        <th>delflag</th>
-        <th>reportcnt</th>
-        <th>findreporter</th>
-        <th>mentorlist</th>
+        <th>제목</th>
+        <th>멘토링 일자</th>
+        <th>장소</th>
       </tr>
     </thead>
     <tbody>
 	<c:forEach items="${matching_lists}" var="mlists">
 	<c:if test="${userinfo.memberseq eq mlists.memberseq}">
       <tr>
-        <td>${mlists.boardseq}</td>
         <td><a href='./detailContent.do?boardseq=${mlists.boardseq}&memberseq=${mlists.memberseq}'>${mlists.title}</a></td>
-        <td>${mlists.memberseq}</td>
-        <td>${mlists.delflag}</td>
-        <td>${mlists.reportcnt}</td>
-        <td>${mlists.findreporter}</td>
-        <td>${mlists.mentorlist}</td>
+        <td>${mlists.mentoringdate}</td>
+        <td>${mlists.location}</td>
       </tr>
        </c:if>
        
@@ -112,50 +119,35 @@
 	<c:if test="${userinfo.auth eq 'ROLE_R'}">
 	
       <tr>
-        <td>${mlists.boardseq}</td>
         <td><a href='./detailContent.do?boardseq=${mlists.boardseq}&memberseq=${mlists.memberseq}'>${mlists.title}</a></td>
-        <td>${mlists.memberseq}</td>
-        <td>${mlists.delflag}</td>
-        <td>${mlists.reportcnt}</td>
-        <td>${mlists.findreporter}</td>
-        <td>${mlists.mentorlist}</td>
+        <td>${mlists.mentoringdate}</td>
+        <td>${mlists.location}</td>
       </tr>
        </c:if>
 	</c:forEach>
     </tbody>
   </table>
  
- 	
- 	
- 	<hr>
- <h1>완료가 된 글들이 위치하는 영역</h1>
- 
- 
+ 	</div>
+ 	<div class="div5">
+<!--  <h1>완료가 된 글들이 위치하는 영역</h1> -->
  <!-- 멘티의 영역 -->
-	
+	<p class="boardTitle">&nbsp;&nbsp;멘토링 완료</p>
 	<table class="table table-hover">
     <thead>
       <tr>
-        <th>boardseq</th>
-        <th>title</th>
-        <th>memberseq</th>
-        <th>delflag</th>
-        <th>reportcnt</th>
-        <th>findreporter</th>
-        <th>mentorlist</th>
+        <th>제목</th>
+        <th>멘토링 일자</th>
+        <th>장소</th>
       </tr>
     </thead>
     <tbody>
 	<c:forEach items="${complete_lists}" var="clists">
 	<c:if test="${userinfo.memberseq eq clists.memberseq}">
       <tr>
-        <td>${clists.boardseq}</td>
         <td><a href='./detailContent.do?boardseq=${clists.boardseq}&memberseq=${clists.memberseq}'>${clists.title}</a></td>
-        <td>${clists.memberseq}</td>
-        <td>${clists.delflag}</td>
-        <td>${clists.reportcnt}</td>
-        <td>${clists.findreporter}</td>
-        <td>${clists.mentorlist}</td>
+        <td>${clists.mentoringdate}</td>
+        <td>${clists.location}</td>
       </tr>
        </c:if>
        
@@ -165,19 +157,15 @@
 	<c:if test="${userinfo.auth eq 'ROLE_R'}">
 	
       <tr>
-        <td>${clists.boardseq}</td>
         <td><a href='./detailContent.do?boardseq=${clists.boardseq}&memberseq=${clists.memberseq}'>${clists.title}</a></td>
-        <td>${clists.memberseq}</td>
-        <td>${clists.delflag}</td>
-        <td>${clists.reportcnt}</td>
-        <td>${clists.findreporter}</td>
-        <td>${clists.mentorlist}</td>
+        <td>${clists.mentoringdate}</td>
+        <td>${clists.location}</td>
       </tr>
        </c:if>
 	</c:forEach>
     </tbody>
   </table>
- 	
+ 	</div>
 </div>
 <%@include file="/WEB-INF/views/footer.jsp"%>
 </body>

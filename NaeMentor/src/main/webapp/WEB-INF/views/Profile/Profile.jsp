@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>프로필</title>
 <link type="text/css" rel="stylesheet" href="./css/profile/profile.css">
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
@@ -44,132 +44,139 @@
 <body>
 <%@include file="/WEB-INF/views/topMenu.jsp"%>
 <div id="container">
-	<button onclick="updateAuth()" name="btn">멘토신청</button>
-	<c:if test="${profile.profiledto.filechk eq 'N'}">
-	</c:if>
-	<button onclick="applyBye()" name="btn">회원탈퇴</button>
+	<div class="divProfile">
+		<c:if test="${profile.profiledto.filechk eq 'N'}">
+			<button class="myButton" onclick="updateAuth()" name="btn">멘토신청</button>
+		</c:if>
+			<button class="myButton" onclick="applyBye()" name="btn">회원탈퇴</button>
+	</div>
 	<table class="table">
-	    <thead>
-	      <tr>
-	        <th>정보명</th>
-	        <th>나의 정보</th>
-	      </tr>
-	    </thead>
-	    <tbody>
-	    
-	      <tr>
-	        <td>회원번호</td>
-	        <td>${profile.memberseq}</td>
+	       <tr>
+	        <th>사진</th>
+	        <td>${profile.profiledto.photo}</td>
+	        <td></td>
 	      </tr>
 	      <tr>
-	        <td>아이디</td>
+	        <th>이메일</th>
 	        <td>${profile.email}</td>
+	        <td></td>
 	      </tr>
 	      <tr>
-	        <td>닉네임</td>
+	        <th>닉네임</th>
 	        <td>${profile.nickname}</td>
-	        <td><button onclick="modifyNickname()" name="btn">수정</button> </td>
+	        <td><button onclick="modifyNickname()" class="myButton3" name="btn">수정</button> </td>
 	      </tr>
 	      <tr>
-	        <td>자기소개</td>
-	        <td>${profile.introduce}</td>
-	        <td><button onclick="modifyIntro()" name="btn">수정</button> </td>
-	      </tr>
-	      <tr>
-	        <td>생년월일</td>
-	        <td>${profile.birthday}</td>
-	      </tr>
-	      <tr>
-	        <td>성별</td>
-	        <td>${profile.gender}</td>
-	      </tr>
-	      <tr>
-	        <td>전화번호</td>
+	        <th>휴대전화 번호</th>
 	        <td>${profile.phone}</td>
-	        <td><button onclick="modifyPhone()" name="btn">수정</button> </td>
+	        <td><button onclick="modifyPhone()" class="myButton3" name="btn">수정</button> </td>
+	      </tr>
+	        <tr>
+	        <th>자기소개</th>
+	        <td>${profile.introduce}</td>
+	        <td><button onclick="modifyIntro()" class="myButton3" name="btn">수정</button> </td>
 	      </tr>
 	      <tr>
-	        <td>권한</td>
-	        <td>${profile.auth}</td>
+	        <th>생년월일</th>
+	        <td>${profile.birthday}</td>
+	        <td></td>
 	      </tr>
 	      <tr>
-	        <td>유저상태</td>
-	        <td>${profile.userstatus}</td>
+	        <th>성별</th>
+	    	<c:if test="${profile.gender eq 'M'}">   
+	        <td>남자</td>
+	        </c:if>
+	    	<c:if test="${profile.gender eq 'F'}">   
+	        <td>여자</td>
+	        </c:if>
+	        <td></td>
+	      </tr>
+<!-- 	      권한별 이름 표시 -->
+	      <tr>
+	        <th>권한</th>
+	        <c:if test="${profile.auth eq 'ROLE_E'}">   
+	        <td>멘티</td>
+	        </c:if>
+	        <c:if test="${profile.auth eq 'ROLE_R'}">   
+	        <td>멘토</td>
+	        </c:if>
+	        <td></td>
 	      </tr>
 	      <tr>
-	        <td>멘토레벨</td>
+	        <th>가입일</th>
+	        <td>${profile.joindate}</td>
+	        <td></td>
+	      </tr>
+	      <tr>
+	        <th>학교</th>
+	        <td>${profile.profiledto.school}</td>
+	        <td></td>
+	      </tr>
+	      <tr>
+	        <th>전공</th>
+	        <td>${profile.profiledto.major}</td>
+	        <td></td>
+	      </tr>
+	      <tr>
+	        <th>경력</th>
+	        <td>${profile.profiledto.career}</td>
+	        <td></td>
+	      </tr>
+	      <tr>
+	        <th>자격증</th>
+	        <td>${profile.profiledto.certificate}</td>
+	        <td></td>
+	      </tr>
+	      <tr>
+	        <th>전문 분야</th>
+	        <td>${profile.profiledto.specialfield}</td>
+	        <td></td>
+	      </tr>
+	
+	      <tr>
+	        <th>오늘까지 참가한 멘토링 횟수 (멘티)</th>
+	        <td>${profile.menteecnt}</td>
+	        <td></td>
+	      </tr>
+	      <tr>
+	        <th>오늘까지 받은 별 개수 (멘티)</th>
+	        <td>${profile.menteeaccstar}</td>
+	        <td></td>
+	      </tr>
+		<c:if test="${userinfo.auth eq 'ROLE_R'}">
+	      <tr>
+	        <th>멘토 승급일</th>
+	        <td>${profile.profiledto.pmdate}</td>
+	        <td></td>
+	      </tr>
+	      <tr>
+	        <th>오늘까지 참가한 멘토링 횟수 (멘토)</th>
+	        <td>${profile.profiledto.mentorcnt}</td>
+	        <td></td>
+	      </tr>
+	      <tr>
+	        <th>오늘까지 받은 별 개수 (멘토)</th>
+	        <td>${profile.profiledto.mentoaccstar}</td>
+	        <td></td>
+	      </tr>
+	        <tr>
+	        <th>멘토 레벨</th>
+	         <c:if test="${profile.mentortier eq 'B'}">   
+	        	<td>BRONZE</td>
+	        </c:if>
+	         <c:if test="${profile.mentortier eq 'S'}">   
+	        	<td>SILVER</td>
+	        </c:if>
+	         <c:if test="${profile.mentortier eq 'G'}">   
+	        	<td>GOLD</td>
+	        </c:if>
+	         <c:if test="${profile.mentortier eq 'P'}">   
+	        	<td>PLATINUM</td>
+	        </c:if>
 	        <td>${profile.mentortier}</td>
 	      </tr>
-	      <tr>
-	        <td>logincnt</td>
-	        <td>${profile.logincnt}</td>
-	      </tr>
-	      <tr>
-	        <td>reportcnt</td>
-	        <td>${profile.reportcnt}</td>
-	      </tr>
-	      <tr>
-	        <td>joindate</td>
-	        <td>${profile.joindate}</td>
-	      </tr>
-	      <tr>
-	        <td>menteecnt</td>
-	        <td>${profile.menteecnt}</td>
-	      </tr>
-	      <tr>
-	        <td>menteeaccstar</td>
-	        <td>${profile.menteeaccstar}</td>
-	      </tr>
-	      <tr>
-	        <td>byebye</td>
-	        <td>${profile.byebye}</td>
-	      </tr>
-	      <tr>
-	        <td>photo</td>
-	        <td>${profile.profiledto.photo}</td>
-	      </tr>
-	      <tr>
-	        <td>school</td>
-	        <td>${profile.profiledto.school}</td>
-	      </tr>
-	      <tr>
-	        <td>major</td>
-	        <td>${profile.profiledto.major}</td>
-	      </tr>
-	      <tr>
-	        <td>career</td>
-	        <td>${profile.profiledto.career}</td>
-	      </tr>
-	      <tr>
-	        <td>certificate</td>
-	        <td>${profile.profiledto.certificate}</td>
-	      </tr>
-	      <tr>
-	        <td>specialfield</td>
-	        <td>${profile.profiledto.specialfield}</td>
-	      </tr>
-	      <tr>
-	        <td>pmdate</td>
-	        <td>${profile.profiledto.pmdate}</td>
-	      </tr>
-	      <tr>
-	        <td>mentorcnt</td>
-	        <td>${profile.profiledto.mentorcnt}</td>
-	      </tr>
-	      <tr>
-	        <td>mentoaccstar</td>
-	        <td>${profile.profiledto.mentoaccstar}</td>
-	      </tr>
-	      <tr>
-	        <td>filechk</td>
-	        <td>${profile.profiledto.filechk}</td>
-	        <c:if test="${profile.profiledto.filechk eq 'Y'}">
-	        <td>올린 파일이름</td>
-	        <td><a onclick="downFile()">
-	        		${userfile.userfile} : ${userfile.filesize}</a></td>
-	        </c:if>
-	      </tr>
-	    </tbody>
+	      </c:if>
+	      <td></td>
   	</table>
   	
   	<div id="newNick">
@@ -178,17 +185,21 @@
 		<input type="text" name="nickname" id="newNickname" placeholder="새로운 닉네임"><br>
 		<span id="result_nickname"></span>
 	</form>
-		<button class="myButton" onclick="closeWin1()">변경 완료</button>
-		<button class="myButton" onclick="goback1()">돌아가기</button>
+		<div class="profileButton">
+		<button class="myButton3" onclick="closeWin1()">변경 완료</button>
+		<button class="myButton3" onclick="goback1()">돌아가기</button>
+		</div>
 	</div>
 	
 	<div id="newIntro">
 	<form action="./changeIntro.do" id="changeIntro" method="post">
 		<input type="hidden" name="memberseq" value="${profile.memberseq}">
-		<textarea rows="5" cols="30" id="introduce" name="introduce" placeholder="새로운 자기소개"></textarea>
+		<textarea rows="5" cols="30" id="introduce" name="introduce" placeholder="새로운 자기소개" style="width: 100%; vertical-align: middle; text-align: center;"></textarea>
 	</form>
-		<button class="myButton" onclick="closeWin2()">변경 완료</button>
-		<button class="myButton" onclick="goback2()">돌아가기</button>
+		<div class="profileButton">
+		<button class="myButton3" onclick="closeWin2()">변경 완료</button>
+		<button class="myButton3" onclick="goback2()">돌아가기</button>
+		</div>
 	</div>
 	
 	<div id="newPhoneNum">
@@ -197,10 +208,12 @@
 		<input type="text" id="phone" name="phone" placeholder="새로운 휴대전화 번호(-포함)">
 		<input type="button" class="" onclick="sendSms()" id="send" value="전송"/> <br>
 		<input type="text" name="sms" id="sms" placeholder="인증 번호 입력" />
-		<input type="button" id="smsCheck" class="" onclick="numberCheck()" value="인증"/><br> 
+		<input type="button" id="smsCheck" onclick="numberCheck()" value="인증"/><br> 
 	</form>
-		<button class="myButton" onclick="closeWin3()">변경 완료</button>
-		<button class="myButton" onclick="goback3()">돌아가기</button>
+		<div class="profileButton">
+		<button class="myButton3" onclick="closeWin3()">변경 완료</button>
+		<button class="myButton3" onclick="goback3()">돌아가기</button>
+		</div>
 	</div>
 
 </div>
