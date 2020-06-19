@@ -124,7 +124,7 @@ public class Naemember_DaoImpl implements Naemember_IDao {
 
 	@Override
 	public boolean wakeUpStop() {
-		int cnt = sqlSession.update(NS+"wakeUpStrop");
+		int cnt = sqlSession.update(NS+"wakeUpStop");
 		return (cnt>0)?true:false;
 	}
 

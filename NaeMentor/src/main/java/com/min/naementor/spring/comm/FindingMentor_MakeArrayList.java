@@ -41,4 +41,34 @@ public class FindingMentor_MakeArrayList {
 		}
 		return result;
 	}
+	public String convertReviewList2(List<ReviewDto> lists) {
+		List<String> list = new ArrayList<String>();
+		String review = null;
+		String content = null;
+		String wirtedate = null;
+		String memseq = null;
+		String btn= "";
+		int i = 0;
+		list.add("<table class='table table-bordered'>");
+		list.add("<thead><tr><th>후기내용</th><th>작성일</th><th>별점</th></tr></thead><tbody>");
+		
+		for (ReviewDto dto : lists) {
+			review = "<tr>";
+			content = "<td>"+dto.getContent()+"</td>";
+			wirtedate ="<td>"+ dto.getWritedate()+"</td>";
+			if(dto.getMenteestar()!=null) {
+				memseq = "<td>"+dto.getMenteestar()+"</td>";
+			}else {
+				memseq = "<td>"+dto.getMentorstar()+"</td>";
+			}
+			review = review +content +wirtedate+memseq+btn+"</tr>";
+			list.add(review);
+		}
+		list.add("</tbody></table>");
+		String result = "";
+		for (String string : list) {
+			result += string;
+		}
+		return result;
+	}
 }
