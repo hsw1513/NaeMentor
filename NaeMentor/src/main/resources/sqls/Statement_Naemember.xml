@@ -7,10 +7,10 @@
 	<insert id="signUp" parameterType="NMDto">
 		INSERT INTO NAEMEMBER(MEMBERSEQ, EMAIL, PASSWORD, NICKNAME, INTRODUCE, PHONE, 
 								BIRTHDAY, GENDER, AUTH, USERSTATUS, MENTORTIER, LOGINCNT, 
-								REPORTCNT, JOINDATE, MENTEECNT, MENTEEACCSTAR, BYEBYE, TARGET)
+								REPORTCNT, JOINDATE, MENTEECNT, MENTEEACCSTAR, BYEBYE, TARGET, AUTHORCHK)
 			VALUES(MEMBERSEQ.NEXTVAL, #{email}, #{password}, #{nickname}, #{introduce}, #{phone}, 
 					#{birthday}, #{gender}, 'ROLE_E', 'A', 'N', 0, 
-						0, SYSDATE, 0, 0, 'N', #{target})
+						0, SYSDATE, 0, 0, 'N', #{target}, 'N')
 	</insert>
 	
 	<!-- 아이디 중복검사 -->
@@ -70,6 +70,7 @@
 		<result property="menteeaccstar" column="MENTEEACCSTAR"/>
 		<result property="byebye" column="BYEBYE"/>
 		<result property="target" column="TARGET"/>
+		<result property="authorchk" column="AUTHORCHK"/>
 		<result property="profiledto.photo" column="PHOTO"/>
 		<result property="profiledto.school" column="SCHOOL"/>
 		<result property="profiledto.major" column="MAJOR"/>
@@ -88,7 +89,7 @@
 		  	 INTRODUCE , PHONE , BIRTHDAY ,
 		  	 GENDER , AUTH , USERSTATUS ,
 		   	 MENTORTIER , LOGINCNT , REPORTCNT, 
-		   	 JOINDATE , MENTEECNT , MENTEEACCSTAR, BYEBYE, TARGET, PHOTO, SCHOOL, MAJOR,
+		   	 JOINDATE , MENTEECNT , MENTEEACCSTAR, BYEBYE, TARGET, AUTHORCHK, PHOTO, SCHOOL, MAJOR,
 		     CAREER, CERTIFICATE, SPECIALFIELD, PMDATE, MENTORCNT, MENTOACCSTAR,
 		   	 FILECHK
 		   	FROM NAEMEMBER n JOIN PROFILE p
@@ -129,6 +130,22 @@
 	  UPDATE NAEMEMBER 
 		SET USERSTATUS = 'A'
 			WHERE MEMBERSEQ = #{memberseq} AND USERSTATUS = 'R'
+	</update>
+	
+	<!-- 6개월 접속 안한 회원 휴면계정으로 자동 전환 -->
+	<update id="goToBed">
+	UPDATE NAEMEMBER 
+		SET USERSTATUS = 'R'
+			WHERE TRUNC(SYSDATE)- TRUNC(LASTACCESS) >= '180'
+				AND NOT USERSTATUS = 'D'
+	</update>
+	
+	<!-- 정지회원 30일 뒤 이용가능 계정으로 자동 전환 -->
+	<update id="wakeUpStop">
+	UPDATE NAEMEMBER 
+		SET USERSTATUS = 'A'
+			WHERE TRUNC(SYSDATE)- TRUNC(LASTACCESS) >= '30'
+				AND USERSTATUS = 'S'
 	</update>
 	
 	<!-- 아이디 찾기(휴대전화 번호, 생년월일로 Email 찾기) -->

@@ -31,10 +31,10 @@ public interface AdminBoard_IService {
 	
 	/**
 	 * 신고게시글 삭제(deleteReport)
-	 * @param map
+	 * @param 신고당한 횟수
 	 * @return 게시글 삭제 성공여부(true: 삭제)
 	 */
-	public boolean deleteReport(Map<String, String> map);
+	public boolean deleteReport();
 	
 	/**
 	 * 탈퇴신청 회원 조회(searchByeU)
@@ -43,11 +43,11 @@ public interface AdminBoard_IService {
 	public List<NaememberDto> searchByeU();
 	
 	/**
-	 * 회원의 계정 상태 변경(changeStatus)
-	 * @param 유저 상태, 회원번호
+	 * 회원의 계정 상태 변경(changeStatusBye)
+	 * @param 탈퇴신청 여부
 	 * @return 상태변경 성공 여부(true: 성공)
 	 */
-	public boolean changeStatus(Map<String, String> map);
+	public boolean changeStatusBye();
 	
 	/**
 	 * 멘토승인시 권한 변경(mentorPromotion)

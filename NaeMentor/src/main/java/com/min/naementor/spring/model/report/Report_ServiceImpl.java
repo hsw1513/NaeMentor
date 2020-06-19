@@ -30,6 +30,12 @@ public class Report_ServiceImpl implements Report_IService {
 		log.info("신고당한 회원 카운트 증가 addReportCnt, {}", map);
 		return dao.addReportCnt(map);
 	}
+	
+	@Override
+	public boolean stopSingoedMember() {
+		log.info("경고 3회 이상 회원 자격정지 stopSingoedMember");
+		return dao.stopSingoedMember();
+	}
 
 	@Override
 	public boolean changeSingoChk(Map<String, String> map) {
@@ -67,5 +73,7 @@ public class Report_ServiceImpl implements Report_IService {
 		log.info("리뷰번호찾기 findReviewOfMentee, {}", map);
 		return dao.findReviewOfMentee(map);
 	}
+
+	
 
 }

@@ -27,6 +27,12 @@ public class Report_DaoImpl implements Report_IDao {
 		int cnt = sqlSession.update(NS+"addReportCnt", map);
 		return (cnt>0)?true:false;
 	}
+	
+	@Override
+	public boolean stopSingoedMember() {
+		int cnt = sqlSession.update(NS+"stopSingoedMember");
+		return (cnt>0)?true:false;
+	}
 
 	@Override
 	public boolean changeSingoChk(Map<String, String> map) {
@@ -56,5 +62,7 @@ public class Report_DaoImpl implements Report_IDao {
 		int reviewseq = (int) sqlSession.selectList(NS+"findReviewOfMentee", map).get(0);
 		return reviewseq;
 	}
+
+	
 
 }

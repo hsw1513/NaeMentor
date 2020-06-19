@@ -13,7 +13,7 @@
 					WHERE AUTH = #{auth}
 				</if>
 					ORDER BY AUTH
-	</select>
+	 </select>
 	
 	<!-- 회원정보조회(상세) -->
 	<select id="userDetail" parameterType="java.lang.String" resultType="PRDto">
@@ -32,10 +32,10 @@
 	</select>
 	
 	<!-- 신고게시글 삭제 -->
-	<update id="deleteReport" parameterType="java.util.Map">
+	<update id="deleteReport">
 	 	UPDATE FINDINGMENTOR 
  			SET DELFLAG = 'Y'
- 				WHERE BOARDSEQ = #{boardseq}	
+ 				WHERE REPORTCNT > '4'
 	</update>
 	
 	<!-- 탈퇴신청 회원 조회 -->
@@ -48,10 +48,10 @@
 	</select>
 	
 	<!-- 탈퇴회원 승인시 권한 변경 -->
-	<update id="changeStatus" parameterType="java.util.Map">
+	<update id="changeStatusBye" parameterType="java.util.Map">
 		UPDATE NAEMEMBER 
 			SET USERSTATUS = 'D'
-				WHERE EMAIL = #{email} 
+				WHERE BYEBYE = 'Y'
 	</update>
 	
 	<!-- 멘토 승인시 권한 변경 -->
@@ -119,6 +119,21 @@
 					ORDER BY UPLOADDATE
 	</select>
 	
+	<!-- 페이징 쿼리문 -->
+	<select id="adminBoardPaging" resultType="NMDto">
+	SELECT * 
+		FROM(SELECT MEMBERSEQ, EMAIL , NICKNAME , PHONE , BIRTHDAY , 
+        	 GENDER , AUTH , USERSTATUS ,MENTORTIER, REPORTCNT ,
+         	 TO_CHAR(JOINDATE, 'YYYY-MM-DD') AS JOINDATE , MENTEECNT, 
+       		 MENTEEACCSTAR, TO_CHAR(LASTACCESS, 'YYYY-MM-DD') AS LASTACCESS, 
+       		 BYEBYE , ROW_NUMBER() OVER(ORDER BY AUTH) AS "RN"
+            	FROM NAEMEMBER
+               		WHERE AUTH = 'ROLE_R')
+               			WHERE RN BETWEEN #{start} AND #{last}
+	</select>
 	
+	<select id="naeMemberListTotal" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM NAEMEMBER
+	</select>
 	
 </mapper>

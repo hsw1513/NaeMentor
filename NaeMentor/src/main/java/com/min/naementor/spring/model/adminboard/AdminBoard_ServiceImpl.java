@@ -36,8 +36,8 @@ public class AdminBoard_ServiceImpl implements AdminBoard_IService {
 	}
 
 	@Override
-	public boolean deleteReport(Map<String, String> map) {
-		return dao.deleteReport(map);
+	public boolean deleteReport() {
+		return dao.deleteReport();
 	}
 
 	@Override
@@ -46,8 +46,8 @@ public class AdminBoard_ServiceImpl implements AdminBoard_IService {
 	}
 
 	@Override
-	public boolean changeStatus(Map<String, String> map) {
-		return dao.changeStatus(map);
+	public boolean changeStatusBye() {
+		return dao.changeStatusBye();
 	}
 
 	@Override

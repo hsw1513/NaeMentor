@@ -43,8 +43,6 @@ public class Login_CTRL {
 	@Autowired
 	private Naemember_IService service;
 
-	@Autowired
-	private AttachFile_Module module;
 
 	//키를 받아오는 클래스
 	@Resource(name = "gotKey")

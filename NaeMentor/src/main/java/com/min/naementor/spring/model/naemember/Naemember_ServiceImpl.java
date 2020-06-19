@@ -180,6 +180,26 @@ public class Naemember_ServiceImpl implements Naemember_IService {
 		return dao.searchLoginCnt(map);
 	}
 
+	/**
+	 * <h2>자동 휴면계정 전환</h2>
+	 * @return 전환성공 여부
+	 */
+	@Override
+	public boolean goToBed() {
+		log.info("goToBed 6개월 접속 안한 회원 자동 휴면 전환");
+		return dao.goToBed();
+	}
+	
+	/**
+	 * <h2>정지회원 자동 액티브 계정 전환</h2>
+	 * @return 전환성공 여부
+	 */
+	@Override
+	public boolean wakeUpStop() {
+		log.info("wakeUpStop 정지회원 한달 후 자동 액티브 전환");
+		return dao.wakeUpStop();
+	}
+
 	
 
 }

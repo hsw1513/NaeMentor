@@ -33,18 +33,20 @@ public class NaememberDto implements Serializable {
 	private String lastaccess    ;
 	private String byebye        ;
 	private String target		 ;
+	private String authorchk	 ;
 	
 	private ProfileDto profiledto;
 	private OfferDto offerdto;
 	
 	public NaememberDto() {
-		// TODO Auto-generated constructor stub
+		super();
 	}
-
+	
 	public NaememberDto(String memberseq, String email, String password, String nickname, String introduce,
 			String phone, String birthday, String gender, String auth, String userstatus, String mentortier,
 			String logincnt, String reportcnt, String joindate, String menteecnt, String menteeaccstar,
-			String lastaccess, String byebye, String target, ProfileDto profiledto, OfferDto offerdto) {
+			String lastaccess, String byebye, String target, String authorchk, ProfileDto profiledto,
+			OfferDto offerdto) {
 		super();
 		this.memberseq = memberseq;
 		this.email = email;
@@ -65,18 +67,9 @@ public class NaememberDto implements Serializable {
 		this.lastaccess = lastaccess;
 		this.byebye = byebye;
 		this.target = target;
+		this.authorchk = authorchk;
 		this.profiledto = profiledto;
 		this.offerdto = offerdto;
-	}
-
-	@Override
-	public String toString() {
-		return "NaememberDto [memberseq=" + memberseq + ", email=" + email + ", password=" + password + ", nickname="
-				+ nickname + ", introduce=" + introduce + ", phone=" + phone + ", birthday=" + birthday + ", gender="
-				+ gender + ", auth=" + auth + ", userstatus=" + userstatus + ", mentortier=" + mentortier
-				+ ", logincnt=" + logincnt + ", reportcnt=" + reportcnt + ", joindate=" + joindate + ", menteecnt="
-				+ menteecnt + ", menteeaccstar=" + menteeaccstar + ", lastaccess=" + lastaccess + ", byebye=" + byebye
-				+ ", target=" + target + ", profiledto=" + profiledto + ", offerdto=" + offerdto + "]";
 	}
 
 	public String getMemberseq() {
@@ -231,6 +224,14 @@ public class NaememberDto implements Serializable {
 		this.target = target;
 	}
 
+	public String getAuthorchk() {
+		return authorchk;
+	}
+
+	public void setAuthorchk(String authorchk) {
+		this.authorchk = authorchk;
+	}
+
 	public ProfileDto getProfiledto() {
 		return profiledto;
 	}
@@ -247,7 +248,19 @@ public class NaememberDto implements Serializable {
 		this.offerdto = offerdto;
 	}
 
+	@Override
+	public String toString() {
+		return "NaememberDto [memberseq=" + memberseq + ", email=" + email + ", password=" + password + ", nickname="
+				+ nickname + ", introduce=" + introduce + ", phone=" + phone + ", birthday=" + birthday + ", gender="
+				+ gender + ", auth=" + auth + ", userstatus=" + userstatus + ", mentortier=" + mentortier
+				+ ", logincnt=" + logincnt + ", reportcnt=" + reportcnt + ", joindate=" + joindate + ", menteecnt="
+				+ menteecnt + ", menteeaccstar=" + menteeaccstar + ", lastaccess=" + lastaccess + ", byebye=" + byebye
+				+ ", target=" + target + ", authorchk=" + authorchk + ", profiledto=" + profiledto + ", offerdto="
+				+ offerdto + "]";
+	}
 	
+	
+
 
 
 	

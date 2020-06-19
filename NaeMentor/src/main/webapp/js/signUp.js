@@ -152,10 +152,14 @@ $(function(){
 	$("#nickname").keyup(function(){
 		var inputLength = $(this).val().length;
 		var nickname = $(this).val();
+		var regexNick2 = /^[가-힣a-z0-9A-Z]{4,12}$/; //한글,영문,숫자포함 4-12자리 가능S
 		
 		if(nickname.indexOf(" ") != -1){
 			$("#result_nickname").css("color", "red");
 			$("#result_nickname").html("공백이 포함된 아이디는 입력하실 수 없습니다<br>");
+		}else if(!regexNick2.test(nickname)){
+			$("#result_nickname").css("color", "red");
+			$("#result_nickname").html("닉네임을 정확히 입력해주세요(한글,영문,숫자포함 4-12자리 가능)<br>");
 		}else {
 			jQuery.ajax({
 				type:"post",
