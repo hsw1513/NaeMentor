@@ -58,7 +58,7 @@ public class FindingMentor_CTRL {
 	private Matching_IService mservice;
 	@Autowired
 	private Notiquestion_IService nservice;
-  @
+	@Autowired
 	private Profile_IService pservice;
 	@Autowired
 	private Offer_IService oservice;
