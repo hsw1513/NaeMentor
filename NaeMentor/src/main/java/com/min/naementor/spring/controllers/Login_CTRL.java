@@ -193,7 +193,7 @@ public class Login_CTRL {
 				service.wakeUp(gdto.getMemberseq());
 				return "Naemember/changePassword";
 			}
-			return "Naemember/login";
+			return "redirect:/FindingMentor_board.do";
 		}else {
 			return "redirect:/index.do";
 		}

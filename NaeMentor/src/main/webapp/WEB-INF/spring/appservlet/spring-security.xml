@@ -54,7 +54,7 @@
 		<security:csrf disabled="true" />
 		
 		<security:session-management invalid-session-url="/index.do">
-			<security:concurrency-control max-sessions="1" expired-url="/index.do"/>
+			<security:concurrency-control max-sessions="2" expired-url="/result.do" error-if-maximum-exceeded="true"/>
 		</security:session-management>
 	</security:http>
 	

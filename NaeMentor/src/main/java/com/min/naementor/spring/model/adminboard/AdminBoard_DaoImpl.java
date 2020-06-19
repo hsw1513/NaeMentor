@@ -40,8 +40,8 @@ public class AdminBoard_DaoImpl implements AdminBoard_IDao {
 
 	// 신고게시글 삭제
 	@Override
-	public boolean deleteReport() {
-		int cnt = sqlSession.delete(NS+"deleteReport");
+	public boolean deleteReportAuto() {
+		int cnt = sqlSession.delete(NS+"deleteReportAuto");
 		return (cnt>0)?true:false;
 	}
 
@@ -99,6 +99,23 @@ public class AdminBoard_DaoImpl implements AdminBoard_IDao {
 	@Override
 	public String searchReportCnt(Map<String, String> map) {
 		return sqlSession.selectOne(NS2+"searchReportCnt", map);
+	}
+
+	@Override
+	public boolean tierPromotion(Map<String, String> map) {
+		int cnt = sqlSession.update(NS+"tierPromotion", map);
+		return (cnt>0)?true:false;
+	}
+
+	@Override
+	public boolean deleteReport(Map<String, String> map) {
+		int cnt = sqlSession.update(NS+"deleteReport", map);
+		return (cnt>0)?true:false;
+	}
+
+	@Override
+	public NaememberDto personalInfo(Map<String, String> map) {
+		return sqlSession.selectOne(NS+"personalInfo", map);
 	}
 
 }

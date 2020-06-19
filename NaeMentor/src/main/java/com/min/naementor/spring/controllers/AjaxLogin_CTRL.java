@@ -63,8 +63,13 @@ public class AjaxLogin_CTRL {
 		@RequestMapping(value = "/idSend.do", method = RequestMethod.POST)
 		@ResponseBody
 		public String idSend(Model model, NaememberDto dto) {
+			log.info("아이디찾기****{}", dto);
 			String email = service.searchId(dto);
-			return email;
+			if(email != null) {
+				return email;
+			}else {
+				return "no";
+			}
 		}
 		
 		@RequestMapping(value = "/searchLoginCnt.do", method = RequestMethod.POST)
@@ -106,11 +111,7 @@ public class AjaxLogin_CTRL {
 				e.printStackTrace();
 			}
 			
-			PrintWriter out = response.getWriter();
-			out.println("<script>alert('메일이 발송되었습니다.'); location.href='./index.do'</script>");
-			out.flush();// Stream 객체는 flush 안해주면 작동이 되지 않음(flush:  stream에 남아 있는 데이터를 강제로 내보내는 역할)
-			
-			return "<script>alert('비밀번호 변경 페이지 메일이 발송되었습니다. 확인해주세요.');</script>";
+			return "true";
 		}
 		
 		
