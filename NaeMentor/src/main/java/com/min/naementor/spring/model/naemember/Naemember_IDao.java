@@ -129,5 +129,4 @@ public interface Naemember_IDao {
 	 */
 	public boolean changePassword(NaememberDto dto);
 	
-	
 }

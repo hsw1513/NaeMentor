@@ -124,4 +124,16 @@ public class FindingMentor_ServiceImpl implements FindingMentor_IService{
 		return dao.updateNoMatching(boardseq);
 	}
 
+	@Override
+	public boolean deleteNoMatching() {
+		log.info("deleteNoMatching");
+		return dao.deleteNoMatching();
+	}
+
+	@Override
+	public boolean deleteCompleteMatching() {
+		log.info("deleteCompleteMatching");
+		return dao.deleteCompleteMatching();
+	}
+
 }

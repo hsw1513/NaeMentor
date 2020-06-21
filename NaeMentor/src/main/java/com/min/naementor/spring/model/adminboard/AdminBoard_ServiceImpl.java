@@ -36,8 +36,8 @@ public class AdminBoard_ServiceImpl implements AdminBoard_IService {
 	}
 
 	@Override
-	public boolean deleteReport() {
-		return dao.deleteReport();
+	public boolean deleteReportAuto() {
+		return dao.deleteReportAuto();
 	}
 
 	@Override
@@ -83,6 +83,21 @@ public class AdminBoard_ServiceImpl implements AdminBoard_IService {
 	@Override
 	public String searchReportCnt(Map<String, String> map) {
 		return dao.searchReportCnt(map);
+	}
+
+	@Override
+	public boolean tierPromotion(Map<String, String> map) {
+		return dao.tierPromotion(map);
+	}
+
+	@Override
+	public boolean deleteReport(Map<String, String> map) {
+		return dao.deleteReport(map);
+	}
+
+	@Override
+	public NaememberDto personalInfo(Map<String, String> map) {
+		return dao.personalInfo(map);
 	}
 
 }

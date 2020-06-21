@@ -25,8 +25,6 @@ public class AdminBoard_CTRL {
 	private AdminBoard_IService service;
 	
 	
-	
-	
 	// 관리자 페이지로 이동
 	@RequestMapping(value = "/adminBoard.do", method = RequestMethod.GET)
 	public String goAdmin(Model model) {

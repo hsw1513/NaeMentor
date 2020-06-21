@@ -164,10 +164,33 @@ public class AjaxAdminBoard_CTRL {
 				jsono.put("allUser", jLists);
 			}
 		}
-		
-		
 		return jsono;
 	}
+		@SuppressWarnings("unchecked")
+		@RequestMapping(value = "/userInfo.do", method = RequestMethod.GET)
+		@ResponseBody
+		public JSONObject userInfo(String memberseq) {
+			JSONObject json = new JSONObject();
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("memberseq", memberseq);
+			NaememberDto dto = service.personalInfo(map);
+			json.put("memberseq", dto.getMemberseq());
+			json.put("email", dto.getEmail());
+			json.put("nickname", dto.getNickname());
+			json.put("phone", dto.getPhone());
+			json.put("birthday", dto.getBirthday());
+			json.put("gender", dto.getGender());
+			json.put("auth", dto.getAuth());
+			json.put("userstatus", dto.getUserstatus());
+			json.put("mentortier", dto.getMentortier());
+			json.put("reportcnt", dto.getReportcnt());
+			json.put("joindate", dto.getJoindate());
+			json.put("lastaccess", dto.getLastaccess());
+			json.put("byebye", dto.getByebye());
+			System.out.println(dto+"@@@@@@@@@@@@@@@");
+			return json;
+		}
+	
 	
 	// 신고카운트 증가, 신고체크 초기화(Y)
 		@RequestMapping(value = "/changeSingoChk.do", method = RequestMethod.GET)
@@ -206,6 +229,7 @@ public class AjaxAdminBoard_CTRL {
 			map.put("memberseq", memberseq);
 			if(service.mentorPromotion(map)) {
 				service.promotionDate(map);
+				service.tierPromotion(map);
 				return "true";
 			}else {
 				return "false";
@@ -219,7 +243,7 @@ public class AjaxAdminBoard_CTRL {
 			log.info("신고 게시글 삭제");
 			Map<String, String> map = new HashMap<String, String>();
 			map.put("boardseq", boardseq);
-			if(service.deleteReport()) {
+			if(service.deleteReport(map)) {
 				return "true";
 			}else {
 				return "false";

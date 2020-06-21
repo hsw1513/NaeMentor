@@ -178,4 +178,16 @@ public class FindingMentor_DaoImpl implements FindingMentor_IDao{
 		return session.update(NS+"updateNoMatching", boardseq)>0?true:false;
 	}
 
+	@Override
+	public boolean deleteNoMatching() {
+		int cnt = session.update(NS+"deleteNoMatching");
+		return (cnt>0)?true:false;
+	}
+
+	@Override
+	public boolean deleteCompleteMatching() {
+		int cnt = session.update(NS+"deleteCompleteMatching");
+		return (cnt>0)?true:false;
+	}
+
 }

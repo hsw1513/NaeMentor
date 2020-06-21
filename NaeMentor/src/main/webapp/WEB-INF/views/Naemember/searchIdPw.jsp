@@ -4,57 +4,45 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>아이디 비밀번호 찾기</title>
 <link type="text/css" rel="stylesheet" href="./css/sweetalert.css">
+<link type="text/css" rel="stylesheet" href="./css/naeMember/searchIdPw.css">
 </head>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.js"></script>
-<script type="text/javascript">
-// 	var dataf = "";
-// 	window.onload = function(){
-// 		dataf = "birthday="+document.getElementById("birthday").value+"&phone="+document.getElementById("phone").value;
-// 	}
-	
-// 	$(function(){
-// 		$.ajax(function(){
-// 			url:"./idSend.do",
-// 			data: dataf,
-// 			method: "post",
-// 			success: function(msg){
-// 				alert(msg);
-// // 				$("#birthday").prepend("<div>회원님의 ID는"+msg+"입니다.</div>");
-// 		},
-// 		error: function(){
-// 				alert("정확한 아이디와 생년월일을 입력해주세요");
-// 		}
-// 	});
-		
-// 	});
-	
-// 	function btn1(){
-// 		alert(dataf);
-// 	}
-</script>
+<script type="text/javascript" src="./js/searchIdPw.js"></script>
 <body>
+<%@include file="/WEB-INF/views/noneTopMenu.jsp"%>
 	<div id="container">
-			<h2>아이디 찾기</h2>
-		<form action="./idSend.do" method="post">
-			<input type="text" id="phone" name="phone" placeholder="휴대전화 번호입력(-포함)"><br>
-			<input type="text" id="birthday" name="birthday" placeholder="생년월일 입력(ex:19990101)"/><br>
-			<div id="button">
-				<input type="submit" value="아이디 찾기">
-			</div>
+		<div id="centerdiv">
+			<h3 class="join_title">
+				<label for="pswd1">아이디 찾기</label>
+			</h3>
+		<form id="idSend1" method="post">
+			<span class="ps_box int_id">
+			<input class="int" type="text" id="phone" name="phone" placeholder="휴대전화 번호입력(-포함)"><br>
+			</span>
+			<span class="ps_box int_id">
+			<input class="int" type="text" id="birthday" name="birthday" placeholder="생년월일 입력(YYYYMMDD)"/><br>
+			</span>
 		</form>
-<!-- 		<button onclick="btn1()">버튼</button> -->
+		<button class="myButton1" onclick="idChk()">아이디 찾기</button>
 
-			<h2>비밀번호 찾기</h2>
-		<form action="./passwordSend.do" method="post">
-			<input type="email" id="email" name="email" placeholder="ID 입력"><br>
-			<input type="text" id="birthday" name="birthday" placeholder="생년월일 입력(ex:19990101)"/><br>
-			<div id="button">
-				<input type="submit" value="비밀번호 변경 URL 전송">
-			</div>
+			<h3 class="join_title1">
+				<label for="pswd1">비밀번호 찾기</label>
+			</h3>
+		<form id="pwSend1" method="post">
+			<span class="ps_box int_id">
+			<input class="int" type="email" id="pwemail" name="email" placeholder="ID 입력"><br>
+			</span>
+			<span class="ps_box int_id">
+			<input class="int" type="text" id="pwbirthday" name="birthday" placeholder="생년월일 입력(YYYYMMDD)"/><br>
+			</span>
 		</form>
+		<button class="myButton1" onclick="pwChk()">비밀번호 찾기</button><br>
+		<button class="myButton1" onclick="javascript:history.back(-1)">돌아가기</button>
+		</div>
 	</div>
+	<%@include file="/WEB-INF/views/footer.jsp"%>
 </body>
 </html>

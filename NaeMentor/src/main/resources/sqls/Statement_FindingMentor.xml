@@ -240,5 +240,19 @@ ORDER BY BOARDSEQ DESC
 	UPDATE FINDINGMENTOR SET DELFLAG = 'Y' WHERE BOARDSEQ = #{boardseq}
 </update>
 
+<!-- 매칭 안된 글 이틀 후 지우기 -->
+<update id="deleteNoMatching">
+UPDATE FINDINGMENTOR 
+	SET DELFLAG = 'Y'
+		WHERE DELFLAG = 'N' AND SYSDATE - WRITESDATE >=2
+</update>
+
+<!-- 멘토링 날짜 후 3일이 지난 글 삭제 -->
+<update id="deleteCompleteMatching">
+UPDATE FINDINGMENTOR 
+	SET DELFLAG = 'Z'
+		WHERE DELFLAG = 'C' AND SYSDATE - MENTORINGDATE >= 3
+</update>
+
 
 </mapper>
