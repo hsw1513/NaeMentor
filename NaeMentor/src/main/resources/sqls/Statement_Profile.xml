@@ -100,11 +100,11 @@
 		UPDATE NAEMEMBER
 			<set>
 				AUTH = 
-				<if test="toMentor != null">
-					#{toMentor}
+				<if test="tomentor != null">
+					#{tomentor}
 				</if>
-				<if test="toMentee != null">
-					#{toMentee}
+				<if test="tomentee != null">
+					#{tomentee}
 				</if>
 			</set>
 			WHERE MEMBERSEQ = #{memberseq}

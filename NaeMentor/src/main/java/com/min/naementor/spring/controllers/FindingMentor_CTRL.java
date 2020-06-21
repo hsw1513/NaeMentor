@@ -289,7 +289,11 @@ public class FindingMentor_CTRL {
 			map.put("tomentee", "ROLE_E");
 		}
 		map.put("memberseq", dto.getMemberseq());
-		pservice.changeAuth(map);
+		if(pservice.changeAuth(map)) {
+			String email = dto.getEmail();
+			session.removeAttribute("userinfo");
+			session.setAttribute("userinfo", nmservice.encLogin(email));
+		}
 		return "redirect:/FindingMentor_board.do";
 	}
 	
