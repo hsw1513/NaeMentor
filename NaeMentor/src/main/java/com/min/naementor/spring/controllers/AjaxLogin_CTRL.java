@@ -8,6 +8,8 @@ import java.util.UUID;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONObject;
@@ -91,7 +93,7 @@ public class AjaxLogin_CTRL {
 		// 비밀번호 변경 링크 보내주기
 		@RequestMapping(value = "/passwordSend.do", method = RequestMethod.POST)
 		@ResponseBody
-		public String sendEmail(HttpServletResponse response, NaememberDto dto) throws IOException {
+		public String sendEmail(HttpServletResponse response, NaememberDto dto) throws IOException, ServletException {
 			
 			String setFrom = "hsw1513@gmail.com"; // 보낼 아이디
 			String toEmail = service.searchPassword(dto);// 받을 아이디

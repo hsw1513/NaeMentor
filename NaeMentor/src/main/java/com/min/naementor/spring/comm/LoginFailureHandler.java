@@ -8,7 +8,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.aspectj.bridge.MessageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
@@ -41,56 +43,33 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
 		return email;
 	}
 
-
-
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-
-
 
 	public String getPassword() {
 		return password;
 	}
 
-
-
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-
-
 
 	public String getErrormsgname() {
 		return errormsgname;
 	}
 
-
-
-
 	public void setErrormsgname(String errormsgname) {
 		this.errormsgname = errormsgname;
 	}
-
-
-
 
 	public String getDefaultFailureUrl() {
 		return defaultFailureUrl;
 	}
 
-
-
-
 	public void setDefaultFailureUrl(String defaultFailureUrl) {
 		this.defaultFailureUrl = defaultFailureUrl;
 	}
-
-
 
 
 	@Override

@@ -164,7 +164,7 @@
 		
 	<!-- 비밀번호 변경 -->
 	<update id="changePassword" parameterType="NMDto">
-		UPDATE NAEMEMBER 
+		UPDATE NAEMEMBER
 			SET PASSWORD = #{password}
 				WHERE EMAIL = #{email}
 	</update>
