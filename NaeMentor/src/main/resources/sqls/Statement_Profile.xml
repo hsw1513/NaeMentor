@@ -94,7 +94,20 @@
 			SET PHONE = #{phone}
 				WHERE MEMBERSEQ = #{memberseq}
 	</update>
-
 	
+	<!-- 권한 변경 -->
+	<update id="changeAuth" parameterType="java.util.Map">
+		UPDATE NAEMEMBER
+			<set>
+				AUTH = 
+				<if test="toMentor != null">
+					#{toMentor}
+				</if>
+				<if test="toMentee != null">
+					#{toMentee}
+				</if>
+			</set>
+			WHERE MEMBERSEQ = #{memberseq}
+	</update>
 
 </mapper>

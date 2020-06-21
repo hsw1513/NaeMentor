@@ -43,6 +43,7 @@ import com.min.naementor.spring.comm.FindingMentor_MakeArrayList;
 import com.min.naementor.spring.comm.SplitUserComm;
 import com.min.naementor.spring.model.findingMentor.FindingMentor_IService;
 import com.min.naementor.spring.model.matching.Matching_IService;
+import com.min.naementor.spring.model.naemember.Naemember_IService;
 import com.min.naementor.spring.model.notiquestion.Notiquestion_IService;
 import com.min.naementor.spring.model.offer.Offer_IService;
 import com.min.naementor.spring.model.profile.Profile_IService;
@@ -58,7 +59,7 @@ public class FindingMentor_CTRL {
 	private Matching_IService mservice;
 	@Autowired
 	private Notiquestion_IService nservice;
-  @
+	@Autowired 
 	private Profile_IService pservice;
 	@Autowired
 	private Offer_IService oservice;
@@ -66,6 +67,8 @@ public class FindingMentor_CTRL {
 	private Review_IService rservice;
 	@Autowired
 	private FindingMentor_MakeArrayList makearray;
+	@Autowired
+	private Naemember_IService nmservice;
 	
 	// 게시판 리스트 
 	@RequestMapping("FindingMentor_board.do")
@@ -275,7 +278,20 @@ public class FindingMentor_CTRL {
 	}
 	
 	
-	
+	// 권한 변경
+	@RequestMapping("/changeAuth.do")
+	public String changeAuth(HttpSession session) {
+		NaememberDto dto = (NaememberDto) session.getAttribute("userinfo");
+		Map<String,String> map = new HashMap<String, String>();
+		if(dto.getAuth().equals("ROLE_E")) {
+			map.put("tomentor", "ROLE_R");
+		}else {
+			map.put("tomentee", "ROLE_E");
+		}
+		map.put("memberseq", dto.getMemberseq());
+		pservice.changeAuth(map);
+		return "redirect:/FindingMentor_board.do";
+	}
 	
 	
 }

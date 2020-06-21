@@ -9,7 +9,23 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
+<script type="text/javascript">
+	function changeAuth(val){
+		if(val == 'ROLE_E'){
+			if(confirm('멘토로 권한을 변경합니다.')){
+				location.href = "./changeAuth.do";
+			}else{
+				alert('취소되었습니다.');
+			}
+		}else if(val == 'ROLE_R'){
+			if(confirm('멘티로 권한을 변경합니다.')){
+				location.href = "./changeAuth.do";
+			}else{
+				alert('취소되었습니다.');
+			}
+		}
+	}
+</script>
 	<nav class="navbar navbar-inverse">
   <div class="container-fluid" style="height: 100px;">
     <div class="navbar-header">
@@ -26,8 +42,16 @@
       <li>
      	 <a href="./Profile.do">
       		<span class="glyphicon glyphicon-user">
-      		<c:if test="${userinfo.auth eq 'ROLE_E'}">멘티_</c:if>
-      		<c:if test="${userinfo.auth eq 'ROLE_R'}">멘토_</c:if>
+      		<c:choose>
+      			<c:when test="${userinfo.authorchk eq 'Y'}">
+      				<c:if test="${userinfo.auth eq 'ROLE_E'}"><a onclick="changeAuth(${userinfo.auth})">멘티_</a></c:if>
+      				<c:if test="${userinfo.auth eq 'ROLE_R'}"><a onclick="changeAuth(${userinfo.auth})">멘토_</a></c:if>
+      			</c:when>
+      			<c:otherwise>
+      				<c:if test="${userinfo.auth eq 'ROLE_E'}">멘티_</c:if>
+      				<c:if test="${userinfo.auth eq 'ROLE_R'}">멘토_</c:if>
+      			</c:otherwise>
+      		</c:choose>
       		<c:if test="${userinfo.auth eq 'ROLE_A'}">관리자_</c:if>${userinfo.nickname}님, 환영합니다.</span> 
       		
       	</a>
