@@ -46,7 +46,7 @@ function searchMyID(){
 			if (msg != "no") { 
 				swal("아이디 찾기 성공",msg);
 			} else { 
-				swal("아이디 찾기 실패","다시 한번 시도해주세요");
+				swal("아이디 찾기 실패","존재하지 않는 회원입니다. 회원정보를 정확히 입력해주세요.");
 			} 
 		},
 		error: function(){
@@ -62,7 +62,7 @@ function searchMyPW(){
 		data: $('#pwSend1').serialize(),
 		success: function(msg) { 
 			if (msg == "true") { 
-				swal("비밀벊 찾기 성공","입력하신 이메일로 비밀번호 변경 링크를 발송했습니다. 확인해주세요");
+				swal("비밀번호 찾기 성공","입력하신 이메일로 비밀번호 변경 링크를 발송했습니다. 확인해주세요");
 			}
 		},
 		error: function(){

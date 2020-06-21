@@ -217,7 +217,7 @@ var ajaxReportMember = function(){
 				$.each(value, function(k,v){ // 신고당한 회원 조회
 					html += "<tr><th>연번</th> <th>신고한 회원</th> <th>신고당한 회원</th> <th>신고사유</th>"; 
 					html +=	"<th>내용</th> <th>작성일</th> <th>삭제여부</th> <th>멘토링장소</th> <th>멘토링시간</th>";
-					html +=	"<th>결정</th><th>결정</th>";
+					html +=	"<th>결정</th><th>경고증가</th>";
 					html +=	"</tr>";
 					html += "<tr>";
 					html += "<td>"+(k+1)+"</td>"
@@ -226,7 +226,7 @@ var ajaxReportMember = function(){
 					html += "<td>"+v.content+"</td>"+"<td>"+v.writedate+"</td>";
 					html += "<td>"+v.delflag+"</td>"+"<td>"+v.mentoringplace+"</td>";
 					html += "<td>"+v.mentoringtime+"</td>";
-					html += "<td><input class='myButton' type='button' value='경고증가' onclick='changeSingoChk(\""+v.singoedmember+"\")'></td>";
+					html += "<td><input class='myButton' type='button' value='증가' onclick='changeSingoChk(\""+v.singoedmember+"\")'></td>";
 					html += "<td><input class='myButton' type='button' value='취소' onclick='delSingoChk(\""+v.singoedmember+"\")'></td>";
 					html += "</tr>";
 				});

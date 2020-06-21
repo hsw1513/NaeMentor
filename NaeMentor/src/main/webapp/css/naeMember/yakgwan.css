@@ -7,9 +7,26 @@
 	margin-bottom: 30px;
 	padding: 10px;
 	border: 1px solid #E1E1E3;
-	overflow-y: scroll;
 	background-color: #fff;
+}
+
+#docs-title{
+	margin-top: 100px;
+}
+
+#yakGwanScroll{
+	position: relative;
+	overflow:scroll; 
+	width:1200px; 
+	height:600px;
 }
 
 .usm-agree input[type="checkbox"] { cursor: pointer; }
 .usm-agree label { padding: 0 0 0 7px; cursor: pointer; }
+
+#button {
+    margin-top: 50px;
+    position: relative;
+    text-align: center;
+    margin-bottom: 50px;
+}

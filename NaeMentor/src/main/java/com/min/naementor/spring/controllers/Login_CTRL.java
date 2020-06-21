@@ -134,7 +134,6 @@ public class Login_CTRL {
 	@RequestMapping(value = "/cancel.do", method = RequestMethod.GET)
 	public String cancelSignUp(Model model, String email) {
 		log.info("프로필 입력 취소시 회원가입 취소 cancelSignUp");
-		System.out.println("********"+email);
 		service.cancelSignUp(email);
 		return "Naemember/loginPage";
 	}
@@ -147,6 +146,7 @@ public class Login_CTRL {
 
 		if (error != null) { // 로그인 실패시 로그인 카운트 증가
 			String email = request.getParameter("email");
+			request.getParameter("errormsgname");
 			Map<String, String> map = new HashMap<String, String>();
 			map.put("email", email);
 			service.loginCount(map); // 로그인 카운트 증가
@@ -164,7 +164,7 @@ public class Login_CTRL {
 	// 로그아웃시 시간 기록
 	@RequestMapping(value = "/logoutgo.do", method = RequestMethod.GET)
 	public String logoutTime(Model model, String email) {
-		log.info("**************logout.do 들어왔다"+email);
+		log.info("로그아웃시 시간 기록 logoutTime, {}", email);
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("email", email);
 		service.logoutTime(map);
@@ -203,17 +203,24 @@ public class Login_CTRL {
 	// 아이디/비밀번호 찾기 페이지로 이동
 	@RequestMapping(value = "/searchIdPW.do", method = RequestMethod.GET)
 	public String idPwSearch(String phone) {
+		log.info("아아디/비밀번호 찾기 페이지로 이동 idPwSearch, {}", phone);
 		return "Naemember/searchIdPw";
 	}
 
 	@RequestMapping(value = "/changePassword.do", method = RequestMethod.GET)
 	public String changePassword() {
+		log.info("비밀번호 변경 페이지로 이동 changePassword");
+;
 		return "Naemember/changePassword";
 	}
 
 	@RequestMapping(value = "/newPassword.do", method = RequestMethod.POST)
 	public String newPassword(NaememberDto dto) {
+		log.info("비밀번호 변경 newPassword, {}", dto);
 		service.changePassword(dto);
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("email", dto.getEmail());
+		service.initLoginCount(map);
 		return "Naemember/loginPage";
 	}
 

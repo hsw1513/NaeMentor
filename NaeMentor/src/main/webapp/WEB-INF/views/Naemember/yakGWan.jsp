@@ -5,17 +5,20 @@
 <head>
 <meta charset="UTF-8">
 <title>약관</title>
+<link type="text/css" rel="stylesheet" href="./css/naeMember/yakgwan.css">
 <link type="text/css" rel="stylesheet" href="./css/basic.css">
 </head>
 <script type="text/javascript" src="./js/yakGwan.js"></script>
 <body>
+<%@include file="/WEB-INF/views/noneTopMenu.jsp"%>
 	<div id="container">
-	<div class="usm-join-box">
-		<div class="docs-component" data-v-4a85d731 data-v-6b2cef1c>
-			<div data-name="docs-title" data-v-4a85d731>
+			<div id="docs-title">
 				<h1 class="text-center" data-v-4a85d731>이용 약관</h1>
 				<h2 data-v-4a85d731>주식회사 내멘토 이용 약관</h2>
 			</div>
+	<div id="yakGwanScroll">
+	<div class="usm-join-box">
+		<div class="docs-component" data-v-4a85d731 data-v-6b2cef1c>
 			<article data-v-4a85d731>
 				<section data-name="docs-content">
 					<h3>제 1 장 총칙</h3>
@@ -736,10 +739,13 @@
 			</article>
 		</div>
 	</div>
+	</div>
 		<form action="./singUpGo.do" method="get" onsubmit="return yakGwangChk()">
-		<label><input id="yakgwan" type="checkbox" value="agree">약관에 동의합니다</label><br>
+		<label style="font-size: 15px;"><input id="yakgwan" type="checkbox" value="agree">약관에 동의합니다</label><br>
+		<div id="button">
 		<input type="submit" class="myButton" value="회원가입 페이지로 이동">
 		<input type="button" class="myButton" value="돌아가기" onclick="javascript:history.back(-1)">
+		</div>
 		</form>
 		
 		
