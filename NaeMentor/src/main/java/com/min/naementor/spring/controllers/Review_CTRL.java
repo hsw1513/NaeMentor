@@ -95,7 +95,7 @@ public class Review_CTRL {
 		}else {
 		 return "redirect:/FindingMentor_board.do";
 		}
-		return "redirect:/review.do?boardseq="+dto.getBoardseq();
+		return "redirect:/reviewBoard.do?boardseq="+dto.getBoardseq();
 	}
 	// 후기 체크
 	@RequestMapping(value= "/chkReview.do", method=RequestMethod.POST)

@@ -66,7 +66,7 @@
       </tr>
     </thead>
     <tbody>
-	<c:forEach items="${board_lists}" var="lists" begin="1" step="1" end="3">
+	<c:forEach items="${board_lists}" var="lists" begin="0" step="1" end="2">
 	<c:if test="${userinfo.memberseq eq lists.memberseq}">
       <tr>
         <td><a href='./detailContent.do?boardseq=${lists.boardseq}&memberseq=${lists.memberseq}'>${fn:substring(lists.title	, 0, 8)}</a></td>
@@ -107,10 +107,10 @@
       </tr>
     </thead>
     <tbody>
-	<c:forEach items="${matching_lists}" var="mlists" begin="1" step="1" end="3">
+	<c:forEach items="${matching_lists}" var="mlists" begin="0" step="1" end="2">
 	<c:if test="${userinfo.memberseq eq mlists.memberseq}">
       <tr>
-        <td><a href='./detailContent.do?boardseq=${mlists.boardseq}&memberseq=${mlists.memberseq}</a>${fn:substring(mlists.title, 0, 8)}</td>
+        <td><a href='./detailContent.do?boardseq=${mlists.boardseq}&memberseq=${mlists.memberseq}'>${fn:substring(mlists.title, 0, 8)}</a></td>
         <td>${fn:substring(mlists.mentoringdate, 0, 16)}</td>
         <td>${mlists.location}</td>
       </tr>
@@ -145,7 +145,7 @@
       </tr>
     </thead>
     <tbody>
-	<c:forEach items="${complete_lists}" var="clists" begin="1" step="1" end="3">
+	<c:forEach items="${complete_lists}" var="clists" begin="0" step="1" end="2">
 	<c:if test="${userinfo.memberseq eq clists.memberseq}">
       <tr>
         <td><a href='./detailContent.do?boardseq=${clists.boardseq}&memberseq=${clists.memberseq}'>${fn:substring(clists.title, 0, 8)}</a></td>
