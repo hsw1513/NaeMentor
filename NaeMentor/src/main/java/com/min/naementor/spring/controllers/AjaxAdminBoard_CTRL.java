@@ -49,6 +49,7 @@ public class AjaxAdminBoard_CTRL {
 	@RequestMapping(value = "/userDetail.do", method = RequestMethod.GET)
 	@ResponseBody
 	public JSONObject userDetail(Model model, String memberseq) {
+		log.info("정보 상세보기 userDetail {}", memberseq);
 		JSONObject json = new JSONObject();
 		ProfileDto pdto = service.userDetail(memberseq);
 		json.put("memberseq", pdto.getMemberseq());
@@ -71,10 +72,9 @@ public class AjaxAdminBoard_CTRL {
 	@ResponseBody
 	public JSONObject memberList(Model model, String memberList, HttpSession session) {
 		JSONArray jLists = new JSONArray();
-		log.info("******회원고르기"+memberList);
+		log.info("회원고르기, {}",memberList);
 		JSONObject jsono = new JSONObject();
 		
-//		NaememberDto dto = (NaememberDto) session.getAttribute("userinfo");
 		if(memberList.equalsIgnoreCase("reportContent")) {
 			List<FindingMentorDto> fdto = service.SearchRC();
 			for (int i = 0; i < fdto.size(); i++) {
@@ -162,7 +162,7 @@ public class AjaxAdminBoard_CTRL {
 				json.put("byebye", ldto.get(i).getByebye());
 				jLists.add(json);
 				jsono.put("allUser", jLists);
-			}
+			} // 유저 기본정보 조회
 		}
 		return jsono;
 	}
@@ -170,6 +170,7 @@ public class AjaxAdminBoard_CTRL {
 		@RequestMapping(value = "/userInfo.do", method = RequestMethod.GET)
 		@ResponseBody
 		public JSONObject userInfo(String memberseq) {
+			log.info("유저 기본정보 userInfo, {}", memberseq);
 			JSONObject json = new JSONObject();
 			Map<String, String> map = new HashMap<String, String>();
 			map.put("memberseq", memberseq);
@@ -187,7 +188,6 @@ public class AjaxAdminBoard_CTRL {
 			json.put("joindate", dto.getJoindate());
 			json.put("lastaccess", dto.getLastaccess());
 			json.put("byebye", dto.getByebye());
-			System.out.println(dto+"@@@@@@@@@@@@@@@");
 			return json;
 		}
 	
@@ -229,7 +229,7 @@ public class AjaxAdminBoard_CTRL {
 		@RequestMapping(value = "/changeBye.do", method = RequestMethod.GET)
 		@ResponseBody
 		public String changeBye(String email, String userstatus) {
-			log.info("탈퇴회원 승인시 권한 변경");
+			log.info("탈퇴회원 승인시 권한 변경 changeBye, {}, {}", email, userstatus);
 			Map<String, String> map = new HashMap<String, String>();
 			map.put("email", email);
 			if(service.changeStatusBye()) {
@@ -243,7 +243,7 @@ public class AjaxAdminBoard_CTRL {
 		@RequestMapping(value = "/mentorPromotion.do", method = RequestMethod.GET)
 		@ResponseBody
 		public String changeBye(String memberseq) {
-			log.info("멘토승급 승인 및 승급시간 기록");
+			log.info("멘토승급 승인 및 승급시간 기록 changeBye, {}", memberseq);
 			Map<String, String> map = new HashMap<String, String>();
 			map.put("memberseq", memberseq);
 			if(service.mentorPromotion(map)) {
@@ -259,7 +259,7 @@ public class AjaxAdminBoard_CTRL {
 		@RequestMapping(value = "/deleteReport.do", method = RequestMethod.GET)
 		@ResponseBody
 		public String deleteReport(String boardseq) {
-			log.info("신고 게시글 삭제");
+			log.info("신고 게시글 삭제 deleteReport, {}", boardseq);
 			Map<String, String> map = new HashMap<String, String>();
 			map.put("boardseq", boardseq);
 			if(service.deleteReport(map)) {
@@ -273,11 +273,11 @@ public class AjaxAdminBoard_CTRL {
 		@RequestMapping(value = "/mentorCancel.do", method = RequestMethod.GET)
 		@ResponseBody
 		public String mentorCancel(String memberseq) {
-
+			log.info("멘토승인 거절 mentorCancel, {}", memberseq);
+			
 			Map<String, String> map = new HashMap<String, String>();
 			map.put("memberseq", memberseq);
 			
-			log.info("멘토승인 거절");
 			if(service.mentorCancel(map)) {
 			
 			// 메일보내기
@@ -307,7 +307,7 @@ public class AjaxAdminBoard_CTRL {
 		// 신고카운트 감소
 		@RequestMapping(value = "/delSingoChk.do", method = RequestMethod.GET)
 		public String delSingoChk(String singoedmember) {
-			log.info("신고카운트 감소"+singoedmember);
+			log.info("신고카운트 감소 delSingoChk, {}", singoedmember);
 			Map<String, String> map = new HashMap<String, String>();
 			map.put("singoedmember", singoedmember);
 			if(service.delSingoChk(map)) {

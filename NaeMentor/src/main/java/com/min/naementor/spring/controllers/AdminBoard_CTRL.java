@@ -28,7 +28,7 @@ public class AdminBoard_CTRL {
 	// 관리자 페이지로 이동
 	@RequestMapping(value = "/adminBoard.do", method = RequestMethod.GET)
 	public String goAdmin(Model model) {
-		log.info("관리자 페이지로 이동");
+		log.info("관리자 페이지로 이동 goAdmin");
 		List<NaememberDto> lists = service.userBasicInfo();
 		model.addAttribute("lists",lists);
 		return "AdminBoard/adminPage";
