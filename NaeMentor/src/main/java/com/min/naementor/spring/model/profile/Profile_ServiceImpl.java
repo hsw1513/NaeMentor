@@ -1,5 +1,7 @@
 package com.min.naementor.spring.model.profile;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +60,11 @@ public class Profile_ServiceImpl implements Profile_IService{
 	public boolean changePhone(NaememberDto dto) {
 		log.info("Profile_ServiceImpl changePhone:{}",dto);
 		return dao.changePhone(dto);
+	}
+	@Override
+	public boolean changeAuth(Map<String, String> map) {
+		log.info("Profile_ServiceImpl changeAuth:{}",map);
+		return dao.changeAuth(map);
 	}
 	
 }

@@ -15,6 +15,7 @@
 		FROM REVIEW r 
 		JOIN MATCHING m ON r.BOARDSEQ = m.BOARDSEQ
 		WHERE m.MENTORSEQ =#{mentorseq} AND MENTEESTAR = '0'
+		ORDER BY r.WRITEDATE DESC
 	</select>
 <!-- 멘토가 멘티의 별점과 후기 조회  -->
 	<select id="denyMSearch" parameterType="java.lang.String" resultType="RVDto">
@@ -22,6 +23,7 @@
 		FROM REVIEW r 
 		JOIN MATCHING m ON r.BOARDSEQ = m.BOARDSEQ
 		WHERE m.MENTEESEQ =#{menteeseq} AND MENTORSTAR = '0'
+		ORDER BY r.WRITEDATE DESC
 	</select>
 <!-- 멘토링 종료 후 3일간 공고글 에서 입력(작성자, 멘토링 상대, 작성일, 멘토링 날짜, 내용, 별점 입력)  -->
 	<select id="chkReviewMentor" parameterType="java.lang.String" resultType="java.lang.Integer">

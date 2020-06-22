@@ -1,5 +1,7 @@
 package com.min.naementor.spring.model.profile;
 
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -51,5 +53,9 @@ public class Profile_DaoImpl implements Profile_IDao{
 	public boolean changePhone(NaememberDto dto) {
 		int cnt = session.update(NS+"changePhone", dto);
 		return (cnt>0)?true:false;
+	}
+	@Override
+	public boolean changeAuth(Map<String, String> map) {
+		return session.update(NS+"changeAuth", map)>0?true:false;
 	}
 }

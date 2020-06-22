@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -65,12 +66,13 @@
       </tr>
     </thead>
     <tbody>
-	<c:forEach items="${board_lists}" var="lists">
+	<c:forEach items="${board_lists}" var="lists" begin="0" step="1" end="2">
 	<c:if test="${userinfo.memberseq eq lists.memberseq}">
       <tr>
-        <td><a href='./detailContent.do?boardseq=${lists.boardseq}&memberseq=${lists.memberseq}'>${lists.title}</a></td>
-        <td>${lists.mentoringdate}</td>
+        <td><a href='./detailContent.do?boardseq=${lists.boardseq}&memberseq=${lists.memberseq}'>${fn:substring(lists.title	, 0, 8)}</a></td>
+        <td>${fn:substring(lists.mentoringdate, 0, 16)}</td>
         <td>${lists.mentorlist}</td>
+        
       </tr>
        </c:if>
       
@@ -78,13 +80,14 @@
        
 	<c:if test="${userinfo.auth eq 'ROLE_R'}">
 	<c:if test="${userinfo.target eq lists.target}">
-	
+	<c:if test="${userinfo.memberseq ne lists.memberseq}">
       <tr>
-        <td><a href='./detailContent.do?boardseq=${lists.boardseq}&memberseq=${lists.memberseq}'>${lists.title}</a></td>
-        <td>${lists.mentoringdate}</td>
+        <td><a href='./detailContent.do?boardseq=${lists.boardseq}&memberseq=${lists.memberseq}'>${fn:substring(lists.title	, 0, 8)}</a></td>
+        <td>${fn:substring(lists.mentoringdate, 0, 16)}</td>
         <td>${lists.mentorlist}</td>
       </tr>
        </c:if>
+	   </c:if>
        </c:if>
 	</c:forEach>
     </tbody>
@@ -104,11 +107,11 @@
       </tr>
     </thead>
     <tbody>
-	<c:forEach items="${matching_lists}" var="mlists">
+	<c:forEach items="${matching_lists}" var="mlists" begin="0" step="1" end="2">
 	<c:if test="${userinfo.memberseq eq mlists.memberseq}">
       <tr>
-        <td><a href='./detailContent.do?boardseq=${mlists.boardseq}&memberseq=${mlists.memberseq}'>${mlists.title}</a></td>
-        <td>${mlists.mentoringdate}</td>
+        <td><a href='./detailContent.do?boardseq=${mlists.boardseq}&memberseq=${mlists.memberseq}'>${fn:substring(mlists.title, 0, 8)}</a></td>
+        <td>${fn:substring(mlists.mentoringdate, 0, 16)}</td>
         <td>${mlists.location}</td>
       </tr>
        </c:if>
@@ -119,8 +122,8 @@
 	<c:if test="${userinfo.auth eq 'ROLE_R'}">
 	
       <tr>
-        <td><a href='./detailContent.do?boardseq=${mlists.boardseq}&memberseq=${mlists.memberseq}'>${mlists.title}</a></td>
-        <td>${mlists.mentoringdate}</td>
+        <td><a href='./detailContent.do?boardseq=${mlists.boardseq}&memberseq=${mlists.memberseq}'>${fn:substring(mlists.title, 0, 8)}</a></td>
+        <td>${fn:substring(mlists.mentoringdate, 0, 16)}</td>
         <td>${mlists.location}</td>
       </tr>
        </c:if>
@@ -142,11 +145,11 @@
       </tr>
     </thead>
     <tbody>
-	<c:forEach items="${complete_lists}" var="clists">
+	<c:forEach items="${complete_lists}" var="clists" begin="0" step="1" end="2">
 	<c:if test="${userinfo.memberseq eq clists.memberseq}">
       <tr>
-        <td><a href='./detailContent.do?boardseq=${clists.boardseq}&memberseq=${clists.memberseq}'>${clists.title}</a></td>
-        <td>${clists.mentoringdate}</td>
+        <td><a href='./detailContent.do?boardseq=${clists.boardseq}&memberseq=${clists.memberseq}'>${fn:substring(clists.title, 0, 8)}</a></td>
+        <td>${fn:substring(clists.mentoringdate, 0, 16)}</td>
         <td>${clists.location}</td>
       </tr>
        </c:if>
@@ -157,8 +160,8 @@
 	<c:if test="${userinfo.auth eq 'ROLE_R'}">
 	
       <tr>
-        <td><a href='./detailContent.do?boardseq=${clists.boardseq}&memberseq=${clists.memberseq}'>${clists.title}</a></td>
-        <td>${clists.mentoringdate}</td>
+        <td><a href='./detailContent.do?boardseq=${clists.boardseq}&memberseq=${clists.memberseq}'>${fn:substring(clists.title, 0, 8)}</a></td>
+        <td>${fn:substring(clists.mentoringdate, 0, 16)}</td>
         <td>${clists.location}</td>
       </tr>
        </c:if>

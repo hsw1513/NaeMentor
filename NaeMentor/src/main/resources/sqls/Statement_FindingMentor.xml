@@ -224,7 +224,7 @@ ORDER BY BOARDSEQ DESC
 		<if test="mentorseq != null">
 		WHERE m.MENTORSEQ =#{mentorseq}
 		</if>
-		<if test="MENTEESEQ != null">
+		<if test="menteeseq != null">
 		WHERE m.MENTEESEQ =#{menteeseq}
 		</if>
 		 AND DELFLAG = 'C'
