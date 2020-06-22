@@ -42,7 +42,7 @@ public class AjaxLogin_CTRL {
 		@RequestMapping(value = "/idCheck.do", method = RequestMethod.POST)
 		@ResponseBody
 		public Map<String, String> idDupleCheck(String email) {
-			log.info("이메일 중복검사");
+			log.info("이메일 중복검사 idDupleCheck, {}", email);
 			Map<String, String> map = new HashMap<String, String>();
 			boolean isc = service.idDupleChk(email);
 			map.put("isc", isc+"");
@@ -54,7 +54,7 @@ public class AjaxLogin_CTRL {
 		@RequestMapping(value = "/nickNameCheck.do", method = RequestMethod.POST)
 		@ResponseBody
 		public Map<String, String> nickDupleChk(String nickname) {
-			log.info("닉네임 중복검사");
+			log.info("닉네임 중복검사 nickDupleChk, {}", nickname);
 			Map<String, String> map = new HashMap<String, String>();
 			boolean isc = service.nickDupleChk(nickname);
 			map.put("isc", isc+"");
@@ -65,7 +65,7 @@ public class AjaxLogin_CTRL {
 		@RequestMapping(value = "/idSend.do", method = RequestMethod.POST)
 		@ResponseBody
 		public String idSend(Model model, NaememberDto dto) {
-			log.info("아이디찾기****{}", dto);
+			log.info("아이디찾기 idSend, {}", dto);
 			String email = service.searchId(dto);
 			if(email != null) {
 				return email;
@@ -77,6 +77,7 @@ public class AjaxLogin_CTRL {
 		@RequestMapping(value = "/searchLoginCnt.do", method = RequestMethod.POST)
 		@ResponseBody
 		public int searchLoginCnt(String email) {
+			log.info("로그인 시도 횟수 조회 searchLoginCnt, {}", email);
 			Map<String, String> map = new HashMap<String, String>();
 			map.put("email", email);
 			int cnt = service.searchLoginCnt(map);
@@ -94,6 +95,7 @@ public class AjaxLogin_CTRL {
 		@RequestMapping(value = "/passwordSend.do", method = RequestMethod.POST)
 		@ResponseBody
 		public String sendEmail(HttpServletResponse response, NaememberDto dto) throws IOException, ServletException {
+			log.info("비밀번호 변경 링크 보내주기 sendEmail, {}", dto);
 			
 			String setFrom = "hsw1513@gmail.com"; // 보낼 아이디
 			String toEmail = service.searchPassword(dto);// 받을 아이디
@@ -129,10 +131,10 @@ public class AjaxLogin_CTRL {
 		@RequestMapping(value = "/emailConfirm.do", method = RequestMethod.POST)
 		@ResponseBody
 		public String emailConfirm(HttpServletResponse response, String email) throws IOException {
+			log.info("아이디 확인 UUID 이메일 발송 emailConfirm, {}", email);
 			
 			if(!service.idDupleChk(email)) {
 			String setFrom = "hsw1513@gmail.com"; // 보낼 아이디
-			log.info(email);
 			String toEmail = email;// 받을 아이디
 			this.randomEmail = makeUUID();
 			
