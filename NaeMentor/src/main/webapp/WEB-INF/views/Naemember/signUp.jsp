@@ -14,7 +14,7 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.js"></script>
 <body>
 <%@include file="/WEB-INF/views/noneTopMenu.jsp"%>
-	
+<div id="wrapper">
 	<div id="container" style="margin: 0 auto;">
 	<input type="hidden" id="chkval" value="0">
 	<form action="./signUp.do" method="post" id="frm" name="frm" onsubmit="return check()">
@@ -107,7 +107,9 @@
 		</div>
 	</form>
 	</div>
-<%@include file="/WEB-INF/views/footer.jsp"%>
+</div>
+	
+<%@include file="/WEB-INF/views/signUpFooter.jsp"%>
 
 
 </body>
