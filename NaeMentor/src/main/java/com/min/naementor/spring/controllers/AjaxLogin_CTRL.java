@@ -97,7 +97,7 @@ public class AjaxLogin_CTRL {
 			
 			String setFrom = "hsw1513@gmail.com"; // 보낼 아이디
 			String toEmail = service.searchPassword(dto);// 받을 아이디
-			String content = "<h2>내멘토 비밀번호 변경 페이지 링크입니다.</h2><br><a href='http://localhost:8093/NaeMentor/changePassword.do'>내멘토 비밀번호 변경 페이지</a>"; // 받을 내용
+			String content = "<h2>내멘토 비밀번호 변경 페이지 링크입니다.</h2><br><a href='http://localhost:8093/NaeMentor/changePassword.do?email="+toEmail+"'>내멘토 비밀번호 변경 페이지</a>"; // 받을 내용
 			String title= "Naementor 비밀번호 찾기"; // 메일제목
 			MimeMessage message = mailSender.createMimeMessage(); //메일 내용
 			

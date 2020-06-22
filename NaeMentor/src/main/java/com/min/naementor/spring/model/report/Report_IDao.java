@@ -58,4 +58,11 @@ public interface Report_IDao {
 	 */
 	public int findReviewOfMentee(Map<String, String> map);
 	
+	/**
+	 * 신고당한 회원의 이메일 조회
+	 * @param 신고당한 회원번호
+	 * @return 신고당한 회원 이메일 조회 성공여부
+	 */
+	public String searchSingoedMember(Map<String, String> map);
+	
 }

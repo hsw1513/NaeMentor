@@ -63,6 +63,11 @@ public class Report_DaoImpl implements Report_IDao {
 		return reviewseq;
 	}
 
+	@Override
+	public String searchSingoedMember(Map<String, String> map) {
+		return sqlSession.selectOne(NS+"searchSingoedMember", map);
+	}
+
 	
 
 }

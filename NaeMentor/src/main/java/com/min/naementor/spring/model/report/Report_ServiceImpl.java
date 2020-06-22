@@ -74,6 +74,12 @@ public class Report_ServiceImpl implements Report_IService {
 		return dao.findReviewOfMentee(map);
 	}
 
+	@Override
+	public String searchSingoedMember(Map<String, String> map) {
+		log.info("신고당한 회원 이메일 찾기, {}", map);
+		return dao.searchSingoedMember(map);
+	}
+
 	
 
 }

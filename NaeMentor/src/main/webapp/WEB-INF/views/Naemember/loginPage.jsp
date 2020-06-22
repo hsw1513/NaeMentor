@@ -8,7 +8,7 @@
 <link type="text/css" rel="stylesheet" href="./css/forlogin.css">
 </head>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript" src="./js/captcha.js"></script>
+<script type="text/javascript" src="./js/loginCaptcha.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.js"></script>
 <body>
 <div id="container" class="forlogin">
@@ -18,10 +18,10 @@
 		</div>
 		<div class="div2">
 			<input type="email" id="email" name="email" class="idinput" placeholder="아이디 (이메일)"> <br>
-			<input type="password" name="password" class="idinput" placeholder="비밀번호"> <br>
+			<input onkeyup="enterKey()" type="password" id="password" name="password" class="idinput" placeholder="비밀번호"> <br>
 		</div>
 		<div class="div1">
-			<input type="button" onclick="searchLoginCnt()" class="myButton" value="로그인"><br>
+			<input type="button" id="loginBtn" onclick="searchLoginCnt()" class="myButton" value="로그인"><br>
 		</div>
 		<div class="div3">
 			<input name ="remember-me" type = "checkbox"/>로그인 유지

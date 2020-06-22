@@ -15,7 +15,7 @@
 <%@include file="/WEB-INF/views/noneTopMenu.jsp"%>
 <div id="container">
 	<div id="centerdiv">
-	<form action="./newPassword.do" method="post" onsubmit="return pwCheck()">
+	<form id="newPWForm" action="./newPassword.do" method="post" onsubmit="return pwCheck()">
 		<h3 class="join_title">
 			<label for="pswd1">아이디</label>
 		</h3>
@@ -34,8 +34,21 @@
 		<span class="ps_box int_id">
 		<input class="int" type="password" id="passOk" placeholder="비밀번호 확인 "><br>
 		</span>
-		<input class="myButton1" type="submit" value="비밀번호 변경">
 	</form>
+		<c:if test="${toEmail eq null}">
+			<input type="hidden" name="myEmail" id="myEmail" value="${myEmail}">
+			<button class="myButton1" onclick="myEmailChk()">비밀번호 변경</button>
+		</c:if>
+		
+		<c:if test="${toEmail ne null }">
+		<input type="hidden" name="toEmail" id="toEmail" value="${toEmail}">
+			<button class="myButton1" onclick="emailChk()">비밀번호 변경</button>
+		</c:if>
+		
+		<c:if test="${myREmail ne null }">
+		<input type="hidden" name="myREmail" id="myREmail" value="${myREmail}">
+			<button class="myButton1" onclick="myREmailChk()">비밀번호 변경</button>
+		</c:if>
 	</div>
 </div>	
 <%@include file="/WEB-INF/views/footer.jsp"%>

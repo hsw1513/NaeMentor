@@ -42,6 +42,14 @@
 			WHERE MEMBERSEQ = #{singoedmember}
 </select>
 
+<!-- 신고당한 회원 아이디 조회 -->
+<select id="searchSingoedMember" parameterType="java.util.Map">
+	SELECT EMAIL 
+		FROM NAEMEMBER
+			WHERE MEMBERSEQ = #{singoedmember}
+</select>
+
+
 <!-- 신고당한 회원 카운트 증가시 신고체크 초기화(Y로)  -->
 <update id="changeSingoChk" parameterType="java.util.Map">
 	UPDATE REPORT 

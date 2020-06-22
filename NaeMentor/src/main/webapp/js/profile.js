@@ -187,4 +187,7 @@ function numberCheck(){
  	}); 
 }
     
-    
+function changeMyPassword(){
+	var myEmail = document.getElementById("myEmail").innerHTML;
+	location.href = "./changePassword.do?myEmail="+myEmail;
+}
