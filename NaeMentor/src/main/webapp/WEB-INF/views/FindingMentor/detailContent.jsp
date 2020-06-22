@@ -213,6 +213,10 @@ var xhr = null;
 			<td><div id="objDiv"></div>
 				<input type="text" value="${detail.mentoringdate}">
 			</td>
+		<tr>
+			<th>내용</th>
+			<td><input type="text" name="content" value="${detail.content}"></td>
+		</tr>
 		</tr>
 	</table>
 	

@@ -113,7 +113,11 @@ function delSingoChk(val){
 			data: "singoedmember="+val,
 			type: "get",
 			success: function(msg){
-				alert("회원 신고가 취소 되었습니다.");
+				if(msg == "true"){
+					alert("회원 신고가 취소 되었습니다.");
+				}else{
+					alert("취소에 실패했습니다");
+				}
 			},
 			error: function(){
 				alert("오류");
@@ -224,8 +228,8 @@ var ajaxReportMember = function(){
 					html += "<td>"+v.singomember+"</td>"+"<td>"+v.singoedmember+"</td>";
 					html += "<td>"+v.singoreason+"</td>";
 					html += "<td>"+v.content+"</td>"+"<td>"+v.writedate+"</td>";
-					html += "<td>"+v.delflag+"</td>"+"<td>"+v.mentoringplace+"</td>";
-					html += "<td>"+v.mentoringtime+"</td>";
+					html += "<td>"+v.delflag+"</td>"+"<td>"+v.location+"</td>";
+					html += "<td>"+v.mentoringdate+"</td>";
 					html += "<td><input class='myButton' type='button' value='증가' onclick='changeSingoChk(\""+v.singoedmember+"\")'></td>";
 					html += "<td><input class='myButton' type='button' value='취소' onclick='delSingoChk(\""+v.singoedmember+"\")'></td>";
 					html += "</tr>";

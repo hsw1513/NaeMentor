@@ -91,12 +91,6 @@ public class AdminBoard_DaoImpl implements AdminBoard_IDao {
 	}
 
 	@Override
-	public boolean delSingoChk(Map<String, String> map) {
-		int cnt = sqlSession.update(NS2+"delSingoChk", map);
-		return (cnt>0)?true:false;
-	}
-
-	@Override
 	public String searchReportCnt(Map<String, String> map) {
 		return sqlSession.selectOne(NS2+"searchReportCnt", map);
 	}
@@ -116,6 +110,12 @@ public class AdminBoard_DaoImpl implements AdminBoard_IDao {
 	@Override
 	public NaememberDto personalInfo(Map<String, String> map) {
 		return sqlSession.selectOne(NS+"personalInfo", map);
+	}
+
+	@Override
+	public boolean authorChk(Map<String, String> map) {
+		int cnt = sqlSession.update(NS+"authorChk", map);
+		return (cnt>0)? true:false;
 	}
 
 }

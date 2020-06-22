@@ -45,10 +45,12 @@
 <%@include file="/WEB-INF/views/topMenu.jsp"%>
 <div id="container">
 	<div class="divProfile">
-		<c:if test="${profile.profiledto.filechk eq 'N'}">
+	<c:if test="${userinfo.auth ne 'ROLE_A'}">
+		<c:if test="${profile.profiledto.filechk ne 'Y'}">
 			<button class="myButton" onclick="updateAuth()" name="btn">멘토신청</button>
 		</c:if>
 			<button class="myButton" onclick="applyBye()" name="btn">회원탈퇴</button>
+	</c:if>
 			<button class="myButton" onclick="changeMyPassword()" name="btn">비밀번호 변경</button>
 	</div>
 	<table class="table">

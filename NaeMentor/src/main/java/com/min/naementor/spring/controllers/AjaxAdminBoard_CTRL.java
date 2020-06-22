@@ -138,8 +138,8 @@ public class AjaxAdminBoard_CTRL {
 				json.put("content", rdto.get(i).getReviewdto().getContent());
 				json.put("writedate", rdto.get(i).getReviewdto().getWritedate());
 				json.put("delflag", rdto.get(i).getReviewdto().getDelflag());
-				json.put("mentoringplace", rdto.get(i).getReviewdto().getMatchingdto().getMemberscheduledto().getMentoringplace());
-				json.put("mentoringtime", rdto.get(i).getReviewdto().getMatchingdto().getMemberscheduledto().getMentoringtime());
+				json.put("location", rdto.get(i).getReviewdto().getMatchingdto().getFindingmentordto().getLocation());
+				json.put("mentoringdate", rdto.get(i).getReviewdto().getMatchingdto().getFindingmentordto().getLocation());
 				jLists.add(json);
 				jsono.put("reportM", jLists);
 			} // 신고당한 회원 조회
@@ -213,7 +213,6 @@ public class AjaxAdminBoard_CTRL {
 				messageHelper.setSubject(title);
 				messageHelper.setText(content, true);
 				mailSender.send(message);
-				
 			} catch (MessagingException e) {
 				e.printStackTrace();
 			}
@@ -249,6 +248,7 @@ public class AjaxAdminBoard_CTRL {
 			if(service.mentorPromotion(map)) {
 				service.promotionDate(map);
 				service.tierPromotion(map);
+				service.authorChk(map);
 				return "true";
 			}else {
 				return "false";
@@ -304,14 +304,15 @@ public class AjaxAdminBoard_CTRL {
 			}
 		}
 		
-		// 신고카운트 감소
+		// 신고카운트 감소 => 신고 취소시, 신고체크 Y로 변환
 		@RequestMapping(value = "/delSingoChk.do", method = RequestMethod.GET)
+		@ResponseBody
 		public String delSingoChk(String singoedmember) {
 			log.info("신고카운트 감소 delSingoChk, {}", singoedmember);
 			Map<String, String> map = new HashMap<String, String>();
 			map.put("singoedmember", singoedmember);
-			if(service.delSingoChk(map)) {
-				rservice.changeSingoChk(map);
+			
+			if(rservice.changeSingoChk(map)) {
 				return "true";
 			}else {
 				return "false";

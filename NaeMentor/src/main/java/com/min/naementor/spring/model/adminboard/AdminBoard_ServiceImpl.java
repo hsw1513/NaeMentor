@@ -87,12 +87,6 @@ public class AdminBoard_ServiceImpl implements AdminBoard_IService {
 	}
 
 	@Override
-	public boolean delSingoChk(Map<String, String> map) {
-		log.info("신고 취소시 카운트 감소 delSingoChk, {}", map);
-		return dao.delSingoChk(map);
-	}
-
-	@Override
 	public String searchReportCnt(Map<String, String> map) {
 		log.info("신고당한 회원의 신고당한 횟수 조회 searchReportcnt, {}", map);
 		return dao.searchReportCnt(map);
@@ -114,6 +108,12 @@ public class AdminBoard_ServiceImpl implements AdminBoard_IService {
 	public NaememberDto personalInfo(Map<String, String> map) {
 		log.info("개인회원 기본 정보 조회 personalInfo, {}", map);
 		return dao.personalInfo(map);
+	}
+
+	@Override
+	public boolean authorChk(Map<String, String> map) {
+		log.info("멘토 승급시 authorchk를 Y로 전환 authorChk, {}", map);
+		return dao.authorChk(map);
 	}
 
 }
