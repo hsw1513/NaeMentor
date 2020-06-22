@@ -1,5 +1,11 @@
 @charset "UTF-8";
 
+#wrapper{
+	position: relative;
+	min-height: 100%;
+}
+
+
 
 #info{
 	position: relative;
