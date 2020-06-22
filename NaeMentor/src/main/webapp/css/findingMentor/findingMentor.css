@@ -5,6 +5,7 @@
 	width: 35%;
 	position: absolute;
 	margin: 30px 20px auto;
+	padding: 20px;
 }
 .rightDiv{
 	border: 1px solid gray;
@@ -16,3 +17,13 @@
 .detailDiv{
 	height: 500px;
 }
+
+input {
+	height: 30px;
+	width: 200px;
+	margin: 5px;
+	border: 1.5px solid lightgrey;
+	border-radius: 5px;
+	vertical-align: middle;
+	text-align-last: center;
+	}
