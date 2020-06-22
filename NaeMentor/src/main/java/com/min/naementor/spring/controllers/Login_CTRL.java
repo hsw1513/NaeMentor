@@ -191,6 +191,7 @@ public class Login_CTRL {
 			NaememberDto gdto = (NaememberDto) session.getAttribute("userinfo");
 			if(gdto.getUserstatus().equals("R")) {
 				service.wakeUp(gdto.getMemberseq());
+				model.addAttribute("myREmail", gdto.getEmail());
 				return "Naemember/changePassword";
 			}
 			return "redirect:/FindingMentor_board.do";
@@ -208,9 +209,10 @@ public class Login_CTRL {
 	}
 
 	@RequestMapping(value = "/changePassword.do", method = RequestMethod.GET)
-	public String changePassword() {
+	public String changePassword(Model model, String email, String myEmail) {
 		log.info("비밀번호 변경 페이지로 이동 changePassword");
-;
+		model.addAttribute("toEmail", email);
+		model.addAttribute("myEmail", myEmail);
 		return "Naemember/changePassword";
 	}
 

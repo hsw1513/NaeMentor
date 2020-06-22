@@ -5,7 +5,6 @@ function pwCheck(){
 	var regExpPw = /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}$/; 
 	var regExEmail = /[0-9a-zA-Z][_0-9a-zA-Z]*@[_0-9a-zA-Z-]+(\.[_0-9a-zA-Z-]+){1,2}$/;
 	
-	
 	if(email == ""){
 		swal("비밀번호 변경 오류", "아이디를 입력해주세요");
 		return false;
@@ -25,4 +24,48 @@ function pwCheck(){
 		return true;
 	}
 	
+}
+
+
+function emailChk(){
+	var toEmail = document.getElementById("toEmail").value;
+	var email = document.getElementById("email").value;
+	var newPWForm = document.getElementById("newPWForm");
+	if(toEmail == email){
+		if(pwCheck()){
+		newPWForm.submit();
+		}
+	}else{
+		swal("비밀번호 변경 오류", "자신의 비밀번호만 변경할 수 있습니다.")
+		return false;
+	}
+}
+
+function myEmailChk(){
+	var myEmail = document.getElementById("myEmail").value;
+	var email = document.getElementById("email").value;
+	var newPWForm = document.getElementById("newPWForm");
+	if(myEmail == email){
+		if(pwCheck()){
+			newPWForm.submit();
+		}
+	}else{
+		swal("비밀번호 변경 오류", "자신의 비밀번호만 변경할 수 있습니다.");
+		return false;
+	}
+}
+
+
+function myREmailChk(){
+	var myREmail = document.getElementById("myREmail").value;
+	var email = document.getElementById("email").value;
+	var newPWForm = document.getElementById("newPWForm");
+	if(myREmail == email){
+		if(pwCheck()){
+			newPWForm.submit();
+		}
+	}else{
+		swal("비밀번호 변경 오류", "자신의 비밀번호만 변경할 수 있습니다.");
+		return false;
+	}
 }

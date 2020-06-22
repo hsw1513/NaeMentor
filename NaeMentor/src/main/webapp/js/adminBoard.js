@@ -176,7 +176,7 @@ var ajaxReportMember = function(){
 		url:"./reportContent.do",
 		type:"get",
 		dataType:"json",
-		data: {"memberList":$("#memberList option:selected").val()}, //$("#memberList option:selected").val(), //$(this).val
+		data: {"memberList":$("#memberList option:selected").val()},
 		success:function(msg){
 			$.each(msg, function(key,value){
 				//msg는 배열, k는 배열의 키(인덱스), v는 값

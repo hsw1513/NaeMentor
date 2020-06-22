@@ -49,6 +49,7 @@
 			<button class="myButton" onclick="updateAuth()" name="btn">멘토신청</button>
 		</c:if>
 			<button class="myButton" onclick="applyBye()" name="btn">회원탈퇴</button>
+			<button class="myButton" onclick="changeMyPassword()" name="btn">비밀번호 변경</button>
 	</div>
 	<table class="table">
 	       <tr>
@@ -58,7 +59,7 @@
 	      </tr>
 	      <tr>
 	        <th>이메일</th>
-	        <td>${profile.email}</td>
+	        <td id="myEmail">${profile.email}</td>
 	        <td></td>
 	      </tr>
 	      <tr>

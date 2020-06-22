@@ -196,9 +196,28 @@ public class AjaxAdminBoard_CTRL {
 		@RequestMapping(value = "/changeSingoChk.do", method = RequestMethod.GET)
 		@ResponseBody
 		public String changeSingoChk(String singoedmember) {
-			log.info("신고카운트 증가");
+			log.info("신고카운트 증가 changeSingoChk, {}", singoedmember);
 			Map<String, String> map = new HashMap<String, String>();
 			map.put("singoedmember", singoedmember);
+			
+			String setFrom = "hsw1513@gmail.com"; // 보낼 아이디
+			String toEmail = rservice.searchSingoedMember(map);
+			String content = "<h2>특정한 이유로 신고당하셨습니다. 3회 경고카운트 누적시 한달간 이용이 제한됩니다.<br> 자세한 사항은 1대1문의 게시판에서 질문해주새요.</h2><br><a href='http://localhost:8093/NaeMentor/Question_board.do'>내멘토 1대1 문의게시판 이동</a>";
+			String title= "Naementor 신고 관련"; // 메일제목
+			MimeMessage message = mailSender.createMimeMessage();
+			
+			try {
+				MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+				messageHelper.setFrom(setFrom);
+				messageHelper.setTo(toEmail);
+				messageHelper.setSubject(title);
+				messageHelper.setText(content, true);
+				mailSender.send(message);
+				
+			} catch (MessagingException e) {
+				e.printStackTrace();
+			}
+			
 			if(rservice.addReportCnt(map)) {
 				rservice.changeSingoChk(map);
 				return "true";
