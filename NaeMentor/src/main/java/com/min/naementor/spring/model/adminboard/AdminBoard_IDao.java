@@ -91,12 +91,6 @@ public interface AdminBoard_IDao {
 	 */
 	public String denyId(Map<String, String> map);
 	
-	/**
-	 * 신고취소시 카운트 감소
-	 * @param 신고당한 사람 회원번호
-	 * @return 카운트 감소 성공여부
-	 */
-	public boolean delSingoChk(Map<String, String> map);
 	
 	/**
 	 * 신고당한 회원의 신고당한 횟수 조회
@@ -118,6 +112,13 @@ public interface AdminBoard_IDao {
 	 * @return 회원하나의 기본정보
 	 */
 	public NaememberDto personalInfo(Map<String, String> map);
+	
+	/**
+	 * 멘토 승급시 authorchk를 Y로 전환
+	 * @param 회원번호
+	 * @return 전환 성공 여부
+	 */
+	public boolean authorChk(Map<String, String> map);
 
 	
 }

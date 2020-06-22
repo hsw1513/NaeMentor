@@ -12,16 +12,16 @@
 		<result property="reviewdto.content" column="CONTENT"/>
 		<result property="reviewdto.writedate" column="WRITEDATE"/>
 		<result property="reviewdto.delflag" column="DELFLAG"/>
-		<result property="reviewdto.matchingdto.memberscheduledto.mentoringplace" column="MENTORINGPLACE"/>
-		<result property="reviewdto.matchingdto.memberscheduledto.mentoringtime" column="MENTORINGTIME"/>
+		<result property="reviewdto.matchingdto.findingmentordto.location" column="LOCATION"/>
+		<result property="reviewdto.matchingdto.findingmentordto.mentoringdate" column="MENTORINGDATE"/>
 	</resultMap>
 
 <!-- 신고당한 회원 조회 -->
 <select id="searchReportU" resultMap="joinsearchReportU">
 	SELECT SINGOMEMBER , SINGOEDMEMBER , SINGOREASON , SINGOCHK , r.REVIEWSEQ , r.BOARDSEQ 
 			, CONTENT, WRITEDATE, DELFLAG,
-			(SELECT MENTORINGPLACE FROM MEMBERSCHEDULE m2 WHERE r2.BOARDSEQ =m2.BOARDSEQ) MENTORINGPLACE, 
-			TO_CHAR((SELECT MENTORINGTIME FROM MEMBERSCHEDULE m WHERE r2.BOARDSEQ = m.BOARDSEQ),'YYYY-MM-DD') MENTORINGTIME 
+			(SELECT LOCATION FROM FINDINGMENTOR m2 WHERE r2.BOARDSEQ =m2.BOARDSEQ) LOCATION, 
+			TO_CHAR((SELECT MENTORINGDATE FROM FINDINGMENTOR m WHERE r2.BOARDSEQ = m.BOARDSEQ),'YYYY-MM-DD') MENTORINGDATE
 		FROM REPORT r JOIN REVIEW r2 
 			ON r.REVIEWSEQ = r2.REVIEWSEQ
 				WHERE SINGOCHK = 'N'
@@ -36,14 +36,14 @@
 
 
 <!-- 신고당한 회원의 신고당한 횟수 조회 -->
-<select id="searchReportCnt" parameterType="java.util.Map">
+<select id="searchReportCnt" parameterType="java.util.Map" resultType="java.lang.String">
 	SELECT REPORTCNT
 		FROM NAEMEMBER
 			WHERE MEMBERSEQ = #{singoedmember}
 </select>
 
 <!-- 신고당한 회원 아이디 조회 -->
-<select id="searchSingoedMember" parameterType="java.util.Map">
+<select id="searchSingoedMember" parameterType="java.util.Map" resultType="java.lang.String">
 	SELECT EMAIL 
 		FROM NAEMEMBER
 			WHERE MEMBERSEQ = #{singoedmember}
@@ -55,13 +55,6 @@
 	UPDATE REPORT 
 		SET SINGOCHK = 'Y'
 			WHERE SINGOEDMEMBER = #{singoedmember}
-</update>
-
-<!-- 신고당한 회원 확인후 신고 취소시 카운트 감소 -->
-<update id="delSingoChk" parameterType="java.util.Map">
-	UPDATE NAEMEMBER
-		SET REPORTCNT = REPORTCNT -1
-			WHERE MEMBERSEQ = #{singoedmember}
 </update>
 
 <!-- 신고당한 횟수 3회 이상 정지 -->

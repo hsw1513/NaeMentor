@@ -21,7 +21,8 @@ function check(){
 	if(email == ""){
 		swal("회원가입 오류", "아이디를 입력해주세요");
 		return false;
-	}else if(!regExpPw.test(password)){
+	}
+	else if(!regExpPw.test(password)){
 		swal("회원가입 오류", "비밀번호는 숫자, 특수문자 1회 이상, 영문은 2개 이상 사용하여 8자리 이상 입력하여야합니다.")
 		return false;
 	}else if(password != passOk){

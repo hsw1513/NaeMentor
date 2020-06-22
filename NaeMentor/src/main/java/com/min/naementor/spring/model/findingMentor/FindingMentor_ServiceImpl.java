@@ -113,9 +113,9 @@ public class FindingMentor_ServiceImpl implements FindingMentor_IService{
 	}
 
 	@Override
-	public boolean updateComplete(String boardseq) {
-		log.info("updateComplete {}",boardseq);
-		return dao.updateComplete(boardseq);
+	public boolean updateComplete() {
+		log.info("updateComplete");
+		return dao.updateComplete();
 	}
 
 	@Override

@@ -169,8 +169,8 @@ public class FindingMentor_DaoImpl implements FindingMentor_IDao{
 	}
 
 	@Override
-	public boolean updateComplete(String boardseq) {
-		return session.update(NS+"updateComplete", boardseq)>0?true:false;
+	public boolean updateComplete() {
+		return session.update(NS+"updateComplete")>0?true:false;
 	}
 
 	@Override

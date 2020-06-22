@@ -126,10 +126,9 @@ public interface FindingMentor_IDao {
 
 	/**
 	 * 후기가 모두 남겨진 글 삭제
-	 * @param boardseq
 	 * @return boolean(true:삭제 완료)
 	 */
-	public boolean updateComplete(String boardseq);
+	public boolean updateComplete();
 
 	/**
 	 * 매칭이 안되었을 시 글 삭제

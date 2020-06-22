@@ -14,7 +14,6 @@ import com.min.naementor.spring.model.report.Report_IService;
 @Component
 public class Naemember_Scheduler {
 
-	private Logger log = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	private Naemember_IService nservice;
 	
@@ -57,7 +56,7 @@ public class Naemember_Scheduler {
 		nservice.wakeUpStop();
 	}
 	
-	// 매칭 안될 글 이틀 후 삭제(이틀에 한번 작동)
+	// 매칭 안된 글 이틀 후 삭제(이틀에 한번 작동)
 	@Scheduled(cron = "0 0 0 1/2 * *")
 	public void deleteNoMatching() {
 		fservice.deleteNoMatching();
@@ -68,5 +67,12 @@ public class Naemember_Scheduler {
 	public void deleteCompleteMatching() {
 		fservice.deleteCompleteMatching();
 	}
+	
+	// 후기가 남겨진 글 삭제 (5분에 한번 작동)
+	@Scheduled(cron = "*/5 * * * * *")
+	public void updateComplete() {
+		fservice.updateComplete();
+	}
+	
 	
 }

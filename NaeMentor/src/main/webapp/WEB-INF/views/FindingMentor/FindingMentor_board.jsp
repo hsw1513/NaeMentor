@@ -43,7 +43,7 @@
 	<a href="./Notification_board.do" style="cursor: pointer; float: right;">더보기</a>
 	<table class="table table-hover">
     <tbody>
-	<c:forEach items="${lists2}" var="nlists">
+	<c:forEach items="${lists}" var="nlists" begin="0" end="4" step="1">
       <tr>
       	<td>공지</td>
         <td><a href='./Notification_board.do?adminseq=${nlists.adminseq}'>${nlists.title}</a></td>

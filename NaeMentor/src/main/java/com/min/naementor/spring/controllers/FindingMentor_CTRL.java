@@ -83,24 +83,16 @@ public class FindingMentor_CTRL {
 		}
 		model.addAttribute("complete_lists", service.chkComplete(map));
 		model.addAttribute("matching_lists", service.chkMatching(map));
-		model.addAttribute("complete_lists", service.chkComplete(map));
 		
 		// 공지사항
 		RowNumUtil rUtil = new RowNumUtil();
 		rUtil.setTotal(nservice.notiBoardListTotal());
 		
 		List<NotiQuestionDto> lists = nservice.notiAll(rUtil);
-		List<NotiQuestionDto> lists2 = new ArrayList<NotiQuestionDto>();
 		
 		model.addAttribute("row", rUtil);
 		model.addAttribute("lists", lists);
 		
-		lists2.add(lists.get(0));
-		lists2.add(lists.get(1));
-		lists2.add(lists.get(2));
-		lists2.add(lists.get(3));
-		lists2.add(lists.get(4));
-		model.addAttribute("lists2", lists2);
 		
 		return "FindingMentor/FindingMentor_board";
 	}

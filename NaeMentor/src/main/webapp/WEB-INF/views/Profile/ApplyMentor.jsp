@@ -52,7 +52,6 @@ table{
 			if(xhrImg.readyState==4){
 				if(xhrImg.status ==200){
 					let val = JSON.parse(xhrImg.responseText);				
-					alert(val.fileName);
 					document.getElementById("tt").src = val.url;
 					document.getElementsByName("photo")[0].value = val.fileName;
 			}

@@ -89,6 +89,14 @@
 				WHERE MEMBERSEQ = #{memberseq}
 	</update>
 	
+	<!-- 멘토 승급시 AUTHORCHK를 Y로 변경 -->
+	<update id="authorChk" parameterType="java.util.Map">
+		UPDATE NAEMEMBER
+			SET AUTHORCHK = 'Y'
+				WHERE MEMBERSEQ = #{memberseq}
+	</update>
+	
+	
 	<!-- 멘토승급 거절시 메일 보낼 아이디 찾기 -->
 	<select id="denyId" parameterType="java.util.Map" resultType="java.lang.String">
 		SELECT EMAIL
