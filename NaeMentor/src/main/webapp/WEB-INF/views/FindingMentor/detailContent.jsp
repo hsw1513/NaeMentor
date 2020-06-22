@@ -175,37 +175,64 @@ var xhr = null;
 	<div class="detailDiv">
 	<div class="leftdiv">
 	<form action="" onsubmit="return modify()">
-	제목<input type="text" name="title" value="${detail.title}"><br>
-	글번호<input type="text" name="boardseq" value="${detail.boardseq}"><br>
-	작성자번호<input type="text" name="memberseq" value="${detail.memberseq}"><br>
-	작성자<input type="text" value="${detail.naememberdto.nickname}"><br>
-	작성일<input type="text" value="${detail.writesdate}"><br>
-	전문분야<input type="text" name="specialfield" value="${detail.specialfield}"><br>
-	장소<input type="text" name="location" value="${detail.location}"><br>
-	<div id="objDiv"></div>
-	일시<input type="text" value="${detail.mentoringdate}"><br>
-
-	내용<textarea rows="3" cols="20" name="content">${detail.content}</textarea><br>
+	<table>
+		<tr>
+			<th>제목</th>
+			<td><input type="text" name="title" value="${detail.title}"></td>
+		</tr>
+		<tr>
+			<th>글번호</th>
+			<td><input type="text" name="boardseq" value="${detail.boardseq}"></td>
+		</tr>
+		<tr>
+			<th>작성자번호</th>
+			<td><input type="text" name="memberseq" value="${detail.memberseq}"></td>
+		</tr>
+		<tr>
+			<th>작성자</th>
+			<td><input type="text" value="${detail.naememberdto.nickname}"></td>
+		</tr>
+		<tr>
+			<th>작성일</th>
+			<td><input type="text" value="${detail.writesdate}"></td>
+		</tr>
+		<tr>
+			<th>작성일</th>
+			<td><input type="text" value="${detail.writesdate}"></td>
+		</tr>
+		<tr>
+			<th>전문분야</th>
+			<td><input type="text" name="specialfield" value="${detail.specialfield}"></td>
+		</tr>
+		<tr>
+			<th>장소</th>
+			<td><input type="text" name="location" value="${detail.location}"></td>
+		</tr>
+		<tr>
+			<th>일시</th>
+			<td><div id="objDiv"></div>
+				<input type="text" value="${detail.mentoringdate}">
+			</td>
+		</tr>
+	</table>
 	
 	<c:if test="${userinfo.memberseq eq detail.memberseq}">
 	<c:if test="${detail.matchingchk eq 'N'}">
-	<button onclick="del()">삭제하기</button>
+	<button class="myButton" style="margin-top: 10px; onclick="del()">삭제하기</button>
 	</c:if>
 	</c:if>
 	<c:if test="${userinfo.memberseq eq detail.memberseq}">
 	<c:if test="${fn:length(findMentor) == 0}">
 	<input type="submit" value="수정하기">
-	<button onclick="modifyDate(event)">날짜수정</button>
+	<button class="myButton"" onclick="modifyDate(event)">날짜수정</button>
 	</c:if>
 	</c:if>
 	</form>
-	
-	
-	
-	<button onclick="javascript:history.back(-1)">뒤로가기</button>
+	<br>
+	<button class="myButton" style="margin-top: 10px;" onclick="javascript:history.back(-1)">뒤로가기</button>
 	
 	<c:if test="${userinfo.memberseq ne detail.memberseq}">
-	<button onclick="report()">신고하기</button>
+	<button class="myButton" onclick="report()">신고하기</button>
 	</c:if>
 	</div>
 	
@@ -275,12 +302,12 @@ var xhr = null;
 			<td>${applyMentors.profiledto.mentoaccstar}</td>
 			<td>${applyMentors.profiledto.mentorcnt}</td>
 			<td name="intro_${applyMentors.memberseq}">멘토정보를 확인하세요.</td>
-			<td><input type="button" value="멘토의 소개글 보기" onclick="openApply(this)" name="${applyMentors.memberseq}"></td>
+			<td><input type="button" class="myButton" value="멘토의 소개글 보기" onclick="openApply(this)" name="${applyMentors.memberseq}"></td>
 		</tr>
 		<tr id="a${applyMentors.memberseq}st" style="display:none;">
 			<td colspan="1">자기소개</td>
 			<td colspan="4" name="intro_${applyMentors.memberseq}"></td>
-			<td><button onclick="matching(this.title,this.name)" name="${applyMentors.nickname}" title="${applyMentors.memberseq}">멘토선택</button></td>
+			<td><button class="myButton;" onclick="matching(this.title,this.name)" name="${applyMentors.nickname}" title="${applyMentors.memberseq}">멘토선택</button></td>
 		</tr>	
 	</c:forEach>
 	</tbody>
