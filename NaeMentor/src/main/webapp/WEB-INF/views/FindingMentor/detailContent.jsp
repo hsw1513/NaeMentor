@@ -78,7 +78,6 @@ var xhr = null;
 	}
 	function callback(){
 		if(xhr.readyState==4){
-// 			alert(xhr.status);
 			if(xhr.status==200){
 				alert(xhr.responseText);
 			}
@@ -111,12 +110,10 @@ var xhr = null;
 		applyxhr.send("memberseq="+${detail.memberseq}+"&boardseq="+${detail.boardseq});
 	}
 	function matching(title, name){
-// 		alert(title);
 		// 회원정보 보여주기
 		// 컨펌
 		if(confirm(name+"님과 멘토링을 진행하시겠습니까?")){
 			let info = "boardseq="+${detail.boardseq}+"&mentorseq="+title.trim();
-// 			alert(info);
 			let matchingxhr = new XMLHttpRequest();
 			matchingxhr.onreadystatechange = function(){
 				if(matchingxhr.readyState==4){

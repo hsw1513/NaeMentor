@@ -21,7 +21,6 @@
 			xhr.onreadystatechange = function(){
 				if(xhr.readyState==4){
 					if(xhr.status==200){
-//	 					alert(xhr.responseText);
 						if(xhr.responseText == "false"){
 							btn1.style.display = "none";
 							btn2.style.display = "";
@@ -42,7 +41,6 @@
 	function chkVal(){
 		var stara = document.getElementsByClassName("starVal")[0].value;
 		var contenta = document.getElementsByName("content")[0].value;
-// 		alert("c:"+stara+"cc:"+contenta);
 		if(stara == ''){
 			alert('별점을 입력해주세요.');
 		}else if(stara < 1 || stara > 5){
@@ -66,7 +64,6 @@
 	}
 	
 	function report(obj, myseq){
-// 		alert('신고할 상대의 회원번호'+obj+"\n 나의 회원번호"+myseq);
 		if(confirm('신고할 상대의 회원번호'+obj+"\n 나의 회원번호"+myseq)){
 			let singoreason = prompt('신고하시는 이유를 입력해주세요.');
 			if(singoreason != ''){
@@ -209,9 +206,6 @@ function parse(str) {
  		  let dates = document.getElementsByName("date");
  		  let starNum = 0;
  		  let dateNum = "";
-//  		  dataRow = [parse('2020-06-11'), 0];
-//  		  alert(typeof parse('1999-01-01'));
-//  		  data.addRow(dataRow);
           for(var i = 0; i < sizeOf; i++){ //이상하게 jquery 셀렉터로 검색하지 않고 자바스크립트로 하면 undefined가 뜨므로 주의
 			starNum = $("input[name='star1']").eq(i).val();
 			dateNum = $("input[name='date']").eq(i).val();
