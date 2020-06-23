@@ -50,8 +50,8 @@ function check(){
 	}else if(inputPhone.trim() == ""){
 		swal("회원가입 오류", "휴대폰 번호를 입력해주세요");
 		return false;
-	}else if(regExpPhone1.test(inputPhone)){
-		swal("회원가입 오류", "휴대폰 번호를 정확히 입력해주세요(-)");
+	}else if(!regExpPhone1.test(inputPhone)){
+		swal("회원가입 오류", "휴대폰 번호를 정확히 입력해주세요(- 포함)");
 		return false;
 	}else if(smsCheck == ""){
 		swal("회원가입 오류", "휴대전화 본인 인증을 진행해주세요");

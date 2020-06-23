@@ -175,19 +175,19 @@ var xhr = null;
 	<table>
 		<tr>
 			<th>제목</th>
-			<td><input type="text" name="title" value="${detail.title}"></td>
+			<td><input type="text" name="title" value="${detail.title}" readonly="readonly"></td>
 		</tr>
 		<tr>
 			<th>글번호</th>
-			<td><input type="text" name="boardseq" value="${detail.boardseq}"></td>
+			<td><input type="hidden" name="boardseq" value="${detail.boardseq}"></td>
 		</tr>
 		<tr>
 			<th>작성자번호</th>
-			<td><input type="text" name="memberseq" value="${detail.memberseq}"></td>
+			<td><input type="hidden" name="memberseq" value="${detail.memberseq}" readonly="readonly"></td>
 		</tr>
 		<tr>
 			<th>작성자</th>
-			<td><input type="text" value="${detail.naememberdto.nickname}"></td>
+			<td><input type="text" value="${detail.naememberdto.nickname}" readonly="readonly"></td>
 		</tr>
 		<tr>
 			<th>작성일</th>
@@ -199,16 +199,16 @@ var xhr = null;
 		</tr>
 		<tr>
 			<th>전문분야</th>
-			<td><input type="text" name="specialfield" value="${detail.specialfield}"></td>
+			<td><input type="text" name="specialfield" value="${detail.specialfield}" readonly="readonly"></td>
 		</tr>
 		<tr>
 			<th>장소</th>
-			<td><input type="text" name="location" value="${detail.location}"></td>
+			<td><input type="text" name="location" value="${detail.location}" readonly="readonly"></td>
 		</tr>
 		<tr>
 			<th>일시</th>
 			<td><div id="objDiv"></div>
-				<input type="text" value="${detail.mentoringdate}">
+				<input type="text" value="${detail.mentoringdate}" readonly="readonly">
 			</td>
 		<tr>
 			<th>내용</th>
@@ -224,11 +224,12 @@ var xhr = null;
 	</c:if>
 	<c:if test="${userinfo.memberseq eq detail.memberseq}">
 	<c:if test="${fn:length(findMentor) == 0}">
-	<input type="submit" value="수정하기">
 	<button class="myButton"" onclick="modifyDate(event)">날짜수정</button>
 	</c:if>
 	</c:if>
 	</form>
+	<input type="submit" value="수정하기">
+	
 	<br>
 	<button class="myButton" style="margin-top: 10px;" onclick="javascript:history.back(-1)">뒤로가기</button>
 	
