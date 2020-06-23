@@ -1,7 +1,6 @@
          
          // 첫번째 페이지로 작동 <<
          function pageFirst(){
-//             alert("작동");
             var index = document.getElementById("index");
             var pageNum = document.getElementById("pageNum");
             index.value = 0;
@@ -12,13 +11,10 @@
       
          // < 버튼
          function pagePre(num, pageList){
-//             alert(num+"-"+pageList+"="+(num-pageList));
             if(0 < num-pageList){
                num -= pageList;
-//               alert(num);
             var index = document.getElementById('index');
             var pageNum = document.getElementById('pageNum');
-//            alert(index);
             pageNum.value=num;
             index.value=num-1;
             }
@@ -27,7 +23,6 @@
                
          // 인덱스를 통한 해당 페이지 이동 index는 0부터 시작
          function pageIndex(idx){
-//             alert(idx);
             var index = document.getElementById('index');
             index.value = idx-1;
             pageAjax();
@@ -35,7 +30,6 @@
          
          // >> 버튼
          function pageLast(num, total, listNum, pageList){
-//             alert("작동");
             var idx = Math.ceil(total/listNum);
             var max = Math.ceil(idx/pageList);
             
@@ -46,32 +40,23 @@
             var pageNum = document.getElementById("pageNum");
             pageNum.value = num;
             index.value = idx-1;
-//            alert(index.value);
             pageAjax();
             }
          // > 버튼
          function pageNext(num, total, listNum, pageList){ // 페이지 번호, 전체 글 개수, 뿌려지는 글의 row 개수, 페이지 1,2,3,4,5
-//             alert(num);
-//             alert(total);
-//             alert(listNum);
-//             alert(pageList);
             var index = Math.ceil(total/listNum); // 30/5, 6개의 페이지가 있음
             var max = Math.ceil(index/pageList);  // 6/5, 2개의 그룹으로 나누어짐
-//            alert(max*pageList);
-//            alert(num+pageList);
             if(max*pageList > num+pageList){
                num += pageList;
                var index = document.getElementById("index");
                var pageNum = document.getElementById("pageNum");
                pageNum.value = num;
                index.value = num - 1;
-//               alert(index.value);
             }
             pageAjax();
          }
 //---------------------------------- 공통 페이징 AJAX ----------------------------------
 function pageAjax(){
-//    alert("아작아작");
 $.ajax({
       url: "./adminPaging.do",
       type: "post",
@@ -79,7 +64,6 @@ $.ajax({
       data: $("#adminAdmin").serialize(), // 키=값&, input tag 안의 name 값을 키 값으로 가져옴
       dataType: "json",
       success: function(msg){
-//         alert(msg);
          
          $.each(msg, function(key, value){ // lists, {"",[]} // row, {}
          var varHtml = "";

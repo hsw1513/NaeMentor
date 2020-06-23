@@ -48,14 +48,14 @@ function check(){
 		swal("회원가입 오류", "휴대전화 본인 인증을 진행해주세요");
 		return false;
 	}
-//	else if(emailchk == false){
-//		swal("회원가입 오류", "이메일 인증을 완료해주세요");
-//		return false;
-//	}
-//	else if(smschk == false){
-//		alert("sms 인증을 완료해주세요");
-//		return false;
-//	}
+	else if(emailchk == false){
+		swal("회원가입 오류", "이메일 인증을 완료해주세요");
+		return false;
+	}
+	else if(smschk == false){
+		alert("sms 인증을 완료해주세요");
+		return false;
+	}
 	else{
 		return true;
 	}
