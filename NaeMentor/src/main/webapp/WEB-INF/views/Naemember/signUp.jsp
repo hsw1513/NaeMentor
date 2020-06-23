@@ -64,6 +64,7 @@
 				<span class="ps_box int_id">
 				<input class="int" type="text" id="phone" name="phone" placeholder="휴대폰 번호입력(- 포함)">
 				</span>
+				<span id="result_phone"></span>
 				<input type="button" class="myButton" onclick="sendSms()" id="send" value="전송"/> <br>
 				<h3 class="join_title">
 					<label for="pswd1">*인증번호</label>

@@ -6,18 +6,23 @@ import java.util.HashMap;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.min.naementor.spring.comm.SMSComm;
+import com.min.naementor.spring.model.naemember.Naemember_IService;
 
 
 @Controller
 public class SMS_CTRL {
 
 	private Logger log = LoggerFactory.getLogger(this.getClass());
+	
+	@Autowired
+	private Naemember_IService service;
 	
 	/**
 	 * 임의의 인증번호 6자리 숫자를 랜덤으로 생성해 <br> 
@@ -44,6 +49,7 @@ public class SMS_CTRL {
 	public String smsSend(String phone) {
 		log.info("Welcome sendSms.do : \t {} / {}",phone);
 		
+		if(!service.phoneCheck(phone)) {
 		String apiKey = "NCS753AQIBRZHIUM";
 		String apiSecret = "RWWGIRQUPPKD3YENUUEBQMGMUPGYCW4G";
 		
@@ -81,8 +87,12 @@ public class SMS_CTRL {
             System.out.println("실패");
             System.out.println(result.get("code")); // REST API 에러코드
             System.out.println(result.get("message")); // 에러메시지
-            return "false";
+            // return "false"; 잔액이 떨어져서 모두 return true로 전환
+            return "true";
           }
+		}else {
+			return "false";
+		}
 	}
 	
 	/**
@@ -100,7 +110,8 @@ public class SMS_CTRL {
 			return "ok"; 
 		}else { 
 			log.info("Welcome smsCheck.do 인증실패 - \t 인증번호 : {} / 입력값 : {}",chkCode,sms);
-			return "no"; 
+//			return "no"; // 인증 실패시 no 리턴(잔액 부족으로 전부 ok로 전환)
+			return "ok"; 
 		}
 	}
 	

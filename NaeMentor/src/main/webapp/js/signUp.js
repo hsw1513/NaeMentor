@@ -9,6 +9,7 @@ function check(){
 	var phone = document.getElementById("phone").value;
 	var birthday = document.getElementById("birthday").value;
 	var gender = document.getElementsByName("gender")[0];
+	var inputPhone = document.getElementById("phone").value;
 	var idx = gender.selectedIndex;
 	var genderValue = gender.options[idx].value;
 	var chkId = document.getElementById("chkval").value;
@@ -17,12 +18,21 @@ function check(){
 	var regExpPw = /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}$/; 
 	// 비밀번호 정규화 표현식, 숫자, 특수문자 각 1회 이상, 영문은 2개 이상 사용하여 8자리 이상 입력
 	var regExpBirthday = /^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/; // 생년월일 정규식(19930113)
+	var regExpPhone1 = /^\d{3}-\d{3,4}-\d{4}$/;
 	
 	if(email == ""){
 		swal("회원가입 오류", "아이디를 입력해주세요");
 		return false;
-	}
-	else if(!regExpPw.test(password)){
+	}else if(emailchk == false){
+		swal("회원가입 오류", "이메일 인증을 완료해주세요");
+		return false;
+	}else if(password.trim() == ""){
+		swal("회원가입 오류", "비밀번호를 입력해주세요");
+		return false;
+	}else if(passOk.trim() == ""){
+		swal("회원가입 오류", "비밀번호를 확인해주세요");
+		return false;
+	}else if(!regExpPw.test(password)){
 		swal("회원가입 오류", "비밀번호는 숫자, 특수문자 1회 이상, 영문은 2개 이상 사용하여 8자리 이상 입력하여야합니다.")
 		return false;
 	}else if(password != passOk){
@@ -37,26 +47,25 @@ function check(){
 	}else if(introduce.trim() == ""){
 		swal("회원가입 오류", "자기소개를 필히 작성해주세요");
 		return false;
+	}else if(inputPhone.trim() == ""){
+		swal("회원가입 오류", "휴대폰 번호를 입력해주세요");
+		return false;
+	}else if(regExpPhone1.test(inputPhone)){
+		swal("회원가입 오류", "휴대폰 번호를 정확히 입력해주세요(-)");
+		return false;
+	}else if(smsCheck == ""){
+		swal("회원가입 오류", "휴대전화 본인 인증을 진행해주세요");
+		return false;
+	}else if(smschk == false){
+		swal("회원가입 오류","sms 인증을 완료해주세요");
+		return false;
 	}else if(birthday == ""){
 		swal("회원가입 오류","생년월일을 입력해주세요");
 		return false;
 	}else if(!regExpBirthday.test(birthday)){
 		swal("회원가입 오류","생년월일을 정확하게 입력해주세요");
 		return false;
-	}
-	else if(smsCheck == ""){
-		swal("회원가입 오류", "휴대전화 본인 인증을 진행해주세요");
-		return false;
-	}
-	else if(emailchk == false){
-		swal("회원가입 오류", "이메일 인증을 완료해주세요");
-		return false;
-	}
-	else if(smschk == false){
-		alert("sms 인증을 완료해주세요");
-		return false;
-	}
-	else{
+	}else{
 		return true;
 	}
 }
@@ -179,6 +188,43 @@ $(function(){
 					}else if(msg.isc == "true"){
 						$("#result_nickname").css("color", "red");
 						$("#result_nickname").html("사용 불가능한 닉네임입니다<br>");
+						$("#chkval").val("");
+						$(this).val("");
+					}
+				},
+				error:function(){
+					alert("잘못된 요청값입니다.");
+				}
+			});
+		}
+		
+	});
+});
+
+
+$(function(){
+	$("#phone").keyup(function(){
+		var inputLength = $(this).val().length;
+		var phone = $(this).val();
+		var regExpPhone1 = /^\d{3}-\d{3,4}-\d{4}$/;
+		
+		if(!regExpPhone1.test(phone)){
+			$("#result_phone").css("color", "red");
+			$("#result_phone").html("휴대전화 번호를 정확히 입력해주세요(- 포함)<br>");
+		}else {
+			jQuery.ajax({
+				type:"post",
+				url:"./phoneCheck.do",
+				data:"phone="+$(this).val(),
+				async:true,
+				success: function(msg){
+					if(msg.isc == "false"){
+						$("#result_phone").css("color", "blue");
+						$("#result_phone").html("사용가능한 휴대전화 번호입니다<br>");
+						$("#chkval").val("1");
+					}else if(msg.isc == "true"){
+						$("#result_phone").css("color", "red");
+						$("#result_phone").html("이미 존재하는 휴대전화 번호입니다.<br>");
 						$("#chkval").val("");
 						$(this).val("");
 					}

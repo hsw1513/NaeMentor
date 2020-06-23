@@ -32,6 +32,12 @@ public class Naemember_ServiceImpl implements Naemember_IService {
 	}
 	
 	@Override
+	public boolean phoneCheck(String phone) {
+		log.info("phoneCheck 휴대전화 번호 중복여부");
+		return dao.phoneCheck(phone);
+	}
+	
+	@Override
 	public boolean insertProFile(ProfileDto dto) {
 		log.info("insertProFile 프로필 입력, {}", dto);
 		return dao.insertProFile(dto);
@@ -121,6 +127,8 @@ public class Naemember_ServiceImpl implements Naemember_IService {
 		log.info("wakeUpStop 정지회원 한달 후 자동 액티브 전환");
 		return dao.wakeUpStop();
 	}
+
+
 
 	
 

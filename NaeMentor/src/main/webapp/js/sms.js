@@ -2,10 +2,8 @@ function sendSms() { // 인증번호 전송 ajax 처리
 	
 	var regExpPhone = /^\d{3}-\d{3,4}-\d{4}$/; // 휴대전화 번호 정규화 표현식
 	var phone = $("#phone").val();
-	if(phone == null){
-		alert("휴대폰 번호를 입력해주세요");
-		return false;
-	}else if(phone == ""){
+	
+	if(phone.trim() == ""){
 			swal("회원가입 오류", "휴대전화 번호를 입력해주세요");
 			return false;
 	}else if(!regExpPhone.test(phone)){
@@ -23,7 +21,7 @@ function sendSms() { // 인증번호 전송 ajax 처리
     				smschk= true;
     				$("#send").val("재전송");
     			} else { 
-    				swal("SMS인증 오류","인증번호 전송 실패","error"); 
+    				swal("SMS인증 오류","이미 존재하는 휴대전화번호입니다.","error"); 
     			} 
     		},
     		error: function(){

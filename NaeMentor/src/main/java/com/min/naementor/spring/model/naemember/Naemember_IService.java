@@ -23,6 +23,13 @@ public interface Naemember_IService {
 	public boolean idDupleChk(String email);
 	
 	/**
+	 * 휴대전화번호 중복 체크(phoneCheck)
+	 * @param 중복확인값(휴대전화 번호)
+	 * @return 사용가능 여부(true 사용 가능)
+	 */
+	public boolean phoneCheck(String phone);
+	
+	/**
 	 * 프로필 입력(insertProFile)
 	 * @param 프로필 입력 정보
 	 * @return 프로필 입력 성공여부(true 성공)
@@ -126,5 +133,7 @@ public interface Naemember_IService {
 	 * @return 비밀번호 변경
 	 */
 	public boolean changePassword(NaememberDto dto);
+	
+
 
 }
