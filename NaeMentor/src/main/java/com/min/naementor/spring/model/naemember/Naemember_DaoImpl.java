@@ -38,6 +38,12 @@ public class Naemember_DaoImpl implements Naemember_IDao {
 		int cnt = sqlSession.selectOne(NS+"idDupleChk", email); // 중복이면 true
 		return (cnt>0)?true:false;
 	}
+	
+	@Override
+	public boolean phoneCheck(String phone) {
+		int cnt = sqlSession.selectOne(NS+"phoneCheck", phone);
+		return (cnt>0)?true:false;
+	}
 
 	@Override
 	public boolean insertProFile(ProfileDto dto) { // 프로필 입력
@@ -127,6 +133,8 @@ public class Naemember_DaoImpl implements Naemember_IDao {
 		int cnt = sqlSession.update(NS+"wakeUpStop");
 		return (cnt>0)?true:false;
 	}
+
+
 
 	
 

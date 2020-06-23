@@ -60,6 +60,16 @@ public class AjaxLogin_CTRL {
 			map.put("isc", isc+"");
 			return map;
 		}
+		
+		@RequestMapping(value = "/phoneCheck.do", method = RequestMethod.POST)
+		@ResponseBody
+		public Map<String, String> phoneCheck(String phone) {
+			log.info("휴대전화 번호 중복검사 phoneCheck, {}", phone);
+			Map<String, String> map = new HashMap<String, String>();
+			boolean isc = service.phoneCheck(phone);
+			map.put("isc", isc+"");
+			return map;
+		}
 	
 		// 아이디 찾기
 		@RequestMapping(value = "/idSend.do", method = RequestMethod.POST)
