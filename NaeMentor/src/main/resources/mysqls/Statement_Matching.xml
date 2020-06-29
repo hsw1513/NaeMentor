@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.min.naementor.matching">
+<select id="chkMatching" parameterType="java.lang.String" resultType="MTDto">
+	SELECT BOARDSEQ,MENTEESEQ , MENTORSEQ , MATCHINGDATE 
+	FROM MATCHING m 
+	WHERE BOARDSEQ = #{BOARDSEQ}
+</select>
+
+<!-- 매칭 확인 -->
+<select id="chkMatchingCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+	SELECT COUNT(BOARDSEQ) FROM MATCHING m WHERE BOARDSEQ = #{boardseq}
+</select>
+</mapper>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.min.naementor.report">
+
+<resultMap type="com.min.naementor.dtos.ReportDto" id="joinsearchReportU">
+		<result property="singomember" column="SINGOMEMBER"/>
+		<result property="singoedmember" column="SINGOEDMEMBER"/>
+		<result property="singoreason" column="SINGOREASON"/>
+		<result property="singochk" column="SINGOCHK"/>
+		<result property="reviewseq" column="REVIEWSEQ"/>
+		<result property="boardseq" column="BOARDSEQ"/>
+		<result property="reviewdto.content" column="CONTENT"/>
+		<result property="reviewdto.writedate" column="WRITEDATE"/>
+		<result property="reviewdto.delflag" column="DELFLAG"/>
+		<result property="reviewdto.matchingdto.findingmentordto.location" column="LOCATION"/>
+		<result property="reviewdto.matchingdto.findingmentordto.mentoringdate" column="MENTORINGDATE"/>
+	</resultMap>
+
+<!-- 신고당한 회원 조회 -->
+<select id="searchReportU" resultMap="joinsearchReportU">
+	SELECT SINGOMEMBER , SINGOEDMEMBER , SINGOREASON , SINGOCHK , r.REVIEWSEQ , r.BOARDSEQ 
+			, CONTENT, WRITEDATE, DELFLAG,
+			(SELECT LOCATION FROM FINDINGMENTOR m2 WHERE r2.BOARDSEQ =m2.BOARDSEQ) LOCATION, 
+			DATE_FORMAT((SELECT MENTORINGDATE FROM FINDINGMENTOR m WHERE r2.BOARDSEQ = m.BOARDSEQ), '%Y-%m-%d') AS MENTORINGDATE
+		FROM REPORT r JOIN REVIEW r2 
+			ON r.REVIEWSEQ = r2.REVIEWSEQ
+				WHERE SINGOCHK = 'N'
+</select>
+
+<!-- 신고당한 회원 카운트 증가 -->
+<update id="addReportCnt" parameterType="java.util.Map">
+	UPDATE NAEMEMBER 
+		SET REPORTCNT = REPORTCNT +1
+			WHERE MEMBERSEQ = #{singoedmember}
+</update>
+
+
+<!-- 신고당한 회원의 신고당한 횟수 조회 -->
+<select id="searchReportCnt" parameterType="java.util.Map" resultType="java.lang.String">
+	SELECT REPORTCNT
+		FROM NAEMEMBER
+			WHERE MEMBERSEQ = #{singoedmember}
+</select>
+
+<!-- 신고당한 회원 아이디 조회 -->
+<select id="searchSingoedMember" parameterType="java.util.Map" resultType="java.lang.String">
+	SELECT EMAIL 
+		FROM NAEMEMBER
+			WHERE MEMBERSEQ = #{singoedmember}
+</select>
+
+
+<!-- 신고당한 회원 카운트 증가시 신고체크 초기화(Y로)  -->
+<update id="changeSingoChk" parameterType="java.util.Map">
+	UPDATE REPORT 
+		SET SINGOCHK = 'Y'
+			WHERE SINGOEDMEMBER = #{singoedmember}
+</update>
+
+<!-- 신고당한 횟수 3회 이상 정지 -->
+<update id="stopSingoedMember">
+	UPDATE NAEMEMBER
+		SET USERSTATUS = 'S'
+			WHERE REPORTCNT >= '3'
+</update>
+
+
+<!-- 회원신고(1.이미 신고한 회원인가 체크): 구현우 -->
+<select id="chkReport" parameterType="java.util.Map" resultType="java.lang.Integer">
+	SELECT COUNT(SINGOREASON) FROM REPORT r
+	WHERE REVIEWSEQ =#{reviewseq} AND SINGOMEMBER =#{singomember}
+</select>
+<!-- 회원신고(2.신고한적이 없는 회원일 경우 신고): 구현우 -->
+<insert id="insertReport" parameterType="RPDto">
+	INSERT INTO REPORT
+	(SINGOMEMBER, SINGOEDMEMBER, SINGOREASON, SINGOCHK, REVIEWSEQ, BOARDSEQ)
+	VALUES(#{singomember}, #{singoedmember}, #{singoreason}, 'N', #{reviewseq}, #{boardseq})
+</insert>
+<!-- 멘티: 신고를 위해 멘티가 남긴 후기번호 가져오기 -->
+<select id="findReviewOfMentor" parameterType="java.util.Map" resultType="java.lang.Integer">
+	SELECT r.REVIEWSEQ
+		FROM REVIEW r 
+		JOIN MATCHING m ON r.BOARDSEQ = m.BOARDSEQ
+		WHERE m.MENTORSEQ = #{mentorseq} AND m.MENTEESEQ = #{menteeseq} AND r.MENTEESTAR = '0'
+		ORDER BY r.WRITEDATE DESC
+</select>
+<!-- 멘토: 신고를 위해 멘토가 남긴 후기번호 가져오기 -->
+<select id="findReviewOfMentee" parameterType="java.util.Map" resultType="java.lang.Integer">
+	SELECT r.REVIEWSEQ
+		FROM REVIEW r 
+		JOIN MATCHING m ON r.BOARDSEQ = m.BOARDSEQ
+		WHERE m.MENTORSEQ = #{mentorseq} AND m.MENTEESEQ = #{menteeseq} AND r.MENTORSTAR = '0'
+		ORDER BY r.WRITEDATE DESC
+</select>
+
+
+</mapper>

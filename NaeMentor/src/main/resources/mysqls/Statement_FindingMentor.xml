@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.min.naementor.findingmentor">
+
+<!-- 테스트용 리스트 -->
+<select id="selectAll" resultType="FMDto">
+ SELECT BOARDSEQ, TITLE, CONTENT, WRITESDATE, 
+			REPORTCNT, SPECIALFIELD, TARGET, MENTEELEVEL, HOWTO, 
+			LOCATION, DELFLAG, MEMBERSEQ, FINDREPORTER, MENTORLIST, MATCHINGCHK, MENTORINGDATE
+FROM FINDINGMENTOR
+WHERE DELFLAG = 'N'
+ORDER BY BOARDSEQ DESC
+</select>
+<!-- 멘토찾기 게시판 -->
+
+<resultMap type="FMDto" id="detailJoinView">
+	<result column="MENTORLIST" property="mentorlist"/>
+	<result column="BOARDSEQ" property="boardseq"/>
+	<result column="TITLE" property="title"/>
+	<result column="CONTENT" property="content"/>
+	<result column="REPORTCNT" property="reportcnt"/>
+	<result column="SPECIALFIELD" property="specialfield"/>
+	<result column="TARGET" property="target"/>
+	<result column="MENTEELEVEL" property="menteelevel"/>
+	<result column="HOWTO" property="howto"/>
+	<result column="LOCATION" property="location"/>
+	<result column="DELFLAG" property="delflag"/>
+	<result column="MEMBERSEQ" property="memberseq"/>
+	<result column="FINDREPORTER" property="findreporter"/>
+	<result column="MATCHINGCHK" property="matchingchk"/>
+	<result column="MENTORINGDATE" property="mentoringdate"/>
+	<result column="NICKNAME" property="naememberdto.nickname"/>
+	<result column="INTRODUCE" property="naememberdto.introduce"/>
+	<result column="MENTEEACCSTAR" property="naememberdto.menteeaccstar"/>
+	<result column="MENTEECNT" property="naememberdto.menteecnt"/>
+</resultMap>
+
+
+<!-- 게시글 상세조회 -->
+<select id="detailContent" parameterType="java.util.Map" resultMap="detailJoinView">
+	SELECT MENTORLIST ,BOARDSEQ, TITLE, CONTENT, WRITESDATE, f.REPORTCNT, 
+		   SPECIALFIELD, f.TARGET, MENTEELEVEL, HOWTO, LOCATION, DELFLAG, 
+		   f.MEMBERSEQ, FINDREPORTER, MATCHINGCHK, MENTORINGDATE, n.NICKNAME,
+		   n.INTRODUCE , n.MENTEEACCSTAR , n.MENTEECNT
+			FROM FINDINGMENTOR f JOIN NAEMEMBER n
+				ON f.MEMBERSEQ = n.MEMBERSEQ 
+					WHERE BOARDSEQ = #{boardseq}
+</select>
+
+<!-- 멘토링 신청 -->
+<!-- 1. 멘토중복지원방지 -->
+<select id="applyMentorChk" parameterType="java.util.Map" resultType="java.lang.String">
+	SELECT INSTR((SELECT MENTORLIST FROM FINDINGMENTOR f WHERE BOARDSEQ = #{boardseq}), #{memberseq}) AS BOOL 
+	FROM DUAL
+</select>
+<!-- 2. 멘토링 신청 -->
+<update id="applyMentor" parameterType="java.util.Map">
+	UPDATE FINDINGMENTOR
+	SET MENTORLIST= CONCAT(MENTORLIST,#{memberseq})
+	WHERE BOARDSEQ=#{boardseq}
+</update>
+
+<!-- 게시글 신고 -->
+<!-- 1. 신고중복방지 -->
+<select id="reportContentChk" parameterType="java.util.Map" resultType="java.lang.String">
+	SELECT INSTR((SELECT FINDREPORTER FROM FINDINGMENTOR f WHERE BOARDSEQ =#{boardseq}),#{memberseq}) AS BOOL 
+	FROM DUAL
+</select>
+<!-- 2. 게시글 신고자 명단 추가 -->
+<update id="reportUserUpdate" parameterType="java.util.Map">
+	UPDATE FINDINGMENTOR
+	SET FINDREPORTER= CONCAT(FINDREPORTER,#{memberseq})
+	WHERE BOARDSEQ=#{boardseq}
+</update>
+<!-- 3. 게시글 신고 카운트 증가 -->
+<update id="reportCntUpdate" parameterType="java.util.Map">
+	UPDATE FINDINGMENTOR SET REPORTCNT = REPORTCNT +1 WHERE BOARDSEQ = #{boardseq}
+</update>
+
+<!-- 멘토찾기 글입력 -->
+<insert id="insertContent" parameterType="FMDto">
+	INSERT INTO FINDINGMENTOR
+	(BOARDSEQ, TITLE, CONTENT, WRITESDATE, REPORTCNT, SPECIALFIELD, TARGET, 
+	MENTEELEVEL, HOWTO, LOCATION, DELFLAG, MENTORLIST, MEMBERSEQ, FINDREPORTER, MATCHINGCHK, MENTORINGDATE)
+	VALUES(BOARDSEQ.NEXTVAL, #{title}, #{content}, NOW(), 0, #{specialfield}, #{target}, 
+	#{menteelevel}, #{howto}, #{location}, 'N', '0,', #{memberseq}, '0,', 'N', STR_TO_DATE(#{mentoringdate}, '%Y%m%d%H%i))
+</insert>
+
+<!-- 게시글 수정 -->
+<!-- 1. 불러오기 -->
+<select id="modifyContentSelect" parameterType="java.util.Map" resultType="FMDto">
+	SELECT BOARDSEQ , CONTENT , WRITESDATE , SPECIALFIELD,
+  			TARGET ,MENTEELEVEL ,HOWTO ,LOCATION , MENTORLIST , MEMBERSEQ, MENTORINGDATE
+	FROM FINDINGMENTOR f
+	WHERE BOARDSEQ =#{boardseq} AND DELFLAG ='N'
+</select>
+<!-- 2. 수정하기 -->
+<update id="modifyContent" parameterType="FMDto">
+	UPDATE FINDINGMENTOR SET WRITESDATE=NOW()
+		<if test="content != null">
+		,CONTENT=#{content}
+		</if>
+		<if test="specialfield != null">
+		, SPECIALFIELD =#{specialfield}
+		</if>
+		<if test="target != null">
+		, TARGET=#{target}
+		</if>
+		<if test="menteelevel != null">
+		, MENTEELEVEL=#{menteelevel}
+		</if>
+		<if test="howto != null">
+		, HOWTO=#{howto}
+		</if>
+		<if test="location != null">
+		, LOCATION=#{location}
+		</if>
+		<if test="mentoringdate != null">
+		, MENTORINGDATE=#{mentoringdate}
+		</if>
+		
+  		WHERE BOARDSEQ = #{boardseq}
+</update>
+
+<!-- 게시글 삭제 -->
+<!-- 1. 단일 삭제 -->
+<update id="deleteContent" parameterType="java.util.Map">
+	UPDATE FINDINGMENTOR SET DELFLAG ='Y'
+ 	WHERE BOARDSEQ = #{boardseq} AND MEMBERSEQ = #{memberseq}
+</update>
+<!-- 2. 다중 삭제 -->
+<update id="multidelContent" parameterType="java.util.Map">
+	UPDATE FINDINGMENTOR SET DELFLAG ='N'
+ 	WHERE MEMBERSEQ = #{memberseq} AND BOARDSEQ IN
+ 	<foreach collection="_boardseq" item="boardseq" open="(" separator="," close=")">
+ 		#{boardseq}
+ 	</foreach>
+</update>
+
+
+<resultMap type="com.min.naementor.dtos.NaememberDto" id="chkMentorInfo">
+		<result property="memberseq" column="MEMBERSEQ"/>
+		<result property="target" column="TARGET"/>
+		<result property="email" column="EMAIL"/>
+		<result property="password" column="PASSWORD"/>
+		<result property="nickname" column="NICKNAME"/>
+		<result property="introduce" column="INTRODUCE"/>
+		<result property="phone" column="PHONE"/>
+		<result property="birthday" column="BIRTHDAY"/>
+		<result property="gender" column="GENDER"/>
+		<result property="auth" column="AUTH"/>
+		<result property="userstatus" column="USERSTATUS"/>
+		<result property="mentortier" column="MENTORTIER"/>
+		<result property="logincnt" column="LOGINCNT"/>
+		<result property="reportcnt" column="REPORTCNT"/>
+		<result property="joindate" column="JOINDATE"/>
+		<result property="menteecnt" column="MENTEECNT"/>
+		<result property="menteeaccstar" column="MENTEEACCSTAR"/>
+		<result property="byebye" column="BYEBYE"/>
+		<result property="profiledto.photo" column="PHOTO"/>
+		<result property="profiledto.school" column="SCHOOL"/>
+		<result property="profiledto.major" column="MAJOR"/>
+		<result property="profiledto.career" column="CAREER"/>
+		<result property="profiledto.certificate" column="CERTIFICATE"/>
+		<result property="profiledto.specialfield" column="SPECIALFIELD"/>
+		<result property="profiledto.pmdate" column="PMDATE"/>
+		<result property="profiledto.mentorcnt" column="MENTORCNT"/>
+		<result property="profiledto.mentoaccstar" column="MENTOACCSTAR"/>
+		<result property="profiledto.filechk" column="FILECHK"/>
+	</resultMap>
+
+
+<!-- 멘토 선택(Matching게시판 insert) -->
+<insert id="matching" parameterType="MTDto">
+	INSERT INTO MATCHING(BOARDSEQ, MENTEESEQ, MENTORSEQ, MATCHINGDATE, PAYFLAG)
+	VALUES(#{boardseq}, #{menteeseq}, #{mentorseq}, NOW(), 'N')
+</insert>
+<select id="chkUser" parameterType="java.util.Map" resultMap="chkMentorInfo">
+	SELECT p.MEMBERSEQ , n.EMAIL, NICKNAME , 
+		  	 IFNULL(INTRODUCE, 0) INTRODUCE , PHONE , BIRTHDAY ,
+		  	 GENDER , AUTH , USERSTATUS ,
+		   	  IFNULL(MENTORTIER, 0) MENTORTIER, LOGINCNT , REPORTCNT, 
+		   	 JOINDATE , MENTEECNT , MENTEEACCSTAR,  IFNULL(BYEBYE,0) BYEBYE,  IFNULL(MAJOR,0) MAJOR, IFNULL(SCHOOL,0) SCHOOL,
+		      IFNULL(CAREER,0) CAREER,  IFNULL(CERTIFICATE,0) CERTIFICATE,  IFNULL(SPECIALFIELD,0) SPECIALFIELD, STR_TO_DATE(IFNULL(PMDATE, '21201231'), 'YYYY-MM-DD') PMDATE, MENTORCNT, MENTOACCSTAR,
+		   	  FILECHK,  IFNULL(PHOTO,0) PHOTO
+		   	  FROM NAEMEMBER n JOIN PROFILE p
+		   			ON n.MEMBERSEQ = p.MEMBERSEQ
+	<where>
+		p.MEMBERSEQ IN
+		<foreach collection="_memberseq" item="memberseq" open="(" separator="," close=")">
+			<if test="memberseq != ''">
+			#{memberseq}
+			</if>
+		</foreach>
+	</where>
+</select>
+
+
+<update id="updateMatching" parameterType="java.lang.String">
+	UPDATE FINDINGMENTOR SET MATCHINGCHK = 'Y', DELFLAG = 'M' WHERE BOARDSEQ = #{boardseq}
+</update>
+
+<!-- 매칭 글 조회 -->
+<select id="chkMatching" parameterType="java.util.Map" resultType="FMDto" >
+	SELECT f.BOARDSEQ, TITLE, CONTENT, WRITESDATE, 
+			REPORTCNT, SPECIALFIELD, TARGET, MENTEELEVEL, HOWTO, 
+			LOCATION, DELFLAG, MEMBERSEQ, FINDREPORTER, MENTORLIST, MATCHINGCHK, MENTORINGDATE 
+		FROM FINDINGMENTOR f JOIN MATCHING m
+		ON f.BOARDSEQ = m.BOARDSEQ
+		<if test="mentorseq != null">
+		WHERE m.MENTORSEQ =#{mentorseq} 
+		</if>
+		<if test="menteeseq != null">
+		WHERE m.MENTEESEQ =#{menteeseq} 
+		</if>
+		AND DELFLAG = 'M'
+</select>
+<select id="chkComplete" parameterType="java.util.Map" resultType="FMDto">
+	SELECT f.BOARDSEQ, TITLE, CONTENT, WRITESDATE, 
+			REPORTCNT, SPECIALFIELD, TARGET, MENTEELEVEL, HOWTO, 
+			LOCATION, DELFLAG, MEMBERSEQ, FINDREPORTER, MENTORLIST, MATCHINGCHK, MENTORINGDATE 
+		FROM FINDINGMENTOR f JOIN MATCHING m
+		ON f.BOARDSEQ = m.BOARDSEQ
+		<if test="mentorseq != null">
+		WHERE m.MENTORSEQ =#{mentorseq}
+		</if>
+		<if test="menteeseq != null">
+		WHERE m.MENTEESEQ =#{menteeseq}
+		</if>
+		 AND DELFLAG = 'C'
+</select>
+
+<!-- 후기가 남겨진 글 삭제 -->
+<update id="updateComplete">
+	UPDATE FINDINGMENTOR SET DELFLAG = 'C' WHERE NOW()-MENTORINGDATE > 0
+</update>
+
+
+<!-- 매칭x시 상태변경 -->
+<update id="updateNoMatching" parameterType="java.lang.Integer">
+	UPDATE FINDINGMENTOR SET DELFLAG = 'Y' WHERE BOARDSEQ = #{boardseq}
+</update>
+
+<!-- 매칭 안된 글 이틀 후 지우기 -->
+<update id="deleteNoMatching">
+UPDATE FINDINGMENTOR 
+	SET DELFLAG = 'Y'
+		WHERE DELFLAG = 'N' AND NOW() - WRITESDATE >=2
+</update>
+
+<!-- 멘토링 날짜 후 3일이 지난 글 삭제 -->
+<update id="deleteCompleteMatching">
+UPDATE FINDINGMENTOR 
+	SET DELFLAG = 'Z'
+		WHERE DELFLAG = 'C' AND NOW() - MENTORINGDATE >= 3
+</update>
+
+
+</mapper>

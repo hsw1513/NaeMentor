@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.min.naementor.offer">
+<!-- 오퍼 작성 -->
+<insert id="insertOffer" parameterType="OFDto">
+	INSERT INTO OFFER(MEMBERSEQ , BOARDSEQ , CONTENT , PRICE )
+		VALUES (#{memberseq},#{boardseq},#{content},#{price})
+</insert>
+<!-- 오퍼 확인 -->
+<select id="viewOffer" parameterType="java.util.Map" resultType="OFDto">
+	SELECT MEMBERSEQ , CONTENT , PRICE 
+		FROM OFFER o WHERE BOARDSEQ = #{boardseq} AND MEMBERSEQ = #{memberseq}
+</select>
+
+<select id="chkOffer" parameterType="java.util.Map" resultType="java.lang.Integer">
+	SELECT COUNT(MEMBERSEQ) 
+		FROM OFFER o 
+			WHERE BOARDSEQ = #{boardseq} AND MEMBERSEQ = #{memberseq}
+</select>
+</mapper>

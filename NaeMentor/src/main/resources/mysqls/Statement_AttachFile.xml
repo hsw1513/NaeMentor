@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.min.naementor.attachfile">
+
+<!-- 프로필 파일 조회 -->
+<select id="chkFile" parameterType="java.lang.String" resultType="AFDto">
+	SELECT FILESEQ,USERFILE,SEARCHFILE,FILESIZE,UPLOADDATE,FILEPATH,ADMINSEQ,MEMBERSEQ 
+	FROM ATTACHFILE a
+	WHERE MEMBERSEQ = #{memberseq} AND ADMINSEQ = 0
+	ORDER BY UPLOADDATE DESC
+</select>
+
+
+</mapper>

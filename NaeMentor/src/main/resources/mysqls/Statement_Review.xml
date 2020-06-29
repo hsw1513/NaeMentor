@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.min.naementor.review">
+		
+		<resultMap type="RVDto" id="findMentorseq">
+			<result column="MENTORSEQ" property="matchingdto.mentorseq"/>
+			<result column="MENTORSTAR" property="mentorstar"/>
+			<result column="CONTENT" property="content"/>
+			<result column="WRITEDATE" property="writedate"/>
+		</resultMap>
+		
+<!-- 멘티가 멘토의 별점과 후기 조회  -->
+	<select id="searchMStar" parameterType="java.lang.String" resultMap="findMentorseq">
+		SELECT m.MENTORSEQ,r.MENTORSTAR, r.CONTENT, r.WRITEDATE
+		FROM REVIEW r 
+		JOIN MATCHING m ON r.BOARDSEQ = m.BOARDSEQ
+		WHERE m.MENTORSEQ =#{mentorseq} AND MENTEESTAR = '0'
+		ORDER BY r.WRITEDATE DESC
+	</select>
+<!-- 멘토가 멘티의 별점과 후기 조회  -->
+	<select id="denyMSearch" parameterType="java.lang.String" resultType="RVDto">
+		SELECT r.MENTEESTAR , r.CONTENT, r.WRITEDATE
+		FROM REVIEW r 
+		JOIN MATCHING m ON r.BOARDSEQ = m.BOARDSEQ
+		WHERE m.MENTEESEQ =#{menteeseq} AND MENTORSTAR = '0'
+		ORDER BY r.WRITEDATE DESC
+	</select>
+<!-- 멘토링 종료 후 3일간 공고글 에서 입력(작성자, 멘토링 상대, 작성일, 멘토링 날짜, 내용, 별점 입력)  -->
+	<select id="chkReviewMentor" parameterType="java.lang.String" resultType="java.lang.Integer">
+		SELECT COUNT(REVIEWSEQ) FROM REVIEW r
+		WHERE BOARDSEQ = #{boardseq} AND MENTORSTAR = '0'
+	</select>
+	<insert id="insertReviewMentor" parameterType="MSDto">
+		INSERT INTO REVIEW
+		(REVIEWSEQ, BOARDSEQ, CONTENT, WRITEDATE, DELFLAG, MENTORSTAR, MENTEESTAR)
+		VALUES(REVIEWSEQ.NEXTVAL, #{boardseq}, #{content}, NOW(), 'N', '0', #{menteestar})
+	</insert>
+	<update id="updateMenteeAccStar" parameterType="java.util.Map">
+		UPDATE NAEMEMBER SET MENTEEACCSTAR = MENTEEACCSTAR + #{menteeaccstar}
+		WHERE MEMBERSEQ = #{memberseq}
+	</update>
+<!-- 멘티가 멘토의 별점,후기입력 -->
+	<select id="chkReviewMentee" parameterType="java.lang.String" resultType="java.lang.Integer">
+		SELECT COUNT(REVIEWSEQ) FROM REVIEW r
+		WHERE BOARDSEQ = #{boardseq} AND MENTEESTAR = '0'
+	</select>
+	<insert id="insertReviewMentee" parameterType="MSDto">
+		INSERT INTO REVIEW
+		(REVIEWSEQ, BOARDSEQ, CONTENT, WRITEDATE, DELFLAG, MENTORSTAR, MENTEESTAR)
+		VALUES(REVIEWSEQ.NEXTVAL, #{boardseq}, #{content}, NOW(), 'N', #{mentorstar}, '0')
+	</insert>
+	<update id="updateMentoAccStar" parameterType="java.util.Map">
+		UPDATE PROFILE SET MENTOACCSTAR = MENTOACCSTAR + #{mentoaccstar}
+		WHERE MEMBERSEQ = #{memberseq}
+	</update>
+
+
+<!-- 리뷰가 둘 다 남겨진 게시글 삭제 카운트 조회 -->
+<select id="chkReviewCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+	SELECT COUNT(BOARDSEQ) FROM REVIEW r WHERE BOARDSEQ = #{boardseq}
+</select>
+
+</mapper>

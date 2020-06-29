@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.min.naementor.naemember.admin">
+	
+	<!-- 전체 회원정보조회(기본) -->
+	<select id="userBasicInfo" parameterType="NMDto" resultType="NMDto">
+		SELECT MEMBERSEQ, EMAIL , NICKNAME , PHONE , BIRTHDAY , 
+			GENDER , AUTH , USERSTATUS ,MENTORTIER, REPORTCNT ,
+			DATE_FORMAT(JOINDATE, 'YYYY-MM-DD') AS JOINDATE , MENTEECNT, 
+			MENTEEACCSTAR, DATE_FORMAT(LASTACCESS, 'YYYY-MM-DD') AS LASTACCESS, BYEBYE 
+				FROM NAEMEMBER
+					WHERE AUTH != 'ROLE_A'
+					ORDER BY AUTH
+	 </select>
+	 
+	 <!-- 회원정보조회(기본) -->
+	<select id="personalInfo" parameterType="java.util.Map" resultType="NMDto">
+		SELECT MEMBERSEQ, EMAIL , NICKNAME , PHONE , BIRTHDAY , 
+			GENDER , AUTH , USERSTATUS ,MENTORTIER, REPORTCNT ,
+			DATE_FORMAT(JOINDATE, 'YYYY-MM-DD') AS JOINDATE , MENTEECNT, 
+			MENTEEACCSTAR, DATE_FORMAT(LASTACCESS, 'YYYY-MM-DD') AS LASTACCESS, BYEBYE 
+				FROM NAEMEMBER
+					WHERE MEMBERSEQ = #{memberseq}
+	 </select>
+	
+	<!-- 회원정보조회(상세) -->
+	<select id="userDetail" parameterType="java.lang.String" resultType="PRDto">
+		SELECT PHOTO, SCHOOL, MAJOR, CAREER, CERTIFICATE, SPECIALFIELD, DATE_FORMAT(PMDATE, 'YYYY-MM-DD') AS PMDATE, MENTORCNT, MENTOACCSTAR
+  			 FROM PROFILE
+  				WHERE MEMBERSEQ = #{memberseq}
+	</select>
+	
+	<!-- 신고게시글 조회 -->
+	<select id="SearchRC" resultType="FMDto">
+	SELECT BOARDSEQ, TITLE , CONTENT , WRITESDATE , REPORTCNT , 
+  			SPECIALFIELD, TARGET , MENTEELEVEL , HOWTO, 
+  			LOCATION , DELFLAG , MENTORLIST , FINDREPORTER
+  				FROM FINDINGMENTOR f 
+					WHERE REPORTCNT >= 1 AND DELFLAG  = 'N'
+	</select>
+	
+	<!-- 신고게시글 삭제 자동 -->
+	<update id="deleteReportAuto">
+	 	UPDATE FINDINGMENTOR 
+ 			SET DELFLAG = 'Y'
+ 				WHERE REPORTCNT > '4'
+	</update>
+	
+	<update id="deleteReport" parameterType="java.util.Map">
+		UPDATE FINDINGMENTOR 
+ 			SET DELFLAG = 'Y'
+ 				WHERE BOARDSEQ = #{boardseq}
+	</update>
+	
+	<!-- 탈퇴신청 회원 조회 -->
+	<select id="searchByeU" resultType="NMDto">
+		SELECT MEMBERSEQ, EMAIL , NICKNAME , PHONE , BIRTHDAY , 
+			GENDER , AUTH , USERSTATUS ,MENTORTIER, REPORTCNT ,
+			JOINDATE , MENTEECNT, MENTEEACCSTAR, LASTACCESS , BYEBYE
+				FROM NAEMEMBER
+					WHERE BYEBYE = 'Y'		
+	</select>
+	
+	<!-- 탈퇴회원 승인시 권한 변경 -->
+	<update id="changeStatusBye" parameterType="java.util.Map">
+		UPDATE NAEMEMBER 
+			SET USERSTATUS = 'D'
+				WHERE BYEBYE = 'Y'
+	</update>
+	
+	<!-- 멘토 승인시 권한 변경 -->
+	<update id="mentorPromotion" parameterType="java.util.Map">
+ 		UPDATE NAEMEMBER 
+ 			SET AUTH = 'ROLE_R'
+ 				WHERE MEMBERSEQ =#{memberseq}
+	</update>
+	
+	<!-- 멘토 승급시 멘토 티어를 B로 승급 -->
+	<update id="tierPromotion" parameterType="java.util.Map">
+		UPDATE NAEMEMBER
+			SET MENTORTIER = 'B'
+				WHERE MEMBERSEQ = #{memberseq}
+	</update>
+	
+	<!-- 멘토승급 취소시 FILECHK를 다시 변경  -->
+	<update id="mentorCancel" parameterType="java.util.Map">
+		UPDATE PROFILE
+			SET FILECHK = 'N'
+				WHERE MEMBERSEQ = #{memberseq}
+	</update>
+	
+	<!-- 멘토 승급시 AUTHORCHK를 Y로 변경 -->
+	<update id="authorChk" parameterType="java.util.Map">
+		UPDATE NAEMEMBER
+			SET AUTHORCHK = 'Y'
+				WHERE MEMBERSEQ = #{memberseq}
+	</update>
+	
+	
+	<!-- 멘토승급 거절시 메일 보낼 아이디 찾기 -->
+	<select id="denyId" parameterType="java.util.Map" resultType="java.lang.String">
+		SELECT EMAIL
+			FROM NAEMEMBER
+				WHERE MEMBERSEQ = #{memberseq}
+	</select>
+	
+	
+	<!-- 멘토승급시 승급일 기록 -->
+	<update id="promotionDate" parameterType="java.util.Map">
+		UPDATE PROFILE 
+ 			SET PMDATE = NOW()
+ 				WHERE MEMBERSEQ =#{memberseq}
+	</update>
+	
+	
+	<resultMap type="com.min.naementor.dtos.NaememberDto" id="joinsearchApplier">
+		<result property="memberseq" column="MEMBERSEQ"/>
+		<result property="email" column="EMAIL"/>
+		<result property="nickname" column="NICKNAME"/>
+		<result property="introduce" column="INTRODUCE"/>
+		<result property="phone" column="PHONE"/>
+		<result property="birthday" column="BIRTHDAY"/>
+		<result property="gender" column="GENDER"/>
+		<result property="reportcnt" column="REPORTCNT"/>
+		<result property="joindate" column="JOINDATE"/>
+		<result property="profiledto.photo" column="PHOTO"/>
+		<result property="profiledto.school" column="SCHOOL"/>
+		<result property="profiledto.major" column="MAJOR"/>
+		<result property="profiledto.career" column="CAREER"/>
+		<result property="profiledto.certificate" column="CERTIFICATE"/>
+		<result property="profiledto.specialfield" column="SPECIALFIELD"/>
+		<result property="profiledto.mentoaccstar" column="MENTOACCSTAR"/>
+		<result property="profiledto.filechk" column="FILECHK"/>
+		<result property="profiledto.attachfiledto.userfile" column="USERFILE"/>
+		<result property="profiledto.attachfiledto.uploaddate" column="UPLOADDATE"/>
+	</resultMap>
+	
+	<!-- 멘토신청자 조회 -->
+	<select id="searchApplier" resultMap="joinsearchApplier">
+		SELECT n.MEMBERSEQ, AUTH, EMAIL, NICKNAME, INTRODUCE, PHONE, BIRTHDAY,
+			   GENDER, REPORTCNT, DATE_FORMAT(JOINDATE, 'YYYY-MM-DD') AS JOINDATE, PHOTO, SCHOOL, MAJOR, CAREER,
+			   CERTIFICATE, SPECIALFIELD, MENTOACCSTAR, FILECHK, USERFILE, DATE_FORMAT(UPLOADDATE, 'YYYY-MM-DD') AS UPLOADDATE
+			FROM NAEMEMBER n JOIN PROFILE p
+				ON n.MEMBERSEQ = p.MEMBERSEQ 
+			JOIN ATTACHFILE a 
+				ON n.MEMBERSEQ = a.MEMBERSEQ
+				WHERE FILECHK = 'Y' AND NOT AUTH = 'ROLE_R' AND NOT AUTH = 'ROLE_A'
+					ORDER BY UPLOADDATE
+	</select>
+	
+	<!-- 페이징 쿼리문 -->
+	<select id="adminBoardPaging" resultType="NMDto">
+	SELECT * 
+		FROM(SELECT MEMBERSEQ, EMAIL , NICKNAME , PHONE , BIRTHDAY , 
+        	 GENDER , AUTH , USERSTATUS ,MENTORTIER, REPORTCNT ,
+         	 DATE_FORMAT(JOINDATE, 'YYYY-MM-DD') AS JOINDATE , MENTEECNT, 
+       		 MENTEEACCSTAR, DATE_FORMAT(LASTACCESS, 'YYYY-MM-DD') AS LASTACCESS, 
+       		 BYEBYE , ROW_NUMBER() OVER(ORDER BY AUTH) AS "RN"
+            	FROM NAEMEMBER
+               		WHERE AUTH = 'ROLE_R')
+               			WHERE RN BETWEEN #{start} AND #{last}
+	</select>
+	
+	<select id="naeMemberListTotal" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM NAEMEMBER
+	</select>
+	
+</mapper>

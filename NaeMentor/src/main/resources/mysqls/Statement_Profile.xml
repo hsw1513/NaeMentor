@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.min.naementor.profile">
+
+<resultMap type="com.min.naementor.dtos.NaememberDto" id="joinEncLogin">
+		<result property="memberseq" column="MEMBERSEQ"/>
+		<result property="target" column="TARGET"/>
+		<result property="email" column="EMAIL"/>
+		<result property="password" column="PASSWORD"/>
+		<result property="nickname" column="NICKNAME"/>
+		<result property="introduce" column="INTRODUCE"/>
+		<result property="phone" column="PHONE"/>
+		<result property="birthday" column="BIRTHDAY"/>
+		<result property="gender" column="GENDER"/>
+		<result property="auth" column="AUTH"/>
+		<result property="userstatus" column="USERSTATUS"/>
+		<result property="mentortier" column="MENTORTIER"/>
+		<result property="logincnt" column="LOGINCNT"/>
+		<result property="reportcnt" column="REPORTCNT"/>
+		<result property="joindate" column="JOINDATE"/>
+		<result property="menteecnt" column="MENTEECNT"/>
+		<result property="menteeaccstar" column="MENTEEACCSTAR"/>
+		<result property="byebye" column="BYEBYE"/>
+		<result property="profiledto.photo" column="PHOTO"/>
+		<result property="profiledto.school" column="SCHOOL"/>
+		<result property="profiledto.major" column="MAJOR"/>
+		<result property="profiledto.career" column="CAREER"/>
+		<result property="profiledto.certificate" column="CERTIFICATE"/>
+		<result property="profiledto.specialfield" column="SPECIALFIELD"/>
+		<result property="profiledto.pmdate" column="PMDATE"/>
+		<result property="profiledto.mentorcnt" column="MENTORCNT"/>
+		<result property="profiledto.mentoaccstar" column="MENTOACCSTAR"/>
+		<result property="profiledto.filechk" column="FILECHK"/>
+	</resultMap>
+	
+	<select id="encLogin" parameterType="java.lang.String" resultMap="joinEncLogin">
+		SELECT p.MEMBERSEQ , n.EMAIL, NICKNAME , 
+		  	 IFNULL(INTRODUCE, 0) INTRODUCE , PHONE , BIRTHDAY ,
+		  	 GENDER , AUTH , USERSTATUS ,
+		   	  IFNULL(MENTORTIER, 0) MENTORTIER, LOGINCNT , REPORTCNT, 
+		   	 JOINDATE , MENTEECNT , MENTEEACCSTAR,  IFNULL(BYEBYE,0) BYEBYE,  IFNULL(MAJOR,0) MAJOR, IFNULL(SCHOOL,0) SCHOOL,
+		      IFNULL(CAREER,0) CAREER,  IFNULL(CERTIFICATE,0) CERTIFICATE,  IFNULL(SPECIALFIELD,0) SPECIALFIELD, STR_TO_DATE(IFNULL(PMDATE, '21201231'), 'YYYY-MM-DD') PMDATE, MENTORCNT, MENTOACCSTAR,
+		   	  FILECHK,  IFNULL(PHOTO,0) PHOTO
+		   	FROM NAEMEMBER n JOIN PROFILE p
+		   			ON n.MEMBERSEQ = p.MEMBERSEQ 
+		   				AND n.MEMBERSEQ = #{memberseq}
+	</select>
+	
+	<update id="applyBye" parameterType="java.lang.String">
+	UPDATE NAEMEMBER 
+       SET BYEBYE = 'Y'
+          WHERE MEMBERSEQ = #{memberseq}
+	</update>
+
+	<insert id="insertProfile" parameterType="PRDto">
+	UPDATE PROFILE
+	SET PHOTO=#{photo}, SCHOOL=#{school}, MAJOR=#{major}, CAREER=#{career}, CERTIFICATE=#{certificate}, SPECIALFIELD=#{specialfield}
+	WHERE MEMBERSEQ=#{memberseq}
+	</insert>
+
+	<insert id="insertFile" parameterType="AFDto">
+	INSERT INTO ATTACHFILE
+	(FILESEQ, USERFILE, SEARCHFILE, FILESIZE, UPLOADDATE, FILEPATH, ADMINSEQ, MEMBERSEQ)
+	VALUES(FILESEQ.NEXTVAL, #{userfile}, #{searchfile}, #{filesize}, NOW(), #{filepath}, '0', #{memberseq})
+	</insert>
+
+	<update id="updateFilechk" parameterType="java.lang.String">
+	UPDATE PROFILE
+	SET FILECHK='Y'
+	WHERE MEMBERSEQ=#{memberseq}
+	</update>
+
+	<update id="updateAuth" parameterType="java.lang.String">
+	UPDATE NAEMEMBER SET AUTH = 'ROLE_R' WHERE MEMBERSEQ = #{memberseq}
+	</update>
+	
+	<!-- 닉네임 변경 -->
+	<update id="changeNickName" parameterType="NMDto">
+		UPDATE NAEMEMBER
+			SET NICKNAME = #{nickname}
+				WHERE MEMBERSEQ = #{memberseq}
+	</update>
+	
+	<!-- 자기소개 변경 -->
+	<update id="changeIntro" parameterType="NMDto">
+		UPDATE NAEMEMBER
+			SET INTRODUCE = #{introduce}
+				WHERE MEMBERSEQ = #{memberseq}
+	</update>
+	
+	<!-- 휴대전화 번호 변경 -->
+	<update id="changePhone" parameterType="NMDto">
+		UPDATE NAEMEMBER
+			SET PHONE = #{phone}
+				WHERE MEMBERSEQ = #{memberseq}
+	</update>
+	
+	<!-- 권한 변경 -->
+	<update id="changeAuth" parameterType="java.util.Map">
+		UPDATE NAEMEMBER
+			<set>
+				AUTH = 
+				<if test="tomentor != null">
+					#{tomentor}
+				</if>
+				<if test="tomentee != null">
+					#{tomentee}
+				</if>
+			</set>
+			WHERE MEMBERSEQ = #{memberseq}
+	</update>
+
+</mapper>

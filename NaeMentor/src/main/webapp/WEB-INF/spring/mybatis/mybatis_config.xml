@@ -17,18 +17,18 @@
 	</typeAliases>
 	
 	<mappers>
-		<mapper resource="/sqls/Statement_Naemember.xml"/>
-		<mapper resource="/sqls/Statement_AdminBoard.xml"/>
-		<mapper resource="/sqls/Statement_AttachFile.xml"/>
-		<mapper resource="/sqls/Statement_Profile.xml"/>
-		<mapper resource="/sqls/Statement_Payment.xml"/>
-		<mapper resource="/sqls/Statement_NotiQuestion.xml"/>
-		<mapper resource="/sqls/Statement_FindingMentor.xml"/>
-		<mapper resource="/sqls/Statement_Matching.xml"/>
-		<mapper resource="/sqls/Statement_MemberSchedule.xml"/>
-		<mapper resource="/sqls/Statement_Report.xml"/>
-		<mapper resource="/sqls/Statement_Review.xml"/>
-		<mapper resource="/sqls/Statement_Offer.xml"/>
+		<mapper resource="/mysqls/Statement_Naemember.xml"/>
+		<mapper resource="/mysqls/Statement_AdminBoard.xml"/>
+		<mapper resource="/mysqls/Statement_AttachFile.xml"/>
+		<mapper resource="/mysqls/Statement_Profile.xml"/>
+		<mapper resource="/mysqls/Statement_Payment.xml"/>
+		<mapper resource="/mysqls/Statement_NotiQuestion.xml"/>
+		<mapper resource="/mysqls/Statement_FindingMentor.xml"/>
+		<mapper resource="/mysqls/Statement_Matching.xml"/>
+		<mapper resource="/mysqls/Statement_MemberSchedule.xml"/>
+		<mapper resource="/mysqls/Statement_Report.xml"/>
+		<mapper resource="/mysqls/Statement_Review.xml"/>
+		<mapper resource="/mysqls/Statement_Offer.xml"/>
 	</mappers>
 	
 </configuration>
